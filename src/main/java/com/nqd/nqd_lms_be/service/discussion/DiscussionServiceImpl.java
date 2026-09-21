@@ -232,9 +232,15 @@ public class DiscussionServiceImpl implements DiscussionService {
 
         contentModerationService.validateContent(request.getContent(), "Nội dung phản hồi");
 
+        DiscussionPost parentPost = null;
+        if (request.getParentId() != null) {
+            parentPost = postRepository.findById(request.getParentId()).orElse(null);
+        }
+
         DiscussionPost post = DiscussionPost.builder()
                 .thread(thread)
                 .author(author)
+                .parent(parentPost)
                 .content(request.getContent().trim())
                 .isAnswer(false)
                 .upvoteCount(0)

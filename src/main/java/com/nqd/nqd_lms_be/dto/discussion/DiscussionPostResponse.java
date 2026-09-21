@@ -15,10 +15,12 @@ public class DiscussionPostResponse {
 
     private UUID id;
     private UUID threadId;
+    private UUID parentId;
     private UUID authorId;
     private String authorName;
     private String authorEmail;
     private String authorRole;
+    private String authorAvatarUrl;
     private String content;
     private Boolean isAnswer;
     private Integer upvoteCount;
@@ -45,10 +47,12 @@ public class DiscussionPostResponse {
         return DiscussionPostResponse.builder()
                 .id(p.getId())
                 .threadId(p.getThread() != null ? p.getThread().getId() : null)
+                .parentId(p.getParent() != null ? p.getParent().getId() : null)
                 .authorId(p.getAuthor() != null ? p.getAuthor().getId() : null)
                 .authorName(p.getAuthor() != null ? p.getAuthor().getFullName() : null)
                 .authorEmail(p.getAuthor() != null ? p.getAuthor().getEmail() : null)
                 .authorRole(authorRole)
+                .authorAvatarUrl(p.getAuthor() != null ? p.getAuthor().getAvatarUrl() : null)
                 .content(p.getContent())
                 .isAnswer(p.getIsAnswer())
                 .upvoteCount(p.getUpvoteCount())

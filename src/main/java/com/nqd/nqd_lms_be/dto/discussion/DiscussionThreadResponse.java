@@ -22,6 +22,7 @@ public class DiscussionThreadResponse {
     private String authorName;
     private String authorEmail;
     private String authorRole;
+    private String authorAvatarUrl;
     private String title;
     private String content;
     private Boolean isPinned;
@@ -49,6 +50,7 @@ public class DiscussionThreadResponse {
                 .authorName(t.getAuthor() != null ? t.getAuthor().getFullName() : null)
                 .authorEmail(t.getAuthor() != null ? t.getAuthor().getEmail() : null)
                 .authorRole(authorRole)
+                .authorAvatarUrl(t.getAuthor() != null ? t.getAuthor().getAvatarUrl() : null)
                 .title(t.getTitle())
                 .content(t.getContent())
                 .isPinned(t.getIsPinned())

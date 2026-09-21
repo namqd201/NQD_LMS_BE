@@ -42,7 +42,7 @@ public class StudentProfileServiceImpl implements StudentProfileService {
         user.setFullName(request.getFullName());
         user.setPhoneNumber(request.getPhoneNumber());
         if (request.getAvatarUrl() != null) {
-            user.setAvatarUrl(request.getAvatarUrl());
+            user.setAvatarUrl(request.getAvatarUrl().isBlank() ? null : request.getAvatarUrl());
         }
 
         user = userRepository.save(user);

@@ -20,6 +20,10 @@ public class DiscussionPost extends BaseEntity {
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private DiscussionPost parent;
+
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 

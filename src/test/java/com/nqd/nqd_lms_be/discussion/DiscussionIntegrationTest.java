@@ -342,5 +342,18 @@ public class DiscussionIntegrationTest {
                         .build());
 
         assertThat(reply).isNotNull();
+        assertThat(reply.getParentId()).isNull();
+
+        // 4. Student 1 replies to Student 2's reply (nested reply)
+        authenticateAs(studentUser1, "STUDENT");
+        DiscussionPostResponse nestedReply = discussionService.createPost(testCourse.getId(), thread.getId(), studentUser1.getId(),
+                CreateDiscussionPostRequest.builder()
+                        .parentId(reply.getId())
+                        .content("@Học Viên 2 cảm ơn bạn nhé")
+                        .mentionedUserIds(List.of(studentUser2.getId()))
+                        .build());
+
+        assertThat(nestedReply).isNotNull();
+        assertThat(nestedReply.getParentId()).isEqualTo(reply.getId());
     }
 }
