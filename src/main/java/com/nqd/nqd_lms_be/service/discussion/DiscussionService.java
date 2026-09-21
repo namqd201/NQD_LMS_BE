@@ -35,4 +35,6 @@ public interface DiscussionService {
     DiscussionPostResponse toggleUpvote(UUID courseId, UUID threadId, UUID postId, UUID userId);
 
     DiscussionPostResponse markAnswer(UUID courseId, UUID threadId, UUID postId, UUID userId);
+
+    java.util.List<MentionCandidateResponse> getMentionCandidates(UUID courseId);
 }

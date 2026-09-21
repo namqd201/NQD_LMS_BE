@@ -54,6 +54,15 @@ public class DiscussionController {
         return ResponseEntity.ok(ApiResponse.ok("Lấy chi tiết chủ đề thành công", response));
     }
 
+    @GetMapping("/mention-candidates")
+    @Operation(summary = "Get mention candidates (teachers and students) for a course")
+    public ResponseEntity<ApiResponse<java.util.List<MentionCandidateResponse>>> getMentionCandidates(
+            @PathVariable UUID courseId
+    ) {
+        java.util.List<MentionCandidateResponse> response = discussionService.getMentionCandidates(courseId);
+        return ResponseEntity.ok(ApiResponse.ok("Lấy danh sách thành viên để nhắc đến thành công", response));
+    }
+
     @PostMapping
     @Operation(summary = "Create a new discussion thread")
     public ResponseEntity<ApiResponse<DiscussionThreadResponse>> createThread(

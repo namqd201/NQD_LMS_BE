@@ -77,6 +77,9 @@ public class DiscussionIntegrationTest {
     @Autowired
     private DiscussionPostRepository postRepository;
 
+    @Autowired
+    private NotificationRepository notificationRepository;
+
     private User teacherUser;
     private User studentUser1;
     private User studentUser2;
@@ -296,5 +299,48 @@ public class DiscussionIntegrationTest {
         PageResponse<CourseAnnouncementResponse> list = announcementService.getCourseAnnouncements(testCourse.getId(), PageRequest.of(0, 10));
         assertThat(list.getItems()).hasSize(1);
         assertThat(list.getItems().get(0).getTitle()).isEqualTo("Thông báo lịch thi giữa kỳ");
+    }
+
+    @Test
+    @DisplayName("6. Mention candidates retrieval and mention notifications")
+    void testMentionCandidatesAndNotification() {
+        enrollmentRepository.save(CourseEnrollment.builder()
+                .course(testCourse)
+                .student(studentUser1)
+                .status(EnrollmentStatus.ENROLLED)
+                .build());
+
+        enrollmentRepository.save(CourseEnrollment.builder()
+                .course(testCourse)
+                .student(studentUser2)
+                .status(EnrollmentStatus.ENROLLED)
+                .build());
+
+        // 1. Get mention candidates for the course
+        List<MentionCandidateResponse> candidates = discussionService.getMentionCandidates(testCourse.getId());
+        assertThat(candidates).isNotEmpty();
+        List<UUID> candidateIds = candidates.stream().map(MentionCandidateResponse::getId).toList();
+        assertThat(candidateIds).contains(teacherUser.getId(), studentUser1.getId(), studentUser2.getId());
+
+        // 2. Student 1 creates a thread mentioning Teacher and Student 2
+        authenticateAs(studentUser1, "STUDENT");
+        DiscussionThreadResponse thread = discussionService.createThread(testCourse.getId(), studentUser1.getId(),
+                CreateDiscussionThreadRequest.builder()
+                        .title("Hỏi bài có tag @Thầy")
+                        .content("Em xin hỏi @Thầy và @Bạn 2")
+                        .mentionedUserIds(List.of(teacherUser.getId(), studentUser2.getId()))
+                        .build());
+
+        assertThat(thread).isNotNull();
+
+        // 3. Student 2 replies mentioning Student 1
+        authenticateAs(studentUser2, "STUDENT");
+        DiscussionPostResponse reply = discussionService.createPost(testCourse.getId(), thread.getId(), studentUser2.getId(),
+                CreateDiscussionPostRequest.builder()
+                        .content("@Học Viên 1 em đồng ý kiến")
+                        .mentionedUserIds(List.of(studentUser1.getId()))
+                        .build());
+
+        assertThat(reply).isNotNull();
     }
 }

@@ -37,6 +37,7 @@ public class DiscussionServiceImpl implements DiscussionService {
     private final CourseRepository courseRepository;
     private final LessonRepository lessonRepository;
     private final CourseEnrollmentRepository enrollmentRepository;
+    private final CourseTeacherRepository courseTeacherRepository;
     private final UserRepository userRepository;
     private final DiscussionRateLimiter rateLimiter;
     private final KafkaNotificationProducer kafkaNotificationProducer;
@@ -130,6 +131,9 @@ public class DiscussionServiceImpl implements DiscussionService {
                 log.warn("Failed to dispatch thread creation notification: {}", ex.getMessage());
             }
         }
+
+        // Notify mentioned users
+        notifyMentionedUsers(course, thread, lesson, author, request.getMentionedUserIds(), "trong một chủ đề thảo luận: \"" + thread.getTitle() + "\"");
 
         return DiscussionThreadResponse.fromEntity(thread);
     }
@@ -245,7 +249,9 @@ public class DiscussionServiceImpl implements DiscussionService {
         try {
             String title = "Phản hồi mới trong chủ đề thảo luận";
             String body = author.getFullName() + " vừa phản hồi câu hỏi: \"" + thread.getTitle() + "\"";
-            String linkUrl = "/courses/" + courseId + "?tab=discussion&threadId=" + thread.getId();
+            String linkUrl = (thread.getLesson() != null)
+                    ? "/courses/" + courseId + "/lessons/" + thread.getLesson().getId() + "?threadId=" + thread.getId()
+                    : "/courses/" + courseId + "?tab=discussion&threadId=" + thread.getId();
 
             // Notify thread author if different from post author
             if (!thread.getAuthor().getId().equals(authorId)) {
@@ -259,6 +265,9 @@ public class DiscussionServiceImpl implements DiscussionService {
         } catch (Exception ex) {
             log.warn("Failed to dispatch discussion reply notification: {}", ex.getMessage());
         }
+
+        // Notify mentioned users
+        notifyMentionedUsers(course, thread, thread.getLesson(), author, request.getMentionedUserIds(), "trong một phản hồi: \"" + truncate(post.getContent(), 80) + "\"");
 
         return DiscussionPostResponse.fromEntity(post, authorId, false);
     }
@@ -424,5 +433,99 @@ public class DiscussionServiceImpl implements DiscussionService {
         if (!isTeacher && !isAdmin) {
             throw new ForbiddenOperationException("Chỉ giảng viên của khóa học hoặc Quản trị viên mới có quyền thực hiện thao tác này.");
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MentionCandidateResponse> getMentionCandidates(UUID courseId) {
+        Course course = getCourseOrThrow(courseId);
+        java.util.Map<UUID, MentionCandidateResponse> candidatesMap = new java.util.LinkedHashMap<>();
+
+        // 1. Course Creator / Primary Teacher
+        if (course.getCreator() != null) {
+            User creator = course.getCreator();
+            candidatesMap.put(creator.getId(), MentionCandidateResponse.builder()
+                    .id(creator.getId())
+                    .fullName(creator.getFullName())
+                    .email(creator.getEmail())
+                    .avatarUrl(creator.getAvatarUrl())
+                    .roleInCourse("TEACHER")
+                    .build());
+        }
+
+        // 2. Co-teachers
+        try {
+            List<CourseTeacher> coTeachers = courseTeacherRepository.findByCourseId(courseId);
+            if (coTeachers != null) {
+                for (CourseTeacher ct : coTeachers) {
+                    if (ct.getTeacher() != null && !candidatesMap.containsKey(ct.getTeacher().getId())) {
+                        User t = ct.getTeacher();
+                        candidatesMap.put(t.getId(), MentionCandidateResponse.builder()
+                                .id(t.getId())
+                                .fullName(t.getFullName())
+                                .email(t.getEmail())
+                                .avatarUrl(t.getAvatarUrl())
+                                .roleInCourse("TEACHER")
+                                .build());
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            log.warn("Could not query co-teachers for course {}: {}", courseId, ex.getMessage());
+        }
+
+        // 3. Enrolled students
+        try {
+            List<CourseEnrollment> enrollments = enrollmentRepository.findByCourseIdWithStudent(courseId);
+            if (enrollments != null) {
+                for (CourseEnrollment ce : enrollments) {
+                    if (ce.getStudent() != null && !candidatesMap.containsKey(ce.getStudent().getId())) {
+                        User s = ce.getStudent();
+                        candidatesMap.put(s.getId(), MentionCandidateResponse.builder()
+                                .id(s.getId())
+                                .fullName(s.getFullName())
+                                .email(s.getEmail())
+                                .avatarUrl(s.getAvatarUrl())
+                                .roleInCourse("STUDENT")
+                                .build());
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            log.warn("Could not query enrollments for course {}: {}", courseId, ex.getMessage());
+        }
+
+        return new java.util.ArrayList<>(candidatesMap.values());
+    }
+
+    private void notifyMentionedUsers(Course course, DiscussionThread thread, Lesson lesson, User author, List<UUID> mentionedUserIds, String contextSnippet) {
+        if (mentionedUserIds == null || mentionedUserIds.isEmpty()) {
+            return;
+        }
+
+        String linkUrl = (lesson != null)
+                ? "/courses/" + course.getId() + "/lessons/" + lesson.getId() + "?threadId=" + thread.getId()
+                : "/courses/" + course.getId() + "?tab=discussion&threadId=" + thread.getId();
+
+        String title = author.getFullName() + " đã nhắc đến bạn trong thảo luận";
+        String body = author.getFullName() + " đã nhắc đến bạn " + contextSnippet;
+
+        mentionedUserIds.stream()
+                .filter(id -> id != null && !id.equals(author.getId()))
+                .distinct()
+                .forEach(recipientId -> {
+                    try {
+                        kafkaNotificationProducer.sendNotification(recipientId, "DISCUSSION_MENTION", title, body, linkUrl);
+                        log.info("Sent mention notification to user {} for thread {}", recipientId, thread.getId());
+                    } catch (Exception ex) {
+                        log.warn("Failed to dispatch mention notification to user {}: {}", recipientId, ex.getMessage());
+                    }
+                });
+    }
+
+    private String truncate(String text, int maxLength) {
+        if (text == null) return "";
+        if (text.length() <= maxLength) return text;
+        return text.substring(0, maxLength) + "...";
     }
 }

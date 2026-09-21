@@ -21,4 +21,6 @@ public class CreateDiscussionThreadRequest {
 
     @NotBlank(message = "Nội dung thảo luận không được để trống")
     private String content;
+
+    private java.util.List<UUID> mentionedUserIds;
 }
