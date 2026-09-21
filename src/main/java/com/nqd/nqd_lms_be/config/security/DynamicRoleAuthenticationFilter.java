@@ -28,6 +28,7 @@ import java.util.UUID;
 public class DynamicRoleAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserRoleRepository userRoleRepository;
+    private final SessionAuthRegistry sessionAuthRegistry;
     private final SecurityContextRepository securityContextRepository = new HttpSessionSecurityContextRepository();
 
     @Override
@@ -35,6 +36,25 @@ public class DynamicRoleAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
+            String token = request.getHeader("X-Session-Id");
+            if (token == null || token.isBlank()) {
+                String authHeader = request.getHeader("Authorization");
+                if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                    token = authHeader.substring(7).trim();
+                }
+            }
+            if (token != null && !token.isBlank()) {
+                Authentication registeredAuth = sessionAuthRegistry.get(token);
+                if (registeredAuth != null) {
+                    SecurityContext context = SecurityContextHolder.createEmptyContext();
+                    context.setAuthentication(registeredAuth);
+                    SecurityContextHolder.setContext(context);
+                    authentication = registeredAuth;
+                }
+            }
+        }
 
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof AppUserPrincipal principal) {
             UUID userId = principal.getId();

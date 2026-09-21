@@ -29,6 +29,7 @@ public class SecurityConfig {
     private final CustomOAuth2UserService customOAuth2UserService;
     private final CustomOidcUserService customOidcUserService;
     private final com.nqd.nqd_lms_be.config.security.DynamicRoleAuthenticationFilter dynamicRoleAuthenticationFilter;
+    private final com.nqd.nqd_lms_be.config.security.OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
     @Value("${app.frontend.url:http://localhost:3000}")
     private String frontendUrl;
@@ -82,7 +83,7 @@ public class SecurityConfig {
                 })
             )
             .oauth2Login(oauth2 -> oauth2
-                .defaultSuccessUrl(frontendUrl + "/auth/callback", true)
+                .successHandler(oAuth2LoginSuccessHandler)
                 .failureUrl(frontendUrl + "/login?error=oauth2_failure")
                 .userInfoEndpoint(userInfo -> userInfo
                     .userService(customOAuth2UserService)
