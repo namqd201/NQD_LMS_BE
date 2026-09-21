@@ -1,0 +1,40 @@
+# Template file mẫu (Không chứa mật khẩu thật)
+# Copy file này thành 'application-local.properties' và điền thông tin thực tế khi chạy ở máy local
+
+# Database Configuration (PostgreSQL)
+spring.datasource.url=jdbc:postgresql://localhost:5432/ai_learning_platform
+spring.datasource.username=postgres
+spring.datasource.password=your_db_password
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+spring.docker.compose.enabled=false
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.open-in-view=false
+spring.jpa.show-sql=false
+
+# High-Concurrency & Virtual Threads (JDK 21)
+spring.threads.virtual.enabled=true
+server.port=8080
+
+# Google OAuth 2.0 Client Configuration
+spring.security.oauth2.client.registration.google.client-id=your-google-client-id.apps.googleusercontent.com
+spring.security.oauth2.client.registration.google.client-secret=your-google-client-secret
+spring.security.oauth2.client.registration.google.scope=openid,profile,email
+spring.security.oauth2.client.registration.google.redirect-uri={baseUrl}/login/oauth2/code/{registrationId}
+
+# Frontend URL
+app.frontend.url=http://localhost:3000
+
+# AI & LLM Provider Configuration
+lms.ai.provider=GEMINI
+lms.ai.gemini.api-key=your-gemini-api-key
+lms.ai.gemini.model-name=gemini-1.5-flash
+
+# Payment Gateways Configuration (SePay / VietQR)
+payment.provider=SEPAY
+payment.client-id=nqd-lms-client-id
+payment.api-key=your-sepay-api-key
+payment.checksum-key=your-checksum-secret-key
+payment.bank-code=MB
+payment.account-number=your_account_number
+payment.account-name=your_account_name
