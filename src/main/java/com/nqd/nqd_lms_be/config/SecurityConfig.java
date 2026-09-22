@@ -75,6 +75,8 @@ public class SecurityConfig {
                 ).permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/payments/config").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/marketplace/courses/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/courses/*/discussions", "/api/v1/courses/*/discussions/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/courses/*/announcements", "/api/v1/courses/*/announcements/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/membership/plans").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/public/certificates/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/public/media/**").permitAll()
