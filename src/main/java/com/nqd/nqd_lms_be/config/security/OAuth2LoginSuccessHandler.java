@@ -18,11 +18,14 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
     private final String frontendUrl;
     private final SessionAuthRegistry sessionAuthRegistry;
+    private final JwtService jwtService;
 
     public OAuth2LoginSuccessHandler(@Value("${app.frontend.url:http://localhost:3000}") String frontendUrl,
-                                     SessionAuthRegistry sessionAuthRegistry) {
+                                     SessionAuthRegistry sessionAuthRegistry,
+                                     JwtService jwtService) {
         this.frontendUrl = frontendUrl;
         this.sessionAuthRegistry = sessionAuthRegistry;
+        this.jwtService = jwtService;
     }
 
     @Override
@@ -34,8 +37,22 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
             sessionAuthRegistry.register(sessionId, authentication);
         }
 
-        String targetUrl = frontendUrl + "/auth/callback?session_id=" + sessionId;
-        log.info("OAuth2 login success, redirecting to frontend: {}", targetUrl);
+        String jwtToken = "";
+        if (authentication.getPrincipal() instanceof AppUserPrincipal principal) {
+            jwtToken = jwtService.generateToken(
+                    principal.getId(),
+                    principal.getEmail(),
+                    principal.getFullName(),
+                    principal.getRoles()
+            );
+            if (!jwtToken.isBlank()) {
+                sessionAuthRegistry.register(jwtToken, authentication);
+            }
+        }
+
+        String finalToken = !jwtToken.isBlank() ? jwtToken : sessionId;
+        String targetUrl = frontendUrl + "/auth/callback?token=" + finalToken + "&session_id=" + finalToken;
+        log.info("OAuth2 login success, redirecting to frontend with JWT: {}...", finalToken.substring(0, Math.min(finalToken.length(), 15)));
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 }

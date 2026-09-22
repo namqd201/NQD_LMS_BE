@@ -1,5 +1,8 @@
 package com.nqd.nqd_lms_be.config.security;
 
+import com.nqd.nqd_lms_be.entity.User;
+import com.nqd.nqd_lms_be.entity.enums.UserStatus;
+import com.nqd.nqd_lms_be.repository.UserRepository;
 import com.nqd.nqd_lms_be.repository.UserRoleRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -17,10 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -28,7 +28,9 @@ import java.util.UUID;
 public class DynamicRoleAuthenticationFilter extends OncePerRequestFilter {
 
     private final UserRoleRepository userRoleRepository;
+    private final UserRepository userRepository;
     private final SessionAuthRegistry sessionAuthRegistry;
+    private final JwtService jwtService;
     private final SecurityContextRepository securityContextRepository = new HttpSessionSecurityContextRepository();
 
     @Override
@@ -45,17 +47,48 @@ public class DynamicRoleAuthenticationFilter extends OncePerRequestFilter {
                     token = authHeader.substring(7).trim();
                 }
             }
+
             if (token != null && !token.isBlank()) {
-                Authentication registeredAuth = sessionAuthRegistry.get(token);
-                if (registeredAuth != null) {
-                    SecurityContext context = SecurityContextHolder.createEmptyContext();
-                    context.setAuthentication(registeredAuth);
-                    SecurityContextHolder.setContext(context);
-                    authentication = registeredAuth;
+                // 1. Verify and authenticate with stateless 7-day JWT
+                if (jwtService.validateToken(token)) {
+                    UUID userId = jwtService.getUserIdFromToken(token);
+                    if (userId != null) {
+                        User user = userRepository.findById(userId).orElse(null);
+                        if (user != null && user.getStatus() != UserStatus.BANNED) {
+                            List<String> latestRoleNames = userRoleRepository.findRoleNamesByUserId(userId);
+                            Set<String> roles = (latestRoleNames != null && !latestRoleNames.isEmpty())
+                                    ? new HashSet<>(latestRoleNames)
+                                    : jwtService.getRolesFromToken(token);
+
+                            AppUserPrincipal principal = AppUserPrincipal.create(user, roles, Collections.emptyMap());
+                            OAuth2AuthenticationToken jwtAuth = new OAuth2AuthenticationToken(
+                                    principal,
+                                    principal.getAuthorities(),
+                                    "google"
+                            );
+
+                            SecurityContext context = SecurityContextHolder.createEmptyContext();
+                            context.setAuthentication(jwtAuth);
+                            SecurityContextHolder.setContext(context);
+                            authentication = jwtAuth;
+                        }
+                    }
+                }
+
+                // 2. Fallback to in-memory sessionAuthRegistry for legacy session tokens
+                if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
+                    Authentication registeredAuth = sessionAuthRegistry.get(token);
+                    if (registeredAuth != null) {
+                        SecurityContext context = SecurityContextHolder.createEmptyContext();
+                        context.setAuthentication(registeredAuth);
+                        SecurityContextHolder.setContext(context);
+                        authentication = registeredAuth;
+                    }
                 }
             }
         }
 
+        // 3. Dynamic role refresh if user roles have changed in DB
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof AppUserPrincipal principal) {
             UUID userId = principal.getId();
             List<String> latestRoleNames = userRoleRepository.findRoleNamesByUserId(userId);
