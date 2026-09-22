@@ -31,7 +31,7 @@ public class SecurityConfig {
     private final com.nqd.nqd_lms_be.config.security.DynamicRoleAuthenticationFilter dynamicRoleAuthenticationFilter;
     private final com.nqd.nqd_lms_be.config.security.OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
-    @Value("${app.frontend.url:http://localhost:3000}")
+    @Value("${app.frontend.url:https://nqdlms.online}")
     private String frontendUrl;
 
     @Bean
@@ -40,6 +40,27 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .addFilterBefore(dynamicRoleAuthenticationFilter, org.springframework.security.web.access.intercept.AuthorizationFilter.class)
+            .addFilterBefore(new org.springframework.web.filter.OncePerRequestFilter() {
+                @Override
+                protected void doFilterInternal(jakarta.servlet.http.HttpServletRequest request,
+                                                jakarta.servlet.http.HttpServletResponse response,
+                                                jakarta.servlet.FilterChain filterChain)
+                        throws jakarta.servlet.ServletException, java.io.IOException {
+                    String uri = request.getRequestURI();
+                    if (uri != null && uri.contains("/oauth2/authorization/")) {
+                        String referer = request.getHeader("Referer");
+                        if (referer != null && !referer.isBlank()) {
+                            try {
+                                java.net.URI u = new java.net.URI(referer);
+                                String origin = u.getScheme() + "://" + u.getHost() +
+                                        (u.getPort() > 0 && u.getPort() != 80 && u.getPort() != 443 ? ":" + u.getPort() : "");
+                                request.getSession(true).setAttribute("OAUTH2_REDIRECT_ORIGIN", origin);
+                            } catch (Exception ignored) {}
+                        }
+                    }
+                    filterChain.doFilter(request, response);
+                }
+            }, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.class)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/oauth2/**",
@@ -116,7 +137,12 @@ public class SecurityConfig {
             "http://127.0.0.1:3001",
             "http://localhost:5173",
             "https://*.vercel.app",
-            "https://*.onrender.com"
+            "https://*.onrender.com",
+            "https://nqdlms.online",
+            "https://www.nqdlms.online",
+            "https://*.nqdlms.online",
+            "http://nqdlms.online",
+            "http://www.nqdlms.online"
         ));
         if (frontendUrl != null && !frontendUrl.isBlank() && !origins.contains(frontendUrl)) {
             origins.add(frontendUrl);

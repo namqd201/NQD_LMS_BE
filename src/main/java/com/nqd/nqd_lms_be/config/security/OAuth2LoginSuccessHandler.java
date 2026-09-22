@@ -51,8 +51,27 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         }
 
         String finalToken = !jwtToken.isBlank() ? jwtToken : sessionId;
-        String targetUrl = frontendUrl + "/auth/callback?token=" + finalToken + "&session_id=" + finalToken;
-        log.info("OAuth2 login success, redirecting to frontend with JWT: {}...", finalToken.substring(0, Math.min(finalToken.length(), 15)));
+
+        String redirectBase = (String) session.getAttribute("OAUTH2_REDIRECT_ORIGIN");
+        if (redirectBase == null || redirectBase.isBlank() || !isValidFrontendOrigin(redirectBase)) {
+            redirectBase = frontendUrl;
+        }
+        if (redirectBase == null || redirectBase.isBlank()) {
+            redirectBase = "https://nqdlms.online";
+        }
+
+        String targetUrl = redirectBase + "/auth/callback?token=" + finalToken + "&session_id=" + finalToken;
+        log.info("OAuth2 login success, redirecting to frontend ({}) with JWT: {}...", redirectBase, finalToken.substring(0, Math.min(finalToken.length(), 15)));
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
+    }
+
+    private boolean isValidFrontendOrigin(String origin) {
+        if (origin == null) return false;
+        String lower = origin.toLowerCase();
+        return lower.contains("localhost") ||
+               lower.contains("127.0.0.1") ||
+               lower.contains("nqdlms.online") ||
+               lower.endsWith(".vercel.app") ||
+               lower.endsWith(".onrender.com");
     }
 }
