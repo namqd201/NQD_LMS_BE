@@ -1,5 +1,6 @@
 package com.nqd.nqd_lms_be.dto.student;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nqd.nqd_lms_be.entity.enums.CourseStatus;
 import com.nqd.nqd_lms_be.entity.enums.EnrollmentStatus;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,22 @@ public class StudentCourseResponse {
     private Boolean isPrivate;
     private UUID creatorId;
     private String creatorName;
+
+    @JsonProperty("isOwner")
     private boolean isOwner;
+
+    @JsonProperty("isEnrolled")
     private boolean isEnrolled;
+
     private EnrollmentStatus enrollmentStatus;
+
+    @JsonProperty("owner")
+    public boolean getOwner() {
+        return isOwner;
+    }
+
+    @JsonProperty("enrolled")
+    public boolean getEnrolled() {
+        return isEnrolled;
+    }
 }

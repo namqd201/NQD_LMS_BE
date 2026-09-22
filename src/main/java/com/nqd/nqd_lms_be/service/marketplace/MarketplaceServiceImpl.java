@@ -173,7 +173,7 @@ public class MarketplaceServiceImpl implements MarketplaceService {
             Optional<CourseEnrollment> enrollmentOpt = courseEnrollmentRepository.findByCourseIdAndStudentId(courseId, currentUserId);
             if (enrollmentOpt.isPresent()) {
                 enrollmentStatus = enrollmentOpt.get().getStatus();
-                if (enrollmentStatus == EnrollmentStatus.ENROLLED) {
+                if (enrollmentStatus == EnrollmentStatus.ENROLLED || enrollmentStatus == EnrollmentStatus.COMPLETED) {
                     isEnrolled = true;
                 }
             }

@@ -161,6 +161,8 @@ public class StudentCourseServiceImpl implements StudentCourseService {
         Optional<CourseEnrollment> enrollment = courseEnrollmentRepository.findByCourseIdAndStudentId(course.getId(), studentId);
         boolean isOwner = course.getCreator() != null && course.getCreator().getId().equals(studentId);
 
+        boolean isEnrolled = isOwner || enrollment.map(e -> e.getStatus() == EnrollmentStatus.ENROLLED || e.getStatus() == EnrollmentStatus.COMPLETED).orElse(false);
+
         return StudentCourseResponse.builder()
                 .id(course.getId())
                 .name(course.getName())
@@ -174,7 +176,7 @@ public class StudentCourseServiceImpl implements StudentCourseService {
                 .creatorId(course.getCreator() != null ? course.getCreator().getId() : null)
                 .creatorName(course.getCreator() != null ? course.getCreator().getFullName() : null)
                 .isOwner(isOwner)
-                .isEnrolled(enrollment.isPresent() || isOwner)
+                .isEnrolled(isEnrolled)
                 .enrollmentStatus(enrollment.map(CourseEnrollment::getStatus).orElse(null))
                 .build();
     }
