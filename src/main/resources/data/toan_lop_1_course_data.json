@@ -1,0 +1,1537 @@
+{
+  "course": {
+    "name": "Toán 1",
+    "code": "MATH_GRADE_1",
+    "subjectCode": "MATH",
+    "subjectName": "Toán Học",
+    "gradeLevel": "Lớp 1",
+    "description": "Khóa học Toán 1 chuẩn Chương trình Giáo dục phổ thông mới của Bộ Giáo dục & Đào tạo. Cung cấp kiến thức số học từ 0 đến 100, phép cộng trừ, hình học trực quan, đo lường độ dài và thời gian kết hợp bài tập trắc nghiệm củng cố sinh động, dễ hiểu.",
+    "pricingType": "FREE",
+    "price": 0,
+    "status": "ACTIVE",
+    "thumbnailUrl": "/images/courses/toan-1.jpg",
+    "totalChapters": 8,
+    "totalLessons": 34,
+    "totalQuestions": 102
+  },
+  "chapters": [
+    {
+      "chapterOrder": 1,
+      "title": "Chương 1: Các số từ 0 đến 10",
+      "description": "Làm quen với môn Toán, nhận biết, đếm, đọc, viết và so sánh các số tự nhiên từ 0 đến 10, nắm vững cấu tạo số tách - gộp.",
+      "lessons": [
+        {
+          "displayOrder": 1,
+          "title": "Tiết học đầu tiên",
+          "slug": "tiet-hoc-dau-tien",
+          "summary": "Làm quen với lớp học toán, đồ dùng học tập môn Toán và tư thế ngồi học đúng cách.",
+          "estimatedMinutes": 35,
+          "theory": "### 🌟 Chào mừng các em đến với Tiết học Toán đầu tiên!\n\n#### 1. Đồ dùng học Toán thân quen của em\nĐể học thật tốt môn Toán, chúng mình hãy cùng chuẩn bị các bạn nhỏ này nhé:\n- 📖 **Sách giáo khoa Toán 1**: Người bạn mang đến bao điều thú vị và tranh vẽ rực rỡ.\n- 📓 **Vở ô li**: Nơi chúng mình viết những chữ số xinh xắn.\n- ✏️ **Bút chì & cục tẩy**: Giúp bé viết số tròn trịa và tẩy sạch khi cần sửa.\n- 📏 **Thước kẻ**: Dùng để kẻ thẳng hàng và đo độ dài các đồ vật.\n- 📦 **Bộ đồ dùng Toán 1**: Chứa các que tính sắc màu 🥢 và các khối hình học vuông, tròn, tam giác.\n\n#### 2. Tư thế ngồi học chuẩn và giữ gìn mắt sáng\n- 🪑 **Lưng thẳng**: Không tì ngực vào cạnh bàn.\n- 👀 **Khoảng cách**: Mắt cách trang sách, vở từ 25 cm đến 30 cm.\n- 💡 **Ánh sáng**: Ngồi học nơi có đủ ánh sáng tự nhiên hoặc đèn bàn sáng rõ.\n\n#### 3. Cùng nhau khám phá thế giới số học\nToán học có ở khắp mọi nơi quanh em:\n- Đếm số ngón tay trên một bàn tay: 🖐️ có **5** ngón tay.\n- Đếm số bánh xe của chiếc xe đạp: 🚲 có **2** bánh xe.\n- Hãy cùng mở sách và bắt đầu chuyến hành trình kỳ thú nào! 🚀",
+          "exercises": [
+            {
+              "question": "Đâu là đồ dùng học tập cần thiết để kẻ đường thẳng trong môn Toán?",
+              "options": [
+                "A. Cục tẩy",
+                "B. Thước kẻ",
+                "C. Hộp màu sáp",
+                "D. Cặp sách"
+              ],
+              "correct_answer": "B",
+              "explanation": "Thước kẻ giúp chúng mình kẻ những đường thẳng thật đẹp và chính xác đấy các em!"
+            },
+            {
+              "question": "Tư thế ngồi học nào sau đây là ĐÚNG để bảo vệ cột sống và mắt?",
+              "options": [
+                "A. Nằm ra bàn khi viết bài",
+                "B. Cúi sát mắt vào trang vở",
+                "C. Ngồi thẳng lưng, mắt cách vở khoảng 25 - 30 cm",
+                "D. Tì ngực sát vào cạnh bàn"
+              ],
+              "correct_answer": "C",
+              "explanation": "Ngồi thẳng lưng giúp cột sống phát triển khỏe mạnh và mắt luôn sáng tinh anh!"
+            },
+            {
+              "question": "Một bàn tay của em có bao nhiêu ngón tay? 🖐️",
+              "options": [
+                "A. 3 ngón tay",
+                "B. 4 ngón tay",
+                "C. 5 ngón tay",
+                "D. 6 ngón tay"
+              ],
+              "correct_answer": "C",
+              "explanation": "Bé hãy xòe một bàn tay và đếm cùng cô nhé: 1, 2, 3, 4, 5. Đúng rồi, có 5 ngón tay!"
+            }
+          ]
+        },
+        {
+          "displayOrder": 2,
+          "title": "Bài 1: Các số 0, 1, 2, 3, 4, 5",
+          "slug": "bai-1-cac-so-0-1-2-3-4-5",
+          "summary": "Đếm, đọc, viết và nhận biết số lượng các nhóm đồ vật từ 0 đến 5.",
+          "estimatedMinutes": 40,
+          "theory": "### 🔢 Các số 0, 1, 2, 3, 4, 5\n\n#### 1. Đếm và nhận biết đồ vật\nHãy cùng đếm các đồ vật xinh xắn nào:\n- **Số 0**: Đĩa không có quả táo nào 🍽️ -> **0 quả táo**.\n- **Số 1**: Một chú mèo con 🐱 -> Số **1**.\n- **Số 2**: Hai chú cún con 🐶🐶 -> Số **2**.\n- **Số 3**: Ba bông hoa hồng 🌸🌸🌸 -> Số **3**.\n- **Số 4**: Bốn chiếc ô tô đồ chơi 🚗🚗🚗🚗 -> Số **4**.\n- **Số 5**: Năm quả bóng bay rực rỡ 🎈🎈🎈🎈🎈 -> Số **5**.\n\n#### 2. Thứ tự các số từ 0 đến 5\n- Dãy số tăng dần: **0, 1, 2, 3, 4, 5**\n- Dãy số đếm lùi: **5, 4, 3, 2, 1, 0**\n\n#### 3. Bé ghi nhớ:\n- **0** là không có gì cả.\n- Số đứng liền sau luôn nhiều hơn số đứng liền trước 1 đơn vị.",
+          "exercises": [
+            {
+              "question": "Bé hãy đếm xem có bao nhiêu quả táo ở đây: 🍎🍎🍎",
+              "options": [
+                "A. 2 quả táo",
+                "B. 3 quả táo",
+                "C. 4 quả táo",
+                "D. 5 quả táo"
+              ],
+              "correct_answer": "B",
+              "explanation": "Chúng mình cùng đếm nhé: một, hai, ba. Vậy có tất cả 3 quả táo!"
+            },
+            {
+              "question": "Số nào đứng liền sau số 3 trong dãy số tự nhiên?",
+              "options": [
+                "A. Số 2",
+                "B. Số 4",
+                "C. Số 5",
+                "D. Số 1"
+              ],
+              "correct_answer": "B",
+              "explanation": "Trong dãy số 0, 1, 2, 3, 4, 5, đứng ngay sau số 3 chính là số 4."
+            },
+            {
+              "question": "Trong một chiếc rổ không có đồ chơi nào, ta dùng số nào để chỉ số lượng đồ chơi trong rổ?",
+              "options": [
+                "A. Số 1",
+                "B. Số 0",
+                "C. Số 2",
+                "D. Số 5"
+              ],
+              "correct_answer": "B",
+              "explanation": "Khi không có đồ vật nào, ta dùng số 0 để biểu thị số lượng."
+            }
+          ]
+        },
+        {
+          "displayOrder": 3,
+          "title": "Bài 2: Các số 6, 7, 8, 9, 10",
+          "slug": "bai-2-cac-so-6-7-8-9-10",
+          "summary": "Đếm, đọc, viết các số từ 6 đến 10, đặc biệt làm quen với số 10 tròn trĩnh.",
+          "estimatedMinutes": 40,
+          "theory": "### 🔟 Các số 6, 7, 8, 9, 10\n\n#### 1. Đếm tiếp từ 6 đến 10\nKhi đã có 5 ngón tay trên một bàn tay, ta mở tiếp các ngón tay ở bàn tay kia:\n- **Số 6**: 5 ngón tay thêm 1 ngón tay 🖐️☝️ -> **6**. (Ví dụ: 6 chú chim 🐦🐦🐦🐦🐦🐦)\n- **Số 7**: 5 ngón tay thêm 2 ngón tay 🖐️✌️ -> **7**. (Ví dụ: 7 ngôi sao ⭐⭐⭐⭐⭐⭐⭐)\n- **Số 8**: 5 ngón tay thêm 3 ngón tay -> **8**. (Ví dụ: 8 cây kem 🍦🍦🍦🍦🍦🍦🍦🍦)\n- **Số 9**: 5 ngón tay thêm 4 ngón tay -> **9**. (Ví dụ: 9 chiếc kẹo 🍬🍬🍬🍬🍬🍬🍬🍬🍬)\n- **Số 10**: Cả hai bàn tay xòe ra 🖐️🖐️ -> **10 ngón tay**! Số 10 gồm chữ số 1 đứng trước và chữ số 0 đứng sau.\n\n#### 2. Dãy số từ 0 đến 10 hoàn chỉnh\n- Đếm xuôi: **0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10**\n- Đếm ngược: **10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0**",
+          "exercises": [
+            {
+              "question": "Bé hãy đếm xem có bao nhiêu ngôi sao: ⭐⭐⭐⭐⭐⭐⭐",
+              "options": [
+                "A. 6 ngôi sao",
+                "B. 7 ngôi sao",
+                "C. 8 ngôi sao",
+                "D. 9 ngôi sao"
+              ],
+              "correct_answer": "B",
+              "explanation": "Đếm lần lượt từng ngôi sao: 1, 2, 3, 4, 5, 6, 7. Có tất cả 7 ngôi sao!"
+            },
+            {
+              "question": "Số mười (10) được viết bởi những chữ số nào?",
+              "options": [
+                "A. Chữ số 0 và chữ số 1",
+                "B. Chữ số 1 đứng trước, chữ số 0 đứng sau",
+                "C. Hai chữ số 1",
+                "D. Chỉ có chữ số 1"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số 10 được viết bằng chữ số 1 ở hàng chục và chữ số 0 ở hàng đơn vị: số 1 đứng trước, số 0 đứng sau."
+            },
+            {
+              "question": "Số nào lớn nhất trong các số sau: 5, 8, 3, 7?",
+              "options": [
+                "A. Số 5",
+                "B. Số 3",
+                "C. Số 7",
+                "D. Số 8"
+              ],
+              "correct_answer": "D",
+              "explanation": "Khi đếm từ 0 đến 10, số 8 xuất hiện sau cùng trong nhóm nên số 8 là số lớn nhất."
+            }
+          ]
+        },
+        {
+          "displayOrder": 4,
+          "title": "Bài 3: Nhiều hơn, ít hơn, bằng nhau",
+          "slug": "bai-3-nhieu-hon-it-hon-bang-nhau",
+          "summary": "So sánh số lượng đồ vật của hai nhóm bằng phương pháp ghép cặp một - một.",
+          "estimatedMinutes": 35,
+          "theory": "### ⚖️ Nhiều hơn, ít hơn, bằng nhau\n\n#### 1. Cách so sánh ghép đôi (1 - 1)\nĐể biết nhóm nào có nhiều hơn hay ít hơn, chúng mình nối từng đồ vật nhóm này với một đồ vật nhóm kia:\n- **Nhiều hơn**: Nếu còn thừa đồ vật thì nhóm đó **nhiều hơn**.\n  - Ví dụ: Có 4 chú thỏ 🐰🐰🐰🐰 và 3 củ cà rốt 🥕🥕🥕. Mỗi chú thỏ cầm 1 củ cà rốt, còn thừa 1 chú thỏ chưa có cà rốt.\n  - Ta nói: *Số chú thỏ nhiều hơn số củ cà rốt*.\n- **Ít hơn**: Nếu thiếu đồ vật thì nhóm đó **ít hơn**.\n  - Ta nói: *Số củ cà rốt ít hơn số chú thỏ*.\n- **Bằng nhau**: Nếu ghép đôi vừa vặn, không thừa không thiếu đồ vật nào.\n  - Ví dụ: 3 chú mèo 🐱🐱🐱 và 3 con cá 🐟🐟🐟.\n  - Ta nói: *Số chú mèo bằng số con cá*.",
+          "exercises": [
+            {
+              "question": "Có 5 bạn học sinh và 4 chiếc ghế. Kết luận nào sau đây là ĐÚNG?",
+              "options": [
+                "A. Số học sinh bằng số ghế",
+                "B. Số học sinh nhiều hơn số ghế",
+                "C. Số học sinh ít hơn số ghế",
+                "D. Không so sánh được"
+              ],
+              "correct_answer": "B",
+              "explanation": "Mỗi bạn ngồi 1 chiếc ghế, có 4 chiếc ghế nên vẫn còn thừa 1 bạn chưa có ghế. Vậy số học sinh nhiều hơn số ghế!"
+            },
+            {
+              "question": "Có 3 con bướm 🦋🦋🦋 và 3 bông hoa 🌸🌸🌸. Ta nói số con bướm và số bông hoa như thế nào?",
+              "options": [
+                "A. Nhiều hơn",
+                "B. Ít hơn",
+                "C. Bằng nhau",
+                "D. Khác nhau"
+              ],
+              "correct_answer": "C",
+              "explanation": "Mỗi chú bướm đậu trên một bông hoa vừa vặn, không thừa chú bướm hay bông hoa nào, nên hai nhóm bằng nhau."
+            },
+            {
+              "question": "Có 2 chiếc thìa 🥄🥄 và 4 bát súp 🥣🥣🥣🥣. Số chiếc thìa như thế nào so với số bát súp?",
+              "options": [
+                "A. Nhiều hơn",
+                "B. Ít hơn",
+                "C. Bằng nhau",
+                "D. Gấp đôi"
+              ],
+              "correct_answer": "B",
+              "explanation": "Vì chỉ có 2 chiếc thìa mà có tới 4 bát súp nên số chiếc thìa ít hơn số bát súp."
+            }
+          ]
+        },
+        {
+          "displayOrder": 5,
+          "title": "Bài 4: So sánh số",
+          "slug": "bai-4-so-sanh-so",
+          "summary": "Làm quen với các dấu so sánh: dấu lớn hơn (>), dấu bé hơn (<), dấu bằng (=).",
+          "estimatedMinutes": 40,
+          "theory": "### 🔍 So sánh số: >, <, =\n\n#### 1. Làm quen với các dấu toán học\n- **Dấu lớn hơn ( > )**: Miệng cá sấu mở rộng về phía số lớn hơn! 🐊\n  - Ví dụ: 5 lớn hơn 3, viết là: **5 > 3**\n- **Dấu bé hơn ( < )**: Mũi nhọn quay về phía số bé hơn!\n  - Ví dụ: 2 bé hơn 4, viết là: **2 < 4**\n- **Dấu bằng ( = )**: Hai nét ngang song song bằng nhau!\n  - Ví dụ: 4 bằng 4, viết là: **4 = 4**\n\n#### 2. Mẹo nhớ siêu dễ cho bé\n- \"Đầu nhọn chỉ số bé, miệng to há về số lớn!\"\n- Dựa vào dãy số 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10:\n  - Số nào đứng trước thì bé hơn.\n  - Số nào đứng sau thì lớn hơn.",
+          "exercises": [
+            {
+              "question": "Điền dấu thích hợp vào chỗ chấm: 7 ... 4",
+              "options": [
+                "A. >",
+                "B. <",
+                "C. =",
+                "D. +"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số 7 đứng sau số 4 trong dãy số nên 7 lớn hơn 4, ta điền dấu lớn hơn (>)."
+            },
+            {
+              "question": "Phép so sánh nào dưới đây là ĐÚNG?",
+              "options": [
+                "A. 8 < 5",
+                "B. 3 > 6",
+                "C. 2 < 9",
+                "D. 10 < 7"
+              ],
+              "correct_answer": "C",
+              "explanation": "Số 2 đứng trước số 9 nên 2 bé hơn 9 (2 < 9) là đáp án hoàn toàn chính xác."
+            },
+            {
+              "question": "Số nào thích hợp điền vào ô trống: [ ? ] = 6",
+              "options": [
+                "A. 5",
+                "B. 6",
+                "C. 7",
+                "D. 0"
+              ],
+              "correct_answer": "B",
+              "explanation": "Để dấu bằng (=) đúng thì hai bên phải có giá trị như nhau: 6 = 6."
+            }
+          ]
+        },
+        {
+          "displayOrder": 6,
+          "title": "Bài 5: Mấy và mấy",
+          "slug": "bai-5-may-va-may",
+          "summary": "Cấu tạo số: tách một nhóm thành hai phần và gộp hai phần thành một nhóm.",
+          "estimatedMinutes": 40,
+          "theory": "### 🧩 Mấy và mấy (Tách - Gộp số)\n\n#### 1. Thao tác Tách số\n- Bé có 4 quả cam 🍊🍊🍊🍊. Bé chia cho mẹ 1 quả 🍊, bé giữ lại 3 quả 🍊🍊🍊.\n  - Ta nói: **4 gồm 1 và 3** (hoặc **4 gồm 3 và 1**).\n- Bé có thể chia cho mẹ 2 quả 🍊🍊 và bé 2 quả 🍊🍊.\n  - Ta nói: **4 gồm 2 và 2**.\n\n#### 2. Thao tác Gộp số\n- Tay trái bé cầm 2 viên kẹo 🍬🍬, tay phải bé cầm 3 viên kẹo 🍬🍬🍬. Khi gộp lại vào hai tay, bé có tất cả 5 viên kẹo.\n  - Ta nói: **Gộp 2 và 3 được 5**.\n\n#### 3. Ý nghĩa quan trọng:\nHọc tốt bài \"Mấy và mấy\" chính là chiếc chìa khóa vàng 🔑 giúp chúng mình tính cộng và trừ cực nhanh ở chương sau!",
+          "exercises": [
+            {
+              "question": "5 gồm 2 và mấy?",
+              "options": [
+                "A. 1",
+                "B. 2",
+                "C. 3",
+                "D. 4"
+              ],
+              "correct_answer": "C",
+              "explanation": "Có 5 que tính, tách ra 2 que thì còn lại 3 que. Vậy 5 gồm 2 và 3!"
+            },
+            {
+              "question": "Gộp 4 và 1 được mấy?",
+              "options": [
+                "A. 3",
+                "B. 4",
+                "C. 5",
+                "D. 6"
+              ],
+              "correct_answer": "C",
+              "explanation": "Có 4 quả bóng, gộp thêm 1 quả bóng nữa ta được tất cả 5 quả bóng."
+            },
+            {
+              "question": "Số 6 gồm những cặp số nào sau đây gộp lại?",
+              "options": [
+                "A. 3 và 2",
+                "B. 4 và 2",
+                "C. 5 và 2",
+                "D. 1 và 4"
+              ],
+              "correct_answer": "B",
+              "explanation": "Gộp 4 và 2 ta đếm: 4... 5, 6. Như vậy 6 gồm 4 và 2."
+            }
+          ]
+        },
+        {
+          "displayOrder": 7,
+          "title": "Bài 6: Luyện tập chung",
+          "slug": "bai-6-luyen-tap-chung",
+          "summary": "Tổng hợp kỹ năng đếm, so sánh và tách gộp các số từ 0 đến 10.",
+          "estimatedMinutes": 45,
+          "theory": "### 🎯 Luyện tập chung Chương 1\n\n#### 1. Nhìn lại kiến thức đã học\nCùng nhau điểm lại những hành trang tuyệt vời của Chương 1 nào:\n- 🔢 Các số từ **0 đến 10**: Nhận biết mặt số, đếm xuôi, đếm ngược thành thạo.\n- ⚖️ So sánh số lượng: Biết dùng từ **nhiều hơn**, **ít hơn**, **bằng nhau**.\n- 🐊 Dấu so sánh: Sử dụng thành thạo dấu lớn **>**, dấu bé **<**, dấu bằng **=**.\n- 🧩 Tách và gộp số: Hiểu sâu sắc bản chất số để chuẩn bị học phép tính cộng trừ.\n\n#### 2. Thử thách tài năng nhí\n- Đếm nhanh số đồ vật trong phòng ngủ hoặc phòng khách.\n- Xếp que tính từ 1 đến 10 thành các hàng đều tăm tắp!",
+          "exercises": [
+            {
+              "question": "Dãy số nào sau đây được sắp xếp theo thứ tự từ bé đến lớn?",
+              "options": [
+                "A. 1, 4, 3, 7, 9",
+                "B. 0, 2, 5, 8, 10",
+                "C. 10, 8, 6, 4, 2",
+                "D. 3, 5, 2, 7, 8"
+              ],
+              "correct_answer": "B",
+              "explanation": "Dãy 0, 2, 5, 8, 10 đi từ số bé đến số lớn dần theo đúng thứ tự đếm."
+            },
+            {
+              "question": "Cho ba số: 3, 8, 6. Số bé nhất và số lớn nhất lần lượt là:",
+              "options": [
+                "A. Bé nhất là 3, lớn nhất là 6",
+                "B. Bé nhất là 6, lớn nhất là 8",
+                "C. Bé nhất là 3, lớn nhất là 8",
+                "D. Bé nhất là 8, lớn nhất là 3"
+              ],
+              "correct_answer": "C",
+              "explanation": "Trong ba số 3, 8, 6 thì số 3 nhỏ nhất và số 8 lớn nhất."
+            },
+            {
+              "question": "Gộp 3 chú gấu 🐻🐻🐻 và 4 chú thỏ 🐰🐰🐰🐰 thì có tất cả bao nhiêu con vật?",
+              "options": [
+                "A. 6 con vật",
+                "B. 7 con vật",
+                "C. 8 con vật",
+                "D. 9 con vật"
+              ],
+              "correct_answer": "B",
+              "explanation": "Gộp 3 và 4 được 7. Có tất cả 7 con vật đáng yêu!"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 2,
+      "title": "Chương 2: Làm quen với một số hình phẳng",
+      "description": "Nhận biết và gọi đúng tên các hình phẳng cơ bản: hình vuông, hình tròn, hình tam giác, hình chữ nhật; thực hành xếp hình sáng tạo.",
+      "lessons": [
+        {
+          "displayOrder": 8,
+          "title": "Bài 7: Hình vuông, hình tròn, hình tam giác, hình chữ nhật",
+          "slug": "bai-7-hinh-vuong-hinh-tron-hinh-tam-giac-hinh-chu-nhat",
+          "summary": "Nhận biết đặc điểm trực quan của 4 hình phẳng cơ bản qua đồ vật quen thuộc.",
+          "estimatedMinutes": 40,
+          "theory": "### 🔴🔺🟦 Làm quen với các hình phẳng cơ bản\n\n#### 1. Nhận biết 4 hình phẳng\n- 🔴 **Hình tròn**: Tròn xoe, không có góc, có thể lăn được dễ dàng.\n  - Đồ vật quanh em: Chiếc đĩa tròn 🍽️, mặt đồng hồ treo tường ⏰, nắp chai nước.\n- 🔺 **Hình tam giác**: Có 3 cạnh và 3 góc nhọn.\n  - Đồ vật quanh em: Chiếc thước eke, lá cờ thi đua 🚩, miếng bánh pizza cắt lát 🍕.\n- 🟦 **Hình vuông**: Có 4 cạnh dài bằng nhau và 4 góc vuông vức.\n  - Đồ vật quanh em: Chiếc bánh chưng ngày Tết, viên gạch hoa lát nền, mặt con xúc xắc 🎲.\n- 🟨 **Hình chữ nhật**: Có 4 cạnh (2 cạnh dài bằng nhau, 2 cạnh ngắn bằng nhau).\n  - Đồ vật quanh em: Bìa sách giáo khoa 📖, chiếc bảng lớp học, cánh cửa ra vào 🚪.",
+          "exercises": [
+            {
+              "question": "Mặt chiếc đồng hồ tròn xoe hoặc nắp chai nước có dạng hình gì?",
+              "options": [
+                "A. Hình vuông",
+                "B. Hình tròn",
+                "C. Hình tam giác",
+                "D. Hình chữ nhật"
+              ],
+              "correct_answer": "B",
+              "explanation": "Mặt đồng hồ tròn xoe và nắp chai có đường viền cong tròn khép kín, chính là hình tròn!"
+            },
+            {
+              "question": "Lá cờ thi đua có 3 cạnh nhọn có dạng hình gì? 🚩",
+              "options": [
+                "A. Hình tròn",
+                "B. Hình vuông",
+                "C. Hình tam giác",
+                "D. Hình chữ nhật"
+              ],
+              "correct_answer": "C",
+              "explanation": "Lá cờ có 3 cạnh và 3 đỉnh nhọn chính là hình tam giác."
+            },
+            {
+              "question": "Bìa cuốn sách Toán 1 hoặc cánh cửa phòng học có dạng hình gì?",
+              "options": [
+                "A. Hình tròn",
+                "B. Hình chữ nhật",
+                "C. Hình vuông",
+                "D. Hình tam giác"
+              ],
+              "correct_answer": "B",
+              "explanation": "Bìa sách và cánh cửa có 2 cạnh dài và 2 cạnh ngắn, đó là hình chữ nhật."
+            }
+          ]
+        },
+        {
+          "displayOrder": 9,
+          "title": "Bài 8: Thực hành lắp ghép, xếp hình",
+          "slug": "bai-8-thuc-hanh-lap-ghep-xep-hinh",
+          "summary": "Sử dụng các miếng ghép hình phẳng để sáng tạo nên ngôi nhà, con thuyền, ô tô, cây cối.",
+          "estimatedMinutes": 40,
+          "theory": "### 🏠⛵ Thực hành lắp ghép, xếp hình sáng tạo\n\n#### 1. Ghép các hình đơn giản thành hình mới\n- Ghép **2 hình tam giác** giống nhau có thể tạo thành một **hình vuông** hoặc một **hình tam giác lớn hơn**!\n- Ghép **1 hình tam giác** (làm mái nhà 🔺) lên trên **1 hình vuông** (làm thân nhà 🟦) ta được một **ngôi nhà ấm cúng** 🏠!\n\n#### 2. Xếp tranh từ bộ đồ dùng Toán\n- **Thuyền buồm trên biển ⛵**: Thân thuyền ghép từ hình chữ nhật, cánh buồm ghép từ 2 hình tam giác.\n- **Cây xanh tốt 🌲**: Thân cây là hình chữ nhật nâu, tán cây là 3 hình tam giác xếp tầng.\n- **Mặt trời tỏa nắng ☀️**: Một hình tròn vàng ở giữa và các que tính xung quanh làm tia nắng.",
+          "exercises": [
+            {
+              "question": "Để ghép thành mái nhà của một ngôi nhà, em thường dùng hình nào? 🏠",
+              "options": [
+                "A. Hình tam giác",
+                "B. Hình tròn",
+                "C. Hình chữ nhật",
+                "D. Hình thoi"
+              ],
+              "correct_answer": "A",
+              "explanation": "Mái nhà nhọn và dốc sang hai bên thường được xếp bằng một hình tam giác."
+            },
+            {
+              "question": "Em có thể ghép hai hình tam giác vuông bằng nhau để tạo thành hình nào?",
+              "options": [
+                "A. Hình tròn",
+                "B. Hình vuông",
+                "C. Hình ngôi sao",
+                "D. Hình cầu"
+              ],
+              "correct_answer": "B",
+              "explanation": "Hai hình tam giác vuông cân khi ghép cạnh huyền vào nhau sẽ tạo thành một hình vuông thật đẹp."
+            },
+            {
+              "question": "Khi vẽ chiếc xe ô tô tải đồ chơi 🚚, bánh xe thường có dạng hình gì?",
+              "options": [
+                "A. Hình tam giác",
+                "B. Hình vuông",
+                "C. Hình tròn",
+                "D. Hình chữ nhật"
+              ],
+              "correct_answer": "C",
+              "explanation": "Bánh xe phải có dạng hình tròn để có thể lăn tròn và xe chạy bon bon được!"
+            }
+          ]
+        },
+        {
+          "displayOrder": 10,
+          "title": "Bài 9: Luyện tập chung",
+          "slug": "bai-9-luyen-tap-chung",
+          "summary": "Đếm số lượng từng loại hình trong một bức tranh và củng cố cách phân biệt các hình phẳng.",
+          "estimatedMinutes": 45,
+          "theory": "### 🎨 Luyện tập chung: Thế giới hình phẳng\n\n#### 1. Kỹ năng quan sát và đếm hình không bị sót\n- Khi đếm hình trong tranh, bé hãy đánh dấu nhẹ bằng bút chì:\n  - Đếm hết tất cả các **hình tròn** trước.\n  - Rồi đếm đến tất cả các **hình tam giác**.\n  - Tiếp theo là các **hình vuông**.\n  - Cuối cùng là các **hình chữ nhật**.\n\n#### 2. Phân biệt kỹ: Hình vuông và Hình chữ nhật\n- **Hình vuông**: 4 cạnh phải bằng nhau như khuôn bánh chưng.\n- **Hình chữ nhật**: Có 2 cạnh dài và 2 cạnh ngắn rõ rệt.",
+          "exercises": [
+            {
+              "question": "Hình nào sau đây KHÔNG CÓ cạnh thẳng và góc nhọn?",
+              "options": [
+                "A. Hình chữ nhật",
+                "B. Hình tam giác",
+                "C. Hình vuông",
+                "D. Hình tròn"
+              ],
+              "correct_answer": "D",
+              "explanation": "Hình tròn là một đường cong kín trơn tru, không hề có góc hay cạnh thẳng."
+            },
+            {
+              "question": "Một bức tranh ngôi nhà có 1 mái nhà hình tam giác, 1 thân nhà hình vuông và 2 cửa sổ hình vuông. Hỏi có tất cả bao nhiêu hình vuông?",
+              "options": [
+                "A. 1 hình vuông",
+                "B. 2 hình vuông",
+                "C. 3 hình vuông",
+                "D. 4 hình vuông"
+              ],
+              "correct_answer": "C",
+              "explanation": "Có 1 hình vuông thân nhà + 2 hình vuông cửa sổ = 3 hình vuông."
+            },
+            {
+              "question": "Hình tam giác có bao nhiêu cạnh?",
+              "options": [
+                "A. 2 cạnh",
+                "B. 3 cạnh",
+                "C. 4 cạnh",
+                "D. 5 cạnh"
+              ],
+              "correct_answer": "B",
+              "explanation": "Hình tam giác ('tam' có nghĩa là 3) có đúng 3 cạnh và 3 đỉnh."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 3,
+      "title": "Chương 3: Phép cộng, phép trừ trong phạm vi 10",
+      "description": "Khám phá ý nghĩa phép cộng, phép trừ, làm chủ bảng tính cộng trừ trong phạm vi 10, tính nhẩm nhanh và giải toán theo tranh vẽ.",
+      "lessons": [
+        {
+          "displayOrder": 11,
+          "title": "Bài 10: Phép cộng trong phạm vi 10",
+          "slug": "bai-10-phep-cong-trong-pham-vi-10",
+          "summary": "Ý nghĩa của dấu cộng (+), thao tác gộp thêm đồ vật và thực hiện phép cộng đơn giản.",
+          "estimatedMinutes": 45,
+          "theory": "### ➕ Phép cộng trong phạm vi 10\n\n#### 1. Ý nghĩa của dấu cộng (+)\n- **Cộng** có nghĩa là **gộp lại**, **thêm vào**, **cùng nhau**.\n- Dấu cộng được viết là: **+** (gồm một nét dọc cắt một nét ngang).\n\n#### 2. Ví dụ sinh động\n- Trên đĩa có 3 quả táo 🍎🍎🍎. Mẹ cho thêm 2 quả táo nữa 🍎🍎.\n  - Ta gộp lại và đếm: 3, thêm 1 là 4, thêm 1 nữa là 5.\n  - Ta viết phép tính: **3 + 2 = 5**\n  - Đọc là: *Ba cộng hai bằng năm*.\n- Có 4 chú vịt đang bơi 🦆🦆🦆🦆, có 1 chú vịt khác nhảy xuống bơi cùng 🦆.\n  - Phép tính: **4 + 1 = 5**\n\n#### 3. Bé ghi nhớ:\n- Bất kỳ số nào cộng với 0 cũng bằng chính số đó:\n  - **4 + 0 = 4**\n  - **0 + 5 = 5**",
+          "exercises": [
+            {
+              "question": "Bé hãy tính: 3 + 2 = ?",
+              "options": [
+                "A. 4",
+                "B. 5",
+                "C. 6",
+                "D. 7"
+              ],
+              "correct_answer": "B",
+              "explanation": "Có 3 que tính, thêm 2 que tính nữa, ta đếm: 3... 4, 5. Vậy 3 + 2 = 5!"
+            },
+            {
+              "question": "Có 4 chú chim trên cành cây, 2 chú chim khác bay đến đậu cùng. Hỏi có tất cả bao nhiêu chú chim?",
+              "options": [
+                "A. 5 chú chim",
+                "B. 6 chú chim",
+                "C. 7 chú chim",
+                "D. 8 chú chim"
+              ],
+              "correct_answer": "B",
+              "explanation": "Thực hiện phép tính cộng: 4 + 2 = 6 chú chim."
+            },
+            {
+              "question": "Kết quả của phép tính: 7 + 0 = ?",
+              "options": [
+                "A. 0",
+                "B. 6",
+                "C. 7",
+                "D. 8"
+              ],
+              "correct_answer": "C",
+              "explanation": "Một số cộng với 0 luôn bằng chính nó, do đó 7 + 0 = 7."
+            }
+          ]
+        },
+        {
+          "displayOrder": 12,
+          "title": "Bài 11: Phép trừ trong phạm vi 10",
+          "slug": "bai-11-phep-tru-trong-pham-vi-10",
+          "summary": "Ý nghĩa của dấu trừ (-), thao tác bớt đi, tách rời và tính nhẩm phép trừ.",
+          "estimatedMinutes": 45,
+          "theory": "### ➖ Phép trừ trong phạm vi 10\n\n#### 1. Ý nghĩa của dấu trừ (-)\n- **Trừ** có nghĩa là **bớt đi**, **cho đi**, **bay mất**, **ăn mất**, **còn lại**.\n- Dấu trừ được viết là một nét ngang ngắn: **-**\n\n#### 2. Ví dụ sinh động\n- Bé có chùm 5 quả bóng bay 🎈🎈🎈🎈🎈. Không may bị gió thổi bay mất 2 quả 🎈🎈.\n  - Hỏi bé còn lại mấy quả bóng bay?\n  - Ta bớt đi 2 quả, đếm ngược từ 5: 5 bớt 1 còn 4, bớt 1 nữa còn 3.\n  - Ta viết phép tính: **5 - 2 = 3**\n  - Đọc là: *Năm trừ hai bằng ba*.\n- Có 6 củ cà rốt 🥕🥕🥕🥕🥕🥕, chú thỏ ăn mất 1 củ 🥕.\n  - Còn lại: **6 - 1 = 5**\n\n#### 3. Bé ghi nhớ:\n- Một số trừ đi 0 vẫn bằng chính nó: **5 - 0 = 5**\n- Hai số giống nhau trừ cho nhau thì bằng 0: **5 - 5 = 0**",
+          "exercises": [
+            {
+              "question": "Tính kết quả phép tính: 6 - 2 = ?",
+              "options": [
+                "A. 3",
+                "B. 4",
+                "C. 5",
+                "D. 8"
+              ],
+              "correct_answer": "B",
+              "explanation": "Có 6 ngón tay, cụp bớt 2 ngón tay xuống, ta còn lại 4 ngón tay. Vậy 6 - 2 = 4!"
+            },
+            {
+              "question": "Có 5 chiếc kẹo, bé ăn hết cả 5 chiếc kẹo. Hỏi bé còn lại mấy chiếc kẹo?",
+              "options": [
+                "A. 0 chiếc kẹo",
+                "B. 1 chiếc kẹo",
+                "C. 5 chiếc kẹo",
+                "D. 10 chiếc kẹo"
+              ],
+              "correct_answer": "A",
+              "explanation": "Hai số giống nhau trừ đi nhau bằng 0: 5 - 5 = 0 chiếc kẹo."
+            },
+            {
+              "question": "Điền số thích hợp vào chỗ chấm: 8 - ... = 5",
+              "options": [
+                "A. 2",
+                "B. 3",
+                "C. 4",
+                "D. 1"
+              ],
+              "correct_answer": "B",
+              "explanation": "Vì 8 gồm 5 và 3, nên 8 trừ 3 sẽ bằng 5."
+            }
+          ]
+        },
+        {
+          "displayOrder": 13,
+          "title": "Bài 12: Bảng cộng, bảng trừ trong phạm vi 10",
+          "slug": "bai-12-bang-cong-bang-tru-trong-pham-vi-10",
+          "summary": "Mối liên hệ tương quan giữa phép cộng và phép trừ, học thuộc bảng tính cơ bản.",
+          "estimatedMinutes": 45,
+          "theory": "### 📊 Bảng cộng, bảng trừ trong phạm vi 10\n\n#### 1. Mối liên hệ kỳ diệu giữa Cộng và Trừ\nKhi biết một phép cộng, ta dễ dàng suy ra hai phép trừ tương ứng:\n- Nếu: **3 + 4 = 7**\n- Thì:\n  - **7 - 3 = 4**\n  - **7 - 4 = 3**\n- Giống như một gia đình có 3 thành viên vậy: 3, 4 và 7 luôn gắn bó với nhau! 👨‍👩‍👧\n\n#### 2. Các cặp số cộng lại bằng 10 (Bạn thân của 10)\nHãy học thuộc lòng các \"cặp đôi bạn thân\" để tính siêu nhanh nhé:\n- **1 + 9 = 10** (và 9 + 1 = 10)\n- **2 + 8 = 10** (và 8 + 2 = 10)\n- **3 + 7 = 10** (và 7 + 3 = 10)\n- **4 + 6 = 10** (và 6 + 4 = 10)\n- **5 + 5 = 10**",
+          "exercises": [
+            {
+              "question": "Số nào cộng với 6 để bằng 10?",
+              "options": [
+                "A. 3",
+                "B. 4",
+                "C. 5",
+                "D. 2"
+              ],
+              "correct_answer": "B",
+              "explanation": "4 và 6 là cặp đôi bạn thân: 4 + 6 = 10!"
+            },
+            {
+              "question": "Biết 2 + 5 = 7. Hỏi 7 - 5 bằng bao nhiêu?",
+              "options": [
+                "A. 1",
+                "B. 2",
+                "C. 3",
+                "D. 4"
+              ],
+              "correct_answer": "B",
+              "explanation": "Từ phép cộng 2 + 5 = 7, ta suy ra ngay 7 - 5 = 2."
+            },
+            {
+              "question": "Tính nhẩm: 10 - 3 = ?",
+              "options": [
+                "A. 6",
+                "B. 7",
+                "C. 8",
+                "D. 9"
+              ],
+              "correct_answer": "B",
+              "explanation": "Vì 3 + 7 = 10 nên 10 - 3 = 7."
+            }
+          ]
+        },
+        {
+          "displayOrder": 14,
+          "title": "Bài 13: Luyện tập chung",
+          "slug": "bai-13-luyen-tap-chung",
+          "summary": "Củng cố kỹ năng tính nhẩm chuỗi phép tính, giải toán có lời văn trong phạm vi 10.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏅 Luyện tập chung: Cộng trừ phạm vi 10\n\n#### 1. Tính toán chuỗi phép tính (từ trái sang phải)\nKhi gặp biểu thức có hai dấu tính, ta làm lần lượt từ trái sang phải:\n- Ví dụ: **4 + 2 - 1 = ?**\n  - Bước 1: Tính 4 + 2 trước, được 6.\n  - Bước 2: Lấy 6 - 1 = 5.\n  - Kết quả là: **5**\n\n#### 2. Kỹ năng giải bài toán theo tranh vẽ\n- Nhìn tranh và tự đặt câu hỏi: \"Lúc đầu có bao nhiêu? Thêm vào hay bớt đi? Cuối cùng còn bao nhiêu?\"\n- Viết câu trả lời và phép tính tương ứng thật rõ ràng.",
+          "exercises": [
+            {
+              "question": "Tính kết quả dãy tính: 3 + 4 - 2 = ?",
+              "options": [
+                "A. 5",
+                "B. 6",
+                "C. 7",
+                "D. 4"
+              ],
+              "correct_answer": "A",
+              "explanation": "Thực hiện từ trái sang phải: 3 + 4 = 7; sau đó lấy 7 - 2 = 5."
+            },
+            {
+              "question": "Trên cây có 8 quả xoài, rụng mất 3 quả. Hỏi trên cây còn lại mấy quả xoài?",
+              "options": [
+                "A. 4 quả",
+                "B. 5 quả",
+                "C. 6 quả",
+                "D. 11 quả"
+              ],
+              "correct_answer": "B",
+              "explanation": "Rụng mất nghĩa là bớt đi, ta lấy 8 - 3 = 5 quả xoài."
+            },
+            {
+              "question": "Tìm số thích hợp điền vào dấu ?: ? + 4 = 9",
+              "options": [
+                "A. 4",
+                "B. 5",
+                "C. 6",
+                "D. 3"
+              ],
+              "correct_answer": "B",
+              "explanation": "Ta lấy 9 - 4 = 5. Kiểm tra lại: 5 + 4 = 9."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 4,
+      "title": "Chương 4: Làm quen với một số hình khối",
+      "description": "Nhận biết khối lập phương, khối hộp chữ nhật và xác định vị trí, định hướng trong không gian (trên - dưới, trái - phải, trước - sau, ở giữa).",
+      "lessons": [
+        {
+          "displayOrder": 15,
+          "title": "Bài 14: Khối lập phương, khối hộp chữ nhật",
+          "slug": "bai-14-khoi-lap-phuong-khoi-hop-chu-nhat",
+          "summary": "Phân biệt khối hình 3 chiều: khối lập phương và khối hộp chữ nhật qua đồ vật thực tế.",
+          "estimatedMinutes": 40,
+          "theory": "### 🎲📦 Khối lập phương và Khối hộp chữ nhật\n\n#### 1. Khối lập phương\n- Có 6 mặt đều là các **hình vuông** bằng nhau chằn chặn.\n- Đồ vật quen thuộc:\n  - Viên xúc xắc chơi cá ngựa 🎲.\n  - Khối đồ chơi rubik nhiều màu 🧩.\n  - Hộp quà sinh nhật hình vuông vức 🎁.\n\n#### 2. Khối hộp chữ nhật\n- Có các mặt là **hình chữ nhật** (hoặc có 2 mặt hình vuông và 4 mặt hình chữ nhật).\n- Đồ vật quen thuộc:\n  - Hộp sữa tươi uống hàng ngày 🥛.\n  - Hộp bút của em ✏️.\n  - Viên gạch xây nhà 🧱.\n  - Bao diêm, tủ lạnh gia đình 🧊.",
+          "exercises": [
+            {
+              "question": "Viên xúc xắc 🎲 trong bộ cờ cá ngựa có dạng hình khối nào?",
+              "options": [
+                "A. Khối hộp chữ nhật",
+                "B. Khối lập phương",
+                "C. Hình vuông",
+                "D. Hình tròn"
+              ],
+              "correct_answer": "B",
+              "explanation": "Viên xúc xắc có các mặt đều là hình vuông bằng nhau, chính là khối lập phương!"
+            },
+            {
+              "question": "Hộp sữa tươi giấy Milo hoặc Vinamilk có dạng hình khối nào?",
+              "options": [
+                "A. Khối lập phương",
+                "B. Khối cầu",
+                "C. Khối hộp chữ nhật",
+                "D. Hình chữ nhật"
+              ],
+              "correct_answer": "C",
+              "explanation": "Hộp sữa có các mặt hình chữ nhật, có thể cầm nắm trong không gian, là khối hộp chữ nhật."
+            },
+            {
+              "question": "Điểm khác biệt cơ bản giữa 'Hình vuông' và 'Khối lập phương' là gì?",
+              "options": [
+                "A. Hình vuông lăn được, khối lập phương không lăn được",
+                "B. Hình vuông là hình phẳng vẽ trên giấy, khối lập phương là khối đồ vật cầm nắm được",
+                "C. Hình vuông có màu sắc, khối lập phương không có màu",
+                "D. Cả hai giống hệt nhau"
+              ],
+              "correct_answer": "B",
+              "explanation": "Hình vuông là hình phẳng vẽ trên trang giấy, còn khối lập phương là vật thể trong không gian có thể cầm nắm được."
+            }
+          ]
+        },
+        {
+          "displayOrder": 16,
+          "title": "Bài 15: Vị trí, định hướng trong không gian",
+          "slug": "bai-15-vi-tri-dinh-huong-trong-khong-gian",
+          "summary": "Xác định chính xác các cặp vị trí không gian: trên - dưới, trước - sau, phải - trái, ở giữa.",
+          "estimatedMinutes": 40,
+          "theory": "### 🧭 Vị trí và Định hướng trong không gian\n\n#### 1. Các cặp vị trí quan trọng\n- **Trên - Dưới**:\n  - Quạt trần ở **trên** trần nhà.\n  - Đôi dép ở **dưới** sàn nhà.\n- **Trước - Sau**:\n  - Chiếc bàn ở **trước** mặt em.\n  - Chiếc ba lô treo ở **sau** lưng em.\n- **Phải - Trái**:\n  - Tay **phải** em cầm bút viết bài ✍️.\n  - Tay **trái** em giữ trang vở phẳng phiu ✋.\n- **Ở giữa**:\n  - Vật nằm ngăn cách giữa bên trái và bên phải (hoặc giữa đằng trước và đằng sau).\n  - Ví dụ: Bé đứng ở giữa ba và mẹ 👨‍👧‍👩.",
+          "exercises": [
+            {
+              "question": "Quyển sách đang nằm trên mặt bàn, chiếc cặp sách để dưới sàn nhà. Đồ vật nào ở VỊ TRÍ PHÍA TRÊN?",
+              "options": [
+                "A. Chiếc cặp sách",
+                "B. Quyển sách",
+                "C. Sàn nhà",
+                "D. Đôi dép"
+              ],
+              "correct_answer": "B",
+              "explanation": "Quyển sách đặt trên mặt bàn nên nó ở phía trên so với cặp sách để dưới đất."
+            },
+            {
+              "question": "Hầu hết các bạn nhỏ dùng bàn tay nào để cầm bút chì viết bài?",
+              "options": [
+                "A. Tay trái",
+                "B. Tay phải",
+                "C. Cả hai tay",
+                "D. Chân phải"
+              ],
+              "correct_answer": "B",
+              "explanation": "Chúng mình thường cầm bút chì bằng tay phải và dùng tay trái để giữ mép vở."
+            },
+            {
+              "question": "Bé An đứng giữa bạn Bình và bạn Cúc. Ai là người đứng ở giữa?",
+              "options": [
+                "A. Bạn Bình",
+                "B. Bạn Cúc",
+                "C. Bạn An",
+                "D. Không có ai"
+              ],
+              "correct_answer": "C",
+              "explanation": "Theo đề bài, bạn An đứng ở vị trí giữa hai bạn Bình và Cúc."
+            }
+          ]
+        },
+        {
+          "displayOrder": 17,
+          "title": "Bài 16: Luyện tập chung",
+          "slug": "bai-16-luyen-tap-chung",
+          "summary": "Thực hành xếp chồng các khối hình và xác định vị trí các đồ vật trong phòng học.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏗️ Luyện tập chung: Hình khối và Không gian\n\n#### 1. Xếp chồng các khối hình\n- **Khối lập phương** và **khối hộp chữ nhật** có các mặt phẳng nên có thể xếp chồng lên nhau thành tòa tháp cao mà không bị đổ! 🏰\n- Khi xếp khối nhỏ lên trên khối to, tòa tháp sẽ vô cùng vững chãi.\n\n#### 2. Nhận biết và định hướng nhanh\n- Bé hãy quan sát xung quanh phòng:\n  - Tìm nhanh 2 vật có dạng khối hộp chữ nhật.\n  - Chỉ tay về phía bên phải, bên trái của mình thật nhanh và chính xác nhé!",
+          "exercises": [
+            {
+              "question": "Khối hình nào sau đây CÓ THỂ XẾP CHỒNG lên nhau thành cột mà không bị lăn rơi?",
+              "options": [
+                "A. Quả bóng tròn",
+                "B. Khối lập phương",
+                "C. Viên bi ve",
+                "D. Quả trứng"
+              ],
+              "correct_answer": "B",
+              "explanation": "Khối lập phương có các mặt phẳng vững chắc nên có thể xếp chồng lên nhau dễ dàng."
+            },
+            {
+              "question": "Xếp 3 khối lập phương chồng lên nhau: khối đỏ ở dưới cùng, khối vàng ở giữa, khối xanh ở trên cùng. Khối nào ở vị trí Ở GIỮA?",
+              "options": [
+                "A. Khối đỏ",
+                "B. Khối xanh",
+                "C. Khối vàng",
+                "D. Khối tím"
+              ],
+              "correct_answer": "C",
+              "explanation": "Khối vàng nằm giữa khối đỏ (ở dưới) và khối xanh (ở trên)."
+            },
+            {
+              "question": "Có 2 khối lập phương và 3 khối hộp chữ nhật. Hỏi có tất cả bao nhiêu khối hình?",
+              "options": [
+                "A. 4 khối",
+                "B. 5 khối",
+                "C. 6 khối",
+                "D. 7 khối"
+              ],
+              "correct_answer": "B",
+              "explanation": "Lấy 2 + 3 = 5 khối hình tất cả."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 5,
+      "title": "Chương 5: Các số đến 100",
+      "description": "Nhận biết cấu tạo số có hai chữ số (chục và đơn vị), so sánh các số đến 100, thành thạo bảng các số từ 1 đến 100.",
+      "lessons": [
+        {
+          "displayOrder": 18,
+          "title": "Bài 17: Số có hai chữ số",
+          "slug": "bai-17-so-co-hai-chu-so",
+          "summary": "Khái niệm chục và đơn vị: 1 chục = 10 đơn vị; đọc và viết các số có hai chữ số từ 11 đến 99.",
+          "estimatedMinutes": 45,
+          "theory": "### 💯 Số có hai chữ số: Chục và Đơn vị\n\n#### 1. Khái niệm Chục và Đơn vị\n- Bó 10 que tính lại với nhau 🥢 -> ta được **1 chục que tính**.\n- **1 chục = 10 đơn vị**\n- **2 chục = 20 đơn vị** (hai mươi)\n- **10 chục = 100 đơn vị** (một trăm)\n\n#### 2. Cấu tạo số có hai chữ số\nMỗi số có hai chữ số gồm có:\n- **Chữ số hàng chục** đứng ở bên trái.\n- **Chữ số hàng đơn vị** đứng ở bên phải.\n- Ví dụ: Số **25**\n  - Gồm **2 chục** và **5 đơn vị**.\n  - Đọc là: *Hai mươi lăm*.\n- Ví dụ: Số **40**\n  - Gồm **4 chục** và **0 đơn vị**.\n  - Đọc là: *Bốn mươi* (hoặc bốn chục).",
+          "exercises": [
+            {
+              "question": "1 chục que tính bằng bao nhiêu que tính rời?",
+              "options": [
+                "A. 1 que",
+                "B. 5 que",
+                "C. 10 que",
+                "D. 20 que"
+              ],
+              "correct_answer": "C",
+              "explanation": "1 chục bằng đúng 10 đơn vị, tức là 10 que tính rời."
+            },
+            {
+              "question": "Số 38 gồm mấy chục và mấy đơn vị?",
+              "options": [
+                "A. 3 chục và 8 đơn vị",
+                "B. 8 chục và 3 đơn vị",
+                "C. 30 chục và 8 đơn vị",
+                "D. 3 đơn vị và 8 chục"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số 38 có chữ số 3 ở hàng chục và chữ số 8 ở hàng đơn vị: gồm 3 chục và 8 đơn vị."
+            },
+            {
+              "question": "Số 'Bảy mươi tư' được viết là chữ số nào?",
+              "options": [
+                "A. 47",
+                "B. 74",
+                "C. 704",
+                "D. 70"
+              ],
+              "correct_answer": "B",
+              "explanation": "Bảy mươi (7 chục) tư (4 đơn vị), viết là 74."
+            }
+          ]
+        },
+        {
+          "displayOrder": 19,
+          "title": "Bài 18: So sánh số có hai chữ số",
+          "slug": "bai-18-so-sanh-so-co-hai-chu-so",
+          "summary": "Quy tắc so sánh số có hai chữ số: so sánh chữ số hàng chục trước, nếu bằng nhau thì so sánh chữ số hàng đơn vị.",
+          "estimatedMinutes": 45,
+          "theory": "### ⚖️ Cách so sánh hai số có hai chữ số\n\n#### 1. Quy tắc vàng gồm 2 bước:\n- **Bước 1: So sánh chữ số hàng chục trước**\n  - Số nào có hàng chục lớn hơn thì số đó lớn hơn!\n  - *Ví dụ*: So sánh **52** và **39**:\n    - Số 52 có 5 chục. Số 39 có 3 chục.\n    - Vì 5 > 3 nên **52 > 39** (không cần so sánh hàng đơn vị nữa).\n- **Bước 2: Nếu hàng chục bằng nhau, ta so sánh tiếp hàng đơn vị**\n  - Số nào có hàng đơn vị lớn hơn thì số đó lớn hơn!\n  - *Ví dụ*: So sánh **43** và **47**:\n    - Cả hai đều có 4 chục.\n    - Hàng đơn vị: 3 < 7 nên **43 < 47**.",
+          "exercises": [
+            {
+              "question": "Điền dấu thích hợp: 65 ... 48",
+              "options": [
+                "A. >",
+                "B. <",
+                "C. =",
+                "D. +"
+              ],
+              "correct_answer": "A",
+              "explanation": "So sánh hàng chục: 6 chục lớn hơn 4 chục (6 > 4), do đó 65 > 48."
+            },
+            {
+              "question": "Điền dấu thích hợp: 72 ... 76",
+              "options": [
+                "A. >",
+                "B. <",
+                "C. =",
+                "D. -"
+              ],
+              "correct_answer": "B",
+              "explanation": "Hàng chục đều là 7. So sánh hàng đơn vị: 2 < 6 nên 72 < 76."
+            },
+            {
+              "question": "Trong các số: 35, 78, 42, 81, số nào là SỐ LỚN NHẤT?",
+              "options": [
+                "A. 35",
+                "B. 78",
+                "C. 42",
+                "D. 81"
+              ],
+              "correct_answer": "D",
+              "explanation": "Số 81 có 8 chục và 1 đơn vị, là số có giá trị lớn nhất trong nhóm."
+            }
+          ]
+        },
+        {
+          "displayOrder": 20,
+          "title": "Bài 19: Bảng các số từ 1 đến 100",
+          "slug": "bai-19-bang-cac-so-tu-1-den-100",
+          "summary": "Khám phá quy luật sắp xếp của 100 số tự nhiên trong bảng 10x10, tìm số liền trước, số liền sau.",
+          "estimatedMinutes": 45,
+          "theory": "### 📋 Bảng các số từ 1 đến 100\n\n#### 1. Cấu trúc tuyệt đẹp của bảng số\n- Bảng gồm 10 hàng và 10 cột, bắt đầu từ số **1** và kết thúc ở số **100**.\n- **Quy luật hàng ngang**: Hai số liền nhau hơn kém nhau **1 đơn vị**.\n  - Ví dụ: 21, 22, 23, 24...\n- **Quy luật cột dọc**: Hai số liên tiếp trong cùng một cột hơn kém nhau **1 chục (10 đơn vị)**.\n  - Ví dụ: 5, 15, 25, 35, 45...\n\n#### 2. Số liền trước và Số liền sau\n- Muốn tìm **số liền trước** của một số, ta lấy số đó **bớt đi 1**.\n  - *Ví dụ*: Số liền trước của 20 là **19**.\n- Muốn tìm **số liền sau** của một số, ta lấy số đó **thêm vào 1**.\n  - *Ví dụ*: Số liền sau của 20 là **21**.",
+          "exercises": [
+            {
+              "question": "Số liền trước của số 50 là số nào?",
+              "options": [
+                "A. 48",
+                "B. 49",
+                "C. 51",
+                "D. 52"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số liền trước nằm ngay phía trước số 50 khi đếm, đó là số 49 (lấy 50 - 1 = 49)."
+            },
+            {
+              "question": "Số liền sau của số 79 là số nào?",
+              "options": [
+                "A. 78",
+                "B. 80",
+                "C. 81",
+                "D. 70"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số liền sau của 79 khi đếm thêm 1 là số 80 tròn chục."
+            },
+            {
+              "question": "Số tròn chục lớn nhất có hai chữ số là số nào?",
+              "options": [
+                "A. 10",
+                "B. 90",
+                "C. 99",
+                "D. 100"
+              ],
+              "correct_answer": "B",
+              "explanation": "Các số tròn chục có 2 chữ số gồm 10, 20... 90. Lớn nhất chính là 90 (vì 100 có 3 chữ số)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 21,
+          "title": "Bài 20: Luyện tập chung",
+          "slug": "bai-20-luyen-tap-chung",
+          "summary": "Sắp xếp dãy số có hai chữ số theo thứ tự tăng dần, giảm dần và giải toán tư duy cấu tạo số.",
+          "estimatedMinutes": 45,
+          "theory": "### 🚀 Luyện tập chung Chương 5\n\n#### 1. Kỹ năng sắp xếp thứ tự các số\n- **Từ bé đến lớn (Tăng dần)**: Chọn số bé nhất viết trước, rồi đến các số lớn hơn.\n  - Ví dụ: Cho các số 64, 18, 55, 32.\n  - Thứ tự từ bé đến lớn: **18, 32, 55, 64**.\n- **Từ lớn đến bé (Giảm dần)**: Chọn số lớn nhất viết trước.\n  - Thứ tự từ lớn đến bé: **64, 55, 32, 18**.\n\n#### 2. Bí quyết tìm số thông minh\n- Đọc kỹ yêu cầu: \"Số lớn nhất\", \"Số bé nhất\", hay \"Số tròn chục\"?\n- Gạch chân chữ số hàng chục để so sánh không bao giờ nhầm lẫn!",
+          "exercises": [
+            {
+              "question": "Dãy số nào sau đây được xếp theo thứ tự TỪ LỚN ĐẾN BÉ?",
+              "options": [
+                "A. 12, 34, 56, 78",
+                "B. 89, 75, 43, 21",
+                "C. 54, 32, 67, 10",
+                "D. 19, 45, 23, 90"
+              ],
+              "correct_answer": "B",
+              "explanation": "Dãy 89, 75, 43, 21 bắt đầu từ số lớn nhất rồi giảm dần đều xuống số bé nhất."
+            },
+            {
+              "question": "Số nào có chữ số hàng chục là 5 và chữ số hàng đơn vị là 2?",
+              "options": [
+                "A. 25",
+                "B. 52",
+                "C. 50",
+                "D. 22"
+              ],
+              "correct_answer": "B",
+              "explanation": "5 chục đứng trước, 2 đơn vị đứng sau tạo thành số 52."
+            },
+            {
+              "question": "Cho ba chữ số: 2, 5, 0. Số tròn chục có hai chữ số ghép được từ các số trên là:",
+              "options": [
+                "A. 25",
+                "B. 52",
+                "C. 20 và 50",
+                "D. 205"
+              ],
+              "correct_answer": "C",
+              "explanation": "Số tròn chục có hàng đơn vị là 0, ta ghép được hai số: 20 và 50."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 6,
+      "title": "Chương 6: Độ dài và đo độ dài",
+      "description": "Nhận biết dài hơn - ngắn hơn, làm quen đơn vị đo độ dài xăng-ti-mét (cm), thực hành dùng thước kẻ để đo và ước lượng độ dài.",
+      "lessons": [
+        {
+          "displayOrder": 22,
+          "title": "Bài 21: Dài hơn, ngắn hơn",
+          "slug": "bai-21-dai-hon-ngan-hon",
+          "summary": "So sánh trực tiếp chiều dài của hai đồ vật bằng cách đặt một đầu bằng nhau.",
+          "estimatedMinutes": 35,
+          "theory": "### 📏 Dài hơn, ngắn hơn\n\n#### 1. Cách so sánh chiều dài hai đồ vật\nĐể biết vật nào dài hơn, vật nào ngắn hơn một cách chính xác nhất:\n- **Bước 1**: Đặt một đầu của hai vật **thẳng hàng bằng nhau**.\n- **Bước 2**: Quan sát đầu còn lại:\n  - Vật nào thò ra dài hơn thì vật đó **dài hơn**.\n  - Vật nào thụt vào trong thì vật đó **ngắn hơn**.\n\n#### 2. Ví dụ quen thuộc\n- Đặt chiếc thước kẻ 30 cm cạnh chiếc bút chì ✏️:\n  - Chiếc thước kẻ **dài hơn** chiếc bút chì.\n  - Chiếc bút chì **ngắn hơn** chiếc thước kẻ.\n- Đặt chiếc bút chì cạnh cục tẩy:\n  - Chiếc bút chì **dài hơn** cục tẩy.\n  - Cục tẩy **ngắn hơn** chiếc bút chì.",
+          "exercises": [
+            {
+              "question": "Khi so sánh chiều dài hai chiếc bút chì, ta cần đặt hai chiếc bút như thế nào?",
+              "options": [
+                "A. Đặt chéo nhau",
+                "B. Đặt một đầu của hai chiếc bút thẳng hàng bằng nhau",
+                "C. Đặt cách xa nhau thật nhiều",
+                "D. Đặt chiếc này đè lên đầu chiếc kia"
+              ],
+              "correct_answer": "B",
+              "explanation": "Phải đặt một đầu bằng nhau thì mới quan sát được đầu kia vật nào dài hơn hay ngắn hơn."
+            },
+            {
+              "question": "Thước kẻ dài hơn bút chì, bút chì dài hơn cục tẩy. Vật nào NGẮN NHẤT trong ba vật?",
+              "options": [
+                "A. Thước kẻ",
+                "B. Bút chì",
+                "C. Cục tẩy",
+                "D. Cả ba bằng nhau"
+              ],
+              "correct_answer": "C",
+              "explanation": "Cục tẩy ngắn hơn bút chì và ngắn hơn cả thước kẻ nên cục tẩy là vật ngắn nhất."
+            },
+            {
+              "question": "Bé so sánh chiếc đũa ăn cơm và chiếc thìa canh. Nhận xét nào đúng?",
+              "options": [
+                "A. Chiếc đũa dài hơn chiếc thìa",
+                "B. Chiếc thìa dài hơn chiếc đũa",
+                "C. Chiếc đũa ngắn hơn chiếc thìa",
+                "D. Cả hai ngắn bằng cục tẩy"
+              ],
+              "correct_answer": "A",
+              "explanation": "Thông thường, chiếc đũa ăn cơm dài hơn chiếc thìa canh."
+            }
+          ]
+        },
+        {
+          "displayOrder": 23,
+          "title": "Bài 22: Đơn vị đo độ dài",
+          "slug": "bai-22-don-vi-do-do-dai",
+          "summary": "Làm quen với đơn vị đo xăng-ti-mét, ký hiệu viết tắt là cm; cách đọc các vạch chia trên thước kẻ.",
+          "estimatedMinutes": 40,
+          "theory": "### 📐 Đơn vị đo độ dài: Xăng-ti-mét (cm)\n\n#### 1. Xăng-ti-mét là gì?\n- **Xăng-ti-mét** là một đơn vị đo độ dài chuẩn quốc tế.\n- Xăng-ti-mét được viết tắt là: **cm** (chữ c ghép với chữ m).\n  - Đọc là: *Xăng-ti-mét*.\n  - Ví dụ: 5 cm đọc là *Năm xăng-ti-mét*.\n\n#### 2. Quan sát chiếc thước kẻ học sinh\n- Trên thước có các vạch chia đều nhau và có ghi số: 0, 1, 2, 3, 4, 5...\n- Khoảng cách từ vạch số **0** đến vạch số **1** dài đúng **1 cm**.\n- Khoảng cách từ vạch số **0** đến vạch số **5** dài đúng **5 cm**.",
+          "exercises": [
+            {
+              "question": "Xăng-ti-mét được viết tắt là gì?",
+              "options": [
+                "A. km",
+                "B. m",
+                "C. cm",
+                "D. mm"
+              ],
+              "correct_answer": "C",
+              "explanation": "Xăng-ti-mét được viết tắt trong toán học là 'cm'."
+            },
+            {
+              "question": "'8 cm' được đọc như thế nào?",
+              "options": [
+                "A. Tám mét",
+                "B. Tám xăng-ti-mét",
+                "C. Tám ki-lô-mét",
+                "D. Tám mi-li-mét"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số 8 đi liền với đơn vị cm đọc là 'Tám xăng-ti-mét'."
+            },
+            {
+              "question": "Khoảng cách từ vạch số 0 đến vạch số 7 trên thước kẻ dài bao nhiêu?",
+              "options": [
+                "A. 5 cm",
+                "B. 6 cm",
+                "C. 7 cm",
+                "D. 8 cm"
+              ],
+              "correct_answer": "C",
+              "explanation": "Bắt đầu từ vạch 0 đến vạch số 7 có độ dài đúng bằng 7 cm."
+            }
+          ]
+        },
+        {
+          "displayOrder": 24,
+          "title": "Bài 23: Thực hành ước lượng và đo độ dài",
+          "slug": "bai-23-thuc-hanh-uoc-luong-va-do-do-dai",
+          "summary": "Quy trình 3 bước đo độ dài bằng thước kẻ cm và kỹ năng ước lượng bằng mắt.",
+          "estimatedMinutes": 45,
+          "theory": "### 📏 Thực hành đo độ dài chuẩn xác\n\n#### 1. Quy trình 3 bước đo bằng thước kẻ:\n- **Bước 1**: Đặt mép thước dọc theo đồ vật cần đo (đoạn thẳng, bút chì...).\n- **Bước 2**: Đặt một đầu của đồ vật trùng khít với **vạch số 0** của thước. *(Rất quan trọng, không đặt ở mép ngoài thước nếu vạch 0 lùi vào trong!)*\n- **Bước 3**: Nhìn xem đầu kia của đồ vật trùng với vạch số nào, đó chính là độ dài của đồ vật!\n\n#### 2. Kỹ năng ước lượng độ dài\n- Ước lượng là đoán nhanh độ dài trước khi đo:\n  - Một gang tay của bé dài khoảng **12 cm đến 15 cm**.\n  - Chiếc bút chì mới dài khoảng **15 cm đến 18 cm**.\n  - Cục tẩy dài khoảng **3 cm đến 4 cm**.",
+          "exercises": [
+            {
+              "question": "Khi đo độ dài một cái bút chì bằng thước kẻ, ta phải đặt một đầu bút chì TRÙNG VỚI VẠCH NÀO?",
+              "options": [
+                "A. Vạch số 1",
+                "B. Vạch số 0",
+                "C. Mép ngoài cùng của thước",
+                "D. Vạch số 10"
+              ],
+              "correct_answer": "B",
+              "explanation": "Luôn luôn đặt một đầu của vật trùng với vạch số 0 để kết quả đo chính xác nhất."
+            },
+            {
+              "question": "Một đoạn thẳng có một đầu ở vạch số 0, đầu kia ở vạch số 9. Đoạn thẳng đó dài bao nhiêu?",
+              "options": [
+                "A. 8 cm",
+                "B. 9 cm",
+                "C. 10 cm",
+                "D. 0 cm"
+              ],
+              "correct_answer": "B",
+              "explanation": "Đầu kia chạm vạch số 9 nên đoạn thẳng dài 9 cm."
+            },
+            {
+              "question": "Một que tính dài 10 cm. Bẻ đôi que tính thành 2 nửa bằng nhau. Mỗi nửa que tính dài bao nhiêu?",
+              "options": [
+                "A. 4 cm",
+                "B. 5 cm",
+                "C. 6 cm",
+                "D. 10 cm"
+              ],
+              "correct_answer": "B",
+              "explanation": "Vì 5 cm + 5 cm = 10 cm, nên mỗi nửa que tính dài đúng 5 cm."
+            }
+          ]
+        },
+        {
+          "displayOrder": 25,
+          "title": "Bài 24: Luyện tập chung",
+          "slug": "bai-24-luyen-tap-chung",
+          "summary": "Thực hiện các phép tính cộng, trừ có kèm đơn vị đo xăng-ti-mét và giải toán thực tiễn.",
+          "estimatedMinutes": 45,
+          "theory": "### 🎯 Luyện tập chung: Phép tính với đơn vị cm\n\n#### 1. Quy tắc cộng trừ có kèm đơn vị cm\nKhi thực hiện phép tính có đơn vị đo cm:\n- Ta lấy các số cộng hoặc trừ với nhau như bình thường.\n- **Bắt buộc ghi thêm chữ \"cm\"** ở đằng sau kết quả!\n- *Ví dụ 1*: **4 cm + 3 cm = 7 cm**\n- *Ví dụ 2*: **9 cm - 5 cm = 4 cm**\n- *Ví dụ 3*: **10 cm + 20 cm = 30 cm**\n\n#### 2. Chú ý bài thi:\nNếu câu hỏi hỏi \"Mảnh giấy dài bao nhiêu xăng-ti-mét?\", viết số mà quên chữ \"cm\" là sẽ bị trừ điểm đấy nhé bé yêu!",
+          "exercises": [
+            {
+              "question": "Tính kết quả phép tính: 7 cm + 2 cm = ?",
+              "options": [
+                "A. 9",
+                "B. 9 cm",
+                "C. 10 cm",
+                "D. 8 cm"
+              ],
+              "correct_answer": "B",
+              "explanation": "Lấy 7 + 2 = 9 rồi ghi kèm đơn vị cm ở sau: 9 cm."
+            },
+            {
+              "question": "Đoạn băng dính dài 18 cm, bé cắt đi 5 cm. Hỏi đoạn băng dính còn lại dài bao nhiêu cm?",
+              "options": [
+                "A. 12 cm",
+                "B. 13 cm",
+                "C. 14 cm",
+                "D. 23 cm"
+              ],
+              "correct_answer": "B",
+              "explanation": "Phép tính: 18 cm - 5 cm = 13 cm."
+            },
+            {
+              "question": "Điền số thích hợp: 30 cm + ... cm = 50 cm",
+              "options": [
+                "A. 10",
+                "B. 20",
+                "C. 30",
+                "D. 80"
+              ],
+              "correct_answer": "B",
+              "explanation": "Vì 30 + 20 = 50 nên số cần điền là 20."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 7,
+      "title": "Chương 7: Phép cộng, phép trừ (không nhớ) trong phạm vi 100",
+      "description": "Nắm vững kỹ năng đặt tính rồi tính, cộng trừ số có hai chữ số với số có một chữ số và số có hai chữ số (không nhớ), giải bài toán có lời văn thực tế.",
+      "lessons": [
+        {
+          "displayOrder": 26,
+          "title": "Bài 25: Phép cộng số có hai chữ số với số có một chữ số",
+          "slug": "bai-25-phep-cong-so-co-hai-chu-so-voi-so-co-mot-chu-so",
+          "summary": "Quy tắc đặt tính thẳng cột và tính: cộng hàng đơn vị với hàng đơn vị, hạ hàng chục xuống.",
+          "estimatedMinutes": 45,
+          "theory": "### ➕ Phép cộng số có hai chữ số với số có một chữ số (không nhớ)\n\n#### 1. Ví dụ mẫu: 23 + 4 = ?\nĐể thực hiện phép tính, chúng mình làm qua 2 bước:\n- **Bước 1: Đặt tính thẳng cột**\n  - Viết số 23 ở hàng trên.\n  - Viết số 4 ở hàng dưới, sao cho **chữ số 4 thẳng cột với chữ số 3** ở hàng đơn vị.\n  - Viết dấu **+** ở bên trái và kẻ một đường gạch ngang thay cho dấu bằng.\n- **Bước 2: Tính từ phải sang trái (tính hàng đơn vị trước)**\n  - Lấy 3 cộng 4 bằng 7, viết 7.\n  - Hạ 2 ở hàng chục xuống, viết 2.\n  - Vậy: **23 + 4 = 27**\n\n#### 2. Mẹo tính nhẩm nhanh:\nLấy hàng đơn vị cộng với nhau: 3 + 4 = 7, giữ nguyên 2 chục -> được 27!",
+          "exercises": [
+            {
+              "question": "Tính nhẩm: 42 + 5 = ?",
+              "options": [
+                "A. 45",
+                "B. 46",
+                "C. 47",
+                "D. 92"
+              ],
+              "correct_answer": "C",
+              "explanation": "Lấy 2 cộng 5 bằng 7 ở hàng đơn vị, giữ nguyên 4 chục được 47."
+            },
+            {
+              "question": "Khi đặt tính phép tính 36 + 2, chữ số 2 phải đặt THẲNG CỘT với chữ số nào?",
+              "options": [
+                "A. Chữ số 3",
+                "B. Chữ số 6",
+                "C. Đặt lệch hẳn ra ngoài",
+                "D. Ở đâu cũng được"
+              ],
+              "correct_answer": "B",
+              "explanation": "Chữ số 2 là hàng đơn vị, phải đặt thẳng cột với chữ số 6 ở hàng đơn vị của số 36."
+            },
+            {
+              "question": "Lớp 1A có 31 học sinh, có thêm 3 bạn mới chuyển vào. Hỏi lớp 1A hiện có bao nhiêu bạn?",
+              "options": [
+                "A. 33 bạn",
+                "B. 34 bạn",
+                "C. 35 bạn",
+                "D. 43 bạn"
+              ],
+              "correct_answer": "B",
+              "explanation": "Phép tính: 31 + 3 = 34 bạn học sinh."
+            }
+          ]
+        },
+        {
+          "displayOrder": 27,
+          "title": "Bài 26: Phép cộng số có hai chữ số với số có hai chữ số",
+          "slug": "bai-26-phep-cong-so-co-hai-chu-so-voi-so-co-hai-chu-so",
+          "summary": "Đặt tính rồi tính: hàng chục thẳng cột hàng chục, hàng đơn vị thẳng cột hàng đơn vị.",
+          "estimatedMinutes": 45,
+          "theory": "### ➕ Phép cộng số có hai chữ số với số có hai chữ số (không nhớ)\n\n#### 1. Ví dụ mẫu: 35 + 24 = ?\n- **Bước 1: Đặt tính**\n  - Viết số 35 ở trên, số 24 ở dưới sao cho các chữ số thẳng cột với nhau:\n    - 5 thẳng cột với 4 (hàng đơn vị).\n    - 3 thẳng cột với 2 (hàng chục).\n  - Viết dấu **+** và kẻ vạch ngang.\n- **Bước 2: Tính từ phải qua trái**\n  - **Hàng đơn vị**: 5 + 4 = 9, viết 9.\n  - **Hàng chục**: 3 + 2 = 5, viết 5.\n  - Kết quả: **35 + 24 = 59**\n\n#### 2. Bé ghi nhớ:\n\"Hàng nào cộng với hàng đó! Đơn vị cộng đơn vị, chục cộng chục!\"",
+          "exercises": [
+            {
+              "question": "Tính: 23 + 45 = ?",
+              "options": [
+                "A. 67",
+                "B. 68",
+                "C. 58",
+                "D. 78"
+              ],
+              "correct_answer": "B",
+              "explanation": "Hàng đơn vị: 3 + 5 = 8. Hàng chục: 2 + 4 = 6. Kết quả là 68."
+            },
+            {
+              "question": "Một cửa hàng buổi sáng bán được 20 chiếc cặp, buổi chiều bán được 15 chiếc cặp. Cả ngày bán được bao nhiêu chiếc cặp?",
+              "options": [
+                "A. 25 chiếc",
+                "B. 30 chiếc",
+                "C. 35 chiếc",
+                "D. 40 chiếc"
+              ],
+              "correct_answer": "C",
+              "explanation": "Phép tính: 20 + 15 = 35 chiếc cặp."
+            },
+            {
+              "question": "Tìm x biết: x - 21 = 34",
+              "options": [
+                "A. 13",
+                "B. 55",
+                "C. 54",
+                "D. 65"
+              ],
+              "correct_answer": "B",
+              "explanation": "Muốn tìm số bị trừ x, ta lấy 34 + 21 = 55."
+            }
+          ]
+        },
+        {
+          "displayOrder": 28,
+          "title": "Bài 27: Phép trừ số có hai chữ số cho số có một chữ số",
+          "slug": "bai-27-phep-tru-so-co-hai-chu-so-cho-so-co-mot-chu-so",
+          "summary": "Quy tắc đặt tính và tính: trừ hàng đơn vị cho hàng đơn vị, hạ hàng chục xuống.",
+          "estimatedMinutes": 45,
+          "theory": "### ➖ Phép trừ số có hai chữ số cho số có một chữ số (không nhớ)\n\n#### 1. Ví dụ mẫu: 48 - 5 = ?\n- **Bước 1: Đặt tính thẳng cột**\n  - Viết 48 ở trên, 5 ở dưới thẳng cột với chữ số 8.\n  - Viết dấu **-** và kẻ vạch ngang.\n- **Bước 2: Tính từ phải qua trái**\n  - **Hàng đơn vị**: 8 - 5 = 3, viết 3.\n  - **Hàng chục**: Hạ 4 xuống, viết 4.\n  - Kết quả: **48 - 5 = 43**\n\n#### 2. Mẹo tính nhẩm:\nLấy hàng đơn vị trừ trước: 8 - 5 = 3, ghép với 4 chục -> ra ngay 43!",
+          "exercises": [
+            {
+              "question": "Tính nhẩm: 67 - 4 = ?",
+              "options": [
+                "A. 61",
+                "B. 62",
+                "C. 63",
+                "D. 64"
+              ],
+              "correct_answer": "C",
+              "explanation": "Hàng đơn vị: 7 - 4 = 3, giữ nguyên 6 chục được 63."
+            },
+            {
+              "question": "Một cây ăn quả có 39 quả cam, mẹ hái xuống 7 quả. Hỏi trên cây còn lại mấy quả cam?",
+              "options": [
+                "A. 31 quả",
+                "B. 32 quả",
+                "C. 33 quả",
+                "D. 34 quả"
+              ],
+              "correct_answer": "B",
+              "explanation": "Lấy 39 - 7 = 32 quả cam."
+            },
+            {
+              "question": "Điền số thích hợp vào chỗ chấm: 86 - ... = 81",
+              "options": [
+                "A. 4",
+                "B. 5",
+                "C. 6",
+                "D. 7"
+              ],
+              "correct_answer": "B",
+              "explanation": "Lấy 86 - 81 = 5."
+            }
+          ]
+        },
+        {
+          "displayOrder": 29,
+          "title": "Bài 28: Phép trừ số có hai chữ số cho số có hai chữ số",
+          "slug": "bai-28-phep-tru-so-co-hai-chu-so-cho-so-co-hai-chu-so",
+          "summary": "Đặt tính thẳng cột: hàng chục trừ hàng chục, hàng đơn vị trừ hàng đơn vị.",
+          "estimatedMinutes": 45,
+          "theory": "### ➖ Phép trừ số có hai chữ số cho số có hai chữ số (không nhớ)\n\n#### 1. Ví dụ mẫu: 57 - 23 = ?\n- **Bước 1: Đặt tính thẳng hàng**\n  - Số 57 ở trên, số 23 ở dưới (7 thẳng 3, 5 thẳng 2).\n  - Viết dấu **-** và kẻ gạch ngang.\n- **Bước 2: Trừ từ phải sang trái**\n  - **Hàng đơn vị**: 7 - 3 = 4, viết 4.\n  - **Hàng chục**: 5 - 2 = 3, viết 3.\n  - Kết quả: **57 - 23 = 34**\n\n#### 2. Trường hợp hai số chục bằng nhau:\n- Ví dụ: 68 - 62 = 6 (hàng chục 6 - 6 = 0, ta chỉ viết 6, không cần viết 06).",
+          "exercises": [
+            {
+              "question": "Tính kết quả phép tính: 78 - 34 = ?",
+              "options": [
+                "A. 42",
+                "B. 44",
+                "C. 54",
+                "D. 46"
+              ],
+              "correct_answer": "B",
+              "explanation": "Hàng đơn vị: 8 - 4 = 4. Hàng chục: 7 - 3 = 4. Kết quả là 44."
+            },
+            {
+              "question": "Bác nông dân có 65 quả trứng gà, bác đã bán đi 25 quả. Hỏi bác còn lại bao nhiêu quả trứng gà?",
+              "options": [
+                "A. 35 quả",
+                "B. 40 quả",
+                "C. 45 quả",
+                "D. 50 quả"
+              ],
+              "correct_answer": "B",
+              "explanation": "Phép tính: 65 - 25 = 40 quả trứng gà."
+            },
+            {
+              "question": "Kết quả của phép trừ: 49 - 41 = ?",
+              "options": [
+                "A. 08",
+                "B. 8",
+                "C. 18",
+                "D. 90"
+              ],
+              "correct_answer": "B",
+              "explanation": "49 - 41 = 8 (hàng chục bằng nhau nên hiệu là số có 1 chữ số)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 30,
+          "title": "Bài 29: Luyện tập chung",
+          "slug": "bai-29-luyen-tap-chung",
+          "summary": "Tổng hợp các kỹ năng tính toán trong phạm vi 100 và giải toán có lời văn một bước tính.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏅 Luyện tập chung Chương 7\n\n#### 1. Bốn bước giải bài toán có lời văn điểm 10:\n- **Bước 1**: Đọc kỹ đề bài 2 - 3 lần. Gạch chân từ khóa: *có tất cả / mua thêm* (làm phép **+**); *bớt đi / bán đi / biếu / cho / bay mất* (làm phép **-**).\n- **Bước 2**: Viết câu lời giải chuẩn chỉnh.\n- **Bước 3**: Viết phép tính kèm tên đơn vị trong dấu ngoặc đơn (ví dụ: *quả cam, học sinh, chiếc kẹo*).\n- **Bước 4**: Ghi Đáp số rõ ràng.",
+          "exercises": [
+            {
+              "question": "Dãy tính: 20 + 30 - 10 có kết quả bằng bao nhiêu?",
+              "options": [
+                "A. 30",
+                "B. 40",
+                "C. 50",
+                "D. 60"
+              ],
+              "correct_answer": "B",
+              "explanation": "Tính từ trái sang phải: 20 + 30 = 50, sau đó 50 - 10 = 40."
+            },
+            {
+              "question": "Đàn vịt có 54 con dưới ao và 23 con trên bờ. Hỏi đàn vịt có tất cả bao nhiêu con?",
+              "options": [
+                "A. 71 con",
+                "B. 75 con",
+                "C. 77 con",
+                "D. 87 con"
+              ],
+              "correct_answer": "C",
+              "explanation": "Lấy 54 + 23 = 77 con vịt."
+            },
+            {
+              "question": "Phép tính nào dưới đây có kết quả BẰNG 50?",
+              "options": [
+                "A. 25 + 35",
+                "B. 80 - 30",
+                "C. 90 - 30",
+                "D. 15 + 25"
+              ],
+              "correct_answer": "B",
+              "explanation": "80 - 30 = 50, chính xác bằng 50."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 8,
+      "title": "Chương 8: Thời gian, giờ và lịch",
+      "description": "Nhận biết các bộ phận của đồng hồ, xem giờ đúng, thuộc 7 ngày trong tuần, thực hành xem lịch và sắp xếp thời gian biểu sinh hoạt.",
+      "lessons": [
+        {
+          "displayOrder": 31,
+          "title": "Bài 30: Xem giờ đúng trên đồng hồ",
+          "slug": "bai-30-xem-gio-dung-tren-dong-ho",
+          "summary": "Nhận biết kim ngắn chỉ giờ, kim dài chỉ phút; nhận biết giờ đúng khi kim dài chỉ số 12.",
+          "estimatedMinutes": 40,
+          "theory": "### ⏰ Xem giờ đúng trên mặt đồng hồ\n\n#### 1. Cấu tạo mặt đồng hồ tròn\n- Trên mặt đồng hồ có **12 số** từ 1 đến 12 được xếp tròn đều.\n- **Kim ngắn (kim giờ)**: Chạy chậm chạp, chỉ số giờ.\n- **Kim dài (kim phút)**: Chạy nhanh hơn, chỉ số phút.\n\n#### 2. Quy tắc vàng xem GIỜ ĐÚNG:\n- Khi **kim dài chỉ thẳng vào số 12**: Đó là một giờ đúng!\n- Kim ngắn chỉ vào số nào thì đồng hồ chỉ bấy nhiêu giờ.\n  - Kim ngắn chỉ số **7**, kim dài chỉ số **12** -> **7 giờ đúng** (giờ bé thức dậy đi học 🎒).\n  - Kim ngắn chỉ số **8**, kim dài chỉ số **12** -> **8 giờ đúng** (giờ vào tiết học đầu tiên).\n  - Kim ngắn chỉ số **11**, kim dài chỉ số **12** -> **11 giờ đúng** (giờ ăn trưa 🥣).\n  - Kim ngắn chỉ số **9**, kim dài chỉ số **12** (buổi tối) -> **9 giờ tối** (giờ bé đi ngủ 😴).",
+          "exercises": [
+            {
+              "question": "Khi kim dài chỉ số 12 và kim ngắn chỉ số 4, đồng hồ đang chỉ mấy giờ?",
+              "options": [
+                "A. 12 giờ",
+                "B. 4 giờ",
+                "C. 16 giờ",
+                "D. 8 giờ"
+              ],
+              "correct_answer": "B",
+              "explanation": "Kim dài chỉ số 12 là giờ đúng, kim ngắn chỉ số 4 nên đồng hồ đang chỉ 4 giờ."
+            },
+            {
+              "question": "Trong hai chiếc kim đồng hồ, kim nào dùng để chỉ GIỜ?",
+              "options": [
+                "A. Kim dài",
+                "B. Kim ngắn",
+                "C. Cả hai kim",
+                "D. Kim mảnh nhất"
+              ],
+              "correct_answer": "B",
+              "explanation": "Kim ngắn (mập hơn và ngắn hơn) chính là kim chỉ giờ."
+            },
+            {
+              "question": "Bé An đi ngủ lúc 9 giờ tối. Lúc đó kim ngắn và kim dài chỉ số mấy?",
+              "options": [
+                "A. Kim ngắn chỉ số 12, kim dài chỉ số 9",
+                "B. Kim ngắn chỉ số 9, kim dài chỉ số 12",
+                "C. Cả hai kim chỉ số 9",
+                "D. Cả hai kim chỉ số 12"
+              ],
+              "correct_answer": "B",
+              "explanation": "9 giờ đúng thì kim ngắn chỉ số 9 và kim dài chỉ số 12."
+            }
+          ]
+        },
+        {
+          "displayOrder": 32,
+          "title": "Bài 31: Các ngày trong tuần",
+          "slug": "bai-31-cac-ngay-trong-tuan",
+          "summary": "Một tuần lễ có 7 ngày; thuộc thứ tự các ngày trong tuần và phân biệt ngày đi học, ngày nghỉ cuối tuần.",
+          "estimatedMinutes": 40,
+          "theory": "### 📅 Các ngày trong tuần lễ\n\n#### 1. Một tuần lễ có bao nhiêu ngày?\n- Một tuần lễ có đúng **7 ngày**.\n- Thứ tự 7 ngày lần lượt là:\n  1. **Thứ Hai**: Ngày đầu tuần em đi học hát Quốc ca chào cờ 🚩.\n  2. **Thứ Ba**: Ngày học tập chăm ngoan.\n  3. **Thứ Tư**: Giữa tuần vui vẻ.\n  4. **Thứ Năm**: Tiếp tục rèn luyện chăm chỉ.\n  5. **Thứ Sáu**: Ngày học cuối cùng trong tuần ở trường.\n  6. **Thứ Bảy**: Ngày nghỉ cuối tuần, em giúp đỡ bố mẹ 🧹.\n  7. **Chủ Nhật**: Ngày nghỉ ngơi, vui chơi cùng gia đình 🎡.\n\n#### 2. Bé ghi nhớ:\n- Các ngày đi học: Từ **Thứ Hai** đến **Thứ Sáu** (5 ngày).\n- Hai ngày nghỉ cuối tuần: **Thứ Bảy** và **Chủ Nhật** (2 ngày).",
+          "exercises": [
+            {
+              "question": "Một tuần lễ có bao nhiêu ngày?",
+              "options": [
+                "A. 5 ngày",
+                "B. 6 ngày",
+                "C. 7 ngày",
+                "D. 10 ngày"
+              ],
+              "correct_answer": "C",
+              "explanation": "Một tuần lễ luôn có 7 ngày từ Thứ Hai đến Chủ Nhật."
+            },
+            {
+              "question": "Nếu hôm nay là Thứ Ba thì ngày mai sẽ là thứ mấy?",
+              "options": [
+                "A. Thứ Hai",
+                "B. Thứ Tư",
+                "C. Thứ Năm",
+                "D. Chủ Nhật"
+              ],
+              "correct_answer": "B",
+              "explanation": "Ngay sau ngày Thứ Ba trong tuần lễ chính là ngày Thứ Tư."
+            },
+            {
+              "question": "Hai ngày nghỉ cuối tuần của học sinh là hai ngày nào?",
+              "options": [
+                "A. Thứ Năm và Thứ Sáu",
+                "B. Thứ Hai và Thứ Ba",
+                "C. Thứ Bảy và Chủ Nhật",
+                "D. Thứ Sáu và Thứ Bảy"
+              ],
+              "correct_answer": "C",
+              "explanation": "Thứ Bảy và Chủ Nhật là hai ngày nghỉ ngơi cuối tuần sau những ngày học chăm chỉ."
+            }
+          ]
+        },
+        {
+          "displayOrder": 33,
+          "title": "Bài 32: Thực hành xem lịch và giờ",
+          "slug": "bai-32-thuc-hanh-xem-lich-va-gio",
+          "summary": "Kỹ năng xem tờ lịch bóc hàng ngày (ngày dương lịch, thứ trong tuần) và lập thời gian biểu khoa học.",
+          "estimatedMinutes": 45,
+          "theory": "### 🗓️ Thực hành xem lịch và lập thời gian biểu\n\n#### 1. Xem tờ lịch ngày\n- Trên một tờ lịch treo tường thường ghi rõ:\n  - **Chữ to nhất ở giữa**: Chỉ ngày trong tháng (ví dụ: ngày 15).\n  - **Chữ ở phía trên hoặc dưới**: Chỉ thứ trong tuần (ví dụ: Thứ Sáu).\n  - **Tên tháng và năm**: Tháng 9 năm 2026.\n\n#### 2. Thời gian biểu mẫu của bạn học sinh gương mẫu:\n- ⏰ **6 giờ sáng**: Thức dậy, đánh răng, tập thể dục buổi sáng.\n- ⏰ **7 giờ sáng**: Đến trường sẵn sàng vào lớp.\n- ⏰ **11 giờ trưa**: Ăn trưa và ngủ trưa ngon giấc.\n- ⏰ **4 giờ chiều (16 giờ)**: Tan trường về nhà với bố mẹ.\n- ⏰ **7 giờ tối (19 giờ)**: Ôn bài và làm bài tập toán cùng NQD LMS.\n- ⏰ **9 giờ tối (21 giờ)**: Lên giường đi ngủ để ngày mai dậy sớm khỏe khoắn!",
+          "exercises": [
+            {
+              "question": "Tờ lịch ghi: 'Thứ Năm, Ngày 20'. Vậy ngày hôm trước tờ lịch đó là ngày mấy, thứ mấy?",
+              "options": [
+                "A. Thứ Tư, Ngày 19",
+                "B. Thứ Sáu, Ngày 21",
+                "C. Thứ Tư, Ngày 21",
+                "D. Thứ Sáu, Ngày 19"
+              ],
+              "correct_answer": "A",
+              "explanation": "Ngày hôm trước của ngày 20 là ngày 19, trước Thứ Năm là Thứ Tư."
+            },
+            {
+              "question": "Hoạt động nào sau đây phù hợp với thời điểm 7 giờ sáng của bé?",
+              "options": [
+                "A. Đi ngủ ban đêm",
+                "B. Chuẩn bị đến trường học bài",
+                "C. Ăn bữa cơm tối",
+                "D. Đi xem phim khuya"
+              ],
+              "correct_answer": "B",
+              "explanation": "7 giờ sáng là lúc các bạn nhỏ ăn sáng xong và chuẩn bị vào lớp học tập."
+            },
+            {
+              "question": "Kim ngắn chỉ số 6, kim dài chỉ số 12 lúc bình minh thức giấc. Đó là mấy giờ?",
+              "options": [
+                "A. 12 giờ trưa",
+                "B. 6 giờ sáng",
+                "C. 6 giờ tối",
+                "D. 12 giờ đêm"
+              ],
+              "correct_answer": "B",
+              "explanation": "Bình minh buổi sáng, kim ngắn chỉ số 6 là 6 giờ sáng."
+            }
+          ]
+        },
+        {
+          "displayOrder": 34,
+          "title": "Bài 33: Luyện tập chung",
+          "slug": "bai-33-luyen-tap-chung",
+          "summary": "Ôn tập tổng kết toàn diện toàn bộ chương trình Toán 1: số học, hình học, đo lường, thời gian.",
+          "estimatedMinutes": 50,
+          "theory": "### 🎓 Tổng kết Chương trình Toán 1: Bé là Hiệp sĩ Toán học!\n\n#### 1. Chúc mừng các em đã hoàn thành xuất sắc chặng đường Toán 1!\nChúng mình đã cùng nhau học được biết bao nhiêu điều kỳ diệu:\n1. 🔢 **Số học**: Biết đếm, đọc, viết, so sánh các số từ **0 đến 100**.\n2. ➕➖ **Phép tính**: Thành thạo bảng cộng, trừ phạm vi 10 và cộng trừ không nhớ phạm vi 100.\n3. 📐 **Hình học**: Gọi tên chuẩn xác các hình phẳng (*vuông, tròn, tam giác, chữ nhật*) và khối hình (*lập phương, hộp chữ nhật*).\n4. 📏 **Đo lường**: Biết dùng thước kẻ đo độ dài chính xác từng **xăng-ti-mét (cm)**.\n5. ⏰ **Thời gian**: Tự tin nhìn đồng hồ xem giờ đúng và đọc lịch 7 ngày trong tuần.\n\n#### 2. Lời dặn dò thân thương\nToán học là người bạn thân thiết sẽ cùng các em lớn khôn từng ngày. Hãy luôn tự tin, chăm chỉ và yêu thích khám phá các con số nhé! 🌟❤️",
+          "exercises": [
+            {
+              "question": "Số lớn nhất có hai chữ số khác nhau là số nào?",
+              "options": [
+                "A. 99",
+                "B. 98",
+                "C. 90",
+                "D. 100"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số 99 có hai chữ số giống nhau, do đó số lớn nhất có hai chữ số KHÁC NHAU là số 98."
+            },
+            {
+              "question": "Tính kết quả: 45 cm + 20 cm - 15 cm = ?",
+              "options": [
+                "A. 50 cm",
+                "B. 55 cm",
+                "C. 65 cm",
+                "D. 40 cm"
+              ],
+              "correct_answer": "A",
+              "explanation": "Lấy 45 cm + 20 cm = 65 cm; sau đó lấy 65 cm - 15 cm = 50 cm."
+            },
+            {
+              "question": "Nếu ngày mai là Thứ Bảy thì hôm qua là thứ mấy?",
+              "options": [
+                "A. Thứ Năm",
+                "B. Thứ Sáu",
+                "C. Chủ Nhật",
+                "D. Thứ Tư"
+              ],
+              "correct_answer": "A",
+              "explanation": "Ngày mai là Thứ Bảy thì hôm nay là Thứ Sáu. Vậy hôm qua chính là Thứ Năm!"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
