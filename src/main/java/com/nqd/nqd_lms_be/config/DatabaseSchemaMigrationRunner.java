@@ -448,6 +448,95 @@ public class DatabaseSchemaMigrationRunner {
             jdbcTemplate.execute("CREATE INDEX IF NOT EXISTS idx_teacher_app_user ON teacher_applications(user_id)");
             jdbcTemplate.execute("CREATE INDEX IF NOT EXISTS idx_teacher_app_status ON teacher_applications(status)");
 
+            // 9. Dedicated Knowledge Base Schema (Admin managed GDPT standard curriculum)
+            jdbcTemplate.execute("""
+                CREATE TABLE IF NOT EXISTS knowledge_curriculums (
+                    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                    subject_id UUID NOT NULL REFERENCES subjects(id) ON DELETE CASCADE,
+                    code VARCHAR(50) NOT NULL UNIQUE,
+                    grade_level VARCHAR(50) NOT NULL,
+                    title VARCHAR(255) NOT NULL,
+                    description TEXT,
+                    education_tier VARCHAR(50) DEFAULT 'Tiểu học',
+                    thumbnail_url VARCHAR(500),
+                    status VARCHAR(30) NOT NULL DEFAULT 'ACTIVE',
+                    display_order INTEGER DEFAULT 1,
+                    is_published BOOLEAN DEFAULT TRUE,
+                    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                    is_active BOOLEAN DEFAULT TRUE,
+                    is_deleted BOOLEAN DEFAULT FALSE,
+                    deleted_at TIMESTAMP WITHOUT TIME ZONE,
+                    deleted_by VARCHAR(255),
+                    created_by_user VARCHAR(255),
+                    updated_by VARCHAR(255)
+                )
+            """);
+            jdbcTemplate.execute("CREATE INDEX IF NOT EXISTS idx_k_curriculums_sub_grade ON knowledge_curriculums(subject_id, grade_level)");
+
+            jdbcTemplate.execute("""
+                CREATE TABLE IF NOT EXISTS knowledge_chapters (
+                    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                    curriculum_id UUID NOT NULL REFERENCES knowledge_curriculums(id) ON DELETE CASCADE,
+                    chapter_order INTEGER NOT NULL,
+                    title VARCHAR(255) NOT NULL,
+                    description TEXT,
+                    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                    is_active BOOLEAN DEFAULT TRUE,
+                    is_deleted BOOLEAN DEFAULT FALSE,
+                    deleted_at TIMESTAMP WITHOUT TIME ZONE,
+                    deleted_by VARCHAR(255),
+                    created_by_user VARCHAR(255),
+                    updated_by VARCHAR(255)
+                )
+            """);
+            jdbcTemplate.execute("CREATE INDEX IF NOT EXISTS idx_k_chapters_curriculum ON knowledge_chapters(curriculum_id)");
+
+            jdbcTemplate.execute("""
+                CREATE TABLE IF NOT EXISTS knowledge_lessons (
+                    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                    chapter_id UUID NOT NULL REFERENCES knowledge_chapters(id) ON DELETE CASCADE,
+                    lesson_order INTEGER NOT NULL,
+                    title VARCHAR(255) NOT NULL,
+                    slug VARCHAR(255),
+                    summary TEXT,
+                    theory_markdown TEXT,
+                    estimated_minutes INTEGER DEFAULT 40,
+                    status VARCHAR(30) NOT NULL DEFAULT 'PUBLISHED',
+                    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                    is_active BOOLEAN DEFAULT TRUE,
+                    is_deleted BOOLEAN DEFAULT FALSE,
+                    deleted_at TIMESTAMP WITHOUT TIME ZONE,
+                    deleted_by VARCHAR(255),
+                    created_by_user VARCHAR(255),
+                    updated_by VARCHAR(255)
+                )
+            """);
+            jdbcTemplate.execute("CREATE INDEX IF NOT EXISTS idx_k_lessons_chapter ON knowledge_lessons(chapter_id)");
+
+            jdbcTemplate.execute("""
+                CREATE TABLE IF NOT EXISTS knowledge_questions (
+                    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                    lesson_id UUID NOT NULL REFERENCES knowledge_lessons(id) ON DELETE CASCADE,
+                    question_order INTEGER NOT NULL,
+                    question_text TEXT NOT NULL,
+                    options_json TEXT NOT NULL,
+                    correct_answer VARCHAR(10) NOT NULL,
+                    explanation TEXT,
+                    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                    is_active BOOLEAN DEFAULT TRUE,
+                    is_deleted BOOLEAN DEFAULT FALSE,
+                    deleted_at TIMESTAMP WITHOUT TIME ZONE,
+                    deleted_by VARCHAR(255),
+                    created_by_user VARCHAR(255),
+                    updated_by VARCHAR(255)
+                )
+            """);
+            jdbcTemplate.execute("CREATE INDEX IF NOT EXISTS idx_k_questions_lesson ON knowledge_questions(lesson_id)");
+
             log.info("Database schema migrations verified and applied successfully.");
         } catch (Exception e) {
             log.error("Error during database schema migration: {}", e.getMessage(), e);
