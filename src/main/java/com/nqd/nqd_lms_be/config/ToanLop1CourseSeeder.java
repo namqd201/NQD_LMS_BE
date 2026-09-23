@@ -33,7 +33,7 @@ public class ToanLop1CourseSeeder implements CommandLineRunner {
     private final QuestionOptionRepository questionOptionRepository;
     private final ExerciseQuestionRepository exerciseQuestionRepository;
     private final QuestionCategoryRepository questionCategoryRepository;
-    private final ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     @Transactional
