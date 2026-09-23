@@ -3,6 +3,7 @@ package com.nqd.nqd_lms_be.service.discussion;
 import com.nqd.nqd_lms_be.common.dto.PageResponse;
 import com.nqd.nqd_lms_be.dto.discussion.*;
 import com.nqd.nqd_lms_be.entity.enums.DiscussionThreadStatus;
+import com.nqd.nqd_lms_be.entity.enums.PostReactionType;
 import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;
@@ -11,6 +12,9 @@ public interface DiscussionService {
 
     PageResponse<DiscussionThreadResponse> getCourseThreads(
             UUID courseId, UUID lessonId, DiscussionThreadStatus status, String search, Pageable pageable);
+
+    PageResponse<DiscussionThreadResponse> getCourseThreads(
+            UUID courseId, UUID lessonId, DiscussionThreadStatus status, String search, UUID currentUserId, Pageable pageable);
 
     DiscussionThreadResponse getThreadDetail(UUID courseId, UUID threadId, UUID currentUserId);
 
@@ -33,6 +37,10 @@ public interface DiscussionService {
     void deletePost(UUID courseId, UUID threadId, UUID postId, UUID userId);
 
     DiscussionPostResponse toggleUpvote(UUID courseId, UUID threadId, UUID postId, UUID userId);
+
+    DiscussionThreadResponse reactToThread(UUID courseId, UUID threadId, UUID userId, PostReactionType type);
+
+    DiscussionPostResponse reactToPost(UUID courseId, UUID threadId, UUID postId, UUID userId, PostReactionType type);
 
     DiscussionPostResponse markAnswer(UUID courseId, UUID threadId, UUID postId, UUID userId);
 

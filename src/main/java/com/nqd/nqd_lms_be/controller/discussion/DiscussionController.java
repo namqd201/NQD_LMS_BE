@@ -5,6 +5,7 @@ import com.nqd.nqd_lms_be.common.dto.PageResponse;
 import com.nqd.nqd_lms_be.config.security.AppUserPrincipal;
 import com.nqd.nqd_lms_be.dto.discussion.*;
 import com.nqd.nqd_lms_be.entity.enums.DiscussionThreadStatus;
+import com.nqd.nqd_lms_be.entity.enums.PostReactionType;
 import com.nqd.nqd_lms_be.service.discussion.DiscussionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,10 +36,12 @@ public class DiscussionController {
             @RequestParam(required = false) UUID lessonId,
             @RequestParam(required = false) DiscussionThreadStatus status,
             @RequestParam(required = false) String search,
+            @AuthenticationPrincipal AppUserPrincipal principal,
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
+        UUID currentUserId = principal != null ? principal.getId() : null;
         PageResponse<DiscussionThreadResponse> response = discussionService.getCourseThreads(
-                courseId, lessonId, status, search, pageable);
+                courseId, lessonId, status, search, currentUserId, pageable);
         return ResponseEntity.ok(ApiResponse.ok("Lấy danh sách chủ đề thảo luận thành công", response));
     }
 
@@ -147,6 +150,31 @@ public class DiscussionController {
     ) {
         discussionService.deletePost(courseId, threadId, postId, principal.getId());
         return ResponseEntity.ok(ApiResponse.ok("Xóa phản hồi thành công", null));
+    }
+
+    @PostMapping("/{threadId}/react")
+    @Operation(summary = "React to discussion thread with Facebook-style emoji")
+    public ResponseEntity<ApiResponse<DiscussionThreadResponse>> reactToThread(
+            @PathVariable UUID courseId,
+            @PathVariable UUID threadId,
+            @RequestParam(required = false, defaultValue = "LIKE") PostReactionType type,
+            @AuthenticationPrincipal AppUserPrincipal principal
+    ) {
+        DiscussionThreadResponse response = discussionService.reactToThread(courseId, threadId, principal.getId(), type);
+        return ResponseEntity.ok(ApiResponse.ok("Thao tác thả cảm xúc thành công", response));
+    }
+
+    @PostMapping("/{threadId}/posts/{postId}/react")
+    @Operation(summary = "React to discussion post with Facebook-style emoji")
+    public ResponseEntity<ApiResponse<DiscussionPostResponse>> reactToPost(
+            @PathVariable UUID courseId,
+            @PathVariable UUID threadId,
+            @PathVariable UUID postId,
+            @RequestParam(required = false, defaultValue = "LIKE") PostReactionType type,
+            @AuthenticationPrincipal AppUserPrincipal principal
+    ) {
+        DiscussionPostResponse response = discussionService.reactToPost(courseId, threadId, postId, principal.getId(), type);
+        return ResponseEntity.ok(ApiResponse.ok("Thao tác thả cảm xúc thành công", response));
     }
 
     @PostMapping("/{threadId}/posts/{postId}/upvote")

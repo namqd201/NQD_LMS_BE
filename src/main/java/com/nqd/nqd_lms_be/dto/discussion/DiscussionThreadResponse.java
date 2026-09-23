@@ -2,9 +2,12 @@ package com.nqd.nqd_lms_be.dto.discussion;
 
 import com.nqd.nqd_lms_be.entity.DiscussionThread;
 import com.nqd.nqd_lms_be.entity.enums.DiscussionThreadStatus;
+import com.nqd.nqd_lms_be.entity.enums.PostReactionType;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Map;
 import java.util.UUID;
 
 @Getter
@@ -30,10 +33,23 @@ public class DiscussionThreadResponse {
     private DiscussionThreadStatus status;
     private Integer postCount;
     private Integer viewCount;
+    private Integer reactionCount;
+    private PostReactionType myReaction;
+    private Map<String, Integer> reactionBreakdown;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public static DiscussionThreadResponse fromEntity(DiscussionThread t) {
+        return fromEntity(t, null, null, Collections.emptyMap(), 0);
+    }
+
+    public static DiscussionThreadResponse fromEntity(
+            DiscussionThread t,
+            UUID currentUserId,
+            PostReactionType myReaction,
+            Map<String, Integer> reactionBreakdown,
+            int reactionCount
+    ) {
         if (t == null) return null;
         String authorRole = "STUDENT";
         if (t.getCourse() != null && t.getCourse().getCreator() != null && t.getAuthor() != null
@@ -58,6 +74,9 @@ public class DiscussionThreadResponse {
                 .status(t.getStatus())
                 .postCount(t.getPostCount())
                 .viewCount(t.getViewCount())
+                .reactionCount(reactionCount)
+                .myReaction(myReaction)
+                .reactionBreakdown(reactionBreakdown != null ? reactionBreakdown : Collections.emptyMap())
                 .createdAt(t.getCreatedAt())
                 .updatedAt(t.getUpdatedAt())
                 .build();

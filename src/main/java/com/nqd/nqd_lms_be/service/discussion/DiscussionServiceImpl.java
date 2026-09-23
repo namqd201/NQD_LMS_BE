@@ -21,10 +21,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +32,7 @@ public class DiscussionServiceImpl implements DiscussionService {
     private final DiscussionThreadRepository threadRepository;
     private final DiscussionPostRepository postRepository;
     private final PostReactionRepository reactionRepository;
+    private final ThreadReactionRepository threadReactionRepository;
     private final CourseRepository courseRepository;
     private final LessonRepository lessonRepository;
     private final CourseEnrollmentRepository enrollmentRepository;
@@ -47,6 +46,13 @@ public class DiscussionServiceImpl implements DiscussionService {
     @Transactional(readOnly = true)
     public PageResponse<DiscussionThreadResponse> getCourseThreads(
             UUID courseId, UUID lessonId, DiscussionThreadStatus status, String search, Pageable pageable) {
+        return getCourseThreads(courseId, lessonId, status, search, null, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PageResponse<DiscussionThreadResponse> getCourseThreads(
+            UUID courseId, UUID lessonId, DiscussionThreadStatus status, String search, UUID currentUserId, Pageable pageable) {
 
         Course course = getCourseOrThrow(courseId);
 
@@ -74,7 +80,7 @@ public class DiscussionServiceImpl implements DiscussionService {
         };
 
         Page<DiscussionThread> page = threadRepository.findAll(spec, pageable);
-        return PageResponse.fromPage(page, DiscussionThreadResponse::fromEntity);
+        return PageResponse.fromPage(page, thread -> buildThreadResponse(thread, currentUserId));
     }
 
     @Override
@@ -82,7 +88,7 @@ public class DiscussionServiceImpl implements DiscussionService {
     public DiscussionThreadResponse getThreadDetail(UUID courseId, UUID threadId, UUID currentUserId) {
         DiscussionThread thread = getThreadOrThrow(courseId, threadId);
         threadRepository.incrementViewCount(threadId);
-        return DiscussionThreadResponse.fromEntity(thread);
+        return buildThreadResponse(thread, currentUserId);
     }
 
     @Override
@@ -135,7 +141,7 @@ public class DiscussionServiceImpl implements DiscussionService {
         // Notify mentioned users
         notifyMentionedUsers(course, thread, lesson, author, request.getMentionedUserIds(), "trong một chủ đề thảo luận: \"" + thread.getTitle() + "\"");
 
-        return DiscussionThreadResponse.fromEntity(thread);
+        return buildThreadResponse(thread, authorId);
     }
 
     @Override
@@ -157,7 +163,7 @@ public class DiscussionServiceImpl implements DiscussionService {
         }
 
         thread = threadRepository.save(thread);
-        return DiscussionThreadResponse.fromEntity(thread);
+        return buildThreadResponse(thread, userId);
     }
 
     @Override
@@ -188,7 +194,7 @@ public class DiscussionServiceImpl implements DiscussionService {
         thread.setIsPinned(isPinned);
         thread = threadRepository.save(thread);
         log.info("Thread {} in course {} pin status updated to {} by teacher {}", threadId, courseId, isPinned, teacherId);
-        return DiscussionThreadResponse.fromEntity(thread);
+        return buildThreadResponse(thread, teacherId);
     }
 
     @Override
@@ -200,7 +206,7 @@ public class DiscussionServiceImpl implements DiscussionService {
         thread.setIsLocked(isLocked);
         thread = threadRepository.save(thread);
         log.info("Thread {} in course {} lock status updated to {} by teacher {}", threadId, courseId, isLocked, teacherId);
-        return DiscussionThreadResponse.fromEntity(thread);
+        return buildThreadResponse(thread, teacherId);
     }
 
     @Override
@@ -209,10 +215,7 @@ public class DiscussionServiceImpl implements DiscussionService {
         getThreadOrThrow(courseId, threadId);
         Page<DiscussionPost> postPage = postRepository.findByThreadId(threadId, pageable);
 
-        return PageResponse.fromPage(postPage, post -> {
-            boolean isUpvoted = currentUserId != null && reactionRepository.existsByPostIdAndUserIdAndType(post.getId(), currentUserId, PostReactionType.UPVOTE);
-            return DiscussionPostResponse.fromEntity(post, currentUserId, isUpvoted);
-        });
+        return PageResponse.fromPage(postPage, post -> buildPostResponse(post, currentUserId));
     }
 
     @Override
@@ -251,22 +254,13 @@ public class DiscussionServiceImpl implements DiscussionService {
 
         log.info("User {} replied to thread {} in course {}", author.getEmail(), threadId, courseId);
 
-        // Notify thread author and course teacher
+        // Notify thread author if replier is not thread author
         try {
-            String title = "Phản hồi mới trong chủ đề thảo luận";
-            String body = author.getFullName() + " vừa phản hồi câu hỏi: \"" + thread.getTitle() + "\"";
-            String linkUrl = (thread.getLesson() != null)
-                    ? "/courses/" + courseId + "/lessons/" + thread.getLesson().getId() + "?threadId=" + thread.getId()
-                    : "/courses/" + courseId + "?tab=discussion&threadId=" + thread.getId();
-
-            // Notify thread author if different from post author
             if (!thread.getAuthor().getId().equals(authorId)) {
-                kafkaNotificationProducer.sendNotification(thread.getAuthor().getId(), "DISCUSSION_REPLY", title, body, linkUrl);
-            }
-
-            // Notify course teacher if teacher is not the replier and not the thread author
-            if (course.getCreator() != null && !course.getCreator().getId().equals(authorId) && !course.getCreator().getId().equals(thread.getAuthor().getId())) {
-                kafkaNotificationProducer.sendNotification(course.getCreator().getId(), "DISCUSSION_REPLY", title, body, linkUrl);
+                String title = "Phản hồi mới trong thảo luận: " + thread.getTitle();
+                String body = author.getFullName() + " vừa trả lời trong chủ đề thảo luận của bạn.";
+                String linkUrl = "/courses/" + courseId + "?tab=discussion&threadId=" + threadId;
+                kafkaNotificationProducer.sendNotification(thread.getAuthor().getId(), "DISCUSSION_NEW_REPLY", title, body, linkUrl);
             }
         } catch (Exception ex) {
             log.warn("Failed to dispatch discussion reply notification: {}", ex.getMessage());
@@ -275,7 +269,7 @@ public class DiscussionServiceImpl implements DiscussionService {
         // Notify mentioned users
         notifyMentionedUsers(course, thread, thread.getLesson(), author, request.getMentionedUserIds(), "trong một phản hồi: \"" + truncate(post.getContent(), 80) + "\"");
 
-        return DiscussionPostResponse.fromEntity(post, authorId, false);
+        return buildPostResponse(post, authorId);
     }
 
     @Override
@@ -291,8 +285,7 @@ public class DiscussionServiceImpl implements DiscussionService {
 
         post.setContent(request.getContent().trim());
         post = postRepository.save(post);
-        boolean isUpvoted = reactionRepository.existsByPostIdAndUserIdAndType(postId, userId, PostReactionType.UPVOTE);
-        return DiscussionPostResponse.fromEntity(post, userId, isUpvoted);
+        return buildPostResponse(post, userId);
     }
 
     @Override
@@ -317,31 +310,72 @@ public class DiscussionServiceImpl implements DiscussionService {
 
     @Override
     @Transactional
-    public DiscussionPostResponse toggleUpvote(UUID courseId, UUID threadId, UUID postId, UUID userId) {
+    public DiscussionThreadResponse reactToThread(UUID courseId, UUID threadId, UUID userId, PostReactionType type) {
+        DiscussionThread thread = getThreadOrThrow(courseId, threadId);
+        User user = getUserOrThrow(userId);
+        if (type == null || type == PostReactionType.UPVOTE) {
+            type = PostReactionType.LIKE;
+        }
+
+        Optional<ThreadReaction> reactionOpt = threadReactionRepository.findByThreadIdAndUserId(threadId, userId);
+        if (reactionOpt.isPresent()) {
+            ThreadReaction existing = reactionOpt.get();
+            if (existing.getType() == type) {
+                threadReactionRepository.delete(existing);
+            } else {
+                existing.setType(type);
+                threadReactionRepository.save(existing);
+            }
+        } else {
+            ThreadReaction reaction = ThreadReaction.builder()
+                    .thread(thread)
+                    .user(user)
+                    .type(type)
+                    .build();
+            threadReactionRepository.save(reaction);
+        }
+
+        return buildThreadResponse(thread, userId);
+    }
+
+    @Override
+    @Transactional
+    public DiscussionPostResponse reactToPost(UUID courseId, UUID threadId, UUID postId, UUID userId, PostReactionType type) {
         DiscussionPost post = getPostOrThrow(courseId, threadId, postId);
         User user = getUserOrThrow(userId);
+        if (type == null || type == PostReactionType.UPVOTE) {
+            type = PostReactionType.LIKE;
+        }
 
-        Optional<PostReaction> reactionOpt = reactionRepository.findByPostIdAndUserIdAndType(postId, userId, PostReactionType.UPVOTE);
-        boolean isNowUpvoted;
-
+        Optional<PostReaction> reactionOpt = reactionRepository.findByPostIdAndUserId(postId, userId);
         if (reactionOpt.isPresent()) {
-            reactionRepository.delete(reactionOpt.get());
-            postRepository.decrementUpvoteCount(postId);
-            post.setUpvoteCount(Math.max(0, post.getUpvoteCount() - 1));
-            isNowUpvoted = false;
+            PostReaction existing = reactionOpt.get();
+            if (existing.getType() == type) {
+                reactionRepository.delete(existing);
+                postRepository.decrementUpvoteCount(postId);
+                post.setUpvoteCount(Math.max(0, (post.getUpvoteCount() != null ? post.getUpvoteCount() : 1) - 1));
+            } else {
+                existing.setType(type);
+                reactionRepository.save(existing);
+            }
         } else {
             PostReaction reaction = PostReaction.builder()
                     .post(post)
                     .user(user)
-                    .type(PostReactionType.UPVOTE)
+                    .type(type)
                     .build();
             reactionRepository.save(reaction);
             postRepository.incrementUpvoteCount(postId);
-            post.setUpvoteCount(post.getUpvoteCount() + 1);
-            isNowUpvoted = true;
+            post.setUpvoteCount((post.getUpvoteCount() != null ? post.getUpvoteCount() : 0) + 1);
         }
 
-        return DiscussionPostResponse.fromEntity(post, userId, isNowUpvoted);
+        return buildPostResponse(post, userId);
+    }
+
+    @Override
+    @Transactional
+    public DiscussionPostResponse toggleUpvote(UUID courseId, UUID threadId, UUID postId, UUID userId) {
+        return reactToPost(courseId, threadId, postId, userId, PostReactionType.LIKE);
     }
 
     @Override
@@ -369,23 +403,114 @@ public class DiscussionServiceImpl implements DiscussionService {
             thread.setStatus(DiscussionThreadStatus.OPEN);
         }
 
-        post = postRepository.save(post);
+        postRepository.save(post);
         threadRepository.save(thread);
+        log.info("Post {} marked as answer={} by user {}", postId, newAnswerStatus, userId);
 
-        // Notify post author if marked as accepted answer
-        if (newAnswerStatus && !post.getAuthor().getId().equals(userId)) {
-            try {
-                String title = "Câu trả lời của bạn đã được chấp nhận làm đáp án đúng!";
-                String body = "Trong câu hỏi \"" + thread.getTitle() + "\"";
-                String linkUrl = "/courses/" + courseId + "?tab=discussion&threadId=" + thread.getId();
-                kafkaNotificationProducer.sendNotification(post.getAuthor().getId(), "DISCUSSION_ANSWER_ACCEPTED", title, body, linkUrl);
-            } catch (Exception ex) {
-                log.warn("Failed to dispatch accepted answer notification: {}", ex.getMessage());
+        return buildPostResponse(post, userId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MentionCandidateResponse> getMentionCandidates(UUID courseId) {
+        Course course = getCourseOrThrow(courseId);
+
+        Map<UUID, MentionCandidateResponse> candidates = new LinkedHashMap<>();
+
+        // 1. Course Creator / Main Teacher
+        if (course.getCreator() != null) {
+            User c = course.getCreator();
+            candidates.put(c.getId(), MentionCandidateResponse.builder()
+                    .id(c.getId())
+                    .fullName(c.getFullName())
+                    .email(c.getEmail())
+                    .avatarUrl(c.getAvatarUrl())
+                    .roleInCourse("TEACHER")
+                    .build());
+        }
+
+        // 2. Co-teachers
+        List<CourseTeacher> coTeachers = courseTeacherRepository.findByCourseId(courseId);
+        for (CourseTeacher ct : coTeachers) {
+            User t = ct.getTeacher();
+            if (t != null && !candidates.containsKey(t.getId())) {
+                candidates.put(t.getId(), MentionCandidateResponse.builder()
+                        .id(t.getId())
+                        .fullName(t.getFullName())
+                        .email(t.getEmail())
+                        .avatarUrl(t.getAvatarUrl())
+                        .roleInCourse("TEACHER")
+                        .build());
             }
         }
 
-        boolean isUpvoted = reactionRepository.existsByPostIdAndUserIdAndType(postId, userId, PostReactionType.UPVOTE);
-        return DiscussionPostResponse.fromEntity(post, userId, isUpvoted);
+        // 3. Enrolled Students
+        List<CourseEnrollment> enrollments = enrollmentRepository.findByCourseIdAndStatus(courseId, EnrollmentStatus.ENROLLED);
+        for (CourseEnrollment e : enrollments) {
+            User s = e.getStudent();
+            if (s != null && !candidates.containsKey(s.getId())) {
+                candidates.put(s.getId(), MentionCandidateResponse.builder()
+                        .id(s.getId())
+                        .fullName(s.getFullName())
+                        .email(s.getEmail())
+                        .avatarUrl(s.getAvatarUrl())
+                        .roleInCourse("STUDENT")
+                        .build());
+            }
+        }
+
+        return new ArrayList<>(candidates.values());
+    }
+
+    private DiscussionThreadResponse buildThreadResponse(DiscussionThread thread, UUID currentUserId) {
+        List<ThreadReaction> reactions = threadReactionRepository.findByThreadId(thread.getId());
+        int count = reactions.size();
+        PostReactionType myReaction = currentUserId != null
+                ? reactions.stream()
+                .filter(r -> r.getUser() != null && r.getUser().getId().equals(currentUserId))
+                .map(ThreadReaction::getType)
+                .findFirst()
+                .orElse(null)
+                : null;
+
+        Map<String, Integer> breakdown = reactions.stream()
+                .collect(Collectors.groupingBy(r -> (r.getType() == PostReactionType.UPVOTE ? PostReactionType.LIKE : r.getType()).name(), Collectors.summingInt(r -> 1)));
+
+        return DiscussionThreadResponse.fromEntity(thread, currentUserId, myReaction, breakdown, count);
+    }
+
+    private DiscussionPostResponse buildPostResponse(DiscussionPost post, UUID currentUserId) {
+        List<PostReaction> reactions = reactionRepository.findByPostId(post.getId());
+        int count = reactions.size();
+        PostReactionType myReaction = currentUserId != null
+                ? reactions.stream()
+                .filter(r -> r.getUser() != null && r.getUser().getId().equals(currentUserId))
+                .map(r -> r.getType() == PostReactionType.UPVOTE ? PostReactionType.LIKE : r.getType())
+                .findFirst()
+                .orElse(null)
+                : null;
+
+        Map<String, Integer> breakdown = reactions.stream()
+                .collect(Collectors.groupingBy(r -> (r.getType() == PostReactionType.UPVOTE ? PostReactionType.LIKE : r.getType()).name(), Collectors.summingInt(r -> 1)));
+
+        return DiscussionPostResponse.fromEntity(post, currentUserId, myReaction, breakdown, count);
+    }
+
+    private void notifyMentionedUsers(Course course, DiscussionThread thread, Lesson lesson, User author, List<UUID> mentionedUserIds, String contextDesc) {
+        if (mentionedUserIds == null || mentionedUserIds.isEmpty()) return;
+
+        for (UUID mentionedUserId : mentionedUserIds) {
+            if (mentionedUserId.equals(author.getId())) continue;
+
+            try {
+                String title = author.getFullName() + " đã nhắc đến bạn";
+                String body = author.getFullName() + " đã nhắc đến bạn " + contextDesc;
+                String linkUrl = "/courses/" + course.getId() + "?tab=discussion&threadId=" + thread.getId();
+                kafkaNotificationProducer.sendNotification(mentionedUserId, "DISCUSSION_MENTION", title, body, linkUrl);
+            } catch (Exception ex) {
+                log.warn("Failed to dispatch mention notification to user {}: {}", mentionedUserId, ex.getMessage());
+            }
+        }
     }
 
     private Course getCourseOrThrow(UUID courseId) {
@@ -394,10 +519,13 @@ public class DiscussionServiceImpl implements DiscussionService {
     }
 
     private DiscussionThread getThreadOrThrow(UUID courseId, UUID threadId) {
-        DiscussionThread thread = threadRepository.findByIdWithDetails(threadId)
+        DiscussionThread thread = threadRepository.findById(threadId)
                 .orElseThrow(() -> new ResourceNotFoundException("DiscussionThread", threadId));
         if (!thread.getCourse().getId().equals(courseId)) {
-            throw new IllegalArgumentException("Chủ đề thảo luận không thuộc khóa học này.");
+            throw new ResourceNotFoundException("DiscussionThread in Course", threadId);
+        }
+        if (Boolean.TRUE.equals(thread.getIsDeleted())) {
+            throw new ResourceNotFoundException("DiscussionThread", threadId);
         }
         return thread;
     }
@@ -407,7 +535,10 @@ public class DiscussionServiceImpl implements DiscussionService {
         DiscussionPost post = postRepository.findById(postId)
                 .orElseThrow(() -> new ResourceNotFoundException("DiscussionPost", postId));
         if (!post.getThread().getId().equals(thread.getId())) {
-            throw new IllegalArgumentException("Câu trả lời không thuộc chủ đề thảo luận này.");
+            throw new ResourceNotFoundException("DiscussionPost in Thread", postId);
+        }
+        if (Boolean.TRUE.equals(post.getIsDeleted())) {
+            throw new ResourceNotFoundException("DiscussionPost", postId);
         }
         return post;
     }
@@ -418,120 +549,24 @@ public class DiscussionServiceImpl implements DiscussionService {
     }
 
     private void validateParticipation(Course course, UUID userId) {
-        boolean isTeacher = course.getCreator() != null && course.getCreator().getId().equals(userId);
-        boolean isAdmin = SecurityUtils.isAdmin();
-        if (isTeacher || isAdmin) {
-            return;
-        }
+        if (SecurityUtils.isAdmin()) return;
+        if (course.getCreator() != null && course.getCreator().getId().equals(userId)) return;
+        if (courseTeacherRepository.existsByCourseIdAndTeacherId(course.getId(), userId)) return;
+        if (enrollmentRepository.existsByCourseIdAndStudentIdAndStatus(course.getId(), userId, EnrollmentStatus.ENROLLED)) return;
 
-        boolean isEnrolled = enrollmentRepository.findByCourseIdAndStudentId(course.getId(), userId)
-                .map(e -> e.getStatus() == EnrollmentStatus.ENROLLED || e.getStatus() == EnrollmentStatus.COMPLETED)
-                .orElse(false);
-
-        if (!isEnrolled) {
-            throw new ForbiddenOperationException("Chỉ học viên đã tham gia khóa học mới được phép gửi thảo luận.");
-        }
+        throw new ForbiddenOperationException("Bạn cần đăng ký khóa học để tham gia thảo luận.");
     }
 
     private void validateTeacherOrAdmin(Course course, UUID userId) {
-        boolean isTeacher = course.getCreator() != null && course.getCreator().getId().equals(userId);
-        boolean isAdmin = SecurityUtils.isAdmin();
-        if (!isTeacher && !isAdmin) {
-            throw new ForbiddenOperationException("Chỉ giảng viên của khóa học hoặc Quản trị viên mới có quyền thực hiện thao tác này.");
-        }
+        if (SecurityUtils.isAdmin()) return;
+        if (course.getCreator() != null && course.getCreator().getId().equals(userId)) return;
+        if (courseTeacherRepository.existsByCourseIdAndTeacherId(course.getId(), userId)) return;
+
+        throw new ForbiddenOperationException("Chỉ giảng viên của khóa học mới có quyền thực hiện thao tác này.");
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<MentionCandidateResponse> getMentionCandidates(UUID courseId) {
-        Course course = getCourseOrThrow(courseId);
-        java.util.Map<UUID, MentionCandidateResponse> candidatesMap = new java.util.LinkedHashMap<>();
-
-        // 1. Course Creator / Primary Teacher
-        if (course.getCreator() != null) {
-            User creator = course.getCreator();
-            candidatesMap.put(creator.getId(), MentionCandidateResponse.builder()
-                    .id(creator.getId())
-                    .fullName(creator.getFullName())
-                    .email(creator.getEmail())
-                    .avatarUrl(creator.getAvatarUrl())
-                    .roleInCourse("TEACHER")
-                    .build());
-        }
-
-        // 2. Co-teachers
-        try {
-            List<CourseTeacher> coTeachers = courseTeacherRepository.findByCourseId(courseId);
-            if (coTeachers != null) {
-                for (CourseTeacher ct : coTeachers) {
-                    if (ct.getTeacher() != null && !candidatesMap.containsKey(ct.getTeacher().getId())) {
-                        User t = ct.getTeacher();
-                        candidatesMap.put(t.getId(), MentionCandidateResponse.builder()
-                                .id(t.getId())
-                                .fullName(t.getFullName())
-                                .email(t.getEmail())
-                                .avatarUrl(t.getAvatarUrl())
-                                .roleInCourse("TEACHER")
-                                .build());
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            log.warn("Could not query co-teachers for course {}: {}", courseId, ex.getMessage());
-        }
-
-        // 3. Enrolled students
-        try {
-            List<CourseEnrollment> enrollments = enrollmentRepository.findByCourseIdWithStudent(courseId);
-            if (enrollments != null) {
-                for (CourseEnrollment ce : enrollments) {
-                    if (ce.getStudent() != null && !candidatesMap.containsKey(ce.getStudent().getId())) {
-                        User s = ce.getStudent();
-                        candidatesMap.put(s.getId(), MentionCandidateResponse.builder()
-                                .id(s.getId())
-                                .fullName(s.getFullName())
-                                .email(s.getEmail())
-                                .avatarUrl(s.getAvatarUrl())
-                                .roleInCourse("STUDENT")
-                                .build());
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            log.warn("Could not query enrollments for course {}: {}", courseId, ex.getMessage());
-        }
-
-        return new java.util.ArrayList<>(candidatesMap.values());
-    }
-
-    private void notifyMentionedUsers(Course course, DiscussionThread thread, Lesson lesson, User author, List<UUID> mentionedUserIds, String contextSnippet) {
-        if (mentionedUserIds == null || mentionedUserIds.isEmpty()) {
-            return;
-        }
-
-        String linkUrl = (lesson != null)
-                ? "/courses/" + course.getId() + "/lessons/" + lesson.getId() + "?threadId=" + thread.getId()
-                : "/courses/" + course.getId() + "?tab=discussion&threadId=" + thread.getId();
-
-        String title = author.getFullName() + " đã nhắc đến bạn trong thảo luận";
-        String body = author.getFullName() + " đã nhắc đến bạn " + contextSnippet;
-
-        mentionedUserIds.stream()
-                .filter(id -> id != null && !id.equals(author.getId()))
-                .distinct()
-                .forEach(recipientId -> {
-                    try {
-                        kafkaNotificationProducer.sendNotification(recipientId, "DISCUSSION_MENTION", title, body, linkUrl);
-                        log.info("Sent mention notification to user {} for thread {}", recipientId, thread.getId());
-                    } catch (Exception ex) {
-                        log.warn("Failed to dispatch mention notification to user {}: {}", recipientId, ex.getMessage());
-                    }
-                });
-    }
-
-    private String truncate(String text, int maxLength) {
+    private String truncate(String text, int maxLen) {
         if (text == null) return "";
-        if (text.length() <= maxLength) return text;
-        return text.substring(0, maxLength) + "...";
+        return text.length() > maxLen ? text.substring(0, maxLen - 3) + "..." : text;
     }
 }

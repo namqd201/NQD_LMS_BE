@@ -307,6 +307,30 @@ public class DatabaseSchemaMigrationRunner implements CommandLineRunner {
             jdbcTemplate.execute("CREATE INDEX IF NOT EXISTS idx_post_reactions_user ON post_reactions(user_id)");
 
             jdbcTemplate.execute("""
+                CREATE TABLE IF NOT EXISTS thread_reactions (
+                    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                    thread_id UUID NOT NULL REFERENCES discussion_threads(id) ON DELETE CASCADE,
+                    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                    type VARCHAR(32) NOT NULL DEFAULT 'LIKE',
+                    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                    created_by_user VARCHAR(255),
+                    updated_by VARCHAR(255),
+                    is_active BOOLEAN DEFAULT TRUE,
+                    is_deleted BOOLEAN DEFAULT FALSE,
+                    deleted_at TIMESTAMP WITHOUT TIME ZONE,
+                    deleted_by VARCHAR(255),
+                    CONSTRAINT uk_thread_user_reaction UNIQUE (thread_id, user_id)
+                )
+            """);
+            jdbcTemplate.execute("CREATE INDEX IF NOT EXISTS idx_thread_reactions_thread ON thread_reactions(thread_id)");
+            jdbcTemplate.execute("CREATE INDEX IF NOT EXISTS idx_thread_reactions_user ON thread_reactions(user_id)");
+
+            try {
+                jdbcTemplate.execute("UPDATE post_reactions SET type = 'LIKE' WHERE type = 'UPVOTE'");
+            } catch (Exception ignored) {}
+
+            jdbcTemplate.execute("""
                 CREATE TABLE IF NOT EXISTS course_announcements (
                     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                     course_id UUID NOT NULL REFERENCES courses(id) ON DELETE CASCADE,

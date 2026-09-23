@@ -1,9 +1,12 @@
 package com.nqd.nqd_lms_be.dto.discussion;
 
 import com.nqd.nqd_lms_be.entity.DiscussionPost;
+import com.nqd.nqd_lms_be.entity.enums.PostReactionType;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Map;
 import java.util.UUID;
 
 @Getter
@@ -25,6 +28,9 @@ public class DiscussionPostResponse {
     private Boolean isAnswer;
     private Integer upvoteCount;
     private Boolean isUpvotedByMe;
+    private Integer reactionCount;
+    private PostReactionType myReaction;
+    private Map<String, Integer> reactionBreakdown;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -37,12 +43,24 @@ public class DiscussionPostResponse {
     }
 
     public static DiscussionPostResponse fromEntity(DiscussionPost p, UUID currentUserId, boolean isUpvotedByMe) {
+        return fromEntity(p, currentUserId, isUpvotedByMe ? PostReactionType.LIKE : null, Collections.emptyMap(), p != null && p.getUpvoteCount() != null ? p.getUpvoteCount() : 0);
+    }
+
+    public static DiscussionPostResponse fromEntity(
+            DiscussionPost p,
+            UUID currentUserId,
+            PostReactionType myReaction,
+            Map<String, Integer> reactionBreakdown,
+            int reactionCount
+    ) {
         if (p == null) return null;
         String authorRole = "STUDENT";
         if (p.getThread() != null && p.getThread().getCourse() != null && p.getThread().getCourse().getCreator() != null
                 && p.getAuthor() != null && p.getThread().getCourse().getCreator().getId().equals(p.getAuthor().getId())) {
             authorRole = "TEACHER";
         }
+
+        int count = Math.max(p.getUpvoteCount() != null ? p.getUpvoteCount() : 0, reactionCount);
 
         return DiscussionPostResponse.builder()
                 .id(p.getId())
@@ -55,8 +73,11 @@ public class DiscussionPostResponse {
                 .authorAvatarUrl(p.getAuthor() != null ? p.getAuthor().getAvatarUrl() : null)
                 .content(p.getContent())
                 .isAnswer(p.getIsAnswer())
-                .upvoteCount(p.getUpvoteCount())
-                .isUpvotedByMe(isUpvotedByMe)
+                .upvoteCount(count)
+                .isUpvotedByMe(myReaction != null)
+                .reactionCount(count)
+                .myReaction(myReaction)
+                .reactionBreakdown(reactionBreakdown != null ? reactionBreakdown : Collections.emptyMap())
                 .createdAt(p.getCreatedAt())
                 .updatedAt(p.getUpdatedAt())
                 .build();
