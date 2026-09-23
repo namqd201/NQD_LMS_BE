@@ -27,7 +27,7 @@ public class TeacherSubjectController {
     @GetMapping
     @Operation(summary = "Get list of active subjects for course association")
     public ResponseEntity<List<SubjectResponse>> getActiveSubjects() {
-        List<SubjectResponse> subjects = subjectRepository.findByStatus(SubjectStatus.ACTIVE).stream()
+        List<SubjectResponse> subjects = subjectRepository.findByStatusAndIsDeletedFalse(SubjectStatus.ACTIVE).stream()
                 .map(s -> SubjectResponse.builder()
                         .id(s.getId())
                         .name(s.getName())

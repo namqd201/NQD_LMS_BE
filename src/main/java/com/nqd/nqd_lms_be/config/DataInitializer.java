@@ -1,5 +1,6 @@
 package com.nqd.nqd_lms_be.config;
 
+import com.nqd.nqd_lms_be.entity.Course;
 import com.nqd.nqd_lms_be.entity.Question;
 import com.nqd.nqd_lms_be.entity.QuestionCategory;
 import com.nqd.nqd_lms_be.entity.Role;
@@ -28,6 +29,7 @@ public class DataInitializer implements CommandLineRunner {
     private final UserRepository userRepository;
     private final UserRoleRepository userRoleRepository;
     private final SubjectRepository subjectRepository;
+    private final CourseRepository courseRepository;
     private final QuestionCategoryRepository questionCategoryRepository;
     private final QuestionRepository questionRepository;
 
@@ -66,11 +68,20 @@ public class DataInitializer implements CommandLineRunner {
             }
         }
 
-        // 3. Ensure baseline Academic Subjects exist
-        getOrCreateSubject("Toán học", "MATH", "Môn Toán học từ tiểu học đến phổ thông và đại học");
-        getOrCreateSubject("Tin học & Lập trình", "IT", "Khoa học máy tính, thuật toán và lập trình phần mềm");
-        getOrCreateSubject("Tiếng Anh", "ENG", "Ngoại ngữ tiếng Anh giao tiếp và học thuật");
-        getOrCreateSubject("Khoa học Tự nhiên", "SCI", "Vật lý, Hóa học và Sinh học");
+        // 3. Ensure the 9 baseline Academic Subjects exist:
+        // Danh sách chính thức: Toán Học, Tiếng Việt/Ngữ Văn, Tiếng Anh, Vật Lý, Hóa Học, Sinh Học, Địa Lý, Lịch Sử, Tin Học & Lập Trình
+        syncBaselineSubject("Toán Học", "MATH", "Môn Toán học từ tiểu học đến phổ thông và đại học");
+        syncBaselineSubject("Tiếng Việt/Ngữ Văn", "LIT", "Tiếng Việt, Văn học và phương pháp hành văn nghị luận");
+        syncBaselineSubject("Tiếng Anh", "ENG", "Ngoại ngữ tiếng Anh giao tiếp và học thuật");
+        Subject phys = syncBaselineSubject("Vật Lý", "PHYS", "Cơ học, nhiệt học, điện từ học và quang học");
+        syncBaselineSubject("Hóa Học", "CHEM", "Hóa đại cương, vô cơ và hữu cơ");
+        syncBaselineSubject("Sinh Học", "BIO", "Sinh học tế bào, cơ thể và hệ sinh thái");
+        syncBaselineSubject("Địa Lý", "GEO", "Địa lý tự nhiên, dân cư và kinh tế xã hội");
+        syncBaselineSubject("Lịch Sử", "HIST", "Lịch sử Việt Nam và lịch sử thế giới qua các thời kỳ");
+        syncBaselineSubject("Tin Học & Lập Trình", "IT", "Khoa học máy tính, thuật toán và lập trình phần mềm");
+
+        // Loại bỏ hoàn toàn môn "Khoa học Tự nhiên"
+        removeKhoaHocTuNhienSubject(phys);
 
         // 4. Ensure default PUBLIC categories exist for all subjects & grades, and migrate Grade 1 questions
         initDefaultQuestionCategoriesAndMigrateGrade1();
@@ -87,21 +98,96 @@ public class DataInitializer implements CommandLineRunner {
                 });
     }
 
-    private void getOrCreateSubject(String name, String code, String description) {
-        if (subjectRepository.findByCode(code).isEmpty()) {
-            Subject subject = Subject.builder()
-                    .name(name)
-                    .code(code)
-                    .description(description)
-                    .status(SubjectStatus.ACTIVE)
-                    .build();
-            subjectRepository.save(subject);
-            log.info("Created baseline subject: {} ({})", name, code);
+    private Subject syncBaselineSubject(String name, String code, String description) {
+        Optional<Subject> subjectByCode = subjectRepository.findByCode(code);
+        if (subjectByCode.isPresent()) {
+            Subject s = subjectByCode.get();
+            s.setName(name);
+            s.setDescription(description);
+            s.setStatus(SubjectStatus.ACTIVE);
+            s.setIsDeleted(false);
+            s.setDeletedAt(null);
+            log.info("Updated baseline subject: {} ({})", name, code);
+            return subjectRepository.save(s);
+        }
+
+        // Also check by name (case-insensitive) in case it was created with a different code
+        List<Subject> allSubs = subjectRepository.findAll();
+        Optional<Subject> existingByName = allSubs.stream()
+                .filter(s -> s.getName().equalsIgnoreCase(name) ||
+                             (name.contains("/") && (s.getName().toLowerCase().contains("tiếng việt") || s.getName().toLowerCase().contains("ngữ văn"))))
+                .findFirst();
+
+        if (existingByName.isPresent()) {
+            Subject s = existingByName.get();
+            s.setName(name);
+            s.setCode(code);
+            s.setDescription(description);
+            s.setStatus(SubjectStatus.ACTIVE);
+            s.setIsDeleted(false);
+            s.setDeletedAt(null);
+            log.info("Updated existing subject name/code to: {} ({})", name, code);
+            return subjectRepository.save(s);
+        }
+
+        Subject newSub = Subject.builder()
+                .name(name)
+                .code(code)
+                .description(description)
+                .status(SubjectStatus.ACTIVE)
+                .build();
+        Subject saved = subjectRepository.save(newSub);
+        log.info("Created baseline subject: {} ({})", name, code);
+        return saved;
+    }
+
+    private void removeKhoaHocTuNhienSubject(Subject fallbackSubject) {
+        List<Subject> allSubs = subjectRepository.findAll();
+        for (Subject sub : allSubs) {
+            String nameLower = sub.getName() != null ? sub.getName().toLowerCase() : "";
+            if ("SCI".equalsIgnoreCase(sub.getCode()) ||
+                nameLower.contains("khoa học tự nhiên") ||
+                nameLower.contains("khoa hoc tu nhien")) {
+
+                log.info("Cleaning up 'Khoa học Tự nhiên' subject (id: {}, code: {})", sub.getId(), sub.getCode());
+
+                // 1. Reassign or delete any course referencing it
+                List<Course> courses = courseRepository.findBySubjectId(sub.getId());
+                if (!courses.isEmpty() && fallbackSubject != null) {
+                    for (Course c : courses) {
+                        c.setSubject(fallbackSubject);
+                        courseRepository.save(c);
+                        log.info("Reassigned course '{}' from Khoa học Tự nhiên to {}", c.getName(), fallbackSubject.getName());
+                    }
+                }
+
+                // 2. Reassign any questions referencing it
+                List<Question> questions = questionRepository.findBySubjectId(sub.getId());
+                if (!questions.isEmpty() && fallbackSubject != null) {
+                    for (Question q : questions) {
+                        q.setSubject(fallbackSubject);
+                        questionRepository.save(q);
+                    }
+                }
+
+                // 3. Delete categories referencing it
+                List<QuestionCategory> categories = questionCategoryRepository.findBySubjectIdAndIsDeletedFalseOrderByDisplayOrderAscCreatedAtAsc(sub.getId());
+                if (!categories.isEmpty()) {
+                    questionCategoryRepository.deleteAll(categories);
+                }
+
+                // 4. Mark subject as deleted / inactive
+                sub.setStatus(SubjectStatus.INACTIVE);
+                sub.setIsDeleted(true);
+                sub.setDeletedAt(LocalDateTime.now());
+                subjectRepository.save(sub);
+                log.info("Subject 'Khoa học Tự nhiên' disabled and soft deleted successfully.");
+            }
         }
     }
 
     private void initDefaultQuestionCategoriesAndMigrateGrade1() {
-        List<Subject> subjects = subjectRepository.findAll();
+        List<Subject> subjects = subjectRepository.findByStatusAndIsDeletedFalse(SubjectStatus.ACTIVE);
 
         // 1. Ensure for every subject and every standard grade, a default PUBLIC category exists
         for (Subject subject : subjects) {
