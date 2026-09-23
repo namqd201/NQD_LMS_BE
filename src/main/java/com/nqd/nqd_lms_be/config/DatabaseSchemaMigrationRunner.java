@@ -8,16 +8,31 @@ import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+
 @Component
+@Order(1)
 @RequiredArgsConstructor
 @Slf4j
-public class DatabaseSchemaMigrationRunner {
+public class DatabaseSchemaMigrationRunner implements CommandLineRunner {
 
     private final JdbcTemplate jdbcTemplate;
+    private static volatile boolean migrated = false;
+
+    @Override
+    public void run(String... args) {
+        migrateDatabaseSchema();
+    }
 
     @EventListener(ApplicationReadyEvent.class)
     @Order(1)
-    public void migrateDatabaseSchema() {
+    public synchronized void migrateDatabaseSchema() {
+        if (migrated) {
+            return;
+        }
         log.info("Checking and applying database schema migrations...");
         try {
             // 1. Alter courses table for Phase 3 Monetization

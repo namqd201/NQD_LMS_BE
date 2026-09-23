@@ -16,11 +16,12 @@ import com.nqd.nqd_lms_be.repository.knowledge.KnowledgeLessonRepository;
 import com.nqd.nqd_lms_be.repository.knowledge.KnowledgeQuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.CommandLineRunner;
+import com.nqd.nqd_lms_be.entity.enums.CourseStatus;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -28,10 +29,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-@Order(2)
 @RequiredArgsConstructor
 @Slf4j
-public class KnowledgeBaseSeeder implements CommandLineRunner {
+public class KnowledgeBaseSeeder {
 
     private final SubjectRepository subjectRepository;
     private final KnowledgeCurriculumRepository curriculumRepository;
@@ -41,20 +41,22 @@ public class KnowledgeBaseSeeder implements CommandLineRunner {
     private final CourseRepository courseRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Override
-    @Transactional
-    public void run(String... args) {
+    @EventListener(ApplicationReadyEvent.class)
+    @Order(10)
+    public void seedKnowledgeBase() {
         log.info("Checking Knowledge Base (Admin GDPT Curriculum) baseline data...");
 
-        // Clean up any legacy MATH_GRADE_1 from courses table if it exists
+        // Safely archive any legacy MATH_GRADE_1 from teacher courses table
         // (Courses table is strictly for teachers' personal classes)
         try {
             courseRepository.findByCode("MATH_GRADE_1").ifPresent(legacyCourse -> {
-                log.info("Removing legacy MATH_GRADE_1 from teacher courses table (ID: {})...", legacyCourse.getId());
-                courseRepository.delete(legacyCourse);
+                log.info("Archiving legacy MATH_GRADE_1 from teacher courses table (ID: {})...", legacyCourse.getId());
+                legacyCourse.setStatus(CourseStatus.ARCHIVED);
+                legacyCourse.setIsDisabled(true);
+                courseRepository.save(legacyCourse);
             });
         } catch (Exception e) {
-            log.warn("Could not clean up legacy course MATH_GRADE_1: {}", e.getMessage());
+            log.warn("Could not archive legacy course MATH_GRADE_1: {}", e.getMessage());
         }
 
         try {
