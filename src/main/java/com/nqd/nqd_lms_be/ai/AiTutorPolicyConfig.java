@@ -24,6 +24,7 @@ public class AiTutorPolicyConfig {
     private List<String> allowedDataAccess = new ArrayList<>();
     private List<String> blockedDataAccess = new ArrayList<>();
     private List<String> promptInjectionGuards = new ArrayList<>();
+    private List<String> pedagogicalRules = new ArrayList<>();
     private Map<String, List<String>> roleBasedAccess = new HashMap<>();
 
     @PostConstruct
@@ -58,6 +59,9 @@ public class AiTutorPolicyConfig {
             if (config.get("prompt-injection-guards") instanceof List<?> guards) {
                 this.promptInjectionGuards = guards.stream().map(Object::toString).toList();
             }
+            if (config.get("pedagogical-rules") instanceof List<?> pedRules) {
+                this.pedagogicalRules = pedRules.stream().map(Object::toString).toList();
+            }
             if (config.get("role-based-access") instanceof Map<?, ?> rba) {
                 for (Map.Entry<?, ?> entry : rba.entrySet()) {
                     String roleName = entry.getKey().toString();
@@ -67,8 +71,8 @@ public class AiTutorPolicyConfig {
                 }
             }
 
-            log.info("AI Tutor Policy loaded successfully. Role: '{}', AllowedAccess: {}, BlockedAccess: {}, Guards: {}",
-                    role, allowedDataAccess.size(), blockedDataAccess.size(), promptInjectionGuards.size());
+            log.info("AI Tutor Policy loaded successfully. Role: '{}', AllowedAccess: {}, BlockedAccess: {}, Guards: {}, PedagogicalRules: {}",
+                    role, allowedDataAccess.size(), blockedDataAccess.size(), promptInjectionGuards.size(), pedagogicalRules.size());
 
         } catch (Exception e) {
             log.error("Failed to load ai-tutor-policy.yml: {}. Using default policy.", e.getMessage());
@@ -99,6 +103,13 @@ public class AiTutorPolicyConfig {
         if (userRole != null && roleBasedAccess.containsKey(userRole.toUpperCase())) {
             sb.append("\n## PHẠM VI QUYỀN CỦA NGƯỜI DÙNG HIỆN TẠI (").append(userRole.toUpperCase()).append("):\n");
             for (String rule : roleBasedAccess.get(userRole.toUpperCase())) {
+                sb.append("- ").append(rule).append("\n");
+            }
+        }
+
+        if (pedagogicalRules != null && !pedagogicalRules.isEmpty()) {
+            sb.append("\n## NGUYÊN TẮC SƯ PHẠM ĐỐI VỚI CÁC MÔN TỰ NHIÊN (TOÁN, LÝ, HÓA, TÍNH TOÁN):\n");
+            for (String rule : pedagogicalRules) {
                 sb.append("- ").append(rule).append("\n");
             }
         }

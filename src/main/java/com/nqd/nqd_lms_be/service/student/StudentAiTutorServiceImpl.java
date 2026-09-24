@@ -116,7 +116,7 @@ public class StudentAiTutorServiceImpl implements StudentAiTutorService {
         AiTutorMessage welcome = AiTutorMessage.builder()
                 .conversation(saved)
                 .role("ASSISTANT")
-                .content("👋 Chào bạn! Mình là **NQD AI Tutor** - Gia sư học tập thông minh. Mình có thể hỗ trợ bạn giải đáp bài học, hướng dẫn giải bài tập và ôn luyện kiến thức. Bạn cần mình giúp gì hôm nay?")
+                .content("👋 Chào bạn! Mình là **NQD AI Tutor** - Gia sư học tập thông minh. Mình có thể hỗ trợ bạn giải đáp bài học, hướng dẫn giải bài tập và ôn luyện kiến thức.\n\n💡 *Lưu ý: Đối với các môn Toán học, Vật lý..., mình sẽ hướng dẫn chi tiết từng bước phương pháp để bạn tự thực hiện bước tính cuối và nắm chắc bài học nhé!* Bạn cần mình giúp gì hôm nay?")
                 .createdAt(LocalDateTime.now())
                 .build();
         messageRepository.save(welcome);

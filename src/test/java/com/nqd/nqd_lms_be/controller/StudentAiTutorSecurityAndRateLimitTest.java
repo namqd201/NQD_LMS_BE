@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,6 +81,9 @@ class StudentAiTutorSecurityAndRateLimitTest {
 
     @Autowired
     private StudentAiRateLimiter rateLimiter;
+
+    @MockitoBean
+    private com.nqd.nqd_lms_be.membership.service.MembershipEntitlementService membershipEntitlementService;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
