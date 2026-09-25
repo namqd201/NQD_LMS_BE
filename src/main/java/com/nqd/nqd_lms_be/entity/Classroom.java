@@ -68,7 +68,7 @@ public class Classroom extends BaseEntity {
     @Column(name = "meeting_note", columnDefinition = "TEXT")
     private String meetingNote;
 
-    @Column(name = "is_live_now", nullable = false)
+    @Column(name = "is_live_now", nullable = false, columnDefinition = "boolean default false")
     @Builder.Default
     private Boolean isLiveNow = false;
 }

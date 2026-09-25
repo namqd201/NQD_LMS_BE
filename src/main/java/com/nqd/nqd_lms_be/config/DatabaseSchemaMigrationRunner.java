@@ -574,7 +574,12 @@ public class DatabaseSchemaMigrationRunner implements CommandLineRunner {
                     updated_by VARCHAR(255)
                 )
             """);
-            jdbcTemplate.execute("CREATE INDEX IF NOT EXISTS idx_k_questions_lesson ON knowledge_questions(lesson_id)");
+            // 10. Classroom Meeting & Feature columns
+            jdbcTemplate.execute("ALTER TABLE classrooms ADD COLUMN IF NOT EXISTS lark_meeting_url TEXT");
+            jdbcTemplate.execute("ALTER TABLE classrooms ADD COLUMN IF NOT EXISTS meeting_id VARCHAR(100)");
+            jdbcTemplate.execute("ALTER TABLE classrooms ADD COLUMN IF NOT EXISTS passcode VARCHAR(100)");
+            jdbcTemplate.execute("ALTER TABLE classrooms ADD COLUMN IF NOT EXISTS meeting_note TEXT");
+            jdbcTemplate.execute("ALTER TABLE classrooms ADD COLUMN IF NOT EXISTS is_live_now BOOLEAN NOT NULL DEFAULT FALSE");
 
             log.info("Database schema migrations verified and applied successfully.");
         } catch (Exception e) {
