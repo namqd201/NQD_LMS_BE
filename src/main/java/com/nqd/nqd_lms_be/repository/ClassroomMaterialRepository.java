@@ -10,4 +10,5 @@ import java.util.UUID;
 @Repository
 public interface ClassroomMaterialRepository extends JpaRepository<ClassroomMaterial, UUID> {
     List<ClassroomMaterial> findByClassroomIdOrderByCreatedAtDesc(UUID classroomId);
+    List<ClassroomMaterial> findByClassroomIdOrderByLessonOrderAscCreatedAtAsc(UUID classroomId);
 }

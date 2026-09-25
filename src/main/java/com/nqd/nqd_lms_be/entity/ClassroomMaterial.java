@@ -29,15 +29,32 @@ public class ClassroomMaterial extends BaseEntity {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "chapter_title", length = 255)
+    @Builder.Default
+    private String chapterTitle = "Chủ đề chung";
+
+    @Column(name = "lesson_order")
+    @Builder.Default
+    private Integer lessonOrder = 1;
+
+    @Column(name = "content", columnDefinition = "TEXT")
+    private String content;
+
+    @Column(name = "video_url", columnDefinition = "TEXT")
+    private String videoUrl;
+
+    @Column(name = "attachment_name", length = 255)
+    private String attachmentName;
+
+    @Column(name = "file_url", columnDefinition = "TEXT")
+    private String fileUrl;
+
     /**
-     * PDF, SLIDE, TEXTBOOK, EXAM_PREP, LINK, OTHER
+     * LESSON, PDF, SLIDE, TEXTBOOK, EXAM_PREP, LINK, OTHER
      */
     @Column(name = "material_type", nullable = false, length = 50)
     @Builder.Default
-    private String materialType = "PDF";
-
-    @Column(name = "file_url", nullable = false, columnDefinition = "TEXT")
-    private String fileUrl;
+    private String materialType = "LESSON";
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "uploaded_by", nullable = false)

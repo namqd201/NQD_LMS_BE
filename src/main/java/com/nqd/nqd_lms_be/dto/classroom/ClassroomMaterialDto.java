@@ -13,12 +13,16 @@ public class ClassroomMaterialDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Request {
-        @NotBlank(message = "Tiêu đề tài liệu không được để trống")
+        @NotBlank(message = "Tiêu đề bài học không được để trống")
         private String title;
+        private String chapterTitle;
+        private Integer lessonOrder;
         private String description;
-        private String materialType; // PDF, SLIDE, TEXTBOOK, EXAM_PREP, LINK, OTHER
-        @NotBlank(message = "Đường dẫn tài liệu không được để trống")
+        private String content;
+        private String videoUrl;
+        private String materialType; // LESSON, PDF, SLIDE, TEXTBOOK, EXAM_PREP, LINK, OTHER
         private String fileUrl;
+        private String attachmentName;
     }
 
     @Data
@@ -29,12 +33,18 @@ public class ClassroomMaterialDto {
         private UUID id;
         private UUID classroomId;
         private String title;
+        private String chapterTitle;
+        private Integer lessonOrder;
         private String description;
+        private String content;
+        private String videoUrl;
         private String materialType;
         private String fileUrl;
+        private String attachmentName;
         private UUID uploadedById;
         private String uploadedByName;
         private Integer downloadCount;
         private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
     }
 }

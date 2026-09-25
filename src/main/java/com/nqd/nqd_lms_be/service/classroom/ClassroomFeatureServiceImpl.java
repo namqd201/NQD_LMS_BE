@@ -92,17 +92,26 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
     }
 
     // ==========================================
-    // 1. MATERIALS
+    // 1. MATERIALS (LESSONS)
     // ==========================================
 
     @Override
     @Transactional(readOnly = true)
     public List<ClassroomMaterialDto.Response> getMaterials(UUID classroomId, UUID currentUserId) {
         validateAndGetClassroomAccess(classroomId, currentUserId);
-        return materialRepository.findByClassroomIdOrderByCreatedAtDesc(classroomId)
+        return materialRepository.findByClassroomIdOrderByLessonOrderAscCreatedAtAsc(classroomId)
                 .stream()
                 .map(this::mapToMaterialResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ClassroomMaterialDto.Response getMaterialById(UUID classroomId, UUID materialId, UUID currentUserId) {
+        validateAndGetClassroomAccess(classroomId, currentUserId);
+        ClassroomMaterial material = materialRepository.findById(materialId)
+                .orElseThrow(() -> new ResourceNotFoundException("ClassroomMaterial", materialId));
+        return mapToMaterialResponse(material);
     }
 
     @Override
@@ -115,15 +124,56 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
         ClassroomMaterial material = ClassroomMaterial.builder()
                 .classroom(classroom)
                 .title(request.getTitle().trim())
+                .chapterTitle(request.getChapterTitle() != null && !request.getChapterTitle().trim().isEmpty() 
+                        ? request.getChapterTitle().trim() : "Chủ đề chung")
+                .lessonOrder(request.getLessonOrder() != null ? request.getLessonOrder() : 1)
                 .description(request.getDescription())
-                .materialType(request.getMaterialType() != null ? request.getMaterialType().trim() : "PDF")
-                .fileUrl(request.getFileUrl().trim())
+                .content(request.getContent())
+                .videoUrl(request.getVideoUrl() != null && !request.getVideoUrl().trim().isEmpty() 
+                        ? request.getVideoUrl().trim() : null)
+                .attachmentName(request.getAttachmentName() != null && !request.getAttachmentName().trim().isEmpty()
+                        ? request.getAttachmentName().trim() : null)
+                .materialType(request.getMaterialType() != null && !request.getMaterialType().trim().isEmpty() 
+                        ? request.getMaterialType().trim() : "LESSON")
+                .fileUrl(request.getFileUrl() != null && !request.getFileUrl().trim().isEmpty() 
+                        ? request.getFileUrl().trim() : null)
                 .uploadedBy(teacher)
                 .downloadCount(0)
                 .build();
 
         material = materialRepository.save(material);
-        log.info("Teacher {} created material: {} for classroom {}", teacher.getEmail(), material.getTitle(), classroom.getName());
+        log.info("Teacher {} created lesson/material: {} for classroom {}", teacher.getEmail(), material.getTitle(), classroom.getName());
+        return mapToMaterialResponse(material);
+    }
+
+    @Override
+    @Transactional
+    public ClassroomMaterialDto.Response updateMaterial(UUID classroomId, UUID materialId, ClassroomMaterialDto.Request request, UUID teacherId) {
+        validateTeacherPermission(classroomId, teacherId);
+        ClassroomMaterial material = materialRepository.findById(materialId)
+                .orElseThrow(() -> new ResourceNotFoundException("ClassroomMaterial", materialId));
+
+        material.setTitle(request.getTitle().trim());
+        if (request.getChapterTitle() != null) {
+            material.setChapterTitle(request.getChapterTitle().trim().isEmpty() ? "Chủ đề chung" : request.getChapterTitle().trim());
+        }
+        if (request.getLessonOrder() != null) {
+            material.setLessonOrder(request.getLessonOrder());
+        }
+        material.setDescription(request.getDescription());
+        material.setContent(request.getContent());
+        material.setVideoUrl(request.getVideoUrl() != null && !request.getVideoUrl().trim().isEmpty() 
+                ? request.getVideoUrl().trim() : null);
+        material.setAttachmentName(request.getAttachmentName() != null && !request.getAttachmentName().trim().isEmpty()
+                ? request.getAttachmentName().trim() : null);
+        if (request.getMaterialType() != null && !request.getMaterialType().trim().isEmpty()) {
+            material.setMaterialType(request.getMaterialType().trim());
+        }
+        material.setFileUrl(request.getFileUrl() != null && !request.getFileUrl().trim().isEmpty() 
+                ? request.getFileUrl().trim() : null);
+
+        material = materialRepository.save(material);
+        log.info("Teacher {} updated lesson/material: {} for classroom {}", teacherId, material.getTitle(), classroomId);
         return mapToMaterialResponse(material);
     }
 
@@ -141,13 +191,19 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
                 .id(m.getId())
                 .classroomId(m.getClassroom().getId())
                 .title(m.getTitle())
+                .chapterTitle(m.getChapterTitle() != null ? m.getChapterTitle() : "Chủ đề chung")
+                .lessonOrder(m.getLessonOrder() != null ? m.getLessonOrder() : 1)
                 .description(m.getDescription())
+                .content(m.getContent())
+                .videoUrl(m.getVideoUrl())
                 .materialType(m.getMaterialType())
                 .fileUrl(m.getFileUrl())
+                .attachmentName(m.getAttachmentName())
                 .uploadedById(m.getUploadedBy().getId())
                 .uploadedByName(m.getUploadedBy().getFullName())
                 .downloadCount(m.getDownloadCount())
                 .createdAt(m.getCreatedAt())
+                .updatedAt(m.getUpdatedAt())
                 .build();
     }
 

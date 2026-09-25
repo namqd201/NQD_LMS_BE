@@ -37,11 +37,11 @@ public class ClassroomFeatureController {
     private static final String CLASSROOM_FILES_DIR = "uploads/classroom_files";
 
     // ==========================================
-    // 1. MATERIALS (TÀI LIỆU)
+    // 1. MATERIALS (BÀI HỌC & BÀI GIẢNG)
     // ==========================================
 
     @GetMapping("/materials")
-    @Operation(summary = "Lấy danh sách tài liệu học tập trong lớp")
+    @Operation(summary = "Lấy danh sách bài học và tài liệu học tập trong lớp")
     public ResponseEntity<List<ClassroomMaterialDto.Response>> getMaterials(
             @PathVariable UUID classroomId,
             @AuthenticationPrincipal AppUserPrincipal principal
@@ -49,8 +49,18 @@ public class ClassroomFeatureController {
         return ResponseEntity.ok(featureService.getMaterials(classroomId, principal.getId()));
     }
 
+    @GetMapping("/materials/{materialId}")
+    @Operation(summary = "Xem chi tiết một bài học trong lớp")
+    public ResponseEntity<ClassroomMaterialDto.Response> getMaterialById(
+            @PathVariable UUID classroomId,
+            @PathVariable UUID materialId,
+            @AuthenticationPrincipal AppUserPrincipal principal
+    ) {
+        return ResponseEntity.ok(featureService.getMaterialById(classroomId, materialId, principal.getId()));
+    }
+
     @PostMapping("/materials")
-    @Operation(summary = "Giáo viên đăng tài liệu học tập mới")
+    @Operation(summary = "Giáo viên tạo bài học mới")
     public ResponseEntity<ClassroomMaterialDto.Response> createMaterial(
             @PathVariable UUID classroomId,
             @Valid @RequestBody ClassroomMaterialDto.Request request,
@@ -60,15 +70,26 @@ public class ClassroomFeatureController {
                 .body(featureService.createMaterial(classroomId, request, principal.getId()));
     }
 
+    @PutMapping("/materials/{materialId}")
+    @Operation(summary = "Giáo viên cập nhật bài học")
+    public ResponseEntity<ClassroomMaterialDto.Response> updateMaterial(
+            @PathVariable UUID classroomId,
+            @PathVariable UUID materialId,
+            @Valid @RequestBody ClassroomMaterialDto.Request request,
+            @AuthenticationPrincipal AppUserPrincipal principal
+    ) {
+        return ResponseEntity.ok(featureService.updateMaterial(classroomId, materialId, request, principal.getId()));
+    }
+
     @DeleteMapping("/materials/{materialId}")
-    @Operation(summary = "Giáo viên xóa tài liệu học tập")
+    @Operation(summary = "Giáo viên xóa bài học")
     public ResponseEntity<MessageResponse> deleteMaterial(
             @PathVariable UUID classroomId,
             @PathVariable UUID materialId,
             @AuthenticationPrincipal AppUserPrincipal principal
     ) {
         featureService.deleteMaterial(classroomId, materialId, principal.getId());
-        return ResponseEntity.ok(MessageResponse.of("Đã xóa tài liệu học tập thành công."));
+        return ResponseEntity.ok(MessageResponse.of("Đã xóa bài học thành công."));
     }
 
     // ==========================================

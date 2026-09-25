@@ -8,9 +8,11 @@ import java.util.UUID;
 
 public interface ClassroomFeatureService {
 
-    // Materials
+    // Materials (Lessons)
     List<ClassroomMaterialDto.Response> getMaterials(UUID classroomId, UUID currentUserId);
+    ClassroomMaterialDto.Response getMaterialById(UUID classroomId, UUID materialId, UUID currentUserId);
     ClassroomMaterialDto.Response createMaterial(UUID classroomId, ClassroomMaterialDto.Request request, UUID teacherId);
+    ClassroomMaterialDto.Response updateMaterial(UUID classroomId, UUID materialId, ClassroomMaterialDto.Request request, UUID teacherId);
     void deleteMaterial(UUID classroomId, UUID materialId, UUID teacherId);
 
     // Assignments

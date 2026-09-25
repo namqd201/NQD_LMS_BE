@@ -581,6 +581,14 @@ public class DatabaseSchemaMigrationRunner implements CommandLineRunner {
             jdbcTemplate.execute("ALTER TABLE classrooms ADD COLUMN IF NOT EXISTS meeting_note TEXT");
             jdbcTemplate.execute("ALTER TABLE classrooms ADD COLUMN IF NOT EXISTS is_live_now BOOLEAN NOT NULL DEFAULT FALSE");
 
+            // 11. Classroom Materials (Lesson syllabus columns)
+            jdbcTemplate.execute("ALTER TABLE classroom_materials ADD COLUMN IF NOT EXISTS chapter_title VARCHAR(255) DEFAULT 'Chủ đề chung'");
+            jdbcTemplate.execute("ALTER TABLE classroom_materials ADD COLUMN IF NOT EXISTS lesson_order INTEGER DEFAULT 1");
+            jdbcTemplate.execute("ALTER TABLE classroom_materials ADD COLUMN IF NOT EXISTS content TEXT");
+            jdbcTemplate.execute("ALTER TABLE classroom_materials ADD COLUMN IF NOT EXISTS video_url TEXT");
+            jdbcTemplate.execute("ALTER TABLE classroom_materials ADD COLUMN IF NOT EXISTS attachment_name VARCHAR(255)");
+            jdbcTemplate.execute("ALTER TABLE classroom_materials ALTER COLUMN file_url DROP NOT NULL");
+
             log.info("Database schema migrations verified and applied successfully.");
         } catch (Exception e) {
             log.error("Error during database schema migration: {}", e.getMessage(), e);
