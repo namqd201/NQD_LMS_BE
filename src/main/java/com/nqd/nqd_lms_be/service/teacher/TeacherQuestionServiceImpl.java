@@ -453,6 +453,8 @@ public class TeacherQuestionServiceImpl implements TeacherQuestionService {
                 .questionType(question.getQuestionType())
                 .difficulty(question.getDifficulty())
                 .content(question.getContent())
+                .audioUrl(question.getAudioUrl())
+                .audioScript(question.getAudioScript())
                 .explanation(question.getExplanation())
                 .defaultMarks(question.getDefaultMarks())
                 .status(question.getStatus())

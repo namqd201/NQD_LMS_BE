@@ -25,6 +25,8 @@ public class StudentExamTakingResponse {
     private BigDecimal passingMarks;
     private Integer attemptNumber;
     private LocalDateTime startedAt;
+    private String audioUrl;
+    private Integer maxListeningPlays;
     private Boolean enableProctoring;
     private Integer maxViolationCount;
     private Integer violationCount;

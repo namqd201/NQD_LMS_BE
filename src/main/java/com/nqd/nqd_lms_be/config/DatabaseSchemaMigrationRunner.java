@@ -589,6 +589,17 @@ public class DatabaseSchemaMigrationRunner implements CommandLineRunner {
             jdbcTemplate.execute("ALTER TABLE classroom_materials ADD COLUMN IF NOT EXISTS attachment_name VARCHAR(255)");
             jdbcTemplate.execute("ALTER TABLE classroom_materials ALTER COLUMN file_url DROP NOT NULL");
 
+            // 12. English Listening Audio & Script columns for Questions, Exams, and AI Generated Questions
+            jdbcTemplate.execute("ALTER TABLE questions ADD COLUMN IF NOT EXISTS audio_url TEXT");
+            jdbcTemplate.execute("ALTER TABLE questions ADD COLUMN IF NOT EXISTS audio_script TEXT");
+
+            jdbcTemplate.execute("ALTER TABLE ai_generated_questions ADD COLUMN IF NOT EXISTS audio_url TEXT");
+            jdbcTemplate.execute("ALTER TABLE ai_generated_questions ADD COLUMN IF NOT EXISTS audio_script TEXT");
+
+            jdbcTemplate.execute("ALTER TABLE exams ADD COLUMN IF NOT EXISTS audio_url TEXT");
+            jdbcTemplate.execute("ALTER TABLE exams ADD COLUMN IF NOT EXISTS audio_script TEXT");
+            jdbcTemplate.execute("ALTER TABLE exams ADD COLUMN IF NOT EXISTS max_listening_plays INTEGER DEFAULT 2");
+
             log.info("Database schema migrations verified and applied successfully.");
         } catch (Exception e) {
             log.error("Error during database schema migration: {}", e.getMessage(), e);

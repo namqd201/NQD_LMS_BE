@@ -26,6 +26,8 @@ public class TeacherAiGeneratedQuestionResponse {
     private BigDecimal marks;
     private String explanation;
     private String tags;
+    private String audioUrl;
+    private String audioScript;
     private Integer displayOrder;
     private AiValidationStatus validationStatus;
     private String validationFeedback;

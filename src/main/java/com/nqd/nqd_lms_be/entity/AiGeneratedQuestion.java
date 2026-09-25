@@ -29,6 +29,12 @@ public class AiGeneratedQuestion extends BaseEntity {
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
+    @Column(name = "audio_url", columnDefinition = "TEXT")
+    private String audioUrl;
+
+    @Column(name = "audio_script", columnDefinition = "TEXT")
+    private String audioScript;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "question_type", nullable = false, length = 30)
     private QuestionType questionType;

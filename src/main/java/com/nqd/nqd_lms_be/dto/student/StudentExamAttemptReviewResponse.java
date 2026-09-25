@@ -20,6 +20,8 @@ public class StudentExamAttemptReviewResponse {
     private UUID examId;
     private String examTitle;
     private String examCode;
+    private String audioUrl;
+    private String audioScript;
     private Integer attemptNumber;
     private ExamAttemptStatus status;
     private LocalDateTime startedAt;

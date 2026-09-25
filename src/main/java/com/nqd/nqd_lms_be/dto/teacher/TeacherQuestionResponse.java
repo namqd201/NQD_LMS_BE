@@ -31,6 +31,8 @@ public class TeacherQuestionResponse {
     private QuestionType questionType;
     private QuestionDifficulty difficulty;
     private String content;
+    private String audioUrl;
+    private String audioScript;
     private String explanation;
     private BigDecimal defaultMarks;
     private QuestionStatus status;

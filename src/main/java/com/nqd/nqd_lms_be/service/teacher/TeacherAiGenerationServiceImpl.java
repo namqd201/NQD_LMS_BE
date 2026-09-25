@@ -7,6 +7,7 @@ import com.nqd.nqd_lms_be.ai.dto.ExamBlueprintItem;
 import com.nqd.nqd_lms_be.ai.dto.GeneratedOptionDraft;
 import com.nqd.nqd_lms_be.ai.dto.GeneratedQuestionDraft;
 import com.nqd.nqd_lms_be.ai.validator.AiQuestionValidator;
+import com.nqd.nqd_lms_be.ai.audio.AiAudioService;
 import com.nqd.nqd_lms_be.common.exception.ForbiddenOperationException;
 import com.nqd.nqd_lms_be.common.exception.ResourceNotFoundException;
 import com.nqd.nqd_lms_be.dto.teacher.*;
@@ -50,6 +51,7 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
     private final ExamQuestionRepository examQuestionRepository;
     private final com.nqd.nqd_lms_be.membership.service.MembershipEntitlementService membershipEntitlementService;
     private final TransactionTemplate transactionTemplate;
+    private final AiAudioService aiAudioService;
 
     private static final String CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -111,6 +113,11 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
         final String targetGrade = grade;
         final QuestionCategory targetCategory = resolvedCategory;
 
+        // Detect if this is a listening test
+        boolean isListening = Boolean.TRUE.equals(request.getIsListening())
+                || (request.getTopic() != null && request.getTopic().toLowerCase().matches(".*(nghe|listening|comprehension).*"))
+                || (subject.getName().toLowerCase().contains("tiếng anh") && request.getAdditionalInstructions() != null && request.getAdditionalInstructions().toLowerCase().contains("nghe"));
+
         // 1. Create Job in DB (Short transaction)
         AiGenerationJob job = transactionTemplate.execute(status ->
                 createInitialQuestionJob(teacher, subject, targetCourse, targetLesson, targetGrade, targetCategory, request)
@@ -130,13 +137,19 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                 .marksPerQuestion(request.getMarksPerQuestion())
                 .additionalInstructions(request.getAdditionalInstructions())
                 .isExamBlueprint(false)
+                .isListening(isListening)
+                .listeningPassageType(request.getListeningPassageType())
                 .build();
 
         // 3. Invoke AI Provider (OUTSIDE of @Transactional to prevent DB connection holding)
         AIProvider provider = aiProviderFactory.getProvider();
-        log.info("Generating questions for teacher {} using AI Provider: {}", teacherId, provider.getProviderName());
+        log.info("Generating questions for teacher {} using AI Provider: {} (isListening: {})",
+                teacherId, provider.getProviderName(), isListening);
 
         List<GeneratedQuestionDraft> drafts = provider.generateQuestions(prompt);
+
+        // Synthesize audio for listening drafts if present
+        synthesizeAudioForDrafts(drafts);
 
         // 4. Save generated drafts to DB (Short transaction)
         return transactionTemplate.execute(status ->
@@ -220,6 +233,11 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
             }
         }
 
+        boolean isListening = Boolean.TRUE.equals(request.getIsListening())
+                || (request.getTitle() != null && request.getTitle().toLowerCase().matches(".*(nghe|listening).*"))
+                || (request.getTopic() != null && request.getTopic().toLowerCase().matches(".*(nghe|listening).*"))
+                || (subject.getName().toLowerCase().contains("tiếng anh") && request.getAdditionalInstructions() != null && request.getAdditionalInstructions().toLowerCase().contains("nghe"));
+
         AiQuestionGenerationPrompt prompt = AiQuestionGenerationPrompt.builder()
                 .subjectName(subject.getName())
                 .courseName(course != null ? course.getName() : null)
@@ -229,13 +247,19 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                 .additionalInstructions(request.getAdditionalInstructions())
                 .blueprintItems(bpItems)
                 .isExamBlueprint(true)
+                .isListening(isListening)
+                .listeningPassageType(request.getListeningPassageType())
                 .build();
 
         // 3. Invoke AI Provider (OUTSIDE of @Transactional to prevent DB connection holding)
         AIProvider provider = aiProviderFactory.getProvider();
-        log.info("Generating exam blueprint for teacher {} using AI Provider: {}", teacherId, provider.getProviderName());
+        log.info("Generating exam blueprint for teacher {} using AI Provider: {} (isListening: {})",
+                teacherId, provider.getProviderName(), isListening);
 
         List<GeneratedQuestionDraft> drafts = provider.generateQuestions(prompt);
+
+        // Synthesize audio for listening drafts if present
+        synthesizeAudioForDrafts(drafts);
 
         // 4. Save generated drafts to DB (Short transaction)
         return transactionTemplate.execute(status ->
@@ -288,6 +312,8 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
             AiGeneratedQuestion genQ = AiGeneratedQuestion.builder()
                     .job(job)
                     .content(draft.getContent())
+                    .audioUrl(draft.getAudioUrl())
+                    .audioScript(draft.getAudioScript())
                     .questionType(draft.getQuestionType())
                     .difficulty(draft.getDifficulty())
                     .marks(draft.getDefaultMarks() != null ? draft.getDefaultMarks() : BigDecimal.ONE)
@@ -368,6 +394,12 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
         }
 
         question.setContent(request.getContent());
+        if (request.getAudioUrl() != null) {
+            question.setAudioUrl(request.getAudioUrl());
+        }
+        if (request.getAudioScript() != null) {
+            question.setAudioScript(request.getAudioScript());
+        }
         question.setQuestionType(request.getQuestionType());
         question.setDifficulty(request.getDifficulty());
         question.setMarks(request.getMarks() != null ? request.getMarks() : BigDecimal.ONE);
@@ -443,6 +475,8 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                 .questionType(question.getQuestionType())
                 .difficulty(question.getDifficulty())
                 .content(question.getContent())
+                .audioUrl(question.getAudioUrl())
+                .audioScript(question.getAudioScript())
                 .explanation(question.getExplanation())
                 .defaultMarks(question.getMarks())
                 .source(QuestionSource.AI_GENERATED)
@@ -526,6 +560,8 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                         .questionType(q.getQuestionType())
                         .difficulty(q.getDifficulty())
                         .content(q.getContent())
+                        .audioUrl(q.getAudioUrl())
+                        .audioScript(q.getAudioScript())
                         .explanation(q.getExplanation())
                         .defaultMarks(q.getMarks())
                         .source(QuestionSource.AI_GENERATED)
@@ -601,6 +637,8 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                             .questionType(q.getQuestionType())
                             .difficulty(q.getDifficulty())
                             .content(q.getContent())
+                            .audioUrl(q.getAudioUrl())
+                            .audioScript(q.getAudioScript())
                             .explanation(q.getExplanation())
                             .defaultMarks(q.getMarks())
                             .source(QuestionSource.AI_GENERATED)
@@ -641,6 +679,9 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
         int duration = job.getTargetExamDuration() != null ? job.getTargetExamDuration() : 45;
         BigDecimal passingMarks = job.getTargetExamPassingMarks() != null ? job.getTargetExamPassingMarks() : totalMarksSum.multiply(new BigDecimal("0.5"));
 
+        boolean isListeningExam = approvedRealQuestions.stream().anyMatch(q -> q.getAudioUrl() != null || q.getAudioScript() != null);
+        Integer maxPlays = isListeningExam ? 2 : null;
+
         Exam exam = Exam.builder()
                 .subject(job.getSubject())
                 .course(job.getCourse())
@@ -650,6 +691,7 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                 .durationMinutes(duration)
                 .totalMarks(totalMarksSum)
                 .passingMarks(passingMarks)
+                .maxListeningPlays(maxPlays)
                 .maxAttempts(1)
                 .status(ExamStatus.DRAFT)
                 .creator(teacher)
@@ -761,6 +803,34 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                 .build();
     }
 
+    private void synthesizeAudioForDrafts(List<GeneratedQuestionDraft> drafts) {
+        if (drafts == null || drafts.isEmpty()) {
+            return;
+        }
+
+        Map<String, String> scriptToAudioCache = new HashMap<>();
+
+        for (GeneratedQuestionDraft draft : drafts) {
+            String script = draft.getAudioScript();
+            if (script != null && !script.isBlank() && (draft.getAudioUrl() == null || draft.getAudioUrl().isBlank())) {
+                String normalizedScript = script.trim();
+                if (scriptToAudioCache.containsKey(normalizedScript)) {
+                    draft.setAudioUrl(scriptToAudioCache.get(normalizedScript));
+                } else {
+                    try {
+                        String audioUrl = aiAudioService.synthesizeSpeech(normalizedScript, "Puck");
+                        if (audioUrl != null) {
+                            draft.setAudioUrl(audioUrl);
+                            scriptToAudioCache.put(normalizedScript, audioUrl);
+                        }
+                    } catch (Exception e) {
+                        log.warn("Failed to synthesize audio for listening draft: {}", e.getMessage());
+                    }
+                }
+            }
+        }
+    }
+
     private TeacherAiGeneratedQuestionResponse mapToQuestionResponse(AiGeneratedQuestion q) {
         List<TeacherAiGeneratedOptionResponse> opts = q.getOptions().stream()
                 .map(opt -> TeacherAiGeneratedOptionResponse.builder()
@@ -778,6 +848,8 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                 .questionType(q.getQuestionType())
                 .difficulty(q.getDifficulty())
                 .marks(q.getMarks())
+                .audioUrl(q.getAudioUrl())
+                .audioScript(q.getAudioScript())
                 .explanation(q.getExplanation())
                 .tags(q.getTags())
                 .displayOrder(q.getDisplayOrder())

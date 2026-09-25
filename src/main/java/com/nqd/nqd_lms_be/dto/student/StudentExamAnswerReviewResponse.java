@@ -32,5 +32,7 @@ public class StudentExamAnswerReviewResponse {
     private String correctOptionKey;
     private String correctOptionText;
     private String explanation;
+    private String audioUrl;
+    private String audioScript;
     private List<TeacherQuestionOptionDto> options;
 }

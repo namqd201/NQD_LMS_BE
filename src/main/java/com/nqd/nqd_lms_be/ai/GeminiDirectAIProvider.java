@@ -415,7 +415,8 @@ public class GeminiDirectAIProvider implements AIProvider {
                       "difficulty": "MEDIUM", // EASY, MEDIUM, HARD
                       "defaultMarks": 1.0,
                       "explanation": "Giải thích chi tiết đáp án...",
-                      "tags": "toán học, lớp 5",
+                      "tags": "tiếng anh, listening",
+                      "audioScript": "Alice: Hi Bob, what time does the library close today?\\nBob: It closes at 6 PM on weekdays.", // (Chỉ khi là bài nghe Listening) Kịch bản lời thoại bài nghe chuẩn tiếng Anh
                       "options": [
                         { "optionKey": "A", "optionText": "Nội dung đáp án A", "isCorrect": true, "displayOrder": 1 },
                         { "optionKey": "B", "optionText": "Nội dung đáp án B", "isCorrect": false, "displayOrder": 2 },
@@ -486,6 +487,22 @@ public class GeminiDirectAIProvider implements AIProvider {
             sb.append("- Ghi chú / Yêu cầu thêm: ").append(prompt.getAdditionalInstructions()).append("\n");
         }
 
+        if (Boolean.TRUE.equals(prompt.getIsListening())) {
+            sb.append("\n=======================================================\n");
+            sb.append("LƯU Ý ĐẶC BIỆT: ĐÂY LÀ ĐỀ BÀI/BÀI TẬP KỸ NĂNG NGHE (ENGLISH LISTENING TEST)!\n");
+            sb.append("1. Bạn BẮT BUỘC phải sinh trường 'audioScript' cho mỗi câu hỏi hoặc nhóm câu hỏi.\n");
+            sb.append("2. 'audioScript' là nội dung kịch bản lời thoại hội thoại tiếng Anh chuẩn bản xứ (có phân vai như 'Man: ...', 'Woman: ...' hoặc độc thoại announcement) tự nhiên, rõ ràng.\n");
+            if (prompt.getListeningPassageType() != null && !prompt.getListeningPassageType().isBlank()) {
+                sb.append("3. Thể loại bài nghe: ").append(prompt.getListeningPassageType()).append(".\n");
+            } else {
+                sb.append("3. Thể loại bài nghe: Hội thoại giao tiếp đời sống/học đường, hoặc thông báo ngắn (Short Announcement).\n");
+            }
+            sb.append("4. Nội dung câu hỏi 'content' phải là câu hỏi trắc nghiệm kiểm tra độ hiểu thông tin trong bài nghe (VD: 'Listen to the conversation and answer: What time will the meeting start?').\n");
+            sb.append("5. Các lựa chọn 'options' phải dựa trên thông tin trong 'audioScript' với các bẫy (distractors) hợp lý.\n");
+            sb.append("6. Phần giải thích 'explanation' phải trích dẫn câu cụ thể trong 'audioScript' giải thích vì sao đáp án đúng.\n");
+            sb.append("=======================================================\n");
+        }
+
         return sb.toString();
     }
 
@@ -534,6 +551,11 @@ public class GeminiDirectAIProvider implements AIProvider {
         Object marksObj = map.get("defaultMarks");
         String explanation = (String) map.get("explanation");
         String tags = (String) map.get("tags");
+        String audioUrl = (String) map.get("audioUrl");
+        String audioScript = (String) map.get("audioScript");
+        if (audioScript == null || audioScript.isBlank()) {
+            audioScript = (String) map.get("transcript");
+        }
 
         QuestionType qType = QuestionType.MULTIPLE_CHOICE;
         if (qTypeStr != null) {
@@ -584,6 +606,8 @@ public class GeminiDirectAIProvider implements AIProvider {
                 .defaultMarks(marks)
                 .explanation(explanation)
                 .tags(tags)
+                .audioUrl(audioUrl)
+                .audioScript(audioScript)
                 .options(options)
                 .build();
     }

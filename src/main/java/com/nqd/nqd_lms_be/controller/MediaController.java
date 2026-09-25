@@ -27,18 +27,20 @@ import java.util.UUID;
 public class MediaController {
 
     private static final String UPLOAD_DIR = "uploads/media";
-    private static final long MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
-    private static final Set<String> ALLOWED_EXTENSIONS = Set.of("jpg", "jpeg", "png", "webp", "gif", "svg");
+    private static final long MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB (support audio)
+    private static final Set<String> ALLOWED_EXTENSIONS = Set.of(
+            "jpg", "jpeg", "png", "webp", "gif", "svg", "wav", "mp3", "ogg", "m4a"
+    );
 
     @PostMapping("/api/v1/media/upload")
-    @Operation(summary = "Upload image/diagram for lessons, exercises, questions, or essays")
+    @Operation(summary = "Upload image/diagram or audio for lessons, exercises, questions, or essays")
     public ResponseEntity<?> uploadMedia(@RequestParam("file") MultipartFile file) {
         if (file == null || file.isEmpty()) {
             return ResponseEntity.badRequest().body(Map.of("message", "Tập tin tải lên không được để trống", "success", false));
         }
 
         if (file.getSize() > MAX_FILE_SIZE) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Dung lượng hình ảnh không được vượt quá 10MB", "success", false));
+            return ResponseEntity.badRequest().body(Map.of("message", "Dung lượng tập tin không được vượt quá 25MB", "success", false));
         }
 
         String originalFilename = file.getOriginalFilename();
@@ -49,7 +51,7 @@ public class MediaController {
 
         if (!ALLOWED_EXTENSIONS.contains(extension)) {
             return ResponseEntity.badRequest().body(Map.of(
-                    "message", "Định dạng hình ảnh không hợp lệ. Chỉ chấp nhận JPG, PNG, WEBP, GIF, hoặc SVG",
+                    "message", "Định dạng tập tin không hợp lệ. Chỉ chấp nhận ảnh (JPG, PNG, WEBP, GIF, SVG) hoặc âm thanh (WAV, MP3, OGG, M4A)",
                     "success", false
             ));
         }
@@ -97,6 +99,14 @@ public class MediaController {
                     contentType = "image/svg+xml";
                 } else if (filename.endsWith(".webp")) {
                     contentType = "image/webp";
+                } else if (filename.endsWith(".wav")) {
+                    contentType = "audio/wav";
+                } else if (filename.endsWith(".mp3")) {
+                    contentType = "audio/mpeg";
+                } else if (filename.endsWith(".ogg")) {
+                    contentType = "audio/ogg";
+                } else if (filename.endsWith(".m4a")) {
+                    contentType = "audio/mp4";
                 } else {
                     contentType = "application/octet-stream";
                 }

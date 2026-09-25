@@ -23,6 +23,8 @@ public class GeneratedQuestionDraft {
     private BigDecimal defaultMarks = new BigDecimal("1.00");
     private String explanation;
     private String tags;
+    private String audioUrl;
+    private String audioScript;
     @Builder.Default
     private List<GeneratedOptionDraft> options = new ArrayList<>();
 }

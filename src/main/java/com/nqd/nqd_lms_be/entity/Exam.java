@@ -54,6 +54,16 @@ public class Exam extends BaseEntity {
     @Column(name = "passing_marks", nullable = false, precision = 7, scale = 2)
     private BigDecimal passingMarks;
 
+    @Column(name = "audio_url", columnDefinition = "TEXT")
+    private String audioUrl;
+
+    @Column(name = "audio_script", columnDefinition = "TEXT")
+    private String audioScript;
+
+    @Column(name = "max_listening_plays")
+    @Builder.Default
+    private Integer maxListeningPlays = 2;
+
     @Column(name = "max_attempts", nullable = false)
     @Builder.Default
     private Integer maxAttempts = 1;

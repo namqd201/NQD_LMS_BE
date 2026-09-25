@@ -42,4 +42,9 @@ public class TeacherAiGenerateExamRequest {
     private List<ExamBlueprintItemRequest> blueprintItems = new ArrayList<>();
 
     private String additionalInstructions;
+    @Builder.Default
+    private Boolean isListening = false;
+    private String listeningPassageType;
+    @Builder.Default
+    private Integer maxListeningPlays = 2;
 }

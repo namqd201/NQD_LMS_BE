@@ -26,5 +26,6 @@ public class StudentQuestionTakingResponse {
     private QuestionDifficulty difficulty;
     private BigDecimal marks;
     private Integer displayOrder;
+    private String audioUrl;
     private List<StudentOptionTakingResponse> options;
 }

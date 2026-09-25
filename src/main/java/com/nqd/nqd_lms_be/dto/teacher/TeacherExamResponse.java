@@ -35,6 +35,9 @@ public class TeacherExamResponse {
     private Boolean shuffleOptions;
     private ExamStatus status;
     private ExamVisibility visibility;
+    private String audioUrl;
+    private String audioScript;
+    private Integer maxListeningPlays;
     private Boolean enableProctoring;
     private Integer maxViolationCount;
     private UUID originExamId;

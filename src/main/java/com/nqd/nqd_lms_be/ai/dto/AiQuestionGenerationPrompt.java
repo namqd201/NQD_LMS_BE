@@ -33,4 +33,7 @@ public class AiQuestionGenerationPrompt {
     private List<ExamBlueprintItem> blueprintItems = new ArrayList<>();
     @Builder.Default
     private Boolean isExamBlueprint = false;
+    @Builder.Default
+    private Boolean isListening = false;
+    private String listeningPassageType;
 }

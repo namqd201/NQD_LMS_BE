@@ -197,6 +197,7 @@ public class StudentExamServiceImpl implements StudentExamService {
                     .difficulty(q.getDifficulty())
                     .marks(eq.getMarks())
                     .displayOrder(eq.getDisplayOrder())
+                    .audioUrl(q.getAudioUrl())
                     .options(optionDtos)
                     .build());
         }
@@ -212,6 +213,8 @@ public class StudentExamServiceImpl implements StudentExamService {
                 .durationMinutes(exam.getDurationMinutes())
                 .totalMarks(exam.getTotalMarks())
                 .passingMarks(exam.getPassingMarks())
+                .audioUrl(exam.getAudioUrl())
+                .maxListeningPlays(exam.getMaxListeningPlays())
                 .attemptNumber(attempt.getAttemptNumber())
                 .startedAt(attempt.getStartedAt())
                 .enableProctoring(Boolean.TRUE.equals(exam.getEnableProctoring()))
@@ -444,6 +447,8 @@ public class StudentExamServiceImpl implements StudentExamService {
                     .correctOptionKey(correctOpt != null ? correctOpt.getOptionKey() : null)
                     .correctOptionText(correctOpt != null ? correctOpt.getOptionText() : null)
                     .explanation(q.getExplanation())
+                    .audioUrl(q.getAudioUrl())
+                    .audioScript(q.getAudioScript())
                     .options(optionDtos)
                     .build());
         }
@@ -453,6 +458,8 @@ public class StudentExamServiceImpl implements StudentExamService {
                 .examId(exam.getId())
                 .examTitle(exam.getTitle())
                 .examCode(exam.getCode())
+                .audioUrl(exam.getAudioUrl())
+                .audioScript(exam.getAudioScript())
                 .attemptNumber(attempt.getAttemptNumber())
                 .status(attempt.getStatus())
                 .startedAt(attempt.getStartedAt())

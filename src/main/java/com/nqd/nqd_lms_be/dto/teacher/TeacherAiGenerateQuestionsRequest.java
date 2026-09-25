@@ -50,4 +50,7 @@ public class TeacherAiGenerateQuestionsRequest {
     private BigDecimal marksPerQuestion = new BigDecimal("1.00");
 
     private String additionalInstructions;
+    @Builder.Default
+    private Boolean isListening = false;
+    private String listeningPassageType;
 }
