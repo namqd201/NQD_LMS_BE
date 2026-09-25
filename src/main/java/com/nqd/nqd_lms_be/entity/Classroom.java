@@ -55,4 +55,20 @@ public class Classroom extends BaseEntity {
 
     @Column(name = "cover_image_url", columnDefinition = "TEXT")
     private String coverImageUrl;
+
+    @Column(name = "lark_meeting_url", columnDefinition = "TEXT")
+    private String larkMeetingUrl;
+
+    @Column(name = "meeting_id", length = 100)
+    private String meetingId;
+
+    @Column(name = "passcode", length = 100)
+    private String passcode;
+
+    @Column(name = "meeting_note", columnDefinition = "TEXT")
+    private String meetingNote;
+
+    @Column(name = "is_live_now", nullable = false)
+    @Builder.Default
+    private Boolean isLiveNow = false;
 }

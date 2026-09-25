@@ -32,6 +32,11 @@ public class ClassroomResponse {
     private String currentUserRole; // 'TEACHER', 'STUDENT', 'NONE'
     private ClassEnrollmentStatus currentUserEnrollmentStatus;
     private String coverImageUrl;
+    private String larkMeetingUrl;
+    private String meetingId;
+    private String passcode;
+    private String meetingNote;
+    private Boolean isLiveNow;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -112,4 +112,30 @@ public class MediaController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("/api/v1/public/classroom-files/{filename:.+}")
+    @Operation(summary = "Serve uploaded classroom file for download/preview")
+    public ResponseEntity<Resource> serveClassroomFile(@PathVariable String filename) {
+        try {
+            Path filePath = Paths.get("uploads/classroom_files").resolve(filename).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (!resource.exists() || !resource.isReadable()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            String contentType = Files.probeContentType(filePath);
+            if (contentType == null) {
+                contentType = "application/octet-stream";
+            }
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType))
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        } catch (IOException e) {
+            log.error("Error serving classroom file: {}", e.getMessage(), e);
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

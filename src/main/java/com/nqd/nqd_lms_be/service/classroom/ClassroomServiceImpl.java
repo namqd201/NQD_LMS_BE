@@ -536,6 +536,11 @@ public class ClassroomServiceImpl implements ClassroomService {
                 .currentUserRole(currentUserRole)
                 .currentUserEnrollmentStatus(currentUserStatus)
                 .coverImageUrl(c.getCoverImageUrl())
+                .larkMeetingUrl(c.getLarkMeetingUrl())
+                .meetingId(c.getMeetingId())
+                .passcode(c.getPasscode())
+                .meetingNote(c.getMeetingNote())
+                .isLiveNow(Boolean.TRUE.equals(c.getIsLiveNow()))
                 .createdAt(c.getCreatedAt())
                 .updatedAt(c.getUpdatedAt())
                 .build();

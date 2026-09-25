@@ -81,6 +81,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/v1/membership/plans").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/public/certificates/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/public/media/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/public/classroom-files/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/teacher-applications/documents/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/logout").authenticated()
                 .requestMatchers("/api/v1/auth/me").authenticated()
