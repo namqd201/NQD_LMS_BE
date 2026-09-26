@@ -491,12 +491,12 @@ public class GeminiDirectAIProvider implements AIProvider {
             sb.append("\n=======================================================\n");
             sb.append("LƯU Ý ĐẶC BIỆT: ĐÂY LÀ ĐỀ BÀI/BÀI TẬP KỸ NĂNG NGHE (ENGLISH LISTENING TEST)!\n");
             sb.append("1. Bạn BẮT BUỘC phải sinh trường 'audioScript' cho mỗi câu hỏi hoặc nhóm câu hỏi.\n");
-            sb.append("2. 'audioScript' là nội dung kịch bản lời thoại hội thoại tiếng Anh chuẩn bản xứ (có phân vai như 'Man: ...', 'Woman: ...' hoặc độc thoại announcement) tự nhiên, rõ ràng.\n");
-            if (prompt.getListeningPassageType() != null && !prompt.getListeningPassageType().isBlank()) {
-                sb.append("3. Thể loại bài nghe: ").append(prompt.getListeningPassageType()).append(".\n");
-            } else {
-                sb.append("3. Thể loại bài nghe: Hội thoại giao tiếp đời sống/học đường, hoặc thông báo ngắn (Short Announcement).\n");
-            }
+            sb.append("2. 'audioScript' là nội dung kịch bản lời thoại tiếng Anh chuẩn bản xứ:\n");
+            sb.append("   - ĐỐI VỚI BÀI HỘI THOẠI (DIALOGUE): Bắt buộc viết từng lượt thoại trên một dòng riêng, có tên nhân vật theo sau là dấu hai chấm rõ ràng. Ví dụ:\n");
+            sb.append("     Peter: Good morning, Mai! How are you today?\n");
+            sb.append("     Mai: Good morning, Peter! I am doing great, thank you.\n");
+            sb.append("     (Hệ thống âm thanh sẽ tự động nhận diện nhân vật để lồng giọng nam/nữ tương ứng và bỏ qua tên nhân vật khi đọc).\n");
+            sb.append("   - ĐỐI VỚI ĐỘC THOẠI / THÔNG BÁO (ANNOUNCEMENT): Viết đoạn văn ngắn liền mạch, không cần tiền tố nhân vật.\n");
             sb.append("4. Nội dung câu hỏi 'content' phải là câu hỏi trắc nghiệm kiểm tra độ hiểu thông tin trong bài nghe (VD: 'Listen to the conversation and answer: What time will the meeting start?').\n");
             sb.append("5. Các lựa chọn 'options' phải dựa trên thông tin trong 'audioScript' với các bẫy (distractors) hợp lý.\n");
             sb.append("6. Phần giải thích 'explanation' phải trích dẫn câu cụ thể trong 'audioScript' giải thích vì sao đáp án đúng.\n");

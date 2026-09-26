@@ -2,10 +2,12 @@ package com.nqd.nqd_lms_be.ai.audio;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -18,6 +20,8 @@ import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @Slf4j
@@ -27,6 +31,33 @@ public class AiAudioServiceImpl implements AiAudioService {
     private final ObjectMapper objectMapper;
     private final HttpClient httpClient;
     private static final String UPLOAD_DIR = "uploads/media";
+
+    // 24000Hz, 16-bit, 1 channel PCM: 1 sec = 48000 bytes. 600ms = 28800 bytes
+    private static final int SAMPLE_RATE = 24000;
+    private static final int CHANNELS = 1;
+    private static final int BIT_DEPTH = 16;
+    private static final int PAUSE_BYTES = 28800; // 600ms pause between turns
+
+    private static final List<String> TTS_MODELS = List.of(
+            "gemini-2.5-flash-preview-tts",
+            "gemini-3.1-flash-tts-preview",
+            "gemini-3.8-flash-tts",
+            "gemini-2.5-flash",
+            "gemini-2.0-flash"
+    );
+
+    @Getter
+    public static class DialogueTurn {
+        private final String speaker;
+        private final String text;
+        private final boolean female;
+
+        public DialogueTurn(String speaker, String text, boolean female) {
+            this.speaker = speaker;
+            this.text = text;
+            this.female = female;
+        }
+    }
 
     public AiAudioServiceImpl(
             @Value("${lms.ai.gemini.api-key:${GEMINI_API_KEY:}}") String apiKey,
@@ -50,21 +81,30 @@ public class AiAudioServiceImpl implements AiAudioService {
             return null;
         }
 
+        List<DialogueTurn> turns = parseScript(script);
+
+        // Check if multi-speaker dialogue
+        boolean isMultiSpeaker = turns.size() >= 2 && hasMultipleSpeakers(turns);
+
+        if (isMultiSpeaker) {
+            log.info("Detected multi-speaker dialogue with {} turns. Synthesizing character-by-character...", turns.size());
+            String dialogueAudio = synthesizeDialogue(turns);
+            if (dialogueAudio != null) {
+                return dialogueAudio;
+            }
+            log.warn("Multi-speaker dialogue synthesis failed, falling back to full script reading...");
+        }
+
+        // Monologue / Single passage synthesis
         String voice = (preferredVoice != null && !preferredVoice.isBlank()) ? preferredVoice.trim() : "Puck";
+        // Clean any leading speaker label from monologue so it isn't read aloud
+        String cleanScript = cleanMonologueScript(script);
 
-        // Candidate models supporting audio output
-        List<String> ttsModels = List.of(
-                "gemini-2.0-flash",
-                "gemini-2.5-flash",
-                "gemini-3.1-flash-tts-preview"
-        );
-
-        for (String model : ttsModels) {
+        for (String model : TTS_MODELS) {
             try {
-                String audioUrl = callGeminiTts(model, script, voice);
-                if (audioUrl != null) {
-                    log.info("Successfully synthesized listening audio via model '{}': {}", model, audioUrl);
-                    return audioUrl;
+                byte[] pcmData = callGeminiTtsSingleLine(model, cleanScript, voice);
+                if (pcmData != null && pcmData.length > 0) {
+                    return saveWavFile(pcmData);
                 }
             } catch (Exception e) {
                 log.warn("Failed to synthesize audio with model '{}': {}. Trying next...", model, e.getMessage());
@@ -80,12 +120,64 @@ public class AiAudioServiceImpl implements AiAudioService {
         return CompletableFuture.supplyAsync(() -> synthesizeSpeech(script, preferredVoice));
     }
 
-    private String callGeminiTts(String model, String script, String voiceName) throws Exception {
+    /**
+     * Synthesizes each dialogue line using that character's designated voice (Male: Puck, Female: Kore),
+     * omitting character names from spoken audio, and concatenates lines with a natural 600ms silence.
+     */
+    private String synthesizeDialogue(List<DialogueTurn> turns) {
+        try {
+            ByteArrayOutputStream combinedPcm = new ByteArrayOutputStream();
+            byte[] pauseBytes = new byte[PAUSE_BYTES]; // 600ms silence
+
+            for (int i = 0; i < turns.size(); i++) {
+                DialogueTurn turn = turns.get(i);
+                String lineText = turn.getText().trim();
+                if (lineText.isEmpty()) continue;
+
+                // Pick distinct voice: Puck for Male, Kore for Female
+                String voiceName = turn.isFemale() ? "Kore" : "Puck";
+
+                byte[] turnPcm = null;
+                for (String model : TTS_MODELS) {
+                    try {
+                        turnPcm = callGeminiTtsSingleLine(model, lineText, voiceName);
+                        if (turnPcm != null && turnPcm.length > 0) {
+                            break;
+                        }
+                    } catch (Exception e) {
+                        log.debug("Turn {} TTS failed with model {}: {}", i, model, e.getMessage());
+                    }
+                }
+
+                if (turnPcm == null || turnPcm.length == 0) {
+                    log.warn("Failed to synthesize dialogue turn {}: '{}' by {}", i, lineText, turn.getSpeaker());
+                    return null; // Fallback to whole script
+                }
+
+                // Append pause between lines
+                if (combinedPcm.size() > 0) {
+                    combinedPcm.write(pauseBytes);
+                }
+                combinedPcm.write(turnPcm);
+            }
+
+            byte[] fullPcm = combinedPcm.toByteArray();
+            if (fullPcm.length > 0) {
+                return saveWavFile(fullPcm);
+            }
+        } catch (Exception e) {
+            log.warn("Error synthesizing dialogue: {}", e.getMessage(), e);
+        }
+        return null;
+    }
+
+    /**
+     * Calls Gemini TTS to synthesize a single line or passage without character prefixes.
+     */
+    private byte[] callGeminiTtsSingleLine(String model, String text, String voiceName) throws Exception {
         String url = "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + apiKey;
 
-        // Clean script prompt for optimal speech flow
-        String promptText = "Please read aloud the following English listening passage with clear, natural pronunciation and appropriate pauses:\n\n"
-                + script.trim();
+        String promptText = "Please read aloud clearly and naturally in standard English:\n\n" + text.trim();
 
         Map<String, Object> requestPayload = new HashMap<>();
         requestPayload.put("contents", List.of(
@@ -113,7 +205,7 @@ public class AiAudioServiceImpl implements AiAudioService {
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
-                .timeout(Duration.ofSeconds(45))
+                .timeout(Duration.ofSeconds(30))
                 .build();
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
@@ -123,16 +215,94 @@ public class AiAudioServiceImpl implements AiAudioService {
             return null;
         }
 
-        byte[] pcmData = extractAudioData(response.body());
-        if (pcmData == null || pcmData.length == 0) {
-            log.warn("No audio data returned in Gemini response: {}", response.body());
-            return null;
+        return extractAudioData(response.body());
+    }
+
+    /**
+     * Parses the transcript into structured dialogue turns (speaker, text, gender).
+     */
+    public List<DialogueTurn> parseScript(String script) {
+        if (script == null || script.isBlank()) {
+            return Collections.emptyList();
         }
+        List<DialogueTurn> turns = new ArrayList<>();
+        String[] lines = script.split("\\r?\\n");
+        Pattern pattern = Pattern.compile("^(?:[-*•]\\s*)?\\[?([A-Za-z0-9\\s._'-]+?)\\]?\\s*:\\s*(.+)$");
 
-        // Convert PCM (24000Hz, 1 channel, 16-bit) to standard RIFF WAV format
-        byte[] wavBytes = pcmToWav(pcmData, 24000, 1, 16);
+        Map<String, Boolean> speakerGenders = new HashMap<>();
+        int unknownSpeakerCount = 0;
 
-        // Ensure upload directory exists
+        for (String rawLine : lines) {
+            String line = rawLine.trim();
+            if (line.isEmpty()) continue;
+
+            Matcher m = pattern.matcher(line);
+            if (m.matches()) {
+                String speaker = m.group(1).trim();
+                String text = m.group(2).trim();
+
+                boolean isFemale;
+                String lowerSpeaker = speaker.toLowerCase();
+                if (!speakerGenders.containsKey(lowerSpeaker)) {
+                    isFemale = determineSpeakerGender(speaker, unknownSpeakerCount++);
+                    speakerGenders.put(lowerSpeaker, isFemale);
+                } else {
+                    isFemale = speakerGenders.get(lowerSpeaker);
+                }
+
+                turns.add(new DialogueTurn(speaker, text, isFemale));
+            } else {
+                // Continuation line or narration
+                if (!turns.isEmpty()) {
+                    DialogueTurn last = turns.remove(turns.size() - 1);
+                    turns.add(new DialogueTurn(last.speaker, last.text + " " + line, last.female));
+                } else {
+                    turns.add(new DialogueTurn(null, line, false));
+                }
+            }
+        }
+        return turns;
+    }
+
+    private boolean hasMultipleSpeakers(List<DialogueTurn> turns) {
+        Set<String> distinct = new HashSet<>();
+        for (DialogueTurn t : turns) {
+            if (t.getSpeaker() != null && !t.getSpeaker().isBlank()) {
+                distinct.add(t.getSpeaker().toLowerCase().trim());
+            }
+        }
+        return distinct.size() >= 2;
+    }
+
+    /**
+     * Determines whether a speaker is female based on name/label, or alternates if unknown.
+     */
+    public static boolean determineSpeakerGender(String speaker, int index) {
+        if (speaker == null || speaker.isBlank()) {
+            return (index % 2 == 1);
+        }
+        String s = speaker.toLowerCase().trim();
+        // Female indicators
+        if (s.matches(".*\\b(female|woman|girl|lady|mother|mom|sister|daughter|mrs|ms|miss|mai|mary|anna|linda|sarah|emma|jane|hoa|lan|nga|huong|alice|lucy|daisy|jennifer|elizabeth|kate|helen|amy|chloe|zoe|emily|sally|lily|grace)\\b.*")) {
+            return true;
+        }
+        // Male indicators
+        if (s.matches(".*\\b(male|man|boy|guy|gentleman|father|dad|brother|son|mr|peter|john|david|tom|bob|nam|minh|quan|huy|alex|mike|james|george|paul|jack|mark|ben|dan|sam|tim|tony|nick|bill|steve)\\b.*")) {
+            return false;
+        }
+        // Alternate if unknown: 0 = Male, 1 = Female, 2 = Male, etc.
+        return (index % 2 == 1);
+    }
+
+    private String cleanMonologueScript(String script) {
+        if (script == null) return "";
+        // If whole script has single label like "Announcer: ...", strip it
+        return script.replaceAll("^(?:[-*•]\\s*)?\\[?[A-Za-z0-9\\s._'-]+?\\]?\\s*:\\s*", "").trim();
+    }
+
+    private String saveWavFile(byte[] pcmData) throws IOException {
+        byte[] wavBytes = pcmToWav(pcmData, SAMPLE_RATE, CHANNELS, BIT_DEPTH);
+
         Path uploadDir = Paths.get(UPLOAD_DIR);
         if (!Files.exists(uploadDir)) {
             Files.createDirectories(uploadDir);
