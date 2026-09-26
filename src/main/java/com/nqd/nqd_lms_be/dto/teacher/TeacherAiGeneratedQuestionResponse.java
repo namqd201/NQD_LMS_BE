@@ -28,6 +28,7 @@ public class TeacherAiGeneratedQuestionResponse {
     private String tags;
     private String audioUrl;
     private String audioScript;
+    private String imageUrl;
     private Integer displayOrder;
     private AiValidationStatus validationStatus;
     private String validationFeedback;

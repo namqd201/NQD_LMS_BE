@@ -56,6 +56,9 @@ public class Question extends BaseEntity {
     @Column(name = "audio_script", columnDefinition = "TEXT")
     private String audioScript;
 
+    @Column(name = "image_url", columnDefinition = "TEXT")
+    private String imageUrl;
+
     @Column(name = "explanation", columnDefinition = "TEXT")
     private String explanation;
 

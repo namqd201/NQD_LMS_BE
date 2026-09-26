@@ -47,4 +47,6 @@ public class TeacherAiGenerateExamRequest {
     private String listeningPassageType;
     @Builder.Default
     private Integer maxListeningPlays = 2;
+    @Builder.Default
+    private Boolean includeImages = false;
 }

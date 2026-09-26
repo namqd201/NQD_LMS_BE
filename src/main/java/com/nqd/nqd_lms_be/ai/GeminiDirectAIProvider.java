@@ -417,6 +417,8 @@ public class GeminiDirectAIProvider implements AIProvider {
                       "explanation": "Giải thích chi tiết đáp án...",
                       "tags": "tiếng anh, listening",
                       "audioScript": "Alice: Hi Bob, what time does the library close today?\\nBob: It closes at 6 PM on weekdays.", // (Chỉ khi là bài nghe Listening) Kịch bản lời thoại bài nghe chuẩn tiếng Anh
+                      "imagePrompt": "A clean 2D educational textbook diagram showing a right-angled triangle ABC with right angle at A, side AB labeled 3cm and side AC labeled 4cm, clean white background, clear vector lines", // (Khi cần hình minh họa) Mô tả chi tiết hình vẽ bằng tiếng Anh
+                      "imageDescription": "Hình 1: Tam giác ABC vuông tại A", // Chú thích ngắn gọn hình vẽ bằng tiếng Việt
                       "options": [
                         { "optionKey": "A", "optionText": "Nội dung đáp án A", "isCorrect": true, "displayOrder": 1 },
                         { "optionKey": "B", "optionText": "Nội dung đáp án B", "isCorrect": false, "displayOrder": 2 },
@@ -503,6 +505,21 @@ public class GeminiDirectAIProvider implements AIProvider {
             sb.append("=======================================================\n");
         }
 
+        if (Boolean.TRUE.equals(prompt.getIncludeImages())) {
+            sb.append("\n=======================================================\n");
+            sb.append("YÊU CẦU TẠO HÌNH ẢNH MINH HỌA ĐÍNH KÈM (EDUCATIONAL IMAGE/DIAGRAM GENERATION):\n");
+            sb.append("1. Bạn PHẢI tạo hình ảnh minh họa TRỰC TIẾP LIÊN QUAN ĐẾN ĐỀ BÀI (KHÔNG ĐƯỢC DÙNG ẢNH NGẪU NHIÊN HOẶC KHÔNG LIÊN QUAN).\n");
+            sb.append("   - Môn Toán: Sơ đồ hình học (tam giác, hình tròn, hình chóp, khối lăng trụ, góc, tọa độ,...), đồ thị hàm số, trục số.\n");
+            sb.append("   - Môn Vật lý: Sơ đồ mạch điện, đường đi tia sáng thấu kính, đồ thị dao động, sơ đồ phân tích lực.\n");
+            sb.append("   - Môn Hóa học / Sinh học: Sơ đồ thí nghiệm, cấu trúc phân tử, cấu tạo tế bào, cơ quan sinh vật, chu trình sinh học.\n");
+            sb.append("   - Môn Địa lý / Lịch sử: Lược đồ địa hình, bản đồ chiến dịch, biểu đồ cột/tròn, tháp dân số.\n");
+            sb.append("   - Môn Tiếng Anh / Ngoại ngữ: Tranh minh họa ngữ cảnh, tình huống, hoạt động hoặc đồ vật cần nhận biết.\n");
+            sb.append("2. Đối với mỗi câu hỏi có hình ảnh, bạn BẮT BUỘC cung cấp trường 'imagePrompt' bằng TIẾNG ANH mô tả chi tiết, chính xác hình vẽ cần tạo (ví dụ: 'A clean 2D educational textbook diagram showing a right-angled triangle ABC with right angle at A, side AB labeled 3cm and side AC labeled 4cm, clean white background, clear vector lines').\n");
+            sb.append("3. Cung cấp trường 'imageDescription' bằng tiếng Việt (ví dụ: 'Hình 1: Tam giác ABC vuông tại A').\n");
+            sb.append("4. Trong nội dung câu hỏi 'content': Viết câu hỏi gắn liền và quy chiếu trực tiếp đến hình ảnh (ví dụ: 'Quan sát hình vẽ bên dưới: Cho tam giác ABC vuông tại A có... Tính độ dài cạnh BC.').\n");
+            sb.append("=======================================================\n");
+        }
+
         return sb.toString();
     }
 
@@ -556,6 +573,9 @@ public class GeminiDirectAIProvider implements AIProvider {
         if (audioScript == null || audioScript.isBlank()) {
             audioScript = (String) map.get("transcript");
         }
+        String imageUrl = (String) map.get("imageUrl");
+        String imagePrompt = (String) map.get("imagePrompt");
+        String imageDescription = (String) map.get("imageDescription");
 
         QuestionType qType = QuestionType.MULTIPLE_CHOICE;
         if (qTypeStr != null) {
@@ -608,6 +628,9 @@ public class GeminiDirectAIProvider implements AIProvider {
                 .tags(tags)
                 .audioUrl(audioUrl)
                 .audioScript(audioScript)
+                .imageUrl(imageUrl)
+                .imagePrompt(imagePrompt)
+                .imageDescription(imageDescription)
                 .options(options)
                 .build();
     }

@@ -25,6 +25,9 @@ public class GeneratedQuestionDraft {
     private String tags;
     private String audioUrl;
     private String audioScript;
+    private String imageUrl;
+    private String imagePrompt;
+    private String imageDescription;
     @Builder.Default
     private List<GeneratedOptionDraft> options = new ArrayList<>();
 }

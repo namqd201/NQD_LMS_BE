@@ -40,6 +40,8 @@ public class TeacherAiUpdateGeneratedQuestionRequest {
 
     private String audioScript;
 
+    private String imageUrl;
+
     @Builder.Default
     private List<GeneratedOptionDraft> options = new ArrayList<>();
 }

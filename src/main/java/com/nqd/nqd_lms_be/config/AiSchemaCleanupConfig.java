@@ -63,6 +63,14 @@ public class AiSchemaCleanupConfig {
                                         EXECUTE format('UPDATE %I SET is_deleted = false WHERE is_deleted IS NULL', tbl);
                                     END IF;
                                 END LOOP;
+
+                                -- Ensure image_url columns exist for AI image generation
+                                IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'questions') THEN
+                                    ALTER TABLE questions ADD COLUMN IF NOT EXISTS image_url TEXT;
+                                END IF;
+                                IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ai_generated_questions') THEN
+                                    ALTER TABLE ai_generated_questions ADD COLUMN IF NOT EXISTS image_url TEXT;
+                                END IF;
                             END $$;
                         """);
 

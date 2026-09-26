@@ -8,6 +8,7 @@ import com.nqd.nqd_lms_be.ai.dto.GeneratedOptionDraft;
 import com.nqd.nqd_lms_be.ai.dto.GeneratedQuestionDraft;
 import com.nqd.nqd_lms_be.ai.validator.AiQuestionValidator;
 import com.nqd.nqd_lms_be.ai.audio.AiAudioService;
+import com.nqd.nqd_lms_be.ai.image.AiImageService;
 import com.nqd.nqd_lms_be.common.exception.ForbiddenOperationException;
 import com.nqd.nqd_lms_be.common.exception.ResourceNotFoundException;
 import com.nqd.nqd_lms_be.dto.teacher.*;
@@ -52,6 +53,7 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
     private final com.nqd.nqd_lms_be.membership.service.MembershipEntitlementService membershipEntitlementService;
     private final TransactionTemplate transactionTemplate;
     private final AiAudioService aiAudioService;
+    private final AiImageService aiImageService;
 
     private static final String CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -118,6 +120,8 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                 || (request.getTopic() != null && request.getTopic().toLowerCase().matches(".*(nghe|listening|comprehension).*"))
                 || (subject.getName().toLowerCase().contains("tiếng anh") && request.getAdditionalInstructions() != null && request.getAdditionalInstructions().toLowerCase().contains("nghe"));
 
+        boolean includeImages = Boolean.TRUE.equals(request.getIncludeImages());
+
         // 1. Create Job in DB (Short transaction)
         AiGenerationJob job = transactionTemplate.execute(status ->
                 createInitialQuestionJob(teacher, subject, targetCourse, targetLesson, targetGrade, targetCategory, request)
@@ -139,17 +143,23 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                 .isExamBlueprint(false)
                 .isListening(isListening)
                 .listeningPassageType(request.getListeningPassageType())
+                .includeImages(includeImages)
                 .build();
 
         // 3. Invoke AI Provider (OUTSIDE of @Transactional to prevent DB connection holding)
         AIProvider provider = aiProviderFactory.getProvider();
-        log.info("Generating questions for teacher {} using AI Provider: {} (isListening: {})",
-                teacherId, provider.getProviderName(), isListening);
+        log.info("Generating questions for teacher {} using AI Provider: {} (isListening: {}, includeImages: {})",
+                teacherId, provider.getProviderName(), isListening, includeImages);
 
         List<GeneratedQuestionDraft> drafts = provider.generateQuestions(prompt);
 
         // Synthesize audio for listening drafts if present
         synthesizeAudioForDrafts(drafts);
+
+        // Generate images for drafts if requested
+        if (includeImages) {
+            generateImagesForDrafts(drafts, request.getTopic() != null ? request.getTopic() : subject.getName());
+        }
 
         // 4. Save generated drafts to DB (Short transaction)
         return transactionTemplate.execute(status ->
@@ -238,6 +248,8 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                 || (request.getTopic() != null && request.getTopic().toLowerCase().matches(".*(nghe|listening).*"))
                 || (subject.getName().toLowerCase().contains("tiếng anh") && request.getAdditionalInstructions() != null && request.getAdditionalInstructions().toLowerCase().contains("nghe"));
 
+        boolean includeImages = Boolean.TRUE.equals(request.getIncludeImages());
+
         AiQuestionGenerationPrompt prompt = AiQuestionGenerationPrompt.builder()
                 .subjectName(subject.getName())
                 .courseName(course != null ? course.getName() : null)
@@ -249,17 +261,23 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                 .isExamBlueprint(true)
                 .isListening(isListening)
                 .listeningPassageType(request.getListeningPassageType())
+                .includeImages(includeImages)
                 .build();
 
         // 3. Invoke AI Provider (OUTSIDE of @Transactional to prevent DB connection holding)
         AIProvider provider = aiProviderFactory.getProvider();
-        log.info("Generating exam blueprint for teacher {} using AI Provider: {} (isListening: {})",
-                teacherId, provider.getProviderName(), isListening);
+        log.info("Generating exam blueprint for teacher {} using AI Provider: {} (isListening: {}, includeImages: {})",
+                teacherId, provider.getProviderName(), isListening, includeImages);
 
         List<GeneratedQuestionDraft> drafts = provider.generateQuestions(prompt);
 
         // Synthesize audio for listening drafts if present
         synthesizeAudioForDrafts(drafts);
+
+        // Generate images for drafts if requested
+        if (includeImages) {
+            generateImagesForDrafts(drafts, request.getTopic() != null ? request.getTopic() : request.getTitle());
+        }
 
         // 4. Save generated drafts to DB (Short transaction)
         return transactionTemplate.execute(status ->
@@ -314,6 +332,7 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                     .content(draft.getContent())
                     .audioUrl(draft.getAudioUrl())
                     .audioScript(draft.getAudioScript())
+                    .imageUrl(draft.getImageUrl())
                     .questionType(draft.getQuestionType())
                     .difficulty(draft.getDifficulty())
                     .marks(draft.getDefaultMarks() != null ? draft.getDefaultMarks() : BigDecimal.ONE)
@@ -400,6 +419,9 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
         if (request.getAudioScript() != null) {
             question.setAudioScript(request.getAudioScript());
         }
+        if (request.getImageUrl() != null) {
+            question.setImageUrl(request.getImageUrl());
+        }
         question.setQuestionType(request.getQuestionType());
         question.setDifficulty(request.getDifficulty());
         question.setMarks(request.getMarks() != null ? request.getMarks() : BigDecimal.ONE);
@@ -477,6 +499,7 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                 .content(question.getContent())
                 .audioUrl(question.getAudioUrl())
                 .audioScript(question.getAudioScript())
+                .imageUrl(question.getImageUrl())
                 .explanation(question.getExplanation())
                 .defaultMarks(question.getMarks())
                 .source(QuestionSource.AI_GENERATED)
@@ -562,6 +585,7 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                         .content(q.getContent())
                         .audioUrl(q.getAudioUrl())
                         .audioScript(q.getAudioScript())
+                        .imageUrl(q.getImageUrl())
                         .explanation(q.getExplanation())
                         .defaultMarks(q.getMarks())
                         .source(QuestionSource.AI_GENERATED)
@@ -639,6 +663,7 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                             .content(q.getContent())
                             .audioUrl(q.getAudioUrl())
                             .audioScript(q.getAudioScript())
+                            .imageUrl(q.getImageUrl())
                             .explanation(q.getExplanation())
                             .defaultMarks(q.getMarks())
                             .source(QuestionSource.AI_GENERATED)
@@ -831,6 +856,33 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
         }
     }
 
+    private void generateImagesForDrafts(List<GeneratedQuestionDraft> drafts, String defaultTopic) {
+        if (drafts == null || drafts.isEmpty()) {
+            return;
+        }
+
+        for (GeneratedQuestionDraft draft : drafts) {
+            String prompt = draft.getImagePrompt();
+            if (prompt != null && !prompt.isBlank() && (draft.getImageUrl() == null || draft.getImageUrl().isBlank())) {
+                try {
+                    String imageUrl = aiImageService.generateImage(prompt, defaultTopic);
+                    if (imageUrl != null) {
+                        draft.setImageUrl(imageUrl);
+                        // If content doesn't already contain markdown image, embed it seamlessly
+                        if (draft.getContent() != null && !draft.getContent().contains("![") && !draft.getContent().contains(imageUrl)) {
+                            String caption = (draft.getImageDescription() != null && !draft.getImageDescription().isBlank())
+                                    ? draft.getImageDescription().trim()
+                                    : "Hình minh họa";
+                            draft.setContent(draft.getContent().trim() + "\n\n![" + caption + "](" + imageUrl + ")\n\n");
+                        }
+                    }
+                } catch (Exception e) {
+                    log.warn("Failed to generate image for draft question: {}", e.getMessage());
+                }
+            }
+        }
+    }
+
     private TeacherAiGeneratedQuestionResponse mapToQuestionResponse(AiGeneratedQuestion q) {
         List<TeacherAiGeneratedOptionResponse> opts = q.getOptions().stream()
                 .map(opt -> TeacherAiGeneratedOptionResponse.builder()
@@ -850,6 +902,7 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                 .marks(q.getMarks())
                 .audioUrl(q.getAudioUrl())
                 .audioScript(q.getAudioScript())
+                .imageUrl(q.getImageUrl())
                 .explanation(q.getExplanation())
                 .tags(q.getTags())
                 .displayOrder(q.getDisplayOrder())

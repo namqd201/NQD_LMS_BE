@@ -53,4 +53,6 @@ public class TeacherAiGenerateQuestionsRequest {
     @Builder.Default
     private Boolean isListening = false;
     private String listeningPassageType;
+    @Builder.Default
+    private Boolean includeImages = false;
 }
