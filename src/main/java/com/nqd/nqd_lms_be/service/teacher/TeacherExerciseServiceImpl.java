@@ -305,6 +305,7 @@ public class TeacherExerciseServiceImpl implements TeacherExerciseService {
                 .totalMarks(totalMarks)
                 .createdAt(e.getCreatedAt())
                 .updatedAt(e.getUpdatedAt())
+                .creatorId(e.getCreator() != null ? e.getCreator().getId() : null)
                 .creatorName(e.getCreator() != null ? e.getCreator().getFullName() : null)
                 .build();
     }

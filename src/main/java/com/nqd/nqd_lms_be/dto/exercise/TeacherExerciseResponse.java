@@ -40,6 +40,7 @@ public class TeacherExerciseResponse {
     private BigDecimal totalMarks;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private UUID creatorId;
     private String creatorName;
     private List<TeacherExerciseQuestionResponse> questions;
 }
