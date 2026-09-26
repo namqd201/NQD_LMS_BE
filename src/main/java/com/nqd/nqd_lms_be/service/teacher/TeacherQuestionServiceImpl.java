@@ -207,6 +207,8 @@ public class TeacherQuestionServiceImpl implements TeacherQuestionService {
                 .questionType(request.getQuestionType())
                 .difficulty(request.getDifficulty())
                 .content(request.getContent())
+                .audioUrl(request.getAudioUrl())
+                .audioScript(request.getAudioScript())
                 .explanation(request.getExplanation())
                 .defaultMarks(request.getDefaultMarks() != null ? request.getDefaultMarks() : new BigDecimal("1.00"))
                 .status(request.getStatus() != null ? request.getStatus() : QuestionStatus.DRAFT)
@@ -283,6 +285,8 @@ public class TeacherQuestionServiceImpl implements TeacherQuestionService {
         question.setQuestionType(request.getQuestionType());
         question.setDifficulty(request.getDifficulty());
         question.setContent(request.getContent());
+        question.setAudioUrl(request.getAudioUrl());
+        question.setAudioScript(request.getAudioScript());
         question.setExplanation(request.getExplanation());
         if (request.getDefaultMarks() != null) {
             question.setDefaultMarks(request.getDefaultMarks());
