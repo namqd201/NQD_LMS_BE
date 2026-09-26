@@ -499,6 +499,9 @@ public class StudentExerciseServiceImpl implements StudentExerciseService {
                     .content(q.getContent())
                     .questionType(q.getQuestionType())
                     .difficulty(q.getDifficulty())
+                    .audioUrl(q.getAudioUrl())
+                    .audioScript(q.getAudioScript())
+                    .imageUrl(q.getImageUrl())
                     .options(optTaking)
                     .build();
         }).collect(Collectors.toList());

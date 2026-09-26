@@ -34,5 +34,6 @@ public class StudentExamAnswerReviewResponse {
     private String explanation;
     private String audioUrl;
     private String audioScript;
+    private String imageUrl;
     private List<TeacherQuestionOptionDto> options;
 }

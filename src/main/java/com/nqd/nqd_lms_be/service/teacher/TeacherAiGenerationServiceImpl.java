@@ -156,10 +156,8 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
         // Synthesize audio for listening drafts if present
         synthesizeAudioForDrafts(drafts);
 
-        // Generate images for drafts if requested
-        if (includeImages) {
-            generateImagesForDrafts(drafts, request.getTopic() != null ? request.getTopic() : subject.getName());
-        }
+        // Generate images for drafts if requested or if visual question detected
+        generateImagesForDrafts(drafts, request.getTopic() != null ? request.getTopic() : subject.getName(), includeImages);
 
         // 4. Save generated drafts to DB (Short transaction)
         return transactionTemplate.execute(status ->
@@ -274,10 +272,8 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
         // Synthesize audio for listening drafts if present
         synthesizeAudioForDrafts(drafts);
 
-        // Generate images for drafts if requested
-        if (includeImages) {
-            generateImagesForDrafts(drafts, request.getTopic() != null ? request.getTopic() : request.getTitle());
-        }
+        // Generate images for drafts if requested or if visual question detected
+        generateImagesForDrafts(drafts, request.getTopic() != null ? request.getTopic() : request.getTitle(), includeImages);
 
         // 4. Save generated drafts to DB (Short transaction)
         return transactionTemplate.execute(status ->
@@ -856,17 +852,28 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
         }
     }
 
-    private void generateImagesForDrafts(List<GeneratedQuestionDraft> drafts, String defaultTopic) {
+    private void generateImagesForDrafts(List<GeneratedQuestionDraft> drafts, String defaultTopic, boolean includeImagesRequested) {
         if (drafts == null || drafts.isEmpty()) {
             return;
         }
 
         for (GeneratedQuestionDraft draft : drafts) {
-            String prompt = draft.getImagePrompt();
-            if (prompt != null && !prompt.isBlank() && (draft.getImageUrl() == null || draft.getImageUrl().isBlank())) {
+            boolean needsImage = includeImagesRequested
+                    || (draft.getImagePrompt() != null && !draft.getImagePrompt().isBlank())
+                    || hasVisualReference(draft);
+
+            if (needsImage && (draft.getImageUrl() == null || draft.getImageUrl().isBlank())) {
+                String prompt = draft.getImagePrompt();
+                if (prompt == null || prompt.isBlank()) {
+                    prompt = synthesizeEducationalImagePrompt(draft, defaultTopic);
+                    draft.setImagePrompt(prompt);
+                }
+
                 try {
+                    log.info("Generating educational diagram for draft question (hasVisualReference: {}, prompt: '{}')...",
+                            hasVisualReference(draft), prompt);
                     String imageUrl = aiImageService.generateImage(prompt, defaultTopic);
-                    if (imageUrl != null) {
+                    if (imageUrl != null && !imageUrl.isBlank()) {
                         draft.setImageUrl(imageUrl);
                         // If content doesn't already contain markdown image, embed it seamlessly
                         if (draft.getContent() != null && !draft.getContent().contains("![") && !draft.getContent().contains(imageUrl)) {
@@ -881,6 +888,81 @@ public class TeacherAiGenerationServiceImpl implements TeacherAiGenerationServic
                 }
             }
         }
+    }
+
+    private boolean hasVisualReference(GeneratedQuestionDraft draft) {
+        if (draft == null) return false;
+
+        if (draft.getImagePrompt() != null && !draft.getImagePrompt().isBlank()) {
+            return true;
+        }
+        if (draft.getImageDescription() != null && !draft.getImageDescription().isBlank()) {
+            return true;
+        }
+
+        String textToScan = ((draft.getContent() != null ? draft.getContent() : "") + " " +
+                (draft.getExplanation() != null ? draft.getExplanation() : "")).toLowerCase();
+
+        return textToScan.contains("nhìn hình")
+                || textToScan.contains("xem hình")
+                || textToScan.contains("quan sát hình")
+                || textToScan.contains("dựa vào hình")
+                || textToScan.contains("hình dưới đây")
+                || textToScan.contains("hình bên")
+                || textToScan.contains("hình vẽ")
+                || textToScan.contains("trong hình")
+                || textToScan.contains("hình ảnh minh họa")
+                || textToScan.contains("sơ đồ dưới đây")
+                || textToScan.contains("sơ đồ bên")
+                || textToScan.contains("biểu đồ dưới")
+                || textToScan.contains("đồ thị dưới")
+                || textToScan.contains("look at the picture")
+                || textToScan.contains("look at the image")
+                || textToScan.contains("look at the photo")
+                || textToScan.contains("in the picture")
+                || textToScan.contains("shown in the figure")
+                || textToScan.contains("refer to the figure")
+                || textToScan.contains("refer to the image")
+                || textToScan.contains("refer to the diagram")
+                || textToScan.contains("as shown in the diagram")
+                || textToScan.contains("based on the picture");
+    }
+
+    private String synthesizeEducationalImagePrompt(GeneratedQuestionDraft draft, String defaultTopic) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("A clean, high quality 2D educational textbook illustration, clean white background, textbook diagram style. ");
+
+        // Find correct option if available
+        String correctOption = null;
+        if (draft.getOptions() != null) {
+            for (GeneratedOptionDraft opt : draft.getOptions()) {
+                if (Boolean.TRUE.equals(opt.getIsCorrect())) {
+                    correctOption = opt.getOptionText();
+                    break;
+                }
+            }
+        }
+
+        if (draft.getExplanation() != null && !draft.getExplanation().isBlank()) {
+            String cleanExp = draft.getExplanation().replaceAll("(?i)(đáp án đúng là|chọn|giải thích:)", "").trim();
+            sb.append("Visual details: ").append(cleanExp).append(". ");
+        }
+
+        if (correctOption != null && !correctOption.isBlank()) {
+            sb.append("Showing clearly: ").append(correctOption).append(". ");
+        }
+
+        if (draft.getContent() != null && !draft.getContent().isBlank()) {
+            String cleanContent = draft.getContent().replaceAll("(?i)(nhìn hình|xem hình|quan sát hình|chọn câu trả lời|look at the picture|chọn câu chào phù hợp)", "").trim();
+            sb.append("Context: ").append(cleanContent).append(". ");
+        }
+
+        if (defaultTopic != null && !defaultTopic.isBlank()) {
+            sb.append("Subject/Topic: ").append(defaultTopic).append(". ");
+        }
+
+        sb.append("Clear colors, vector art, educational diagram, suitable for school students.");
+        return sb.toString().trim();
     }
 
     private TeacherAiGeneratedQuestionResponse mapToQuestionResponse(AiGeneratedQuestion q) {

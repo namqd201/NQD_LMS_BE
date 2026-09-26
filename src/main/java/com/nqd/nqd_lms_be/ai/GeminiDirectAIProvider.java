@@ -574,8 +574,32 @@ public class GeminiDirectAIProvider implements AIProvider {
             audioScript = (String) map.get("transcript");
         }
         String imageUrl = (String) map.get("imageUrl");
+        if (imageUrl == null || imageUrl.isBlank()) {
+            imageUrl = (String) map.get("image_url");
+        }
         String imagePrompt = (String) map.get("imagePrompt");
+        if (imagePrompt == null || imagePrompt.isBlank()) {
+            imagePrompt = (String) map.get("image_prompt");
+        }
+        if (imagePrompt == null || imagePrompt.isBlank()) {
+            imagePrompt = (String) map.get("diagramPrompt");
+        }
+        if (imagePrompt == null || imagePrompt.isBlank()) {
+            imagePrompt = (String) map.get("visualPrompt");
+        }
+        if (imagePrompt == null || imagePrompt.isBlank()) {
+            imagePrompt = (String) map.get("image");
+        }
         String imageDescription = (String) map.get("imageDescription");
+        if (imageDescription == null || imageDescription.isBlank()) {
+            imageDescription = (String) map.get("image_description");
+        }
+        if (imageDescription == null || imageDescription.isBlank()) {
+            imageDescription = (String) map.get("imageCaption");
+        }
+        if (imageDescription == null || imageDescription.isBlank()) {
+            imageDescription = (String) map.get("caption");
+        }
 
         QuestionType qType = QuestionType.MULTIPLE_CHOICE;
         if (qTypeStr != null) {

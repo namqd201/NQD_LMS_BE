@@ -22,5 +22,8 @@ public class StudentExerciseQuestionTakingResponse {
     private String content;
     private QuestionType questionType;
     private QuestionDifficulty difficulty;
+    private String audioUrl;
+    private String audioScript;
+    private String imageUrl;
     private List<StudentExerciseOptionTakingResponse> options;
 }

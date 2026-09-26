@@ -31,5 +31,7 @@ public class TeacherExamAttemptAnswerDetailResponse {
     private String correctOptionKey;
     private String correctOptionText;
     private String explanation;
+    private String audioUrl;
+    private String imageUrl;
     private List<TeacherQuestionOptionDto> options;
 }

@@ -198,6 +198,7 @@ public class StudentExamServiceImpl implements StudentExamService {
                     .marks(eq.getMarks())
                     .displayOrder(eq.getDisplayOrder())
                     .audioUrl(q.getAudioUrl())
+                    .imageUrl(q.getImageUrl())
                     .options(optionDtos)
                     .build());
         }
@@ -449,6 +450,7 @@ public class StudentExamServiceImpl implements StudentExamService {
                     .explanation(q.getExplanation())
                     .audioUrl(q.getAudioUrl())
                     .audioScript(q.getAudioScript())
+                    .imageUrl(q.getImageUrl())
                     .options(optionDtos)
                     .build());
         }

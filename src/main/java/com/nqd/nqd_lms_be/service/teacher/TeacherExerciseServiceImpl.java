@@ -336,6 +336,8 @@ public class TeacherExerciseServiceImpl implements TeacherExerciseService {
                     .questionType(q.getQuestionType())
                     .difficulty(q.getDifficulty())
                     .explanation(q.getExplanation())
+                    .audioUrl(q.getAudioUrl())
+                    .imageUrl(q.getImageUrl())
                     .options(optResponses)
                     .build();
         }).collect(Collectors.toList());

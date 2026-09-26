@@ -209,6 +209,7 @@ public class TeacherQuestionServiceImpl implements TeacherQuestionService {
                 .content(request.getContent())
                 .audioUrl(request.getAudioUrl())
                 .audioScript(request.getAudioScript())
+                .imageUrl(request.getImageUrl())
                 .explanation(request.getExplanation())
                 .defaultMarks(request.getDefaultMarks() != null ? request.getDefaultMarks() : new BigDecimal("1.00"))
                 .status(request.getStatus() != null ? request.getStatus() : QuestionStatus.DRAFT)
@@ -287,6 +288,9 @@ public class TeacherQuestionServiceImpl implements TeacherQuestionService {
         question.setContent(request.getContent());
         question.setAudioUrl(request.getAudioUrl());
         question.setAudioScript(request.getAudioScript());
+        if (request.getImageUrl() != null) {
+            question.setImageUrl(request.getImageUrl());
+        }
         question.setExplanation(request.getExplanation());
         if (request.getDefaultMarks() != null) {
             question.setDefaultMarks(request.getDefaultMarks());
@@ -459,6 +463,7 @@ public class TeacherQuestionServiceImpl implements TeacherQuestionService {
                 .content(question.getContent())
                 .audioUrl(question.getAudioUrl())
                 .audioScript(question.getAudioScript())
+                .imageUrl(question.getImageUrl())
                 .explanation(question.getExplanation())
                 .defaultMarks(question.getDefaultMarks())
                 .status(question.getStatus())

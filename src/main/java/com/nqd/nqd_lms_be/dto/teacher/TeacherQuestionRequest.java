@@ -39,6 +39,7 @@ public class TeacherQuestionRequest {
     private String explanation;
     private String audioUrl;
     private String audioScript;
+    private String imageUrl;
     private BigDecimal defaultMarks;
     private QuestionStatus status;
     private List<String> tags;

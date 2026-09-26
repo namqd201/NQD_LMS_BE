@@ -33,6 +33,7 @@ public class TeacherQuestionResponse {
     private String content;
     private String audioUrl;
     private String audioScript;
+    private String imageUrl;
     private String explanation;
     private BigDecimal defaultMarks;
     private QuestionStatus status;

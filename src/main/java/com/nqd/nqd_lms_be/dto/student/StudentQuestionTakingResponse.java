@@ -27,5 +27,6 @@ public class StudentQuestionTakingResponse {
     private BigDecimal marks;
     private Integer displayOrder;
     private String audioUrl;
+    private String imageUrl;
     private List<StudentOptionTakingResponse> options;
 }

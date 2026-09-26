@@ -836,6 +836,8 @@ public class TeacherExamServiceImpl implements TeacherExamService {
                     .correctOptionKey(correctOpt != null ? correctOpt.getOptionKey() : null)
                     .correctOptionText(correctOpt != null ? correctOpt.getOptionText() : null)
                     .explanation(q.getExplanation())
+                    .audioUrl(q.getAudioUrl())
+                    .imageUrl(q.getImageUrl())
                     .options(optionDtos)
                     .build());
         }

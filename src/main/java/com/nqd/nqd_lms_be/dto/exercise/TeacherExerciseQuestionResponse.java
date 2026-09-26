@@ -23,5 +23,7 @@ public class TeacherExerciseQuestionResponse {
     private QuestionType questionType;
     private QuestionDifficulty difficulty;
     private String explanation;
+    private String audioUrl;
+    private String imageUrl;
     private List<TeacherExerciseOptionResponse> options;
 }
