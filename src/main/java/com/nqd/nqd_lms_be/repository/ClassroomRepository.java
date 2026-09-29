@@ -29,4 +29,8 @@ public interface ClassroomRepository extends JpaRepository<Classroom, UUID> {
            "WHERE cs.student.id = :studentId AND cs.status = 'ENROLLED' " +
            "ORDER BY cs.joinedAt DESC")
     List<Classroom> findEnrolledClassroomsByStudentId(@Param("studentId") UUID studentId);
+
+    Optional<Classroom> findFirstByMeetingId(String meetingId);
+
+    Optional<Classroom> findFirstByLarkMeetingUrlContaining(String meetingNo);
 }

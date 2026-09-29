@@ -35,6 +35,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     private final UserRepository userRepository;
     private final SubjectRepository subjectRepository;
     private final KafkaNotificationProducer kafkaNotificationProducer;
+    private final com.nqd.nqd_lms_be.service.lark.LarkService larkService;
 
     private static final String CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -81,6 +82,20 @@ public class ClassroomServiceImpl implements ClassroomService {
                 .studentCount(0)
                 .coverImageUrl(request.getCoverImageUrl())
                 .build();
+
+        // Automatically provision Lark online meeting room for the classroom
+        try {
+            var reservation = larkService.createMeetingReservation("Lớp học: " + classroom.getName(), 30);
+            if (reservation != null && reservation.getMeetingUrl() != null) {
+                classroom.setLarkMeetingUrl(reservation.getMeetingUrl());
+                classroom.setMeetingId(reservation.getMeetingId());
+                classroom.setPasscode(reservation.getPasscode());
+                classroom.setMeetingNote("Phòng học trực tuyến Lark cố định của lớp.");
+                log.info("Auto-provisioned Lark meeting room for classroom {}: url={}", classroom.getName(), reservation.getMeetingUrl());
+            }
+        } catch (Exception e) {
+            log.warn("Could not automatically create Lark meeting for classroom {}: {}", classroom.getName(), e.getMessage());
+        }
 
         classroom = classroomRepository.save(classroom);
         log.info("Teacher {} created classroom: {} (Code: {})", teacher.getEmail(), classroom.getName(), classroom.getCode());

@@ -71,6 +71,7 @@ public class SecurityConfig {
                     "/v3/api-docs/**",
                     "/api/v1/payments/webhook",
                     "/api/v1/payments/webhook/**",
+                    "/api/v1/webhooks/**",
                     "/api/v1/public/certificates/**",
                     "/api/v1/public/knowledge/**"
                 ).permitAll()
