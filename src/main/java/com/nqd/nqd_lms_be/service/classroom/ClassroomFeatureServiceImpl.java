@@ -35,6 +35,8 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
     private final ClassroomScheduleRepository scheduleRepository;
     private final ClassroomRecordedVideoRepository videoRepository;
     private final ClassroomFileRepository fileRepository;
+    private final com.nqd.nqd_lms_be.service.google.GoogleMeetService googleMeetService;
+    private final com.nqd.nqd_lms_be.service.google.GoogleDriveSyncService googleDriveSyncService;
 
     private static final String CLASSROOM_FILES_DIR = "uploads/classroom_files";
 
@@ -313,8 +315,40 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
                 .build();
     }
 
+    @Override
+    @Transactional
+    public ClassroomMeetingDto.Response generateGoogleMeetRoom(UUID classroomId, UUID teacherId) {
+        Classroom c = validateTeacherPermission(classroomId, teacherId);
+
+        var meetDto = googleMeetService.createClassroomMeeting(c.getName(), "Phòng học trực tuyến Google Meet lớp: " + c.getName());
+        if (meetDto != null && meetDto.getMeetingUrl() != null) {
+            c.setLarkMeetingUrl(meetDto.getMeetingUrl());
+            c.setMeetingId(meetDto.getEventId());
+            c.setPasscode(meetDto.getMeetingCode());
+            c.setMeetingNote("Phòng học trực tuyến Google Meet cố định của lớp.");
+            c = classroomRepository.save(c);
+            log.info("Teacher {} provisioned new Google Meet room: url={}", teacherId, meetDto.getMeetingUrl());
+        }
+
+        return ClassroomMeetingDto.Response.builder()
+                .classroomId(c.getId())
+                .larkMeetingUrl(c.getLarkMeetingUrl())
+                .meetingId(c.getMeetingId())
+                .passcode(c.getPasscode())
+                .meetingNote(c.getMeetingNote())
+                .isLiveNow(Boolean.TRUE.equals(c.getIsLiveNow()))
+                .build();
+    }
+
+    @Override
+    @Transactional
+    public int syncMeetRecordings(UUID classroomId, UUID teacherId) {
+        validateTeacherPermission(classroomId, teacherId);
+        return googleDriveSyncService.syncRecordingsForClassroom(classroomId);
+    }
+
     // ==========================================
-    // 4. RECORDED VIDEOS (LARK VIDEOS)
+    // 4. RECORDED VIDEOS (MEET / YOUTUBE VIDEOS)
     // ==========================================
 
     @Override

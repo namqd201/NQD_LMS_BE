@@ -1,5 +1,6 @@
 package com.nqd.nqd_lms_be.service.youtube;
 
+import java.io.InputStream;
 import java.util.List;
 
 public interface YouTubeUploadService {
@@ -25,4 +26,16 @@ public interface YouTubeUploadService {
      * @return Full YouTube video URL (e.g. https://www.youtube.com/watch?v=xxxx)
      */
     String uploadVideoFromUrl(String sourceUrl, String title, String description, List<String> tags);
+
+    /**
+     * Upload an InputStream directly to YouTube with unlisted privacy status (e.g. from Google Drive).
+     *
+     * @param inputStream Video binary stream
+     * @param contentLength Size of video in bytes, or -1 if unknown
+     * @param title Video title
+     * @param description Video description
+     * @param tags List of tags
+     * @return Full YouTube video URL
+     */
+    String uploadVideoStream(InputStream inputStream, long contentLength, String title, String description, List<String> tags);
 }

@@ -10,4 +10,6 @@ import java.util.UUID;
 @Repository
 public interface ClassroomRecordedVideoRepository extends JpaRepository<ClassroomRecordedVideo, UUID> {
     List<ClassroomRecordedVideo> findByClassroomIdOrderBySessionDateDescCreatedAtDesc(UUID classroomId);
+    boolean existsByVideoUrl(String videoUrl);
+    boolean existsByClassroomIdAndTitle(UUID classroomId, String title);
 }

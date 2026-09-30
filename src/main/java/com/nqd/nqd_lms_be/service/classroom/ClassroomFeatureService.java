@@ -20,9 +20,11 @@ public interface ClassroomFeatureService {
     ClassroomAssignmentDto.Response createAssignment(UUID classroomId, ClassroomAssignmentDto.Request request, UUID teacherId);
     void deleteAssignment(UUID classroomId, UUID assignmentId, UUID teacherId);
 
-    // Live Meeting (Lark)
+    // Live Meeting (Google Meet / Lark)
     ClassroomMeetingDto.Response getMeetingInfo(UUID classroomId, UUID currentUserId);
     ClassroomMeetingDto.Response updateMeetingInfo(UUID classroomId, ClassroomMeetingDto.Request request, UUID teacherId);
+    ClassroomMeetingDto.Response generateGoogleMeetRoom(UUID classroomId, UUID teacherId);
+    int syncMeetRecordings(UUID classroomId, UUID teacherId);
 
     // Recorded Videos
     List<ClassroomRecordedVideoDto.Response> getRecordedVideos(UUID classroomId, UUID currentUserId);

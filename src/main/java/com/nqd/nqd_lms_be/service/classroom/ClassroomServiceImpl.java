@@ -36,6 +36,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     private final SubjectRepository subjectRepository;
     private final KafkaNotificationProducer kafkaNotificationProducer;
     private final com.nqd.nqd_lms_be.service.lark.LarkService larkService;
+    private final com.nqd.nqd_lms_be.service.google.GoogleMeetService googleMeetService;
 
     private static final String CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -83,18 +84,27 @@ public class ClassroomServiceImpl implements ClassroomService {
                 .coverImageUrl(request.getCoverImageUrl())
                 .build();
 
-        // Automatically provision Lark online meeting room for the classroom
+        // Automatically provision online meeting room (Priority 1: Google Meet, Fallback: Lark)
         try {
-            var reservation = larkService.createMeetingReservation("Lớp học: " + classroom.getName(), 30);
-            if (reservation != null && reservation.getMeetingUrl() != null) {
-                classroom.setLarkMeetingUrl(reservation.getMeetingUrl());
-                classroom.setMeetingId(reservation.getMeetingId());
-                classroom.setPasscode(reservation.getPasscode());
-                classroom.setMeetingNote("Phòng học trực tuyến Lark cố định của lớp.");
-                log.info("Auto-provisioned Lark meeting room for classroom {}: url={}", classroom.getName(), reservation.getMeetingUrl());
+            var googleMeet = googleMeetService != null ? googleMeetService.createClassroomMeeting(classroom.getName(), "Phòng học trực tuyến Google Meet lớp: " + classroom.getName()) : null;
+            if (googleMeet != null && googleMeet.getMeetingUrl() != null) {
+                classroom.setLarkMeetingUrl(googleMeet.getMeetingUrl());
+                classroom.setMeetingId(googleMeet.getEventId());
+                classroom.setPasscode(googleMeet.getMeetingCode());
+                classroom.setMeetingNote("Phòng học trực tuyến Google Meet cố định của lớp.");
+                log.info("Auto-provisioned Google Meet room for classroom {}: url={}", classroom.getName(), googleMeet.getMeetingUrl());
+            } else if (larkService != null) {
+                var reservation = larkService.createMeetingReservation("Lớp học: " + classroom.getName(), 30);
+                if (reservation != null && reservation.getMeetingUrl() != null) {
+                    classroom.setLarkMeetingUrl(reservation.getMeetingUrl());
+                    classroom.setMeetingId(reservation.getMeetingId());
+                    classroom.setPasscode(reservation.getPasscode());
+                    classroom.setMeetingNote("Phòng học trực tuyến Lark cố định của lớp.");
+                    log.info("Auto-provisioned Lark meeting room for classroom {}: url={}", classroom.getName(), reservation.getMeetingUrl());
+                }
             }
         } catch (Exception e) {
-            log.warn("Could not automatically create Lark meeting for classroom {}: {}", classroom.getName(), e.getMessage());
+            log.warn("Could not automatically create online meeting room for classroom {}: {}", classroom.getName(), e.getMessage());
         }
 
         classroom = classroomRepository.save(classroom);
