@@ -30,6 +30,7 @@ public class LarkWebhookController {
 
     private final LarkService larkService;
     private final R2StorageService r2StorageService;
+    private final com.nqd.nqd_lms_be.service.youtube.YouTubeUploadService youTubeUploadService;
     private final ClassroomRepository classroomRepository;
     private final ClassroomRecordedVideoRepository videoRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -74,7 +75,7 @@ public class LarkWebhookController {
                 .or(() -> classroomRepository.findFirstByLarkMeetingUrlContaining(meetingId));
 
         if (classroomOpt.isEmpty()) {
-            log.warn("No classroom found matching meetingId: {}. Skipping auto-sync to R2.", meetingId);
+            log.warn("No classroom found matching meetingId: {}. Skipping auto-sync.", meetingId);
             return;
         }
 
@@ -88,25 +89,53 @@ public class LarkWebhookController {
             return;
         }
 
-        // Stream from Lark to Cloudflare R2
-        String r2Key = "recordings/" + classroom.getId() + "/" + meetingId + "_" + System.currentTimeMillis() + ".mp4";
-        String finalVideoUrl = r2StorageService.uploadFromUrl(recording.getUrl(), r2Key, "video/mp4");
+        String formattedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String videoTitle = "[" + classroom.getName() + "] - "
+                + ((topic != null && !topic.isBlank()) ? topic : "Buổi học online ngày " + formattedDate);
+        String videoDescription = "Video bài giảng trực tuyến lớp học " + classroom.getName()
+                + " trên hệ thống NQD-LMS. Ghi hình tự động qua Lark Suite.";
 
+        String finalVideoUrl = null;
+        String storageProvider = "Lark Suite";
+
+        // 1. First priority: Stream upload to YouTube (Unlisted)
+        if (youTubeUploadService != null && youTubeUploadService.isConfigured()) {
+            log.info("Starting automated upload to YouTube for classroom '{}'...", classroom.getName());
+            String ytUrl = youTubeUploadService.uploadVideoFromUrl(
+                    recording.getUrl(),
+                    videoTitle,
+                    videoDescription,
+                    java.util.List.of("NQD-LMS", "HocOnline", classroom.getName())
+            );
+            if (ytUrl != null && !ytUrl.isBlank()) {
+                finalVideoUrl = ytUrl;
+                storageProvider = "YouTube (Không công khai)";
+                log.info("Video successfully uploaded to YouTube: {}", finalVideoUrl);
+            }
+        }
+
+        // 2. Second priority: Fallback to Cloudflare R2 if YouTube upload did not run/succeed
+        if ((finalVideoUrl == null || finalVideoUrl.isBlank()) && r2StorageService != null) {
+            String r2Key = "recordings/" + classroom.getId() + "/" + meetingId + "_" + System.currentTimeMillis() + ".mp4";
+            String r2Url = r2StorageService.uploadFromUrl(recording.getUrl(), r2Key, "video/mp4");
+            if (r2Url != null && !r2Url.isBlank() && !r2Url.equals(recording.getUrl())) {
+                finalVideoUrl = r2Url;
+                storageProvider = "Cloudflare R2";
+            }
+        }
+
+        // 3. Fallback to Lark download URL if both external storages are unavailable
         if (finalVideoUrl == null || finalVideoUrl.isBlank()) {
-            log.warn("Failed to upload video to Cloudflare R2. Keeping original Lark URL.");
             finalVideoUrl = recording.getUrl();
+            log.warn("External storage upload was not completed. Preserving original Lark URL.");
         } else {
-            // Once securely in R2, delete original video from Lark to save Lark storage
-            log.info("Video successfully stored in Cloudflare R2: {}. Deleting original from Lark...", finalVideoUrl);
+            // Once securely in YouTube or R2, delete original video from Lark to save 100GB Lark storage
+            log.info("Video securely stored in {}. Deleting original video from Lark to free storage...", storageProvider);
             larkService.deleteMeetingRecording(meetingId);
         }
 
         // Save recorded video entry into database
         int durationMinutes = recording.getDurationMs() != null ? (int) (recording.getDurationMs() / 60000L) : 0;
-        String formattedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        String videoTitle = (topic != null && !topic.isBlank())
-                ? topic + " (" + formattedDate + ")"
-                : "Buổi học online ngày " + formattedDate;
 
         ClassroomRecordedVideo recordedVideo = ClassroomRecordedVideo.builder()
                 .classroom(classroom)
@@ -114,11 +143,11 @@ public class LarkWebhookController {
                 .videoUrl(finalVideoUrl)
                 .sessionDate(LocalDate.now())
                 .durationMinutes(durationMinutes > 0 ? durationMinutes : 60)
-                .description("Bản ghi buổi học trực tuyến qua Lark được tự động lưu trữ trên Cloudflare R2.")
+                .description("Bản ghi buổi học trực tuyến qua Lark được tự động lưu trữ trên " + storageProvider + ".")
                 .uploadedBy(classroom.getTeacher())
                 .build();
 
         videoRepository.save(recordedVideo);
-        log.info("Saved recorded video entry ID: {} for classroom '{}'", recordedVideo.getId(), classroom.getName());
+        log.info("Saved recorded video entry ID: {} for classroom '{}' with URL: {}", recordedVideo.getId(), classroom.getName(), finalVideoUrl);
     }
 }
