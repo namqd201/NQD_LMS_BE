@@ -37,6 +37,8 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
     private final ClassroomFileRepository fileRepository;
     private final com.nqd.nqd_lms_be.service.google.GoogleMeetService googleMeetService;
     private final com.nqd.nqd_lms_be.service.google.GoogleDriveSyncService googleDriveSyncService;
+    private final com.nqd.nqd_lms_be.service.onehundredms.OneHundredMsService oneHundredMsService;
+    private final com.nqd.nqd_lms_be.service.onehundredms.OneHundredMsSyncService oneHundredMsSyncService;
 
     private static final String CLASSROOM_FILES_DIR = "uploads/classroom_files";
 
@@ -272,21 +274,14 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
     }
 
     // ==========================================
-    // 3. LIVE MEETING (LARK)
+    // 3. LIVE MEETING (100MS / GOOGLE MEET / LARK)
     // ==========================================
 
     @Override
     @Transactional(readOnly = true)
     public ClassroomMeetingDto.Response getMeetingInfo(UUID classroomId, UUID currentUserId) {
         Classroom c = validateAndGetClassroomAccess(classroomId, currentUserId);
-        return ClassroomMeetingDto.Response.builder()
-                .classroomId(c.getId())
-                .larkMeetingUrl(c.getLarkMeetingUrl())
-                .meetingId(c.getMeetingId())
-                .passcode(c.getPasscode())
-                .meetingNote(c.getMeetingNote())
-                .isLiveNow(Boolean.TRUE.equals(c.getIsLiveNow()))
-                .build();
+        return mapToMeetingResponse(c);
     }
 
     @Override
@@ -305,20 +300,47 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
         c = classroomRepository.save(c);
         log.info("Teacher {} updated live meeting settings for classroom {}", teacherId, c.getName());
 
-        return ClassroomMeetingDto.Response.builder()
-                .classroomId(c.getId())
-                .larkMeetingUrl(c.getLarkMeetingUrl())
-                .meetingId(c.getMeetingId())
-                .passcode(c.getPasscode())
-                .meetingNote(c.getMeetingNote())
-                .isLiveNow(Boolean.TRUE.equals(c.getIsLiveNow()))
-                .build();
+        return mapToMeetingResponse(c);
+    }
+
+    @Override
+    @Transactional
+    public ClassroomMeetingDto.Response generate100msRoom(UUID classroomId, UUID teacherId) {
+        Classroom c = validateTeacherPermission(classroomId, teacherId);
+
+        if (oneHundredMsService != null && oneHundredMsService.isConfigured()) {
+            var roomDto = oneHundredMsService.createClassroomMeeting(c.getName(), "Phòng học trực tuyến 100ms lớp: " + c.getName());
+            if (roomDto != null && roomDto.getGuestMeetingUrl() != null) {
+                c.setLarkMeetingUrl(roomDto.getGuestMeetingUrl());
+                c.setMeetingId(roomDto.getRoomId());
+                c.setPasscode(roomDto.getHostCode());
+                c.setMeetingNote("Phòng học trực tuyến 100ms Live Class.\nLink Giáo viên (Host & Ghi hình): "
+                        + roomDto.getHostMeetingUrl()
+                        + "\nLink Học viên (Guest): "
+                        + roomDto.getGuestMeetingUrl());
+                c = classroomRepository.save(c);
+                log.info("Teacher {} provisioned 100ms room: roomId={}, hostUrl={}", teacherId, roomDto.getRoomId(), roomDto.getHostMeetingUrl());
+                return mapToMeetingResponse(c);
+            }
+        }
+
+        // Fallback to Google Meet if 100ms not configured
+        return generateGoogleMeetRoom(classroomId, teacherId);
     }
 
     @Override
     @Transactional
     public ClassroomMeetingDto.Response generateGoogleMeetRoom(UUID classroomId, UUID teacherId) {
         Classroom c = validateTeacherPermission(classroomId, teacherId);
+
+        // First attempt 100ms if available
+        if (oneHundredMsService != null && oneHundredMsService.isConfigured()) {
+            try {
+                return generate100msRoom(classroomId, teacherId);
+            } catch (Exception e) {
+                log.warn("100ms provision failed, trying Google Meet fallback: {}", e.getMessage());
+            }
+        }
 
         var meetDto = googleMeetService.createClassroomMeeting(c.getName(), "Phòng học trực tuyến Google Meet lớp: " + c.getName());
         if (meetDto != null && meetDto.getMeetingUrl() != null) {
@@ -329,7 +351,63 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
             c = classroomRepository.save(c);
             log.info("Teacher {} provisioned new Google Meet room: url={}", teacherId, meetDto.getMeetingUrl());
         } else {
-            throw new RuntimeException("Không thể tạo phòng Google Meet tự động. Vui lòng kiểm tra lại quyền truy cập hoặc tự nhập link Meet vào phần Cài đặt phòng học.");
+            throw new RuntimeException("Không thể tạo phòng học tự động. Vui lòng kiểm tra lại cấu hình phòng học.");
+        }
+
+        return mapToMeetingResponse(c);
+    }
+
+    @Override
+    @Transactional
+    public int sync100msRecordings(UUID classroomId, UUID teacherId) {
+        validateTeacherPermission(classroomId, teacherId);
+        int synced = 0;
+        if (oneHundredMsSyncService != null) {
+            synced += oneHundredMsSyncService.syncRecordingsForClassroom(classroomId);
+        }
+        return synced;
+    }
+
+    @Override
+    @Transactional
+    public int syncMeetRecordings(UUID classroomId, UUID teacherId) {
+        validateTeacherPermission(classroomId, teacherId);
+        int synced = 0;
+        if (oneHundredMsSyncService != null) {
+            try {
+                synced += oneHundredMsSyncService.syncRecordingsForClassroom(classroomId);
+            } catch (Exception e) {
+                log.warn("100ms sync failed: {}", e.getMessage());
+            }
+        }
+        if (googleDriveSyncService != null) {
+            try {
+                synced += googleDriveSyncService.syncRecordingsForClassroom(classroomId);
+            } catch (Exception e) {
+                log.warn("Google Drive sync failed: {}", e.getMessage());
+            }
+        }
+        return synced;
+    }
+
+    private ClassroomMeetingDto.Response mapToMeetingResponse(Classroom c) {
+        String hostUrl = null;
+        String guestUrl = c.getLarkMeetingUrl();
+
+        if (c.getMeetingNote() != null) {
+            for (String line : c.getMeetingNote().split("\n")) {
+                if (line.toLowerCase().contains("host") && line.contains("https://")) {
+                    int idx = line.indexOf("https://");
+                    hostUrl = line.substring(idx).trim();
+                } else if (line.toLowerCase().contains("guest") && line.contains("https://")) {
+                    int idx = line.indexOf("https://");
+                    guestUrl = line.substring(idx).trim();
+                }
+            }
+        }
+
+        if (hostUrl == null && c.getPasscode() != null && c.getPasscode().matches("^[a-z0-9]{3}-[a-z0-9]{4}-[a-z0-9]{3}$")) {
+            hostUrl = String.format("https://small-forest-267978.app.100ms.live/meeting/%s", c.getPasscode());
         }
 
         return ClassroomMeetingDto.Response.builder()
@@ -339,14 +417,9 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
                 .passcode(c.getPasscode())
                 .meetingNote(c.getMeetingNote())
                 .isLiveNow(Boolean.TRUE.equals(c.getIsLiveNow()))
+                .hostMeetingUrl(hostUrl != null ? hostUrl : c.getLarkMeetingUrl())
+                .guestMeetingUrl(guestUrl != null ? guestUrl : c.getLarkMeetingUrl())
                 .build();
-    }
-
-    @Override
-    @Transactional
-    public int syncMeetRecordings(UUID classroomId, UUID teacherId) {
-        validateTeacherPermission(classroomId, teacherId);
-        return googleDriveSyncService.syncRecordingsForClassroom(classroomId);
     }
 
     // ==========================================

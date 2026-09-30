@@ -150,28 +150,28 @@ public class ClassroomFeatureController {
         return ResponseEntity.ok(featureService.updateMeetingInfo(classroomId, request, principal.getId()));
     }
 
-    @PostMapping("/generate-google-meet")
-    @Operation(summary = "Tạo phòng học Google Meet tự động cho lớp học")
-    public ResponseEntity<ClassroomMeetingDto.Response> generateGoogleMeet(
+    @PostMapping({"/generate-100ms-room", "/generate-google-meet"})
+    @Operation(summary = "Tạo phòng học 100ms Live Class tự động cho lớp học")
+    public ResponseEntity<ClassroomMeetingDto.Response> generate100msRoom(
             @PathVariable UUID classroomId,
             @AuthenticationPrincipal AppUserPrincipal principal
     ) {
-        return ResponseEntity.ok(featureService.generateGoogleMeetRoom(classroomId, principal.getId()));
+        return ResponseEntity.ok(featureService.generate100msRoom(classroomId, principal.getId()));
     }
 
-    @PostMapping("/sync-drive-recordings")
-    @Operation(summary = "Quét Google Drive lấy video bản ghi Google Meet và tự động đăng lên YouTube")
-    public ResponseEntity<java.util.Map<String, Object>> syncDriveRecordings(
+    @PostMapping({"/sync-100ms-recordings", "/sync-drive-recordings"})
+    @Operation(summary = "Quét bản ghi 100ms và tự động đăng lên YouTube")
+    public ResponseEntity<java.util.Map<String, Object>> sync100msRecordings(
             @PathVariable UUID classroomId,
             @AuthenticationPrincipal AppUserPrincipal principal
     ) {
-        int count = featureService.syncMeetRecordings(classroomId, principal.getId());
+        int count = featureService.sync100msRecordings(classroomId, principal.getId());
         return ResponseEntity.ok(java.util.Map.of(
                 "success", true,
                 "syncedCount", count,
                 "message", count > 0 
-                    ? "Đã đồng bộ thành công " + count + " video bản ghi mới từ Google Drive lên YouTube!" 
-                    : "Không tìm thấy video ghi hình mới nào trên Google Drive cần đồng bộ."
+                    ? "Đã đồng bộ thành công " + count + " video bản ghi mới từ 100ms lên hệ thống / YouTube!" 
+                    : "Không tìm thấy video ghi hình mới nào từ 100ms cần đồng bộ."
         ));
     }
 

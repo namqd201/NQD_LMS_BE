@@ -34,6 +34,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     private final KafkaNotificationProducer kafkaNotificationProducer;
     private final com.nqd.nqd_lms_be.service.lark.LarkService larkService;
     private final com.nqd.nqd_lms_be.service.google.GoogleMeetService googleMeetService;
+    private final com.nqd.nqd_lms_be.service.onehundredms.OneHundredMsService oneHundredMsService;
     private final UserRoleRepository userRoleRepository;
     private final ClassroomMaterialRepository materialRepository;
     private final ClassroomAssignmentRepository assignmentRepository;
@@ -87,15 +88,29 @@ public class ClassroomServiceImpl implements ClassroomService {
                 .coverImageUrl(request.getCoverImageUrl())
                 .build();
 
-        // Automatically provision online meeting room (Priority 1: Google Meet, Fallback: Lark)
+        // Automatically provision online meeting room (Priority 1: 100ms Live Class, Priority 2: Google Meet, Fallback: Lark)
         try {
-            var googleMeet = googleMeetService != null ? googleMeetService.createClassroomMeeting(classroom.getName(), "Phòng học trực tuyến Google Meet lớp: " + classroom.getName()) : null;
-            if (googleMeet != null && googleMeet.getMeetingUrl() != null) {
-                classroom.setLarkMeetingUrl(googleMeet.getMeetingUrl());
-                classroom.setMeetingId(googleMeet.getEventId());
-                classroom.setPasscode(googleMeet.getMeetingCode());
-                classroom.setMeetingNote("Phòng học trực tuyến Google Meet cố định của lớp.");
-                log.info("Auto-provisioned Google Meet room for classroom {}: url={}", classroom.getName(), googleMeet.getMeetingUrl());
+            if (oneHundredMsService != null && oneHundredMsService.isConfigured()) {
+                var roomDto = oneHundredMsService.createClassroomMeeting(classroom.getName(), "Phòng học trực tuyến 100ms lớp: " + classroom.getName());
+                if (roomDto != null && roomDto.getGuestMeetingUrl() != null) {
+                    classroom.setLarkMeetingUrl(roomDto.getGuestMeetingUrl());
+                    classroom.setMeetingId(roomDto.getRoomId());
+                    classroom.setPasscode(roomDto.getHostCode());
+                    classroom.setMeetingNote("Phòng học trực tuyến 100ms Live Class.\nLink Giáo viên (Host & Ghi hình): "
+                            + roomDto.getHostMeetingUrl()
+                            + "\nLink Học viên (Guest): "
+                            + roomDto.getGuestMeetingUrl());
+                    log.info("Auto-provisioned 100ms room for classroom {}: roomId={}, hostUrl={}", classroom.getName(), roomDto.getRoomId(), roomDto.getHostMeetingUrl());
+                }
+            } else if (googleMeetService != null) {
+                var googleMeet = googleMeetService.createClassroomMeeting(classroom.getName(), "Phòng học trực tuyến Google Meet lớp: " + classroom.getName());
+                if (googleMeet != null && googleMeet.getMeetingUrl() != null) {
+                    classroom.setLarkMeetingUrl(googleMeet.getMeetingUrl());
+                    classroom.setMeetingId(googleMeet.getEventId());
+                    classroom.setPasscode(googleMeet.getMeetingCode());
+                    classroom.setMeetingNote("Phòng học trực tuyến Google Meet cố định của lớp.");
+                    log.info("Auto-provisioned Google Meet room for classroom {}: url={}", classroom.getName(), googleMeet.getMeetingUrl());
+                }
             } else if (larkService != null) {
                 var reservation = larkService.createMeetingReservation("Lớp học: " + classroom.getName(), 30);
                 if (reservation != null && reservation.getMeetingUrl() != null) {
@@ -186,6 +201,13 @@ public class ClassroomServiceImpl implements ClassroomService {
 
         var files = fileRepository.findByClassroomIdOrderByCreatedAtDesc(classroomId);
         if (!files.isEmpty()) fileRepository.deleteAll(files);
+
+        // Disable 100ms room if exists
+        if (oneHundredMsService != null && classroom.getMeetingId() != null) {
+            try {
+                oneHundredMsService.disableMeeting(classroom.getMeetingId());
+            } catch (Exception ignored) {}
+        }
 
         // Delete Google Meet calendar event if exists
         if (classroom.getMeetingId() != null && classroom.getMeetingId().length() > 10) {
