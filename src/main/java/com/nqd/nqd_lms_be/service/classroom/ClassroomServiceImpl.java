@@ -10,10 +10,7 @@ import com.nqd.nqd_lms_be.entity.User;
 import com.nqd.nqd_lms_be.entity.enums.ClassEnrollmentStatus;
 import com.nqd.nqd_lms_be.entity.enums.ClassroomStatus;
 import com.nqd.nqd_lms_be.entity.enums.UserStatus;
-import com.nqd.nqd_lms_be.repository.ClassroomRepository;
-import com.nqd.nqd_lms_be.repository.ClassroomStudentRepository;
-import com.nqd.nqd_lms_be.repository.SubjectRepository;
-import com.nqd.nqd_lms_be.repository.UserRepository;
+import com.nqd.nqd_lms_be.repository.*;
 import com.nqd.nqd_lms_be.service.notification.KafkaNotificationProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +34,12 @@ public class ClassroomServiceImpl implements ClassroomService {
     private final KafkaNotificationProducer kafkaNotificationProducer;
     private final com.nqd.nqd_lms_be.service.lark.LarkService larkService;
     private final com.nqd.nqd_lms_be.service.google.GoogleMeetService googleMeetService;
+    private final UserRoleRepository userRoleRepository;
+    private final ClassroomMaterialRepository materialRepository;
+    private final ClassroomAssignmentRepository assignmentRepository;
+    private final ClassroomScheduleRepository scheduleRepository;
+    private final ClassroomRecordedVideoRepository videoRepository;
+    private final ClassroomFileRepository fileRepository;
 
     private static final String CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -148,12 +151,52 @@ public class ClassroomServiceImpl implements ClassroomService {
                 .orElseThrow(() -> new ResourceNotFoundException("Classroom", classroomId));
 
         if (!classroom.getTeacher().getId().equals(teacherId)) {
-            throw new ForbiddenOperationException("Chỉ giáo viên phụ trách lớp học mới có quyền xóa/lưu trữ lớp học này.");
+            List<String> roleNames = userRoleRepository.findRoleNamesByUserId(teacherId);
+            boolean isAdmin = roleNames != null && roleNames.stream()
+                    .anyMatch(r -> r.equalsIgnoreCase("ADMIN") || r.equalsIgnoreCase("ROLE_ADMIN"));
+            if (!isAdmin) {
+                throw new ForbiddenOperationException("Chỉ giáo viên phụ trách lớp học hoặc quản trị viên mới có quyền xóa lớp học này.");
+            }
         }
 
-        classroom.setStatus(ClassroomStatus.ARCHIVED);
-        classroomRepository.save(classroom);
-        log.info("Teacher {} archived classroom: {}", teacherId, classroomId);
+        // Check if there are enrolled students
+        long enrolledCount = classroomStudentRepository.countByClassroomIdAndStatus(classroomId, com.nqd.nqd_lms_be.entity.enums.ClassEnrollmentStatus.ENROLLED);
+        if (enrolledCount > 0 || (classroom.getStudentCount() != null && classroom.getStudentCount() > 0)) {
+            throw new IllegalArgumentException("Không thể xóa lớp học vì đang có học viên tham gia. Chỉ có thể xóa lớp học khi chưa có học viên nào trong lớp.");
+        }
+
+        // Delete any pending / rejected student relations
+        var students = classroomStudentRepository.findByClassroomIdOrderByCreatedAtDesc(classroomId);
+        if (!students.isEmpty()) {
+            classroomStudentRepository.deleteAll(students);
+        }
+
+        // Delete child relations
+        var materials = materialRepository.findByClassroomIdOrderByLessonOrderAscCreatedAtAsc(classroomId);
+        if (!materials.isEmpty()) materialRepository.deleteAll(materials);
+
+        var assigns = assignmentRepository.findByClassroomIdOrderByCreatedAtDesc(classroomId);
+        if (!assigns.isEmpty()) assignmentRepository.deleteAll(assigns);
+
+        var schedules = scheduleRepository.findByClassroomIdOrderByDayOfWeekAscStartTimeAsc(classroomId);
+        if (!schedules.isEmpty()) scheduleRepository.deleteAll(schedules);
+
+        var videos = videoRepository.findByClassroomIdOrderBySessionDateDescCreatedAtDesc(classroomId);
+        if (!videos.isEmpty()) videoRepository.deleteAll(videos);
+
+        var files = fileRepository.findByClassroomIdOrderByCreatedAtDesc(classroomId);
+        if (!files.isEmpty()) fileRepository.deleteAll(files);
+
+        // Delete Google Meet calendar event if exists
+        if (classroom.getMeetingId() != null && classroom.getMeetingId().length() > 10) {
+            try {
+                googleMeetService.deleteMeetingEvent(classroom.getMeetingId());
+            } catch (Exception ignored) {}
+        }
+
+        // Permanently delete the classroom
+        classroomRepository.delete(classroom);
+        log.info("Teacher/Admin {} permanently deleted classroom: {} ({})", teacherId, classroom.getName(), classroomId);
     }
 
     @Override

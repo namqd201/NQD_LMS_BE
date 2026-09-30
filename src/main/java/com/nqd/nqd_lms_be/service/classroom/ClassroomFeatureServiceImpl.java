@@ -323,11 +323,13 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
         var meetDto = googleMeetService.createClassroomMeeting(c.getName(), "Phòng học trực tuyến Google Meet lớp: " + c.getName());
         if (meetDto != null && meetDto.getMeetingUrl() != null) {
             c.setLarkMeetingUrl(meetDto.getMeetingUrl());
-            c.setMeetingId(meetDto.getEventId());
+            c.setMeetingId(meetDto.getMeetingCode() != null ? meetDto.getMeetingCode() : meetDto.getEventId());
             c.setPasscode(meetDto.getMeetingCode());
             c.setMeetingNote("Phòng học trực tuyến Google Meet cố định của lớp.");
             c = classroomRepository.save(c);
             log.info("Teacher {} provisioned new Google Meet room: url={}", teacherId, meetDto.getMeetingUrl());
+        } else {
+            throw new RuntimeException("Không thể tạo phòng Google Meet tự động. Vui lòng kiểm tra lại quyền truy cập hoặc tự nhập link Meet vào phần Cài đặt phòng học.");
         }
 
         return ClassroomMeetingDto.Response.builder()
