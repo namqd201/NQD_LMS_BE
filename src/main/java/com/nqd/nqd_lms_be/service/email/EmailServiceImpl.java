@@ -1,5 +1,6 @@
 package com.nqd.nqd_lms_be.service.email;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +11,12 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
@@ -19,9 +25,13 @@ import java.util.UUID;
 public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender mailSender;
+    private final ObjectMapper objectMapper;
 
     @Value("${spring.mail.username:}")
     private String mailUsername;
+
+    @Value("${email.http-webhook-url:}")
+    private String httpWebhookUrl;
 
     @Value("${app.frontend.url:https://nqdlms.online}")
     private String frontendUrl;
@@ -175,6 +185,13 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendHtmlEmail(String to, String subject, String htmlContent) {
+        // If HTTP webhook URL is configured (e.g. Google Apps Script to bypass Render SMTP port blocks), use it first!
+        if (httpWebhookUrl != null && !httpWebhookUrl.isBlank()) {
+            boolean ok = sendViaHttpWebhook(to, subject, htmlContent);
+            if (ok) return;
+            log.warn("HTTP webhook failed, attempting SMTP fallback for {}", to);
+        }
+
         if (mailUsername == null || mailUsername.isBlank()) {
             log.warn("Cannot send email to {}: spring.mail.username is not configured", to);
             return;
@@ -190,9 +207,41 @@ public class EmailServiceImpl implements EmailService {
             helper.setText(htmlContent, true);
 
             mailSender.send(message);
-            log.info("Sent email successfully to {} with subject '{}'", to, subject);
+            log.info("Sent email successfully via SMTP to {} with subject '{}'", to, subject);
         } catch (Exception e) {
-            log.error("Failed to send email to {}: {}", to, e.getMessage(), e);
+            log.error("Failed to send email via SMTP to {}: {}. Root cause: {}", to, e.getMessage(), e.getCause() != null ? e.getCause().getMessage() : "none", e);
+            // If SMTP failed (e.g. port blocked by host) and webhook URL exists, attempt webhook
+            if (httpWebhookUrl != null && !httpWebhookUrl.isBlank()) {
+                sendViaHttpWebhook(to, subject, htmlContent);
+            }
+        }
+    }
+
+    private boolean sendViaHttpWebhook(String to, String subject, String htmlContent) {
+        if (httpWebhookUrl == null || httpWebhookUrl.isBlank()) {
+            return false;
+        }
+        try {
+            HttpClient client = HttpClient.newBuilder()
+                    .followRedirects(HttpClient.Redirect.ALWAYS)
+                    .build();
+            Map<String, String> payload = Map.of(
+                    "to", to,
+                    "subject", subject,
+                    "htmlBody", htmlContent
+            );
+            String json = objectMapper.writeValueAsString(payload);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(httpWebhookUrl))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(json, StandardCharsets.UTF_8))
+                    .build();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            log.info("HTTP Email Webhook dispatched to {} - status: {}", to, response.statusCode());
+            return response.statusCode() >= 200 && response.statusCode() < 400;
+        } catch (Exception e) {
+            log.error("Failed to send email via HTTP webhook to {}: {}", to, e.getMessage(), e);
+            return false;
         }
     }
 
