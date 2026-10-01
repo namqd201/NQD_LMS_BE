@@ -5,6 +5,7 @@ import com.nqd.nqd_lms_be.dto.MessageResponse;
 import com.nqd.nqd_lms_be.dto.classroom.*;
 import com.nqd.nqd_lms_be.entity.enums.ClassEnrollmentStatus;
 import com.nqd.nqd_lms_be.service.classroom.ClassroomService;
+import com.nqd.nqd_lms_be.service.classroom.ClassroomInvitationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -25,6 +26,7 @@ import java.util.UUID;
 public class ClassroomController {
 
     private final ClassroomService classroomService;
+    private final ClassroomInvitationService classroomInvitationService;
 
     @PostMapping
     @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
@@ -175,6 +177,18 @@ public class ClassroomController {
     ) {
         classroomService.removeStudent(id, studentId, principal.getId());
         return ResponseEntity.ok(MessageResponse.of("Đã xóa học sinh khỏi lớp học thành công."));
+    }
+
+    @DeleteMapping("/{id}/invitations/email")
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
+    @Operation(summary = "Giáo viên hủy lời mời đã gửi bằng email")
+    public ResponseEntity<MessageResponse> cancelEmailInvitation(
+            @PathVariable UUID id,
+            @RequestParam String email,
+            @AuthenticationPrincipal AppUserPrincipal principal
+    ) {
+        classroomInvitationService.cancelInvitation(id, email, principal.getId());
+        return ResponseEntity.ok(MessageResponse.of("Đã hủy lời mời tham gia lớp học."));
     }
 
     @PostMapping("/{id}/leave")

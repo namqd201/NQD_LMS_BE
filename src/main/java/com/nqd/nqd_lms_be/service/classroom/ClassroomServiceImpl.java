@@ -41,6 +41,8 @@ public class ClassroomServiceImpl implements ClassroomService {
     private final ClassroomScheduleRepository scheduleRepository;
     private final ClassroomRecordedVideoRepository videoRepository;
     private final ClassroomFileRepository fileRepository;
+    private final ClassroomInvitationService classroomInvitationService;
+    private final com.nqd.nqd_lms_be.service.email.EmailService emailService;
 
     private static final String CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -389,9 +391,15 @@ public class ClassroomServiceImpl implements ClassroomService {
         }
 
         String email = request.getEmail().trim().toLowerCase();
-        User student = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy người dùng với email: " + email + ". Học sinh cần đăng ký tài khoản trước."));
+        Optional<User> studentOpt = userRepository.findByEmail(email);
 
+        // If user is not yet registered in system, invite via Email + ClassroomInvitation
+        if (studentOpt.isEmpty()) {
+            User teacher = classroom.getTeacher();
+            return classroomInvitationService.inviteByEmail(classroom, email, request.getMessage(), teacher);
+        }
+
+        User student = studentOpt.get();
         if (student.getId().equals(teacherId)) {
             throw new IllegalArgumentException("Bạn không thể tự mời chính mình vào lớp học.");
         }
@@ -427,11 +435,26 @@ public class ClassroomServiceImpl implements ClassroomService {
             cs = classroomStudentRepository.save(cs);
         }
 
-        // Notify Student about invitation
+        // Notify Student about invitation via In-App notification
         String studentTitle = "Lời mời tham gia lớp học: " + classroom.getName() + " 📚";
         String studentBody = "Giáo viên " + classroom.getTeacher().getFullName() + " đã gửi lời mời bạn tham gia lớp học '" + classroom.getName() + "'. Bấm vào để xác nhận.";
         String studentLink = "/classrooms?tab=invitations";
         kafkaNotificationProducer.sendNotification(student.getId(), "CLASSROOM_INVITATION", studentTitle, studentBody, studentLink);
+
+        // Also send invitation email via Gmail
+        try {
+            emailService.sendClassroomInvitationEmail(
+                    student.getEmail(),
+                    classroom.getTeacher().getFullName() != null ? classroom.getTeacher().getFullName() : classroom.getTeacher().getEmail(),
+                    classroom.getTeacher().getEmail(),
+                    classroom.getName(),
+                    classroom.getCode(),
+                    classroom.getId(),
+                    request.getMessage()
+            );
+        } catch (Exception e) {
+            log.warn("Failed to dispatch invitation email to registered user {}: {}", student.getEmail(), e.getMessage());
+        }
 
         log.info("Teacher {} invited student {} into classroom {}", teacherId, student.getEmail(), classroom.getName());
         return mapToStudentResponse(cs);
@@ -508,9 +531,17 @@ public class ClassroomServiceImpl implements ClassroomService {
             students = classroomStudentRepository.findByClassroomIdAndStatusOrderByJoinedAtDesc(classroomId, ClassEnrollmentStatus.ENROLLED);
         }
 
-        return students.stream()
+        List<ClassroomStudentResponse> result = students.stream()
                 .map(this::mapToStudentResponse)
                 .collect(Collectors.toList());
+
+        // If status == INVITED, also include pending ClassroomInvitation records for unregistered emails!
+        if (status == ClassEnrollmentStatus.INVITED && isTeacher) {
+            List<ClassroomStudentResponse> pendingEmailInvites = classroomInvitationService.getPendingInvitationsAsStudentResponses(classroomId);
+            result.addAll(pendingEmailInvites);
+        }
+
+        return result;
     }
 
     @Override

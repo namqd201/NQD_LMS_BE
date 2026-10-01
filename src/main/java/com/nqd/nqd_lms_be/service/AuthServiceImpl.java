@@ -33,6 +33,7 @@ public class AuthServiceImpl implements AuthService {
     private final OAuthAccountRepository oauthAccountRepository;
     private final UserRoleRepository userRoleRepository;
     private final com.nqd.nqd_lms_be.service.notification.KafkaNotificationProducer kafkaNotificationProducer;
+    private final com.nqd.nqd_lms_be.service.classroom.ClassroomInvitationService classroomInvitationService;
 
     @Override
     @Transactional
@@ -76,6 +77,13 @@ public class AuthServiceImpl implements AuthService {
                 // 3. Provision new user for first-time Google login
                 user = provisionNewUser(email, name, picture, sub);
             }
+        }
+
+        // Auto-enroll user into any classrooms they were previously invited to
+        try {
+            classroomInvitationService.processPendingInvitationsForUser(user);
+        } catch (Exception e) {
+            log.warn("Failed to process pending classroom invitations during Google login for {}: {}", email, e.getMessage());
         }
 
         Set<String> roles = getUserRoles(user.getId());
@@ -209,7 +217,12 @@ public class AuthServiceImpl implements AuthService {
         userRepository.findById(userId).ifPresent(user -> {
             user.setIsOnboarded(true);
             userRepository.save(user);
-            log.info("User {} marked as onboarded successfully", userId);
+            try {
+                classroomInvitationService.processPendingInvitationsForUser(user);
+            } catch (Exception e) {
+                log.warn("Failed to process pending classroom invitations during onboarding for {}: {}", user.getEmail(), e.getMessage());
+            }
+            log.info("User {} marked as onboarded successfully and pending classroom invitations processed", userId);
         });
     }
 }
