@@ -309,14 +309,14 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
         Classroom c = validateTeacherPermission(classroomId, teacherId);
 
         if (oneHundredMsService != null && oneHundredMsService.isConfigured()) {
-            var roomDto = oneHundredMsService.createClassroomMeeting(c.getName(), "Phòng học trực tuyến 100ms lớp: " + c.getName());
+            var roomDto = oneHundredMsService.createClassroomMeeting(c.getName(), "Phòng học trực tuyến lớp: " + c.getName());
             if (roomDto != null && roomDto.getGuestMeetingUrl() != null) {
                 c.setLarkMeetingUrl(roomDto.getGuestMeetingUrl());
                 c.setMeetingId(roomDto.getRoomId());
                 c.setPasscode(roomDto.getHostCode());
-                c.setMeetingNote("Phòng học trực tuyến 100ms Live Class.\nLink Giáo viên (Host & Ghi hình): "
+                c.setMeetingNote("Phòng học trực tuyến.\nLink Giáo viên (Host & Ghi hình): "
                         + roomDto.getHostMeetingUrl()
-                        + "\nLink Học viên (Guest): "
+                        + "\nLink Học viên: "
                         + roomDto.getGuestMeetingUrl());
                 c = classroomRepository.save(c);
                 log.info("Teacher {} provisioned 100ms room: roomId={}, hostUrl={}", teacherId, roomDto.getRoomId(), roomDto.getHostMeetingUrl());

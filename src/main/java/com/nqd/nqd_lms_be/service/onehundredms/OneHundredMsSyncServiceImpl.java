@@ -110,8 +110,8 @@ public class OneHundredMsSyncServiceImpl implements OneHundredMsSyncService {
     private boolean processAndUploadAsset(Classroom classroom, OneHundredMsRecordingAssetDto asset) {
         String title = "Buổi học " + classroom.getName() + " - Bản ghi " + (asset.getCreatedAt() != null ? asset.getCreatedAt().substring(0, 10) : "");
         String uniqueMarker = "100ms-" + asset.getId();
-        String description = "Bản ghi buổi học trực tuyến 100ms Live Class lớp " + classroom.getName()
-                + "\nMã bản ghi: " + uniqueMarker;
+        String description = "Bản ghi buổi học trực tuyến lớp " + classroom.getName()
+                + "\nMã: " + uniqueMarker;
 
         // Check if already synced
         var existingOpt = videoRepository.findByClassroomIdOrderBySessionDateDescCreatedAtDesc(classroom.getId())

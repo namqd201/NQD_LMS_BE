@@ -91,14 +91,14 @@ public class ClassroomServiceImpl implements ClassroomService {
         // Automatically provision online meeting room (Priority 1: 100ms Live Class, Priority 2: Google Meet, Fallback: Lark)
         try {
             if (oneHundredMsService != null && oneHundredMsService.isConfigured()) {
-                var roomDto = oneHundredMsService.createClassroomMeeting(classroom.getName(), "Phòng học trực tuyến 100ms lớp: " + classroom.getName());
+                var roomDto = oneHundredMsService.createClassroomMeeting(classroom.getName(), "Phòng học trực tuyến lớp: " + classroom.getName());
                 if (roomDto != null && roomDto.getGuestMeetingUrl() != null) {
                     classroom.setLarkMeetingUrl(roomDto.getGuestMeetingUrl());
                     classroom.setMeetingId(roomDto.getRoomId());
                     classroom.setPasscode(roomDto.getHostCode());
-                    classroom.setMeetingNote("Phòng học trực tuyến 100ms Live Class.\nLink Giáo viên (Host & Ghi hình): "
+                    classroom.setMeetingNote("Phòng học trực tuyến.\nLink Giáo viên (Host & Ghi hình): "
                             + roomDto.getHostMeetingUrl()
-                            + "\nLink Học viên (Guest): "
+                            + "\nLink Học viên: "
                             + roomDto.getGuestMeetingUrl());
                     log.info("Auto-provisioned 100ms room for classroom {}: roomId={}, hostUrl={}", classroom.getName(), roomDto.getRoomId(), roomDto.getHostMeetingUrl());
                 }
