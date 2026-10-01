@@ -1,5 +1,6 @@
 package com.nqd.nqd_lms_be.service.admin;
 
+import com.nqd.nqd_lms_be.common.exception.ForbiddenOperationException;
 import com.nqd.nqd_lms_be.common.exception.ResourceNotFoundException;
 import com.nqd.nqd_lms_be.dto.admin.AdminGrantVipRequest;
 import com.nqd.nqd_lms_be.dto.admin.AdminUserResponse;
@@ -159,6 +160,15 @@ public class AdminUserServiceImpl implements AdminUserService {
     public AdminUserResponse updateUserStatus(UUID id, UpdateUserStatusRequest request) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", id));
+
+        // Admin accounts must never be set to INACTIVE or BANNED
+        List<String> roleNames = userRoleRepository.findRoleNamesByUserId(user.getId());
+        boolean isAdmin = roleNames != null && roleNames.stream()
+                .anyMatch(r -> r.equalsIgnoreCase("ADMIN") || r.equalsIgnoreCase("ROLE_ADMIN"));
+
+        if (isAdmin && request.getStatus() != UserStatus.ACTIVE) {
+            throw new ForbiddenOperationException("Tài khoản Quản trị viên (Admin) luôn ở trạng thái ACTIVE và không thể bị khóa hoặc ngưng hoạt động.");
+        }
 
         user.setStatus(request.getStatus());
         user = userRepository.save(user);

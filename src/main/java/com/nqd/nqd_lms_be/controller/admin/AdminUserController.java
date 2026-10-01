@@ -10,8 +10,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import com.nqd.nqd_lms_be.common.exception.ForbiddenOperationException;
+import com.nqd.nqd_lms_be.config.security.AppUserPrincipal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -75,8 +78,12 @@ public class AdminUserController {
     @Operation(summary = "Update user status (ACTIVE, INACTIVE, BANNED)")
     public ResponseEntity<AdminUserResponse> updateUserStatus(
             @PathVariable UUID id,
-            @Valid @RequestBody UpdateUserStatusRequest request
+            @Valid @RequestBody UpdateUserStatusRequest request,
+            @AuthenticationPrincipal AppUserPrincipal principal
     ) {
+        if (principal != null && principal.getId().equals(id) && request.getStatus() != com.nqd.nqd_lms_be.entity.enums.UserStatus.ACTIVE) {
+            throw new ForbiddenOperationException("Quản trị viên (Admin) không được phép tự khóa hoặc đổi trạng thái tài khoản của chính mình. Tài khoản luôn ở trạng thái ACTIVE.");
+        }
         return ResponseEntity.ok(adminUserService.updateUserStatus(id, request));
     }
 
