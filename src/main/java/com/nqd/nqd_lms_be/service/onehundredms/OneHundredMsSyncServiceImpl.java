@@ -110,14 +110,35 @@ public class OneHundredMsSyncServiceImpl implements OneHundredMsSyncService {
     private boolean processAndUploadAsset(Classroom classroom, OneHundredMsRecordingAssetDto asset) {
         String title = "Buổi học " + classroom.getName() + " - Bản ghi " + (asset.getCreatedAt() != null ? asset.getCreatedAt().substring(0, 10) : "");
         String uniqueMarker = "100ms-" + asset.getId();
+        String description = "Bản ghi buổi học trực tuyến 100ms Live Class lớp " + classroom.getName()
+                + "\nMã bản ghi: " + uniqueMarker;
 
         // Check if already synced
-        boolean exists = videoRepository.findByClassroomIdOrderBySessionDateDescCreatedAtDesc(classroom.getId())
+        var existingOpt = videoRepository.findByClassroomIdOrderBySessionDateDescCreatedAtDesc(classroom.getId())
                 .stream()
-                .anyMatch(v -> v.getTitle().contains(asset.getId()) || (v.getDescription() != null && v.getDescription().contains(uniqueMarker)));
+                .filter(v -> v.getTitle().contains(asset.getId()) || (v.getDescription() != null && v.getDescription().contains(uniqueMarker)))
+                .findFirst();
 
-        if (exists) {
-            log.debug("Recording asset {} already synced for class {}. Skipping.", asset.getId(), classroom.getName());
+        if (existingOpt.isPresent()) {
+            ClassroomRecordedVideo existing = existingOpt.get();
+            // If already on YouTube, skip
+            if (existing.getVideoUrl() != null && (existing.getVideoUrl().contains("youtube.com") || existing.getVideoUrl().contains("youtu.be"))) {
+                log.debug("Recording asset {} already synced to YouTube. Skipping.", asset.getId());
+                return false;
+            }
+
+            // If it previously fell back to 100ms URL, attempt to upload to YouTube now
+            log.info("Recording {} exists with non-YouTube URL. Attempting YouTube re-upload...", asset.getId());
+            String downloadUrl = oneHundredMsService.getPresignedDownloadUrl(asset.getId());
+            if (downloadUrl != null && !downloadUrl.isBlank()) {
+                String yt = uploadStreamToYouTube(downloadUrl, title, description, List.of("NQDLMS", "100ms", classroom.getName()));
+                if (yt != null && !yt.isBlank()) {
+                    existing.setVideoUrl(yt);
+                    videoRepository.save(existing);
+                    log.info("Successfully upgraded recording {} to YouTube URL: {}", asset.getId(), yt);
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -127,39 +148,14 @@ public class OneHundredMsSyncServiceImpl implements OneHundredMsSyncService {
             return false;
         }
 
-        String videoFinalUrl = null;
         int durationMinutes = asset.getDuration() != null && asset.getDuration() > 0 ? (int) (asset.getDuration() / 60) : 45;
         if (durationMinutes <= 0) durationMinutes = 30;
 
-        String description = "Bản ghi buổi học trực tuyến 100ms Live Class lớp " + classroom.getName()
-                + "\nMã bản ghi: " + uniqueMarker;
-
         // Attempt YouTube upload if configured
-        try {
-            HttpRequest downloadReq = HttpRequest.newBuilder()
-                    .uri(URI.create(downloadUrl))
-                    .GET()
-                    .timeout(Duration.ofMinutes(30))
-                    .build();
-
-            HttpResponse<InputStream> resp = httpClient.send(downloadReq, HttpResponse.BodyHandlers.ofInputStream());
-            if (resp.statusCode() == 200) {
-                long contentLength = resp.headers().firstValueAsLong("Content-Length").orElse(-1L);
-                try (InputStream is = resp.body()) {
-                    List<String> tags = List.of("NQDLMS", "100ms", classroom.getName());
-                    String yt = youTubeUploadService.uploadVideoStream(is, contentLength, title, description, tags);
-                    if (yt != null && !yt.isBlank()) {
-                        videoFinalUrl = yt;
-                        log.info("Uploaded 100ms recording asset {} to YouTube: {}", asset.getId(), yt);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            log.warn("YouTube upload failed for 100ms asset {}: {}. Falling back to 100ms URL.", asset.getId(), e.getMessage());
-        }
-
-        if (videoFinalUrl == null) {
+        String videoFinalUrl = uploadStreamToYouTube(downloadUrl, title, description, List.of("NQDLMS", "100ms", classroom.getName()));
+        if (videoFinalUrl == null || videoFinalUrl.isBlank()) {
             videoFinalUrl = downloadUrl;
+            log.info("Using direct 100ms download URL as videoUrl for asset {}", asset.getId());
         }
 
         LocalDate sessionDate = LocalDate.now();
@@ -182,5 +178,32 @@ public class OneHundredMsSyncServiceImpl implements OneHundredMsSyncService {
         videoRepository.save(recordedVideo);
         log.info("Saved 100ms recorded video '{}' for classroom '{}'", title, classroom.getName());
         return true;
+    }
+
+    private String uploadStreamToYouTube(String downloadUrl, String title, String description, List<String> tags) {
+        try {
+            HttpRequest downloadReq = HttpRequest.newBuilder()
+                    .uri(URI.create(downloadUrl))
+                    .GET()
+                    .timeout(Duration.ofMinutes(30))
+                    .build();
+
+            HttpResponse<InputStream> resp = httpClient.send(downloadReq, HttpResponse.BodyHandlers.ofInputStream());
+            if (resp.statusCode() == 200) {
+                long contentLength = resp.headers().firstValueAsLong("Content-Length").orElse(-1L);
+                try (InputStream is = resp.body()) {
+                    String yt = youTubeUploadService.uploadVideoStream(is, contentLength, title, description, tags);
+                    if (yt != null && !yt.isBlank()) {
+                        log.info("Uploaded video stream to YouTube: {}", yt);
+                        return yt;
+                    }
+                }
+            } else {
+                log.warn("Download from 100ms failed: HTTP {}", resp.statusCode());
+            }
+        } catch (Exception e) {
+            log.warn("YouTube stream upload failed: {}", e.getMessage());
+        }
+        return null;
     }
 }
