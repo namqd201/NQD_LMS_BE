@@ -30,10 +30,24 @@ public class MembershipController {
     private final SubscriptionService subscriptionService;
 
     @GetMapping("/plans")
-    @Operation(summary = "List all active membership plans (optionally filtered by userType: STUDENT/TEACHER)")
+    @Operation(summary = "List all active membership plans (filtered strictly by user role if logged in)")
     public ResponseEntity<List<MembershipPlanResponse>> getPlans(
-            @RequestParam(required = false) PlanUserType userType
+            @RequestParam(required = false) PlanUserType userType,
+            @AuthenticationPrincipal AppUserPrincipal principal
     ) {
+        if (principal != null) {
+            boolean isTeacher = principal.getAuthorities() != null && principal.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equalsIgnoreCase("ROLE_TEACHER") || a.getAuthority().equalsIgnoreCase("TEACHER"));
+            boolean isAdmin = principal.getAuthorities() != null && principal.getAuthorities().stream()
+                    .anyMatch(a -> a.getAuthority().equalsIgnoreCase("ROLE_ADMIN") || a.getAuthority().equalsIgnoreCase("ADMIN"));
+            if (!isAdmin) {
+                if (isTeacher) {
+                    userType = PlanUserType.TEACHER;
+                } else {
+                    userType = PlanUserType.STUDENT;
+                }
+            }
+        }
         return ResponseEntity.ok(membershipPlanService.getPublicPlans(userType));
     }
 

@@ -347,7 +347,7 @@ class StudentAiTutorSecurityAndRateLimitTest {
     }
 
     @Test
-    @DisplayName("AI Tutor provides public system consultation on Pro plans and courses")
+    @DisplayName("AI Tutor provides public system consultation on Pro plans filtered strictly for Student")
     void testSystemAdvisoryQuery_ProPackagesAndCourses() throws Exception {
         StudentAiTutorRequest req = StudentAiTutorRequest.builder()
                 .mode(StudentAiTutorMode.GENERAL_QA)
@@ -359,7 +359,36 @@ class StudentAiTutorSecurityAndRateLimitTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.answer", notNullValue()));
+                .andExpect(jsonPath("$.answer", notNullValue()))
+                .andExpect(jsonPath("$.answer", containsString("Học Sinh")))
+                .andExpect(jsonPath("$.answer", not(containsString("Dành Cho Giáo Viên"))));
+    }
+
+    @Test
+    @DisplayName("AI Tutor provides public system consultation on Pro plans filtered strictly for Teacher")
+    void testSystemAdvisoryQuery_TeacherRole_OnlyTeacherPlans() throws Exception {
+        Role teacherRole = roleRepository.findByName("TEACHER")
+                .orElseGet(() -> roleRepository.save(Role.builder().name("TEACHER").description("Teacher Role").build()));
+        User teacher = userRepository.save(User.builder()
+                .email("teacher_ai_" + UUID.randomUUID().toString().substring(0, 8) + "@test.com")
+                .fullName("Teacher AI")
+                .status(UserStatus.ACTIVE)
+                .build());
+        userRoleRepository.save(UserRole.builder().userId(teacher.getId()).roleId(teacherRole.getId()).build());
+
+        StudentAiTutorRequest req = StudentAiTutorRequest.builder()
+                .mode(StudentAiTutorMode.GENERAL_QA)
+                .question("Hệ thống có những gói pro nào?")
+                .build();
+
+        mockMvc.perform(post("/api/v1/student/ai-tutor/ask")
+                        .with(authentication(createAuthToken(teacher, "TEACHER")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(req)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.answer", notNullValue()))
+                .andExpect(jsonPath("$.answer", containsString("Giáo Viên")))
+                .andExpect(jsonPath("$.answer", not(containsString("Dành Cho Học Sinh"))));
     }
 
     @Test

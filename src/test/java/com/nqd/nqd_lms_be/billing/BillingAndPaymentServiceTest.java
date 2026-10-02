@@ -99,6 +99,7 @@ class BillingAndPaymentServiceTest {
                 .code("MATH12_" + System.currentTimeMillis())
                 .subject(subject)
                 .status(CourseStatus.ACTIVE)
+                .price(new BigDecimal("499000.00"))
                 .build());
 
         plan = membershipPlanRepository.save(MembershipPlan.builder()

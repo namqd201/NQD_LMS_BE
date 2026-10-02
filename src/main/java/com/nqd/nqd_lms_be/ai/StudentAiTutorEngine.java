@@ -103,7 +103,7 @@ public class StudentAiTutorEngine {
 
         // 3. If no remote LLM returned or API key is invalid/exhausted, use Smart Generative Engine
         if (answer == null || answer.isBlank()) {
-            answer = generateSmartGenerativeResponse(request, context);
+            answer = generateSmartGenerativeResponse(request, context, userRole);
         }
 
         String hint = null;
@@ -325,7 +325,9 @@ public class StudentAiTutorEngine {
             - Khi người dùng hỏi: "tôi muốn mua khóa học", "môn này thì nên mua của ai", "có những gói pro nào", "học phí thế nào", "cách thức mua và thanh toán ra sao"...:
               + Hãy dựa vào dữ liệu công khai trong phần "THÔNG TIN CÔNG KHAI HỆ THỐNG NQD-LMS" được cung cấp trong prompt.
               + Nhiệt tình tư vấn các khóa học chất lượng cao, nêu rõ tên khóa học, môn học, tên giảng viên phụ trách, mức giá ưu đãi, đánh giá sao và số lượng học viên đã tham gia.
-              + Nêu rõ các gói hội viên PRO (Gói Học sinh PRO, Gói Giáo viên PRO), mức giá và quyền lợi nổi bật (như tạo slide AI, soạn đề thi AI, hỏi đáp AI không giới hạn...).
+              + BẮT BUỘC TƯ VẤN GÓI PRO PHÙ HỢP VỚI ROLE CỦA NGƯỜI DÙNG HIỆN TẠI:
+                * Nếu người dùng là GIÁO VIÊN (TEACHER): CHỈ ĐƯỢC PHÉP tư vấn và liệt kê các gói dành cho Giáo viên (Gói Giáo viên Pro tháng/năm, công cụ AI tạo slide bài giảng, soạn ngân hàng câu hỏi & đề thi, quản lý lớp). TUYỆT ĐỐI KHÔNG giới thiệu hay liệt kê gói dành cho Học sinh!
+                * Nếu người dùng là HỌC SINH (STUDENT): CHỈ ĐƯỢC PHÉP tư vấn và liệt kê các gói dành cho Học sinh (Gói Học sinh Pro tháng/năm, Gói Học sinh Ultra, luyện thi và AI Tutor không giới hạn). TUYỆT ĐỐI KHÔNG giới thiệu hay liệt kê gói dành cho Giáo viên!
               + Hướng dẫn cụ thể quy trình mua: Vào mục Khóa học (`/courses`) hoặc Nâng cấp (`/pricing`) -> Chọn khóa/gói -> Bấm "Mua khóa học" / "Nâng cấp" -> Quét mã QR thanh toán nhanh qua PayOS (kích hoạt tự động ngay lập tức).
             - BẢO MẬT & AN TOÀN DỮ LIỆU TUYỆT ĐỐI (QUAN TRỌNG):
               + Bạn CHỈ ĐƯỢC PHÉP cung cấp các thông tin công khai đã có trong hệ thống (Tên khóa học, tên hiển thị giáo viên, giá, tính năng gói Pro, quy trình mua).
@@ -395,6 +397,14 @@ public class StudentAiTutorEngine {
      * Smart Generative AI response engine for comprehensive, articulate, and dynamic academic answering.
      */
     private String generateSmartGenerativeResponse(StudentAiTutorRequest request, StudentAiContextAssembler.AssembledStudentContext context) {
+        return generateSmartGenerativeResponse(request, context, null);
+    }
+
+    private String generateSmartGenerativeResponse(
+            StudentAiTutorRequest request,
+            StudentAiContextAssembler.AssembledStudentContext context,
+            String userRole
+    ) {
         String rawQuestion = request.getQuestion() != null ? request.getQuestion().trim() : "";
         String lowerQ = rawQuestion.toLowerCase(Locale.ROOT);
         boolean hasAttachments = request.getAttachments() != null && !request.getAttachments().isEmpty();
@@ -428,7 +438,7 @@ public class StudentAiTutorEngine {
 
         // 2c. Handling System & Platform Public Consultation (buying courses, pro packages, teacher recommendations)
         if (isSystemAdvisoryQuery(lowerQ)) {
-            return generateSystemAdvisoryResponse(rawQuestion, lowerQ);
+            return generateSystemAdvisoryResponse(rawQuestion, lowerQ, userRole);
         }
 
         // 3. Handling Physics Queries (mechanics, electricity, optics, thermodynamics, etc.)
@@ -771,8 +781,8 @@ public class StudentAiTutorEngine {
 
         // 1. Detect public system advisory (buying courses, pro packages, teacher recommendations)
         if (isSystemAdvisoryQuery(lowerQ)) {
-            log.info("Intent detected: System public advisory consultation for user {}", userId);
-            return toolService.formatSystemAdvisoryContext(question);
+            log.info("Intent detected: System public advisory consultation for user {} with role {}", userId, userRole);
+            return toolService.formatSystemAdvisoryContext(question, userRole);
         }
 
         // 2. Security: Check if user is asking for private/sensitive information (leak prevention)
@@ -950,7 +960,7 @@ public class StudentAiTutorEngine {
         return false;
     }
 
-    private String generateSystemAdvisoryResponse(String rawQuestion, String lowerQ) {
+    private String generateSystemAdvisoryResponse(String rawQuestion, String lowerQ, String userRole) {
         StringBuilder sb = new StringBuilder();
         sb.append("### 🌟 Tư Vấn Khóa Học & Dịch Vụ Hệ Thống NQD-LMS\n\n");
         sb.append("Chào bạn! Dưới đây là các thông tin chi tiết và gợi ý tốt nhất dành cho bạn trên hệ thống:\n\n");
@@ -958,13 +968,30 @@ public class StudentAiTutorEngine {
         boolean asksAboutPro = lowerQ.contains("gói pro") || lowerQ.contains("pro") || lowerQ.contains("hội viên")
                 || lowerQ.contains("membership") || lowerQ.contains("bảng giá") || lowerQ.contains("nâng cấp");
 
+        String roleUpper = userRole != null ? userRole.toUpperCase(Locale.ROOT) : "";
+        boolean isTeacher = roleUpper.contains("TEACHER");
+        boolean isAdmin = roleUpper.contains("ADMIN");
+
         if (asksAboutPro) {
-            sb.append("#### 💳 1. Các Gói Hội Viên PRO Đang Có Trên NQD-LMS\n");
-            List<AiTutorToolService.PublicPlanSummary> plans = toolService != null ? toolService.getPublicMembershipPlans() : Collections.emptyList();
-            if (plans.isEmpty()) {
-                sb.append("* **Gói Học sinh PRO:** 99.000 đ/tháng — Học tập thông minh, trợ lý AI Tutor không giới hạn, xem giải thích chi tiết đề thi.\n");
-                sb.append("* **Gói Giáo viên PRO:** 299.000 đ/tháng — Tạo slide bài học AI tự động, sinh đề thi & câu hỏi trắc nghiệm AI, quản lý lớp học nâng cao.\n");
-            } else {
+            List<AiTutorToolService.PublicPlanSummary> plans = toolService != null ? toolService.getPublicMembershipPlans(userRole) : Collections.emptyList();
+            if (isTeacher) {
+                sb.append("#### 💳 1. Các Gói Hội Viên PRO Dành Cho Giáo Viên Trên NQD-LMS\n\n");
+                if (plans.isEmpty()) {
+                    sb.append("* **Gói Giáo viên Pro (Tháng)** (149.000 đ/tháng): Tạo slide bài giảng tự động bằng AI, soạn ngân hàng câu hỏi & đề thi bằng AI, phân tích học lực học sinh, quản lý lớp học nâng cao.\n");
+                    sb.append("* **Gói Giáo viên Pro (Năm)** (1.200.000 đ/năm): Trọn gói quyền lợi giáo viên chuyên nghiệp suốt 12 tháng, tiết kiệm chi phí vận hành giảng dạy.\n");
+                } else {
+                    for (AiTutorToolService.PublicPlanSummary p : plans) {
+                        String priceFormatted = p.getPrice() != null ? String.format("%,d đ", p.getPrice().longValue()) : "Miễn phí";
+                        sb.append(String.format("* **%s** (Mức phí: **%s** / %s):\n",
+                                p.getName(), priceFormatted,
+                                "YEARLY".equalsIgnoreCase(p.getBillingCycle()) ? "năm" : "tháng"));
+                        if (p.getDescription() != null && !p.getDescription().isBlank()) {
+                            sb.append("  - *").append(p.getDescription()).append("*\n");
+                        }
+                    }
+                }
+            } else if (isAdmin) {
+                sb.append("#### 💳 1. Các Gói Hội Viên PRO Trên NQD-LMS (Quản Trị Viên Xem Toàn Bộ)\n\n");
                 for (AiTutorToolService.PublicPlanSummary p : plans) {
                     String target = "TEACHER".equalsIgnoreCase(p.getUserType()) ? "Dành cho Giáo viên" : "Dành cho Học sinh";
                     String priceFormatted = p.getPrice() != null ? String.format("%,d đ", p.getPrice().longValue()) : "Miễn phí";
@@ -973,6 +1000,23 @@ public class StudentAiTutorEngine {
                             "YEARLY".equalsIgnoreCase(p.getBillingCycle()) ? "năm" : "tháng"));
                     if (p.getDescription() != null && !p.getDescription().isBlank()) {
                         sb.append("  - *").append(p.getDescription()).append("*\n");
+                    }
+                }
+            } else {
+                sb.append("#### 💳 1. Các Gói Hội Viên PRO Dành Cho Học Sinh Trên NQD-LMS\n\n");
+                if (plans.isEmpty()) {
+                    sb.append("* **Gói Học sinh Pro (Tháng)** (99.000 đ/tháng): Không giới hạn hỏi đáp với AI Tutor, luyện thi đề trắc nghiệm không giới hạn, giảm 20% khi mua khóa học lẻ.\n");
+                    sb.append("* **Gói Học sinh Pro (Năm)** (799.000 đ/năm): Tiết kiệm hơn 30% chi phí, trải nghiệm toàn bộ tính năng VIP trong 12 tháng.\n");
+                    sb.append("* **Gói Học sinh Ultra (Tháng)** (1.500.000 đ/tháng): Đặc quyền vào học MIỄN PHÍ toàn bộ khóa học trên hệ thống và sử dụng AI Tutor không giới hạn.\n");
+                } else {
+                    for (AiTutorToolService.PublicPlanSummary p : plans) {
+                        String priceFormatted = p.getPrice() != null ? String.format("%,d đ", p.getPrice().longValue()) : "Miễn phí";
+                        sb.append(String.format("* **%s** (Mức phí: **%s** / %s):\n",
+                                p.getName(), priceFormatted,
+                                "YEARLY".equalsIgnoreCase(p.getBillingCycle()) ? "năm" : "tháng"));
+                        if (p.getDescription() != null && !p.getDescription().isBlank()) {
+                            sb.append("  - *").append(p.getDescription()).append("*\n");
+                        }
                     }
                 }
             }

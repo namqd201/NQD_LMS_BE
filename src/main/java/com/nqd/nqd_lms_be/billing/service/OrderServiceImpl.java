@@ -41,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
     private final MembershipPlanRepository membershipPlanRepository;
     private final CouponRepository couponRepository;
     private final com.nqd.nqd_lms_be.membership.service.MembershipEntitlementService membershipEntitlementService;
+    private final UserRoleRepository userRoleRepository;
 
     private static final SecureRandom RANDOM = new SecureRandom();
 
@@ -134,6 +135,24 @@ public class OrderServiceImpl implements OrderService {
 
         MembershipPlan plan = membershipPlanRepository.findById(membershipPlanId)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy gói hội viên với ID: " + membershipPlanId));
+
+        // Role validation: Ensure users can only subscribe to plans matching their role
+        if (plan.getUserType() != null && plan.getUserType() != com.nqd.nqd_lms_be.entity.enums.PlanUserType.ALL) {
+            List<UserRole> userRoles = userRoleRepository.findByUserId(userId);
+            boolean isTeacher = userRoles.stream().anyMatch(ur -> ur.getRole() != null &&
+                    ("TEACHER".equalsIgnoreCase(ur.getRole().getName()) || "ROLE_TEACHER".equalsIgnoreCase(ur.getRole().getName())));
+            boolean isAdmin = userRoles.stream().anyMatch(ur -> ur.getRole() != null &&
+                    ("ADMIN".equalsIgnoreCase(ur.getRole().getName()) || "ROLE_ADMIN".equalsIgnoreCase(ur.getRole().getName())));
+
+            if (!isAdmin) {
+                if (plan.getUserType() == com.nqd.nqd_lms_be.entity.enums.PlanUserType.TEACHER && !isTeacher) {
+                    throw new ForbiddenOperationException("Gói hội viên này chỉ dành riêng cho Giáo viên. Tài khoản của bạn không có quyền đăng ký gói Giáo viên.");
+                }
+                if (plan.getUserType() == com.nqd.nqd_lms_be.entity.enums.PlanUserType.STUDENT && isTeacher) {
+                    throw new ForbiddenOperationException("Gói hội viên này chỉ dành cho Học sinh / Thành viên học tập. Quý Thầy/Cô vui lòng chọn các gói Giáo viên Pro.");
+                }
+            }
+        }
 
         Product product = productRepository.findByTargetEntityIdAndProductTypeAndIsDeletedFalse(membershipPlanId, ProductType.MEMBERSHIP)
                 .orElseGet(() -> {

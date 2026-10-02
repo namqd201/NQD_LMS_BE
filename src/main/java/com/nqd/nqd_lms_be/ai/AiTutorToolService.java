@@ -3,6 +3,7 @@ package com.nqd.nqd_lms_be.ai;
 import com.nqd.nqd_lms_be.entity.*;
 import com.nqd.nqd_lms_be.entity.enums.CourseStatus;
 import com.nqd.nqd_lms_be.entity.enums.LessonStatus;
+import com.nqd.nqd_lms_be.entity.enums.PlanUserType;
 import com.nqd.nqd_lms_be.entity.enums.ProductStatus;
 import com.nqd.nqd_lms_be.entity.enums.SubjectStatus;
 import com.nqd.nqd_lms_be.repository.*;
@@ -430,14 +431,34 @@ public class AiTutorToolService {
     }
 
     /**
-     * Retrieve public active membership plans (Pro packages).
+     * Retrieve public active membership plans (Pro packages) optionally filtered by user role.
      */
     @Transactional(readOnly = true)
     public List<PublicPlanSummary> getPublicMembershipPlans() {
+        return getPublicMembershipPlans(null);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PublicPlanSummary> getPublicMembershipPlans(String userRole) {
         try {
             List<MembershipPlan> plans = membershipPlanRepository.findByStatusAndIsDeletedFalseOrderByPriceAsc(ProductStatus.PUBLISHED);
+
+            String roleUpper = userRole != null ? userRole.toUpperCase(Locale.ROOT) : "";
+            boolean isTeacher = roleUpper.contains("TEACHER");
+            boolean isAdmin = roleUpper.contains("ADMIN");
+
             return plans.stream()
                     .filter(p -> Boolean.TRUE.equals(p.getActive()))
+                    .filter(p -> {
+                        if (isAdmin || userRole == null || userRole.isBlank()) {
+                            return true;
+                        }
+                        if (isTeacher) {
+                            return p.getUserType() == PlanUserType.TEACHER || p.getUserType() == PlanUserType.ALL;
+                        }
+                        // Default to STUDENT for students / non-teachers
+                        return p.getUserType() == PlanUserType.STUDENT || p.getUserType() == PlanUserType.ALL;
+                    })
                     .map(p -> PublicPlanSummary.builder()
                             .name(p.getName())
                             .planCode(p.getPlanCode())
@@ -474,16 +495,40 @@ public class AiTutorToolService {
      */
     @Transactional(readOnly = true)
     public String formatSystemAdvisoryContext(String query) {
+        return formatSystemAdvisoryContext(query, null);
+    }
+
+    @Transactional(readOnly = true)
+    public String formatSystemAdvisoryContext(String query, String userRole) {
         StringBuilder sb = new StringBuilder();
         sb.append("\n=== THÔNG TIN CÔNG KHAI HỆ THỐNG NQD-LMS (DÙNG ĐỂ TƯ VẤN NGƯỜI DÙNG) ===\n");
         sb.append("LƯU Ý BẢO MẬT: Mọi thông tin dưới đây là dữ liệu công khai trên nền tảng. Tuyệt đối không bịa đặt hoặc tìm kiếm thông tin riêng tư (như mật khẩu, email, số điện thoại).\n\n");
 
-        // 1. Membership / PRO Plans
-        List<PublicPlanSummary> plans = getPublicMembershipPlans();
-        sb.append("### 1. CÁC GÓI HỘI VIÊN PRO TRÊN NQD-LMS:\n");
+        String roleUpper = userRole != null ? userRole.toUpperCase(Locale.ROOT) : "";
+        boolean isTeacher = roleUpper.contains("TEACHER");
+        boolean isAdmin = roleUpper.contains("ADMIN");
+
+        // 1. Membership / PRO Plans (Filtered strictly by user role)
+        List<PublicPlanSummary> plans = getPublicMembershipPlans(userRole);
+        if (isTeacher) {
+            sb.append("### 1. CÁC GÓI HỘI VIÊN PRO DÀNH CHO GIÁO VIÊN TRÊN NQD-LMS:\n");
+            sb.append("⚠️ QUY TẮC BẮT BUỘC: Người dùng hiện tại có vai trò là GIÁO VIÊN (TEACHER). Bạn CHỈ ĐƯỢC PHÉP tư vấn và giới thiệu các gói dành riêng cho Giáo viên (Gói Giáo viên Pro tháng, năm... với công cụ AI tạo slide bài giảng, soạn đề thi, quản lý lớp). TUYỆT ĐỐI KHÔNG liệt kê hay giới thiệu các gói của Học sinh!\n");
+        } else if (isAdmin) {
+            sb.append("### 1. CÁC GÓI HỘI VIÊN PRO TRÊN NQD-LMS (QUẢN TRỊ VIÊN XEM TOÀN BỘ):\n");
+        } else {
+            sb.append("### 1. CÁC GÓI HỘI VIÊN PRO DÀNH CHO HỌC SINH TRÊN NQD-LMS:\n");
+            sb.append("⚠️ QUY TẮC BẮT BUỘC: Người dùng hiện tại có vai trò là HỌC SINH (STUDENT). Bạn CHỈ ĐƯỢC PHÉP tư vấn và giới thiệu các gói dành riêng cho Học sinh (Gói Học sinh Pro tháng, năm, Học sinh Ultra, luyện thi và AI Tutor không giới hạn). TUYỆT ĐỐI KHÔNG liệt kê hay giới thiệu các gói của Giáo viên!\n");
+        }
+
         if (plans.isEmpty()) {
-            sb.append("- Gói Học sinh PRO: 99.000 đ/tháng (Học tập thông minh, trợ lý AI không giới hạn, xem giải thích chi tiết đề thi)\n");
-            sb.append("- Gói Giáo viên PRO: 299.000 đ/tháng (Tạo slide bài học tự động bằng AI, soạn ngân hàng câu hỏi & đề thi bằng AI, quản lý lớp học nâng cao)\n");
+            if (isTeacher) {
+                sb.append("- Gói Giáo viên PRO: 149.000 đ/tháng (Tạo slide bài học tự động bằng AI, soạn ngân hàng câu hỏi & đề thi bằng AI, quản lý lớp học nâng cao)\n");
+                sb.append("- Gói Giáo viên PRO (Năm): 1.200.000 đ/năm (Toàn quyền sử dụng bộ công cụ AI giáo dục chuyên nghiệp trong 12 tháng)\n");
+            } else {
+                sb.append("- Gói Học sinh PRO: 99.000 đ/tháng (Học tập thông minh, trợ lý AI không giới hạn, xem giải thích chi tiết đề thi, giảm 20% mua khóa lẻ)\n");
+                sb.append("- Gói Học sinh PRO (Năm): 799.000 đ/năm (Tiết kiệm hơn 30% chi phí trong 12 tháng)\n");
+                sb.append("- Gói Học sinh ULTRA: 1.500.000 đ/tháng (Học FREE toàn bộ khóa học trên hệ thống, AI Tutor không giới hạn)\n");
+            }
         } else {
             for (PublicPlanSummary p : plans) {
                 String targetRole = "TEACHER".equalsIgnoreCase(p.getUserType()) ? "Giáo viên" : "Học sinh & Thành viên";
