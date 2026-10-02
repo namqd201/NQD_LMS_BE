@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -78,9 +79,19 @@ public class StudentAiTutorEngine {
                     .build();
         }
 
+        // 0b. Strict Data Privacy & Sensitive Information Guard
+        if (request.getQuestion() != null && isAskingForSensitiveData(request.getQuestion().toLowerCase(Locale.ROOT))) {
+            log.warn("Sensitive data request blocked for user {}: '{}'", userId, request.getQuestion());
+            return StudentAiTutorResponse.builder()
+                    .answer("### 🔒 Thông Báo Bảo Mật NQD-LMS\n\nTheo chính sách an toàn thông tin và bảo mật dữ liệu của NQD-LMS, hệ thống **tuyệt đối không cung cấp** các thông tin nhạy cảm như email, số điện thoại, mật khẩu, tài khoản ngân hàng hoặc dữ liệu nội bộ của người dùng khác.\n\nMọi yêu cầu liên quan đến tài khoản cá nhân, vui lòng liên hệ trực tiếp quản trị viên hoặc trung tâm hỗ trợ NQD-LMS.")
+                    .mode(request.getMode())
+                    .remainingRequests(remainingRequests)
+                    .build();
+        }
+
         // 1. Intent Detection & Auto-Fetch Course Context
         String autoFetchedContext = "";
-        if (userId != null && request.getQuestion() != null) {
+        if (request.getQuestion() != null) {
             autoFetchedContext = detectIntentAndFetchContext(request.getQuestion(), userId, userRole != null ? userRole : "STUDENT");
         }
 
@@ -308,6 +319,18 @@ public class StudentAiTutorEngine {
               + Bước 5 (Mời học sinh đối chiếu): Khuyến khích học sinh: "Bạn hãy thử tính nhẩm hoặc bấm máy tính xem kết quả ra bao nhiêu, rồi nhắn lại cho mình để cùng kiểm tra nhé!".
             - Nếu học sinh nài nỉ xin đáp án cuối cùng hoặc bảo AI giải hết hộ: Hãy ân cần giải thích rằng việc tự làm bước cuối sẽ giúp bạn ghi nhớ và hiểu sâu bản chất để làm tốt các bài kiểm tra, sau đó tiếp tục gợi mở hoặc hỗ trợ nếu học sinh bị vướng mắc ở bước biến đổi nào.
             - Nếu học sinh gửi kết quả họ đã tự tính: Hãy đối chiếu kết quả của học sinh, khen ngợi nếu bạn làm đúng, hoặc chỉ ra vị trí học sinh bị nhầm lẫn (nhầm dấu, nhầm đơn vị, quên bình phương, v.v.) để bạn tự sửa.
+            
+            🎯 KHẢ NĂNG TƯ VẤN HỆ THỐNG & KHÓA HỌC NQD-LMS:
+            - Bạn đồng thời là Cố vấn học tập và Khóa học chính thức của nền tảng NQD-LMS.
+            - Khi người dùng hỏi: "tôi muốn mua khóa học", "môn này thì nên mua của ai", "có những gói pro nào", "học phí thế nào", "cách thức mua và thanh toán ra sao"...:
+              + Hãy dựa vào dữ liệu công khai trong phần "THÔNG TIN CÔNG KHAI HỆ THỐNG NQD-LMS" được cung cấp trong prompt.
+              + Nhiệt tình tư vấn các khóa học chất lượng cao, nêu rõ tên khóa học, môn học, tên giảng viên phụ trách, mức giá ưu đãi, đánh giá sao và số lượng học viên đã tham gia.
+              + Nêu rõ các gói hội viên PRO (Gói Học sinh PRO, Gói Giáo viên PRO), mức giá và quyền lợi nổi bật (như tạo slide AI, soạn đề thi AI, hỏi đáp AI không giới hạn...).
+              + Hướng dẫn cụ thể quy trình mua: Vào mục Khóa học (`/courses`) hoặc Nâng cấp (`/pricing`) -> Chọn khóa/gói -> Bấm "Mua khóa học" / "Nâng cấp" -> Quét mã QR thanh toán nhanh qua PayOS (kích hoạt tự động ngay lập tức).
+            - BẢO MẬT & AN TOÀN DỮ LIỆU TUYỆT ĐỐI (QUAN TRỌNG):
+              + Bạn CHỈ ĐƯỢC PHÉP cung cấp các thông tin công khai đã có trong hệ thống (Tên khóa học, tên hiển thị giáo viên, giá, tính năng gói Pro, quy trình mua).
+              + TUYỆT ĐỐI KHÔNG tìm kiếm, suy đoán hoặc tiết lộ các dữ liệu nhạy cảm/bảo mật như: email cá nhân, số điện thoại, mật khẩu, tài khoản ngân hàng, thông tin tài chính cá nhân, điểm thi riêng tư của người dùng khác.
+              + Nếu người dùng hỏi các thông tin riêng tư hoặc bảo mật trên, hãy lịch sự từ chối và giải thích chính sách bảo mật của NQD-LMS.
             """);
 
         if (context != null && context.getSubjectName() != null && !context.getSubjectName().isBlank()) {
@@ -401,6 +424,11 @@ public class StudentAiTutorEngine {
         // 2b. Handling demands for direct final answer ("cho đáp án luôn", "tính hộ kết quả cuối cùng"...)
         if (isDemandingFinalAnswer(lowerQ)) {
             return generatePedagogicalRefusal(rawQuestion);
+        }
+
+        // 2c. Handling System & Platform Public Consultation (buying courses, pro packages, teacher recommendations)
+        if (isSystemAdvisoryQuery(lowerQ)) {
+            return generateSystemAdvisoryResponse(rawQuestion, lowerQ);
         }
 
         // 3. Handling Physics Queries (mechanics, electricity, optics, thermodynamics, etc.)
@@ -741,7 +769,18 @@ public class StudentAiTutorEngine {
 
         String lowerQ = question.toLowerCase(Locale.ROOT);
 
-        // Detect intent: course lookup
+        // 1. Detect public system advisory (buying courses, pro packages, teacher recommendations)
+        if (isSystemAdvisoryQuery(lowerQ)) {
+            log.info("Intent detected: System public advisory consultation for user {}", userId);
+            return toolService.formatSystemAdvisoryContext(question);
+        }
+
+        // 2. Security: Check if user is asking for private/sensitive information (leak prevention)
+        if (isAskingForSensitiveData(lowerQ)) {
+            return "\n=== CẢNH BÁO BẢO MẬT HỆ THỐNG ===\nNgười dùng đang yêu cầu thông tin riêng tư/bảo mật. Hãy từ chối cung cấp dữ liệu cá nhân theo chính sách bảo mật của NQD-LMS.\n";
+        }
+
+        // 3. Detect intent: enrolled course lookup
         boolean wantsCourseAccess = lowerQ.contains("truy cập khóa học") || lowerQ.contains("tìm khóa học")
                 || lowerQ.contains("mở khóa học") || lowerQ.contains("xem khóa học")
                 || lowerQ.contains("vào khóa học") || lowerQ.contains("khóa học")
@@ -879,5 +918,93 @@ public class StudentAiTutorEngine {
             }
         }
         return null;
+    }
+
+    private boolean isSystemAdvisoryQuery(String lowerQ) {
+        if (lowerQ == null || lowerQ.isBlank()) return false;
+        return lowerQ.contains("mua khóa học") || lowerQ.contains("mua khoá học") || lowerQ.contains("mua khoa hoc")
+                || lowerQ.contains("gói pro") || lowerQ.contains("goi pro") || lowerQ.contains("gói hội viên") || lowerQ.contains("goi hoi vien")
+                || lowerQ.contains("nâng cấp") || lowerQ.contains("nang cap") || lowerQ.contains("membership")
+                || lowerQ.contains("bảng giá") || lowerQ.contains("bang gia") || lowerQ.contains("học phí") || lowerQ.contains("hoc phi")
+                || lowerQ.contains("nên mua của ai") || lowerQ.contains("nen mua cua ai") || lowerQ.contains("nên học ai") || lowerQ.contains("nen hoc ai")
+                || lowerQ.contains("giáo viên nào") || lowerQ.contains("giao vien nao") || lowerQ.contains("giảng viên nào")
+                || lowerQ.contains("thầy nào") || lowerQ.contains("thay nao") || lowerQ.contains("cô nào") || lowerQ.contains("co nao")
+                || lowerQ.contains("môn này thì nên") || lowerQ.contains("ai dạy") || lowerQ.contains("ai day")
+                || lowerQ.contains("hệ thống có những khóa") || lowerQ.contains("có những gói") || lowerQ.contains("các gói pro")
+                || lowerQ.contains("hướng dẫn mua") || lowerQ.contains("cách mua") || lowerQ.contains("cách thanh toán")
+                || lowerQ.contains("đăng ký khóa học");
+    }
+
+    private boolean isAskingForSensitiveData(String lowerQ) {
+        if (lowerQ == null || lowerQ.isBlank()) return false;
+        String[] sensitivePatterns = {
+            "mật khẩu", "password", "email của", "số điện thoại của", "sđt của",
+            "danh sách email", "danh sách mật khẩu", "email và mật khẩu",
+            "tài khoản ngân hàng", "thông tin tài chính", "doanh thu của",
+            "xem điểm của bạn", "xem bài thi của người khác", "token", "api key",
+            "lấy csdl", "dữ liệu database", "xem danh sách user", "tất cả tài khoản"
+        };
+        for (String pattern : sensitivePatterns) {
+            if (lowerQ.contains(pattern)) return true;
+        }
+        return false;
+    }
+
+    private String generateSystemAdvisoryResponse(String rawQuestion, String lowerQ) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("### 🌟 Tư Vấn Khóa Học & Dịch Vụ Hệ Thống NQD-LMS\n\n");
+        sb.append("Chào bạn! Dưới đây là các thông tin chi tiết và gợi ý tốt nhất dành cho bạn trên hệ thống:\n\n");
+
+        boolean asksAboutPro = lowerQ.contains("gói pro") || lowerQ.contains("pro") || lowerQ.contains("hội viên")
+                || lowerQ.contains("membership") || lowerQ.contains("bảng giá") || lowerQ.contains("nâng cấp");
+
+        if (asksAboutPro) {
+            sb.append("#### 💳 1. Các Gói Hội Viên PRO Đang Có Trên NQD-LMS\n");
+            List<AiTutorToolService.PublicPlanSummary> plans = toolService != null ? toolService.getPublicMembershipPlans() : Collections.emptyList();
+            if (plans.isEmpty()) {
+                sb.append("* **Gói Học sinh PRO:** 99.000 đ/tháng — Học tập thông minh, trợ lý AI Tutor không giới hạn, xem giải thích chi tiết đề thi.\n");
+                sb.append("* **Gói Giáo viên PRO:** 299.000 đ/tháng — Tạo slide bài học AI tự động, sinh đề thi & câu hỏi trắc nghiệm AI, quản lý lớp học nâng cao.\n");
+            } else {
+                for (AiTutorToolService.PublicPlanSummary p : plans) {
+                    String target = "TEACHER".equalsIgnoreCase(p.getUserType()) ? "Dành cho Giáo viên" : "Dành cho Học sinh";
+                    String priceFormatted = p.getPrice() != null ? String.format("%,d đ", p.getPrice().longValue()) : "Miễn phí";
+                    sb.append(String.format("* **%s** (%s — **%s** / %s):\n",
+                            p.getName(), target, priceFormatted,
+                            "YEARLY".equalsIgnoreCase(p.getBillingCycle()) ? "năm" : "tháng"));
+                    if (p.getDescription() != null && !p.getDescription().isBlank()) {
+                        sb.append("  - *").append(p.getDescription()).append("*\n");
+                    }
+                }
+            }
+            sb.append("\n👉 **Cách nâng cấp:** Bạn hãy vào trang **Bảng giá / Nâng cấp Hội viên** (`/pricing`), chọn gói mong muốn và quét mã QR chuyển khoản tiện lợi qua PayOS.\n\n");
+        }
+
+        // 2. Recommend courses and teachers
+        String subject = toolService != null ? toolService.extractSubjectFromQuery(rawQuestion) : null;
+        List<AiTutorToolService.PublicCourseSummary> courses = toolService != null ? toolService.getPublicMarketplaceCourses(subject) : Collections.emptyList();
+
+        sb.append("#### 📚 2. Gợi Ý Khóa Học & Giảng Viên Tiêu Biểu\n");
+        if (courses.isEmpty()) {
+            sb.append("Hiện trên hệ thống NQD-LMS đang mở nhiều khóa học chất lượng cao từ các thầy cô giàu kinh nghiệm các môn Toán, Tiếng Anh, Vật lý, Tin học... Bạn hãy xem đầy đủ tại mục **Khóa học** (`/courses`) nhé!\n\n");
+        } else {
+            for (AiTutorToolService.PublicCourseSummary c : courses) {
+                String priceStr = c.getSalePrice() != null ? String.format("%,d đ", c.getSalePrice().longValue())
+                        : (c.getPrice() != null && c.getPrice().compareTo(java.math.BigDecimal.ZERO) > 0 ? String.format("%,d đ", c.getPrice().longValue()) : "Miễn phí");
+                sb.append(String.format("* 📖 **%s** (Môn %s)\n", c.getName(), c.getSubjectName()));
+                sb.append(String.format("  - **Giảng viên:** Thầy/Cô **%s**\n", c.getTeacherName()));
+                sb.append(String.format("  - **Học phí:** **%s** | Đánh giá: ⭐ %.1f (%d học viên đã học)\n", priceStr, c.getRating(), c.getEnrollmentCount()));
+            }
+            sb.append("\n");
+        }
+
+        // 3. Purchase instructions
+        sb.append("#### 🛒 3. Hướng Dẫn Cách Mua & Kích Hoạt Khóa Học\n");
+        sb.append("1. **Tìm khóa học:** Vào mục **Khóa học** (`/courses`), chọn môn học hoặc tìm tên thầy cô bạn yêu thích.\n");
+        sb.append("2. **Đăng ký:** Bấm nút **\"Mua khóa học\"** (hoặc \"Vào học ngay\" nếu miễn phí).\n");
+        sb.append("3. **Thanh toán tức thì:** Hệ thống hiển thị mã QR thanh toán qua **PayOS** (hỗ trợ chuyển khoản ngân hàng hoặc ví điện tử).\n");
+        sb.append("4. **Kích hoạt tự động:** Sau khi quét mã thành công, khóa học sẽ được mở tự động 100% trong mục **Khóa học của tôi**!\n\n");
+        sb.append("💬 *Nếu bạn cần tư vấn thêm về môn học hoặc lớp cụ thể nào, hãy nhắn cho mình biết nhé!*");
+
+        return sb.toString();
     }
 }

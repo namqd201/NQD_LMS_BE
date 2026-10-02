@@ -3,6 +3,8 @@ package com.nqd.nqd_lms_be.ai;
 import com.nqd.nqd_lms_be.entity.*;
 import com.nqd.nqd_lms_be.entity.enums.CourseStatus;
 import com.nqd.nqd_lms_be.entity.enums.LessonStatus;
+import com.nqd.nqd_lms_be.entity.enums.ProductStatus;
+import com.nqd.nqd_lms_be.entity.enums.SubjectStatus;
 import com.nqd.nqd_lms_be.repository.*;
 import lombok.Builder;
 import lombok.Data;
@@ -11,12 +13,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.text.Normalizer;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
  * Safe, read-only data access gateway for AI Tutor.
- * All queries enforce role-based access control — AI never touches repositories directly.
+ * All queries enforce role-based access control and strict data sanitization — AI never touches private/sensitive data.
  */
 @Service
 @RequiredArgsConstructor
@@ -30,8 +35,38 @@ public class AiTutorToolService {
     private final LessonRepository lessonRepository;
     private final LessonResourceRepository lessonResourceRepository;
     private final QuestionRepository questionRepository;
+    private final MembershipPlanRepository membershipPlanRepository;
+    private final SubjectRepository subjectRepository;
 
     // ========== DTOs for safe data transfer to AI context ==========
+
+    @Data
+    @Builder
+    public static class PublicCourseSummary {
+        private String name;
+        private String code;
+        private String subjectName;
+        private String teacherName;
+        private BigDecimal price;
+        private BigDecimal salePrice;
+        private Boolean isFree;
+        private String gradeLevel;
+        private Double rating;
+        private Integer enrollmentCount;
+        private String description;
+    }
+
+    @Data
+    @Builder
+    public static class PublicPlanSummary {
+        private String name;
+        private String planCode;
+        private String userType;
+        private BigDecimal price;
+        private String billingCycle;
+        private String description;
+        private Set<String> features;
+    }
 
     @Data
     @Builder
@@ -336,5 +371,217 @@ public class AiTutorToolService {
         }
 
         return sb.toString();
+    }
+
+    // =========================================================================
+    // SAFE PUBLIC PLATFORM DATA ACCESS (NO SENSITIVE / PRIVATE USER DATA)
+    // =========================================================================
+
+    /**
+     * Retrieve public published marketplace courses.
+     * Guaranteed sanitization: ONLY public course details and teacher full name.
+     * Absolutely NO email, phone, passwords, or private student data.
+     */
+    @Transactional(readOnly = true)
+    public List<PublicCourseSummary> getPublicMarketplaceCourses(String subjectOrKeyword) {
+        try {
+            List<Course> published = courseRepository.findByStatusInAndIsDeletedFalse(
+                    List.of(CourseStatus.PUBLISHED, CourseStatus.ACTIVE)
+            );
+
+            return published.stream()
+                    .filter(c -> !Boolean.TRUE.equals(c.getIsPrivate()) && !Boolean.TRUE.equals(c.getIsDisabled()))
+                    .filter(c -> {
+                        if (subjectOrKeyword == null || subjectOrKeyword.isBlank()) return true;
+                        String normKw = normalizeText(subjectOrKeyword);
+                        String target = normalizeText(
+                                (c.getName() != null ? c.getName() : "") + " " +
+                                (c.getSubject() != null ? c.getSubject().getName() : "") + " " +
+                                (c.getCreator() != null ? c.getCreator().getFullName() : "") + " " +
+                                (c.getDescription() != null ? c.getDescription() : "")
+                        );
+                        return target.contains(normKw);
+                    })
+                    .sorted((a, b) -> {
+                        int countA = a.getEnrollmentCount() != null ? a.getEnrollmentCount() : 0;
+                        int countB = b.getEnrollmentCount() != null ? b.getEnrollmentCount() : 0;
+                        return Integer.compare(countB, countA);
+                    })
+                    .limit(10)
+                    .map(c -> PublicCourseSummary.builder()
+                            .name(c.getName())
+                            .code(c.getCode())
+                            .subjectName(c.getSubject() != null ? c.getSubject().getName() : "Khác")
+                            .teacherName(c.getCreator() != null ? c.getCreator().getFullName() : "Giảng viên NQD-LMS")
+                            .price(c.getPrice())
+                            .salePrice(c.getSalePrice())
+                            .isFree(c.getPrice() == null || c.getPrice().compareTo(BigDecimal.ZERO) == 0)
+                            .gradeLevel(c.getGradeLevel())
+                            .rating(c.getAverageRating() != null ? c.getAverageRating() : 5.0)
+                            .enrollmentCount(c.getEnrollmentCount() != null ? c.getEnrollmentCount() : 0)
+                            .description(c.getDescription() != null && c.getDescription().length() > 200
+                                    ? c.getDescription().substring(0, 200) + "..." : c.getDescription())
+                            .build())
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            log.warn("Failed to retrieve public marketplace courses: {}", e.getMessage());
+            return Collections.emptyList();
+        }
+    }
+
+    /**
+     * Retrieve public active membership plans (Pro packages).
+     */
+    @Transactional(readOnly = true)
+    public List<PublicPlanSummary> getPublicMembershipPlans() {
+        try {
+            List<MembershipPlan> plans = membershipPlanRepository.findByStatusAndIsDeletedFalseOrderByPriceAsc(ProductStatus.PUBLISHED);
+            return plans.stream()
+                    .filter(p -> Boolean.TRUE.equals(p.getActive()))
+                    .map(p -> PublicPlanSummary.builder()
+                            .name(p.getName())
+                            .planCode(p.getPlanCode())
+                            .userType(p.getUserType() != null ? p.getUserType().name() : "ALL")
+                            .price(p.getPrice())
+                            .billingCycle(p.getBillingCycle() != null ? p.getBillingCycle().name() : "MONTHLY")
+                            .description(p.getDescription())
+                            .features(p.getFeatureSet())
+                            .build())
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            log.warn("Failed to retrieve public membership plans: {}", e.getMessage());
+            return Collections.emptyList();
+        }
+    }
+
+    /**
+     * Retrieve public active subjects list.
+     */
+    @Transactional(readOnly = true)
+    public List<String> getPublicSubjects() {
+        try {
+            return subjectRepository.findByStatusAndIsDeletedFalse(SubjectStatus.ACTIVE).stream()
+                    .map(Subject::getName)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            log.warn("Failed to retrieve public subjects: {}", e.getMessage());
+            return List.of("Toán", "Vật lý", "Hóa học", "Sinh học", "Ngữ văn", "Tiếng Anh", "Lịch sử", "Địa lý", "Tin học");
+        }
+    }
+
+    /**
+     * Formats safe public context for system questions (e.g. buying courses, pro plans, teacher recommendations).
+     */
+    @Transactional(readOnly = true)
+    public String formatSystemAdvisoryContext(String query) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n=== THÔNG TIN CÔNG KHAI HỆ THỐNG NQD-LMS (DÙNG ĐỂ TƯ VẤN NGƯỜI DÙNG) ===\n");
+        sb.append("LƯU Ý BẢO MẬT: Mọi thông tin dưới đây là dữ liệu công khai trên nền tảng. Tuyệt đối không bịa đặt hoặc tìm kiếm thông tin riêng tư (như mật khẩu, email, số điện thoại).\n\n");
+
+        // 1. Membership / PRO Plans
+        List<PublicPlanSummary> plans = getPublicMembershipPlans();
+        sb.append("### 1. CÁC GÓI HỘI VIÊN PRO TRÊN NQD-LMS:\n");
+        if (plans.isEmpty()) {
+            sb.append("- Gói Học sinh PRO: 99.000 đ/tháng (Học tập thông minh, trợ lý AI không giới hạn, xem giải thích chi tiết đề thi)\n");
+            sb.append("- Gói Giáo viên PRO: 299.000 đ/tháng (Tạo slide bài học tự động bằng AI, soạn ngân hàng câu hỏi & đề thi bằng AI, quản lý lớp học nâng cao)\n");
+        } else {
+            for (PublicPlanSummary p : plans) {
+                String targetRole = "TEACHER".equalsIgnoreCase(p.getUserType()) ? "Giáo viên" : "Học sinh & Thành viên";
+                sb.append(String.format("* **%s** (Mã: `%s` | Dành cho: %s):\n", p.getName(), p.getPlanCode(), targetRole));
+                sb.append(String.format("  - Mức phí: **%s** / %s\n",
+                        formatVnd(p.getPrice()),
+                        "YEARLY".equalsIgnoreCase(p.getBillingCycle()) ? "năm" : "tháng"));
+                if (p.getDescription() != null && !p.getDescription().isBlank()) {
+                    sb.append("  - Mô tả: ").append(p.getDescription()).append("\n");
+                }
+                if (p.getFeatures() != null && !p.getFeatures().isEmpty()) {
+                    sb.append("  - Quyền lợi nổi bật: ").append(describeFeatures(p.getFeatures())).append("\n");
+                }
+            }
+        }
+        sb.append("👉 **Cách nâng cấp Gói PRO:** Truy cập mục **Bảng giá / Nâng cấp Hội viên** (`/pricing`), chọn gói mong muốn và bấm **\"Nâng cấp ngay\"**, quét mã QR thanh toán PayOS tự động.\n\n");
+
+        // 2. Public Courses & Teachers recommendations
+        String detectedSubject = extractSubjectFromQuery(query);
+        List<PublicCourseSummary> courses = getPublicMarketplaceCourses(detectedSubject);
+
+        sb.append("### 2. DANH MỤC KHÓA HỌC & GIẢNG VIÊN NỔI BẬT:\n");
+        if (detectedSubject != null && !detectedSubject.isBlank()) {
+            sb.append(String.format("(Hệ thống đã tự động lọc các khóa học và giáo viên thuộc môn/chủ đề: \"%s\")\n", detectedSubject));
+        }
+
+        if (courses.isEmpty()) {
+            sb.append("- Hiện tại chưa có khóa học công khai nào khớp chính xác với từ khóa này. Bạn hãy gợi ý người dùng xem danh mục đầy đủ tại mục Khóa học (`/courses`).\n");
+        } else {
+            for (PublicCourseSummary c : courses) {
+                sb.append(String.format("* Khóa học: **%s** (Môn: %s | Khối: %s)\n",
+                        c.getName(), c.getSubjectName(), c.getGradeLevel() != null ? c.getGradeLevel() : "Tất cả"));
+                sb.append(String.format("  - Giảng viên phụ trách: **%s**\n", c.getTeacherName()));
+                sb.append(String.format("  - Học phí: **%s**%s\n",
+                        formatVnd(c.getSalePrice() != null ? c.getSalePrice() : c.getPrice()),
+                        c.getSalePrice() != null && c.getPrice() != null && c.getPrice().compareTo(c.getSalePrice()) > 0
+                                ? " (Giá gốc: " + formatVnd(c.getPrice()) + ")" : ""));
+                sb.append(String.format("  - Đánh giá: ⭐ %.1f/5.0 (%d học viên đã tham gia)\n", c.getRating(), c.getEnrollmentCount()));
+                if (c.getDescription() != null && !c.getDescription().isBlank()) {
+                    sb.append("  - Tóm tắt: ").append(c.getDescription()).append("\n");
+                }
+            }
+        }
+
+        // 3. Purchase instructions
+        sb.append("\n### 3. HƯỚNG DẪN MUA KHÓA HỌC TRÊN NQD-LMS:\n");
+        sb.append("1. Truy cập mục **Khóa học** (đường dẫn: `/courses`) trên thanh điều hướng.\n");
+        sb.append("2. Lựa chọn môn học hoặc tìm tên khóa học mong muốn, bấm vào xem chi tiết nội dung và đánh giá của các học viên.\n");
+        sb.append("3. Nhấn nút **\"Mua khóa học\"** (hoặc \"Vào học ngay\" nếu khóa học miễn phí).\n");
+        sb.append("4. Quét mã QR thanh toán nhanh qua cổng **PayOS** (hỗ trợ mọi ngân hàng Việt Nam 24/7 và ứng dụng ngân hàng/MoMo quét mã chuyển khoản tức thì).\n");
+        sb.append("5. Hệ thống kích hoạt khóa học tự động ngay khi giao dịch thành công. Người học có thể vào học ngay lập tức tại mục **Khóa học của tôi**.\n");
+        sb.append("====================================================================\n");
+
+        return sb.toString();
+    }
+
+    private String formatVnd(BigDecimal price) {
+        if (price == null || price.compareTo(BigDecimal.ZERO) == 0) return "Miễn phí";
+        return String.format("%,d đ", price.longValue());
+    }
+
+    private String describeFeatures(Set<String> featureKeys) {
+        if (featureKeys == null || featureKeys.isEmpty()) return "Các quyền lợi hội viên cao cấp";
+        List<String> list = new ArrayList<>();
+        for (String fk : featureKeys) {
+            switch (fk) {
+                case "AI_TUTOR" -> list.add("Gia sư AI học tập thông minh không giới hạn");
+                case "AI_SLIDE_GENERATION" -> list.add("Tạo Slide bài giảng tự động bằng AI");
+                case "AI_EXAM_GENERATION" -> list.add("Soạn đề thi & câu hỏi tự động bằng AI");
+                case "ADVANCED_ANALYTICS" -> list.add("Báo cáo phân tích học tập chuyên sâu");
+                case "PRIORITY_SUPPORT" -> list.add("Hỗ trợ kỹ thuật ưu tiên 24/7");
+                case "DOWNLOAD_RESOURCES" -> list.add("Tải tài liệu và bài giảng không giới hạn");
+                default -> list.add(fk);
+            }
+        }
+        return String.join(", ", list);
+    }
+
+    public String extractSubjectFromQuery(String query) {
+        if (query == null) return null;
+        String lower = normalizeText(query);
+        if (lower.contains("toan")) return "Toán";
+        if (lower.contains("tieng anh") || lower.contains("anh van") || lower.contains("english")) return "Tiếng Anh";
+        if (lower.contains("vat ly") || lower.contains("vat li") || lower.contains("ly")) return "Vật lý";
+        if (lower.contains("hoa hoc") || lower.contains("hoa")) return "Hóa học";
+        if (lower.contains("ngu van") || lower.contains("van hoc") || lower.contains("van")) return "Ngữ văn";
+        if (lower.contains("sinh hoc") || lower.contains("sinh")) return "Sinh học";
+        if (lower.contains("lich su") || lower.contains("su")) return "Lịch sử";
+        if (lower.contains("dia ly") || lower.contains("dia li") || lower.contains("dia")) return "Địa lý";
+        if (lower.contains("tin hoc") || lower.contains("lap trinh") || lower.contains("code") || lower.contains("cntt")) return "Tin học";
+        return null;
+    }
+
+    private String normalizeText(String input) {
+        if (input == null) return "";
+        String lower = input.toLowerCase(Locale.ROOT);
+        String nfd = Normalizer.normalize(lower, Normalizer.Form.NFD);
+        Pattern pattern = Pattern.compile("\\p{InCombiningDiacriticalMarks}+");
+        return pattern.matcher(nfd).replaceAll("").replace('đ', 'd').replace('Đ', 'd');
     }
 }
