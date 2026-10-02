@@ -33,4 +33,21 @@ public interface ClassroomRepository extends JpaRepository<Classroom, UUID> {
     Optional<Classroom> findFirstByMeetingId(String meetingId);
 
     Optional<Classroom> findFirstByLarkMeetingUrlContaining(String meetingNo);
+
+    long countByStatus(ClassroomStatus status);
+
+    long countByIsLiveNowTrue();
+
+    @Query("SELECT COALESCE(SUM(c.studentCount), 0) FROM Classroom c")
+    long sumAllStudentCount();
+
+    @Query("SELECT c FROM Classroom c " +
+           "WHERE (:status IS NULL OR c.status = :status) " +
+           "AND (:query IS NULL OR :query = '' " +
+           "     OR LOWER(c.name) LIKE LOWER(CONCAT('%', :query, '%')) " +
+           "     OR LOWER(c.code) LIKE LOWER(CONCAT('%', :query, '%')) " +
+           "     OR LOWER(c.teacher.fullName) LIKE LOWER(CONCAT('%', :query, '%')) " +
+           "     OR LOWER(c.teacher.email) LIKE LOWER(CONCAT('%', :query, '%'))) " +
+           "ORDER BY c.createdAt DESC")
+    List<Classroom> searchAllForAdmin(@Param("query") String query, @Param("status") ClassroomStatus status);
 }

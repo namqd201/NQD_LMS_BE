@@ -623,6 +623,93 @@ public class ClassroomServiceImpl implements ClassroomService {
         });
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<ClassroomResponse> getAllClassroomsForAdmin(String query, ClassroomStatus status) {
+        String cleanQuery = (query != null && !query.trim().isEmpty()) ? query.trim() : null;
+        List<Classroom> classrooms = classroomRepository.searchAllForAdmin(cleanQuery, status);
+        return classrooms.stream()
+                .map(c -> mapToClassroomResponse(c, null))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public AdminClassroomStatsResponse getClassroomStatsForAdmin() {
+        long total = classroomRepository.count();
+        long active = classroomRepository.countByStatus(ClassroomStatus.ACTIVE);
+        long archived = classroomRepository.countByStatus(ClassroomStatus.ARCHIVED);
+        long totalStudents = classroomRepository.sumAllStudentCount();
+        long liveNow = classroomRepository.countByIsLiveNowTrue();
+
+        return AdminClassroomStatsResponse.builder()
+                .totalClassrooms(total)
+                .activeClassrooms(active)
+                .archivedClassrooms(archived)
+                .totalStudents(totalStudents)
+                .totalLiveNow(liveNow)
+                .build();
+    }
+
+    @Override
+    @Transactional
+    public ClassroomResponse updateClassroomStatusForAdmin(UUID classroomId, ClassroomStatus newStatus) {
+        Classroom classroom = classroomRepository.findById(classroomId)
+                .orElseThrow(() -> new ResourceNotFoundException("Classroom", classroomId));
+
+        classroom.setStatus(newStatus);
+        classroom = classroomRepository.save(classroom);
+        log.info("Admin updated status for classroom {} ({}) to {}", classroom.getName(), classroomId, newStatus);
+        return mapToClassroomResponse(classroom, null);
+    }
+
+    @Override
+    @Transactional
+    public void forceDeleteClassroomForAdmin(UUID classroomId) {
+        Classroom classroom = classroomRepository.findById(classroomId)
+                .orElseThrow(() -> new ResourceNotFoundException("Classroom", classroomId));
+
+        // Delete all student relations
+        var students = classroomStudentRepository.findByClassroomIdOrderByCreatedAtDesc(classroomId);
+        if (!students.isEmpty()) {
+            classroomStudentRepository.deleteAll(students);
+        }
+
+        // Delete child relations
+        var materials = materialRepository.findByClassroomIdOrderByLessonOrderAscCreatedAtAsc(classroomId);
+        if (!materials.isEmpty()) materialRepository.deleteAll(materials);
+
+        var assigns = assignmentRepository.findByClassroomIdOrderByCreatedAtDesc(classroomId);
+        if (!assigns.isEmpty()) assignmentRepository.deleteAll(assigns);
+
+        var schedules = scheduleRepository.findByClassroomIdOrderByDayOfWeekAscStartTimeAsc(classroomId);
+        if (!schedules.isEmpty()) scheduleRepository.deleteAll(schedules);
+
+        var videos = videoRepository.findByClassroomIdOrderBySessionDateDescCreatedAtDesc(classroomId);
+        if (!videos.isEmpty()) videoRepository.deleteAll(videos);
+
+        var files = fileRepository.findByClassroomIdOrderByCreatedAtDesc(classroomId);
+        if (!files.isEmpty()) fileRepository.deleteAll(files);
+
+        // Disable 100ms room if exists
+        if (oneHundredMsService != null && classroom.getMeetingId() != null) {
+            try {
+                oneHundredMsService.disableMeeting(classroom.getMeetingId());
+            } catch (Exception ignored) {}
+        }
+
+        // Delete Google Meet calendar event if exists
+        if (classroom.getMeetingId() != null && classroom.getMeetingId().length() > 10) {
+            try {
+                googleMeetService.deleteMeetingEvent(classroom.getMeetingId());
+            } catch (Exception ignored) {}
+        }
+
+        // Permanently delete the classroom
+        classroomRepository.delete(classroom);
+        log.info("Admin force-deleted classroom: {} ({})", classroom.getName(), classroomId);
+    }
+
     private ClassroomResponse mapToClassroomResponse(Classroom c, UUID currentUserId) {
         long pendingCount = 0;
         String currentUserRole = "NONE";

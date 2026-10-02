@@ -41,4 +41,12 @@ public interface ClassroomService {
     void leaveClassroom(UUID classroomId, UUID studentId);
 
     List<UserSuggestionResponse> searchUsersForInvitation(String query);
+
+    List<ClassroomResponse> getAllClassroomsForAdmin(String query, com.nqd.nqd_lms_be.entity.enums.ClassroomStatus status);
+
+    AdminClassroomStatsResponse getClassroomStatsForAdmin();
+
+    ClassroomResponse updateClassroomStatusForAdmin(UUID classroomId, com.nqd.nqd_lms_be.entity.enums.ClassroomStatus newStatus);
+
+    void forceDeleteClassroomForAdmin(UUID classroomId);
 }
