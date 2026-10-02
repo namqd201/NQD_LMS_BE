@@ -31,4 +31,9 @@ public interface CourseEnrollmentRepository extends JpaRepository<CourseEnrollme
 
     @org.springframework.data.jpa.repository.Query("SELECT DISTINCT ce FROM CourseEnrollment ce JOIN FETCH ce.course WHERE ce.student.id = :studentId")
     List<CourseEnrollment> findByStudentIdWithCourse(@org.springframework.data.repository.query.Param("studentId") UUID studentId);
+
+    long countByCourseIdAndIsFreeGrantTrueAndIsDeletedFalse(UUID courseId);
+
+    @org.springframework.data.jpa.repository.Query("SELECT DISTINCT ce FROM CourseEnrollment ce JOIN FETCH ce.student WHERE ce.course.id = :courseId AND ce.isFreeGrant = true AND ce.isDeleted = false ORDER BY ce.createdAt DESC")
+    List<CourseEnrollment> findFreeGrantsByCourseId(@org.springframework.data.repository.query.Param("courseId") UUID courseId);
 }

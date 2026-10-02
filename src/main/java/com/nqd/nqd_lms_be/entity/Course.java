@@ -81,6 +81,10 @@ public class Course extends BaseEntity {
     @Builder.Default
     private Boolean isPrivate = false;
 
+    @Column(name = "free_grant_quota", nullable = false)
+    @Builder.Default
+    private Integer freeGrantQuota = 10;
+
     @Column(name = "is_disabled", nullable = false)
     @Builder.Default
     private Boolean isDisabled = false;

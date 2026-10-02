@@ -41,6 +41,14 @@ public class CourseEnrollment extends BaseEntity {
     @Column(name = "completed_at")
     private LocalDateTime completedAt;
 
+    @Column(name = "is_free_grant", nullable = false)
+    @Builder.Default
+    private Boolean isFreeGrant = false;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "granted_by")
+    private User grantedBy;
+
     @PrePersist
     @Override
     protected void onCreate() {
