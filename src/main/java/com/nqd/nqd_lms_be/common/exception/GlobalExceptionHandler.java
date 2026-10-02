@@ -105,6 +105,14 @@ public class GlobalExceptionHandler {
                         : "Trạng thái giao dịch không hợp lệ để thực hiện hành động này."));
     }
 
+    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+    public ResponseEntity<MessageResponse> handleDataIntegrityViolationException(org.springframework.dao.DataIntegrityViolationException ex) {
+        log.error("Data integrity violation: ", ex);
+        String detail = ex.getMostSpecificCause() != null ? ex.getMostSpecificCause().getMessage() : ex.getMessage();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(MessageResponse.of("Dữ liệu vi phạm ràng buộc cơ sở dữ liệu: " + detail));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<MessageResponse> handleGenericException(Exception ex) {
         log.error("Unhandled exception: ", ex);

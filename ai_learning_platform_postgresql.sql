@@ -86,7 +86,7 @@ CREATE TABLE courses (
     grade_level   VARCHAR(50),
     thumbnail_url TEXT,
     status        VARCHAR(20) NOT NULL DEFAULT 'DRAFT'
-                  CHECK (status IN ('DRAFT', 'ACTIVE', 'ARCHIVED')),
+                  CHECK (status IN ('DRAFT', 'PENDING_REVIEW', 'PUBLISHED', 'REJECTED', 'ACTIVE', 'ARCHIVED')),
     created_by    UUID REFERENCES users(id) ON DELETE SET NULL,
     created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at    TIMESTAMPTZ NOT NULL DEFAULT now()
@@ -104,7 +104,7 @@ CREATE TABLE course_enrollments (
     course_id    UUID NOT NULL REFERENCES courses(id) ON DELETE RESTRICT,
     student_id   UUID NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
     status       VARCHAR(20) NOT NULL DEFAULT 'ENROLLED'
-                 CHECK (status IN ('ENROLLED', 'COMPLETED', 'DROPPED')),
+                 CHECK (status IN ('ENROLLED', 'PENDING', 'REJECTED', 'COMPLETED', 'DROPPED')),
     enrolled_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
     completed_at TIMESTAMPTZ,
     UNIQUE (course_id, student_id),

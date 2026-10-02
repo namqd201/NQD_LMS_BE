@@ -35,6 +35,50 @@ public class DatabaseSchemaMigrationRunner implements CommandLineRunner {
         }
         log.info("Checking and applying database schema migrations...");
         try {
+            // 0. Drop legacy check constraints on courses and course_enrollments status
+            try {
+                jdbcTemplate.execute("ALTER TABLE courses DROP CONSTRAINT IF EXISTS courses_status_check");
+                jdbcTemplate.execute("ALTER TABLE course_enrollments DROP CONSTRAINT IF EXISTS course_enrollments_status_check");
+
+                String dbProduct = jdbcTemplate.execute((java.sql.Connection conn) -> conn.getMetaData().getDatabaseProductName());
+                if ("PostgreSQL".equalsIgnoreCase(dbProduct)) {
+                    jdbcTemplate.execute("""
+                        DO $$ 
+                        DECLARE 
+                            r RECORD;
+                        BEGIN 
+                            FOR r IN (
+                                SELECT conname 
+                                FROM pg_constraint 
+                                WHERE conrelid = 'courses'::regclass 
+                                  AND contype = 'c' 
+                                  AND pg_get_constraintdef(oid) ILIKE '%status%'
+                            ) LOOP 
+                                EXECUTE 'ALTER TABLE courses DROP CONSTRAINT IF EXISTS ' || quote_ident(r.conname);
+                            END LOOP;
+                        END $$;
+                    """);
+                    jdbcTemplate.execute("""
+                        DO $$ 
+                        DECLARE 
+                            r RECORD;
+                        BEGIN 
+                            FOR r IN (
+                                SELECT conname 
+                                FROM pg_constraint 
+                                WHERE conrelid = 'course_enrollments'::regclass 
+                                  AND contype = 'c' 
+                                  AND pg_get_constraintdef(oid) ILIKE '%status%'
+                            ) LOOP 
+                                EXECUTE 'ALTER TABLE course_enrollments DROP CONSTRAINT IF EXISTS ' || quote_ident(r.conname);
+                            END LOOP;
+                        END $$;
+                    """);
+                }
+            } catch (Exception ex) {
+                log.warn("Notice while dropping legacy status check constraints: {}", ex.getMessage());
+            }
+
             // 1. Alter courses table for Phase 3 Monetization
             jdbcTemplate.execute("ALTER TABLE courses ADD COLUMN IF NOT EXISTS pricing_type VARCHAR(20) DEFAULT 'FREE'");
             jdbcTemplate.execute("ALTER TABLE courses ADD COLUMN IF NOT EXISTS price NUMERIC(15, 2) DEFAULT 0.00");
