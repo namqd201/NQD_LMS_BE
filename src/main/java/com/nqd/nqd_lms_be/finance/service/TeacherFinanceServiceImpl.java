@@ -7,6 +7,7 @@ import com.nqd.nqd_lms_be.entity.enums.ProductType;
 import com.nqd.nqd_lms_be.entity.enums.WithdrawalStatus;
 import com.nqd.nqd_lms_be.finance.dto.*;
 import com.nqd.nqd_lms_be.repository.*;
+import com.nqd.nqd_lms_be.service.notification.KafkaNotificationProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -35,6 +39,8 @@ public class TeacherFinanceServiceImpl implements TeacherFinanceService {
     private final LessonRepository lessonRepository;
     private final CourseTeacherRepository courseTeacherRepository;
     private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
+    private final KafkaNotificationProducer kafkaNotificationProducer;
     private final com.nqd.nqd_lms_be.membership.service.MembershipEntitlementService membershipEntitlementService;
 
     @Value("${app.finance.platform-fee-rate:0.20}")
@@ -175,6 +181,8 @@ public class TeacherFinanceServiceImpl implements TeacherFinanceService {
     @Transactional(readOnly = true)
     public TeacherBalanceSummaryResponse getBalanceSummary(UUID teacherId) {
         LocalDateTime now = LocalDateTime.now();
+        BigDecimal totalGrossSales = teacherEarningRepository.sumTotalGrossSalesByTeacherId(teacherId);
+        BigDecimal totalPlatformFee = teacherEarningRepository.sumTotalPlatformFeeByTeacherId(teacherId);
         BigDecimal totalEarned = teacherEarningRepository.sumTotalEarnedByTeacherId(teacherId);
         BigDecimal availableEarned = teacherEarningRepository.sumAvailableEarningByTeacherId(teacherId, now);
         BigDecimal pendingBalance = teacherEarningRepository.sumPendingEarningByTeacherId(teacherId, now);
@@ -184,6 +192,8 @@ public class TeacherFinanceServiceImpl implements TeacherFinanceService {
         BigDecimal reversedAmount = teacherEarningRepository.sumReversedEarningByTeacherId(teacherId);
 
         return TeacherBalanceSummaryResponse.builder()
+                .totalGrossSales(totalGrossSales)
+                .totalPlatformFee(totalPlatformFee)
                 .totalEarned(totalEarned)
                 .availableBalance(availableBalance)
                 .pendingBalance(pendingBalance)
@@ -242,6 +252,38 @@ public class TeacherFinanceServiceImpl implements TeacherFinanceService {
                 .build();
 
         TeacherBankAccount saved = teacherBankAccountRepository.save(bankAccount);
+        return toBankAccountResponse(saved);
+    }
+
+    @Override
+    @Transactional
+    public TeacherBankAccountResponse updateBankAccount(UUID teacherId, UUID bankAccountId, TeacherBankAccountRequest request) {
+        TeacherBankAccount account = teacherBankAccountRepository.findByIdAndTeacherIdAndIsDeletedFalse(bankAccountId, teacherId)
+                .orElseThrow(() -> new ResourceNotFoundException("Khong tim thay tai khoan ngan hang"));
+
+        if (request.getBankName() != null && !request.getBankName().isBlank()) {
+            account.setBankName(request.getBankName());
+        }
+        if (request.getBankCode() != null && !request.getBankCode().isBlank()) {
+            account.setBankCode(request.getBankCode());
+        }
+        if (request.getAccountNumber() != null && !request.getAccountNumber().isBlank()) {
+            account.setAccountNumber(request.getAccountNumber());
+        }
+        if (request.getAccountHolderName() != null && !request.getAccountHolderName().isBlank()) {
+            account.setAccountHolderName(request.getAccountHolderName().trim().toUpperCase());
+        }
+
+        if (Boolean.TRUE.equals(request.getIsDefault())) {
+            List<TeacherBankAccount> allAccounts = teacherBankAccountRepository.findByTeacherIdAndIsDeletedFalseOrderByCreatedAtDesc(teacherId);
+            for (TeacherBankAccount acc : allAccounts) {
+                acc.setIsDefault(acc.getId().equals(bankAccountId));
+            }
+            teacherBankAccountRepository.saveAll(allAccounts);
+            account.setIsDefault(true);
+        }
+
+        TeacherBankAccount saved = teacherBankAccountRepository.save(account);
         return toBankAccountResponse(saved);
     }
 
@@ -340,6 +382,7 @@ public class TeacherFinanceServiceImpl implements TeacherFinanceService {
 
         TeacherWithdrawal saved = teacherWithdrawalRepository.save(withdrawal);
         log.info("Created withdrawal request: code={}, teacher={}, amount={}", withdrawalCode, teacherId, request.getAmount());
+        notifyAdminsAboutWithdrawal(saved);
         return toWithdrawalResponse(saved);
     }
 
@@ -418,5 +461,36 @@ public class TeacherFinanceServiceImpl implements TeacherFinanceService {
                 .processedAt(withdrawal.getProcessedAt())
                 .processedBy(withdrawal.getProcessedBy())
                 .build();
+    }
+
+    private void notifyAdminsAboutWithdrawal(TeacherWithdrawal withdrawal) {
+        try {
+            Set<UUID> notifiedAdminIds = new HashSet<>();
+            List<User> admins = new ArrayList<>();
+            List<User> roleAdmins = userRoleRepository.findUsersByRoleName("ROLE_ADMIN");
+            if (roleAdmins != null) admins.addAll(roleAdmins);
+            List<User> directAdmins = userRoleRepository.findUsersByRoleName("ADMIN");
+            if (directAdmins != null) admins.addAll(directAdmins);
+
+            String title = "Yêu cầu rút tiền mới";
+            String teacherName = withdrawal.getTeacher() != null ? withdrawal.getTeacher().getFullName() : "Giảng viên";
+            String amountFormatted = String.format("%,d", withdrawal.getAmount().longValue());
+            String body = String.format("Giảng viên %s vừa gửi yêu cầu rút %s VND (Mã: %s). Vui lòng kiểm tra và xử lý.",
+                    teacherName, amountFormatted, withdrawal.getWithdrawalCode());
+
+            for (User admin : admins) {
+                if (admin != null && admin.getId() != null && notifiedAdminIds.add(admin.getId())) {
+                    kafkaNotificationProducer.sendNotification(
+                            admin.getId(),
+                            "WITHDRAWAL_REQUESTED",
+                            title,
+                            body,
+                            "/admin/finance"
+                    );
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Failed to send withdrawal notification to admins: {}", e.getMessage());
+        }
     }
 }

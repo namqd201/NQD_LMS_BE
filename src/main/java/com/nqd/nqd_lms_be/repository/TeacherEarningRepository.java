@@ -29,6 +29,12 @@ public interface TeacherEarningRepository extends JpaRepository<TeacherEarning, 
     @Query("SELECT COALESCE(SUM(e.teacherAmount), 0) FROM TeacherEarning e WHERE e.teacher.id = :teacherId AND e.status != 'REVERSED' AND e.isDeleted = false")
     BigDecimal sumTotalEarnedByTeacherId(@Param("teacherId") UUID teacherId);
 
+    @Query("SELECT COALESCE(SUM(e.grossAmount), 0) FROM TeacherEarning e WHERE e.teacher.id = :teacherId AND e.status != 'REVERSED' AND e.isDeleted = false")
+    BigDecimal sumTotalGrossSalesByTeacherId(@Param("teacherId") UUID teacherId);
+
+    @Query("SELECT COALESCE(SUM(e.platformFee), 0) FROM TeacherEarning e WHERE e.teacher.id = :teacherId AND e.status != 'REVERSED' AND e.isDeleted = false")
+    BigDecimal sumTotalPlatformFeeByTeacherId(@Param("teacherId") UUID teacherId);
+
     @Query("SELECT COALESCE(SUM(e.teacherAmount), 0) FROM TeacherEarning e WHERE e.teacher.id = :teacherId AND (e.status = 'AVAILABLE' OR (e.status = 'PENDING' AND e.availableAt <= :now)) AND e.isDeleted = false")
     BigDecimal sumAvailableEarningByTeacherId(@Param("teacherId") UUID teacherId, @Param("now") LocalDateTime now);
 

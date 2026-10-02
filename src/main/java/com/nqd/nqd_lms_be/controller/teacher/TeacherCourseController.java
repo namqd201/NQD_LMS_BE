@@ -33,9 +33,10 @@ public class TeacherCourseController {
     @Operation(summary = "Submit course for admin review to be published on marketplace")
     public ResponseEntity<TeacherCourseResponse> submitForReview(
             @PathVariable UUID id,
+            @RequestBody(required = false) com.nqd.nqd_lms_be.dto.teacher.TeacherCoursePriceRequest priceRequest,
             @AuthenticationPrincipal AppUserPrincipal principal
     ) {
-        return ResponseEntity.ok(courseWorkflowService.submitForReview(id, principal.getId()));
+        return ResponseEntity.ok(courseWorkflowService.submitForReview(id, principal.getId(), priceRequest));
     }
 
     @GetMapping

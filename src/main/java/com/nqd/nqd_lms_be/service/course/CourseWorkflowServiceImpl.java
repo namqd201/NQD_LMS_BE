@@ -2,6 +2,7 @@ package com.nqd.nqd_lms_be.service.course;
 
 import com.nqd.nqd_lms_be.common.exception.ForbiddenOperationException;
 import com.nqd.nqd_lms_be.common.exception.ResourceNotFoundException;
+import com.nqd.nqd_lms_be.dto.teacher.TeacherCoursePriceRequest;
 import com.nqd.nqd_lms_be.dto.teacher.TeacherCourseResponse;
 import com.nqd.nqd_lms_be.entity.Course;
 import com.nqd.nqd_lms_be.entity.Product;
@@ -34,6 +35,12 @@ public class CourseWorkflowServiceImpl implements CourseWorkflowService {
     @Override
     @Transactional
     public TeacherCourseResponse submitForReview(UUID courseId, UUID teacherId) {
+        return submitForReview(courseId, teacherId, null);
+    }
+
+    @Override
+    @Transactional
+    public TeacherCourseResponse submitForReview(UUID courseId, UUID teacherId, TeacherCoursePriceRequest priceRequest) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Course", courseId));
 
@@ -46,6 +53,18 @@ public class CourseWorkflowServiceImpl implements CourseWorkflowService {
         long chapterCount = chapterRepository.countByCourseId(courseId);
         if (chapterCount == 0) {
             throw new IllegalStateException("Khóa học phải có ít nhất một chương học trước khi gửi duyệt.");
+        }
+
+        if (priceRequest != null) {
+            if (priceRequest.getPricingType() != null) {
+                course.setPricingType(priceRequest.getPricingType());
+            }
+            if (priceRequest.getPrice() != null) {
+                course.setPrice(priceRequest.getPrice());
+            }
+            if (priceRequest.getSalePrice() != null) {
+                course.setSalePrice(priceRequest.getSalePrice());
+            }
         }
 
         course.setStatus(CourseStatus.PENDING_REVIEW);

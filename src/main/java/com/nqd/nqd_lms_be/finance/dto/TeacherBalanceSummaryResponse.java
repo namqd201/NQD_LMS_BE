@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class TeacherBalanceSummaryResponse {
+    private BigDecimal totalGrossSales;
+    private BigDecimal totalPlatformFee;
     private BigDecimal totalEarned;
     private BigDecimal availableBalance;
     private BigDecimal pendingBalance;

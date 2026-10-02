@@ -30,6 +30,7 @@ public class AdminFinanceServiceImpl implements AdminFinanceService {
     private final OrderRepository orderRepository;
     private final EntitlementRepository entitlementRepository;
     private final CourseEnrollmentRepository courseEnrollmentRepository;
+    private final com.nqd.nqd_lms_be.service.notification.KafkaNotificationProducer kafkaNotificationProducer;
 
     @Override
     @Transactional(readOnly = true)
@@ -137,6 +138,25 @@ public class AdminFinanceServiceImpl implements AdminFinanceService {
 
         TeacherWithdrawal saved = teacherWithdrawalRepository.save(withdrawal);
         log.info("Admin {} completed withdrawal {}: code={}, reference={}", adminEmail, withdrawalId, saved.getWithdrawalCode(), saved.getReferenceCode());
+
+        // Send notification to teacher
+        if (saved.getTeacher() != null && saved.getTeacher().getId() != null) {
+            try {
+                String refCode = saved.getReferenceCode() != null && !saved.getReferenceCode().isBlank()
+                        ? saved.getReferenceCode()
+                        : (request != null && request.getReferenceCode() != null ? request.getReferenceCode() : saved.getWithdrawalCode());
+                kafkaNotificationProducer.sendNotification(
+                        saved.getTeacher().getId(),
+                        "WITHDRAWAL_COMPLETED",
+                        "Rút tiền thành công",
+                        "Admin đã thanh toán thành công cho bạn với mã giao dịch: \"" + refCode + "\"",
+                        "/teacher/finance"
+                );
+            } catch (Exception ex) {
+                log.warn("Failed to send withdrawal completion notification to teacher: {}", ex.getMessage());
+            }
+        }
+
         return toWithdrawalResponse(saved);
     }
 

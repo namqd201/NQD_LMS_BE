@@ -71,6 +71,17 @@ public class TeacherFinanceController {
                 .body(ApiResponse.ok("Them tai khoan ngan hang thanh cong", response));
     }
 
+    @PutMapping("/bank-accounts/{id}")
+    @Operation(summary = "Update an existing bank account for payout")
+    public ResponseEntity<ApiResponse<TeacherBankAccountResponse>> updateBankAccount(
+            @AuthenticationPrincipal AppUserPrincipal principal,
+            @PathVariable UUID id,
+            @Valid @RequestBody TeacherBankAccountRequest request
+    ) {
+        TeacherBankAccountResponse response = teacherFinanceService.updateBankAccount(principal.getId(), id, request);
+        return ResponseEntity.ok(ApiResponse.ok("Cap nhat tai khoan ngan hang thanh cong", response));
+    }
+
     @DeleteMapping("/bank-accounts/{id}")
     @Operation(summary = "Delete a saved bank account")
     public ResponseEntity<ApiResponse<Void>> deleteBankAccount(

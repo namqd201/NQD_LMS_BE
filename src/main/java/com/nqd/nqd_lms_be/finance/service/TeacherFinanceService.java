@@ -23,6 +23,8 @@ public interface TeacherFinanceService {
 
     TeacherBankAccountResponse addBankAccount(UUID teacherId, TeacherBankAccountRequest request);
 
+    TeacherBankAccountResponse updateBankAccount(UUID teacherId, UUID bankAccountId, TeacherBankAccountRequest request);
+
     void deleteBankAccount(UUID teacherId, UUID bankAccountId);
 
     TeacherBankAccountResponse setDefaultBankAccount(UUID teacherId, UUID bankAccountId);

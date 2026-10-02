@@ -26,6 +26,10 @@ public class TeacherCourseDetailResponse {
     private CourseStatus status;
     private String rejectReason;
     private Boolean isPrivate;
+    private com.nqd.nqd_lms_be.entity.enums.CoursePricingType pricingType;
+    private java.math.BigDecimal price;
+    private java.math.BigDecimal salePrice;
+    private String currency;
     private UUID creatorId;
     private String creatorName;
     private List<TeacherChapterResponse> chapters;
