@@ -71,6 +71,18 @@ public class AiSchemaCleanupConfig {
                                 IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'ai_generated_questions') THEN
                                     ALTER TABLE ai_generated_questions ADD COLUMN IF NOT EXISTS image_url TEXT;
                                 END IF;
+
+                                -- Ensure free_grant_quota exists on courses
+                                IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'courses') THEN
+                                    ALTER TABLE courses ADD COLUMN IF NOT EXISTS free_grant_quota INTEGER DEFAULT 10;
+                                    UPDATE courses SET free_grant_quota = 10 WHERE free_grant_quota IS NULL;
+                                END IF;
+
+                                -- Ensure is_free_grant exists on course_enrollments
+                                IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'course_enrollments') THEN
+                                    ALTER TABLE course_enrollments ADD COLUMN IF NOT EXISTS is_free_grant BOOLEAN DEFAULT false;
+                                    UPDATE course_enrollments SET is_free_grant = false WHERE is_free_grant IS NULL;
+                                END IF;
                             END $$;
                         """);
 
