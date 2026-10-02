@@ -74,6 +74,7 @@ public class LessonSlideServiceImpl implements LessonSlideService {
         }
 
         List<SlideItemDto> items = parseSlideItems(slide.getSlideContentJson());
+        enrichGeometricSvgIfMissing(items);
 
         return LessonSlideResponse.builder()
                 .id(slide.getId())
@@ -391,6 +392,11 @@ public class LessonSlideServiceImpl implements LessonSlideService {
                 - Slide %d: Câu hỏi củng cố / Điểm lưu ý (layout: "KEYNOTE") - 2 đến 3 câu hỏi nhanh hoặc lưu ý tránh bẫy.
                 - Slide %d: Tổng kết & Lời dặn (layout: "SUMMARY") - Tóm lược cốt lõi và bài tập/hành động tiếp theo.
                 
+                QUY TẮC MINH HỌA HÌNH ẢNH & HÌNH HỌC (RẤT QUAN TRỌNG):
+                - Đối với bài học về HÌNH HỌC (Toán học, Vật lý...), các slide giảng về hình cụ thể (hình vuông, hình chữ nhật, hình tròn, tam giác, hình thoi, hình thang, hình bình hành, hình lập phương...), bạn CẦN cung cấp mã SVG trực quan hoặc mô tả rõ ràng để hệ thống vẽ đồ họa vector chính xác.
+                - Nếu bạn xuất mã SVG, hãy điền vào trường `svgDiagram` (dạng thẻ `<svg viewBox="0 0 280 210" ...>...</svg>` với màu sắc sinh động, có chú thích đỉnh và kích thước). Nếu không tự tạo được SVG chuẩn, bạn có thể để null hoặc "", hệ thống NQD-LMS sẽ tự động nhận diện và vẽ hình học vector chuẩn mực tương ứng.
+                - Đối với chủ đề khác cần ảnh minh họa, điền mô tả ảnh vào `imagePrompt`.
+                
                 ĐỊNH DẠNG ĐẦU RA BẮT BUỘC:
                 Chỉ trả về DUY NHẤT một mảng JSON thuần túy (không bọc text giải thích bên ngoài, không thêm markdown codeblock thừa):
                 [
@@ -402,7 +408,9 @@ public class LessonSlideServiceImpl implements LessonSlideService {
                     "bulletPoints": ["Gạch đầu dòng 1", "Gạch đầu dòng 2"],
                     "formula": "Công thức toán học hoặc mã lệnh (nếu có)",
                     "callout": "Ghi chú/Điểm nhấn (nếu có)",
-                    "speakerNotes": "Gợi ý lời giảng ngắn gọn cho người thuyết trình"
+                    "speakerNotes": "Gợi ý lời giảng ngắn gọn cho người thuyết trình",
+                    "svgDiagram": "<svg ...>...</svg> (mã SVG trực quan cho hình học nếu có, hoặc null)",
+                    "imagePrompt": "Mô tả ảnh minh họa nếu cần tạo ảnh, hoặc null"
                   }
                 ]
                 Ngôn ngữ: Tiếng Việt sư phạm chuẩn mực, chuyên nghiệp.
@@ -432,10 +440,11 @@ public class LessonSlideServiceImpl implements LessonSlideService {
 
                     List<SlideItemDto> parsed = objectMapper.readValue(cleanJson, new TypeReference<List<SlideItemDto>>() {});
                     if (parsed != null && !parsed.isEmpty()) {
-                        // Normalize slide numbers
+                        // Normalize slide numbers & enrich missing geometric SVGs
                         for (int i = 0; i < parsed.size(); i++) {
                             parsed.get(i).setSlideNumber(i + 1);
                         }
+                        enrichGeometricSvgIfMissing(parsed);
                         return parsed;
                     }
                 }
@@ -531,7 +540,22 @@ public class LessonSlideServiceImpl implements LessonSlideService {
                 .speakerNotes("Cảm ơn các bạn đã lắng nghe bài giảng. Hẹn gặp lại ở bài học tiếp theo!")
                 .build());
 
+        enrichGeometricSvgIfMissing(list);
         return list;
+    }
+
+    private void enrichGeometricSvgIfMissing(List<SlideItemDto> items) {
+        if (items == null) return;
+        for (SlideItemDto item : items) {
+            if ((item.getSvgDiagram() == null || item.getSvgDiagram().isBlank())
+                    && (item.getImageUrl() == null || item.getImageUrl().isBlank())) {
+                String bulletText = item.getBulletPoints() != null ? String.join(" ", item.getBulletPoints()) : "";
+                String svg = GeometricSvgHelper.detectAndGenerateSvg(item.getTitle(), item.getSubtitle(), bulletText);
+                if (svg != null) {
+                    item.setSvgDiagram(svg);
+                }
+            }
+        }
     }
 
     private List<SlideItemDto> parseSlideItems(String json) {
@@ -652,20 +676,90 @@ public class LessonSlideServiceImpl implements LessonSlideService {
                         subRun.setFontFamily("Arial");
                     }
 
+                    // Check if slide has diagram or image
+                    boolean hasVisual = (item.getSvgDiagram() != null && !item.getSvgDiagram().isBlank())
+                            || (item.getImageUrl() != null && !item.getImageUrl().isBlank());
+                    ShapeType detectedPoiShape = GeometricSvgHelper.detectPoiShapeType(
+                            item.getTitle(),
+                            item.getSubtitle(),
+                            item.getBulletPoints() != null ? String.join(" ", item.getBulletPoints()) : ""
+                    );
+                    if (detectedPoiShape != null) {
+                        hasVisual = true;
+                    }
+
+                    int contentWidth = hasVisual ? 510 : 840;
+
                     // Content Box
                     XSLFTextBox contentBox = slide.createTextBox();
-                    contentBox.setAnchor(new Rectangle(60, 120, 840, 270));
+                    contentBox.setAnchor(new Rectangle(60, 115, contentWidth, 275));
 
                     if (item.getBulletPoints() != null) {
                         for (String bp : item.getBulletPoints()) {
                             XSLFTextParagraph p = contentBox.addNewTextParagraph();
                             p.setBullet(true);
-                            p.setSpaceBefore(10.0);
+                            p.setSpaceBefore(8.0);
                             XSLFTextRun r = p.addNewTextRun();
                             r.setText(bp);
-                            r.setFontSize(16.0);
+                            r.setFontSize(15.0);
                             r.setFontColor(textDark);
                             r.setFontFamily("Arial");
+                        }
+                    }
+
+                    // If hasVisual, draw diagram card on the right
+                    if (hasVisual) {
+                        int cardX = 590;
+                        int cardY = 115;
+                        int cardW = 310;
+                        int cardH = 275;
+
+                        // Visual card container
+                        XSLFAutoShape cardBg = slide.createAutoShape();
+                        cardBg.setShapeType(ShapeType.ROUND_RECT);
+                        cardBg.setAnchor(new Rectangle(cardX, cardY, cardW, cardH));
+                        cardBg.setFillColor(new Color(241, 245, 249)); // Slate 100
+                        cardBg.setLineColor(new Color(203, 213, 225)); // Slate 300
+
+                        // Header badge inside card
+                        XSLFTextBox cardHeader = slide.createTextBox();
+                        cardHeader.setAnchor(new Rectangle(cardX + 10, cardY + 8, cardW - 20, 25));
+                        XSLFTextParagraph chp = cardHeader.addNewTextParagraph();
+                        XSLFTextRun chr = chp.addNewTextRun();
+                        chr.setText("📐 HÌNH MINH HỌA TRỰC QUAN");
+                        chr.setFontSize(10.0);
+                        chr.setBold(true);
+                        chr.setFontColor(new Color(79, 70, 229)); // Indigo 600
+
+                        // Render geometric shape in center of card if detected
+                        ShapeType shapeToDraw = detectedPoiShape != null ? detectedPoiShape : ShapeType.ROUND_RECT;
+                        XSLFAutoShape geoShape = slide.createAutoShape();
+                        geoShape.setShapeType(shapeToDraw);
+                        int shapeSize = 130;
+                        int shapeX = cardX + (cardW - shapeSize) / 2;
+                        int shapeY = cardY + 40;
+                        geoShape.setAnchor(new Rectangle(shapeX, shapeY, shapeSize, shapeSize));
+                        geoShape.setFillColor(new Color(224, 231, 255)); // Indigo 100
+                        geoShape.setLineColor(new Color(79, 70, 229));  // Indigo 600
+
+                        // Subtitle caption under shape
+                        XSLFTextBox cardFooter = slide.createTextBox();
+                        cardFooter.setAnchor(new Rectangle(cardX + 10, cardY + 185, cardW - 20, 80));
+                        XSLFTextParagraph cfp = cardFooter.addNewTextParagraph();
+                        XSLFTextRun cfr = cfp.addNewTextRun();
+                        cfr.setText(item.getTitle() != null ? item.getTitle() : "Hình học trực quan");
+                        cfr.setFontSize(12.0);
+                        cfr.setBold(true);
+                        cfr.setFontColor(textDark);
+
+                        if (item.getFormula() != null && !item.getFormula().isBlank()) {
+                            XSLFTextParagraph fmlaPara = cardFooter.addNewTextParagraph();
+                            fmlaPara.setSpaceBefore(4.0);
+                            XSLFTextRun fmlaRun = fmlaPara.addNewTextRun();
+                            fmlaRun.setText(item.getFormula());
+                            fmlaRun.setFontSize(11.0);
+                            fmlaRun.setFontColor(new Color(22, 101, 52));
+                            fmlaRun.setBold(true);
                         }
                     }
 

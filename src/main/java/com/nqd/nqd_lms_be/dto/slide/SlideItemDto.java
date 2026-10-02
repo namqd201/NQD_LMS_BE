@@ -24,4 +24,7 @@ public class SlideItemDto {
     private String formula;
     private String callout;
     private String speakerNotes;
+    private String imageUrl;
+    private String imagePrompt;
+    private String svgDiagram;
 }
