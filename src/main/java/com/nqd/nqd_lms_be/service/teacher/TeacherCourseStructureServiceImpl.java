@@ -6,8 +6,11 @@ import com.nqd.nqd_lms_be.dto.teacher.*;
 import com.nqd.nqd_lms_be.entity.Chapter;
 import com.nqd.nqd_lms_be.entity.Course;
 import com.nqd.nqd_lms_be.entity.Lesson;
+import com.nqd.nqd_lms_be.entity.Product;
 import com.nqd.nqd_lms_be.entity.enums.CourseStatus;
 import com.nqd.nqd_lms_be.entity.enums.LessonStatus;
+import com.nqd.nqd_lms_be.entity.enums.ProductStatus;
+import com.nqd.nqd_lms_be.entity.enums.ProductType;
 import com.nqd.nqd_lms_be.repository.*;
 import com.nqd.nqd_lms_be.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +34,7 @@ public class TeacherCourseStructureServiceImpl implements TeacherCourseStructure
     private final ChapterRepository chapterRepository;
     private final LessonRepository lessonRepository;
     private final CourseTeacherRepository courseTeacherRepository;
+    private final ProductRepository productRepository;
 
     @Override
     @Transactional
@@ -42,6 +46,27 @@ public class TeacherCourseStructureServiceImpl implements TeacherCourseStructure
         course.setStatus(CourseStatus.ACTIVE);
         course = courseRepository.save(course);
         log.info("Teacher {} published course {}", teacherId, courseId);
+        return mapToCourseResponse(course);
+    }
+
+    @Override
+    @Transactional
+    public TeacherCourseResponse unpublishCourse(UUID courseId, UUID teacherId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new ResourceNotFoundException("Course", courseId));
+
+        verifyCourseOwnership(course, teacherId);
+        course.setStatus(CourseStatus.DRAFT);
+        course = courseRepository.save(course);
+
+        // If product exists, sync status to DRAFT so it cannot be purchased during revision
+        productRepository.findByTargetEntityIdAndProductTypeAndIsDeletedFalse(courseId, ProductType.COURSE)
+                .ifPresent(p -> {
+                    p.setStatus(ProductStatus.DRAFT);
+                    productRepository.save(p);
+                });
+
+        log.info("Teacher {} unpublished course {}", teacherId, courseId);
         return mapToCourseResponse(course);
     }
 
@@ -81,6 +106,7 @@ public class TeacherCourseStructureServiceImpl implements TeacherCourseStructure
                 .gradeLevel(course.getGradeLevel())
                 .thumbnailUrl(course.getThumbnailUrl())
                 .status(course.getStatus())
+                .rejectReason(course.getRejectReason())
                 .isPrivate(Boolean.TRUE.equals(course.getIsPrivate()))
                 .creatorId(course.getCreator() != null ? course.getCreator().getId() : null)
                 .creatorName(course.getCreator() != null ? course.getCreator().getFullName() : null)

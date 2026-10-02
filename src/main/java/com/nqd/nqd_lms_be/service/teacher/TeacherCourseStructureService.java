@@ -6,6 +6,7 @@ import java.util.UUID;
 
 public interface TeacherCourseStructureService {
     TeacherCourseResponse publishCourse(UUID courseId, UUID teacherId);
+    TeacherCourseResponse unpublishCourse(UUID courseId, UUID teacherId);
     TeacherCourseResponse archiveCourse(UUID courseId, UUID teacherId);
 
     TeacherCourseDetailResponse getCourseStructure(UUID courseId, UUID teacherId);

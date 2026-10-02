@@ -78,6 +78,12 @@ public class MarketplaceAndCoursePublishWorkflowTest {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private LessonRepository lessonRepository;
+
+    @Autowired
+    private LessonProgressRepository lessonProgressRepository;
+
     private User teacherUser;
     private User studentUser;
     private User adminUser;
@@ -366,6 +372,14 @@ public class MarketplaceAndCoursePublishWorkflowTest {
         // Fulfill entitlement
         entitlementActivationService.activateOrderFulfillment(order);
 
+        // Complete preview lesson progress to satisfy sequential progression
+        lessonProgressRepository.save(LessonProgress.builder()
+                .student(studentUser)
+                .lesson(lessonRepository.findById(previewLesson.getId()).orElseThrow())
+                .status(LessonProgressStatus.COMPLETED)
+                .completedAt(java.time.LocalDateTime.now())
+                .build());
+
         // 4. Locked lesson should now be accessible!
         StudentLessonDetailResponse unlockedDetail = studentCourseStructureService.getPublishedLesson(
                 lockedLesson.getId(), studentUser.getId()
@@ -445,5 +459,53 @@ public class MarketplaceAndCoursePublishWorkflowTest {
 
         Course refreshedCourse = courseRepository.findById(course.getId()).orElseThrow();
         assertThat(refreshedCourse.getAverageRating()).isEqualTo(4.0);
+    }
+
+    @Test
+    @DisplayName("Active or published course can be submitted for Marketplace review and can be unpublished back to DRAFT")
+    void testActiveCourseCanSubmitForReviewAndUnpublishCourse() {
+        authenticateAs(teacherUser, "TEACHER");
+
+        TeacherCourseResponse course = teacherCourseService.createCourse(
+                TeacherCourseRequest.builder()
+                        .subjectId(mathSubject.getId())
+                        .name("Khóa Học Đại Số Tuyến Tính")
+                        .price(new BigDecimal("150000.00"))
+                        .build(),
+                teacherUser.getId()
+        );
+
+        teacherCourseStructureService.createChapter(
+                course.getId(),
+                TeacherChapterRequest.builder().title("Chương 1").build(),
+                teacherUser.getId()
+        );
+
+        // 1. Teacher publishes course internally (status = ACTIVE)
+        TeacherCourseResponse published = teacherCourseStructureService.publishCourse(course.getId(), teacherUser.getId());
+        assertThat(published.getStatus()).isEqualTo(CourseStatus.ACTIVE);
+
+        // 2. Teacher can still submit for Marketplace review without IllegalStateException
+        TeacherCourseResponse submitted = courseWorkflowService.submitForReview(course.getId(), teacherUser.getId());
+        assertThat(submitted.getStatus()).isEqualTo(CourseStatus.PENDING_REVIEW);
+
+        // 3. Admin approves course (status = PUBLISHED)
+        authenticateAs(adminUser, "ADMIN");
+        TeacherCourseResponse approved = courseWorkflowService.approveCourse(course.getId(), adminUser.getId());
+        assertThat(approved.getStatus()).isEqualTo(CourseStatus.PUBLISHED);
+
+        Product product = productRepository.findByTargetEntityIdAndProductTypeAndIsDeletedFalse(course.getId(), ProductType.COURSE).orElse(null);
+        assertThat(product).isNotNull();
+        assertThat(product.getStatus()).isEqualTo(ProductStatus.PUBLISHED);
+
+        // 4. Teacher accidentally published or wants to edit lessons: unpublish back to DRAFT
+        authenticateAs(teacherUser, "TEACHER");
+        TeacherCourseResponse unpublished = teacherCourseStructureService.unpublishCourse(course.getId(), teacherUser.getId());
+        assertThat(unpublished.getStatus()).isEqualTo(CourseStatus.DRAFT);
+
+        // Product is also reverted to DRAFT
+        Product updatedProduct = productRepository.findByTargetEntityIdAndProductTypeAndIsDeletedFalse(course.getId(), ProductType.COURSE).orElse(null);
+        assertThat(updatedProduct).isNotNull();
+        assertThat(updatedProduct.getStatus()).isEqualTo(ProductStatus.DRAFT);
     }
 }

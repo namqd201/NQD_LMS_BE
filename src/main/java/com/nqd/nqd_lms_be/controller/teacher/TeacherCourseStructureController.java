@@ -35,6 +35,15 @@ public class TeacherCourseStructureController {
         return ResponseEntity.ok(teacherCourseStructureService.publishCourse(courseId, principal.getId()));
     }
 
+    @PutMapping("/courses/{courseId}/unpublish")
+    @Operation(summary = "Unpublish course and revert to draft")
+    public ResponseEntity<TeacherCourseResponse> unpublishCourse(
+            @PathVariable UUID courseId,
+            @AuthenticationPrincipal AppUserPrincipal principal
+    ) {
+        return ResponseEntity.ok(teacherCourseStructureService.unpublishCourse(courseId, principal.getId()));
+    }
+
     @PutMapping("/courses/{courseId}/archive")
     @Operation(summary = "Archive course")
     public ResponseEntity<TeacherCourseResponse> archiveCourse(

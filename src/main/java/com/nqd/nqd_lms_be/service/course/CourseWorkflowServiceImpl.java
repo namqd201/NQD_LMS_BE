@@ -39,9 +39,6 @@ public class CourseWorkflowServiceImpl implements CourseWorkflowService {
 
         verifyCourseOwnership(course, teacherId);
 
-        if (course.getStatus() == CourseStatus.PUBLISHED || course.getStatus() == CourseStatus.ACTIVE) {
-            throw new IllegalStateException("Khóa học đã được xuất bản công khai.");
-        }
         if (course.getStatus() == CourseStatus.PENDING_REVIEW) {
             throw new IllegalStateException("Khóa học đang trong quá trình xét duyệt.");
         }

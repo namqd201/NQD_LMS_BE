@@ -24,6 +24,7 @@ public class TeacherCourseDetailResponse {
     private String gradeLevel;
     private String thumbnailUrl;
     private CourseStatus status;
+    private String rejectReason;
     private Boolean isPrivate;
     private UUID creatorId;
     private String creatorName;
