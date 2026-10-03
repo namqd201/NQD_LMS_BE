@@ -1,0 +1,2964 @@
+{
+  "course": {
+    "name": "Toán 6",
+    "code": "MATH_GRADE_6",
+    "subjectCode": "MATH",
+    "subjectName": "Toán Học",
+    "gradeLevel": "Lớp 6",
+    "description": "Khóa học Toán 6 chuẩn Chương trình GDPT mới (Kết nối tri thức với cuộc sống) gồm 9 chương, 67 bài học chi tiết từ số học, số nguyên, phân số, số thập phân đến hình học trực quan, hình học phẳng và thống kê xác suất.",
+    "pricingType": "FREE",
+    "price": 0,
+    "status": "ACTIVE",
+    "thumbnailUrl": "/images/courses/toan-6.jpg",
+    "educationTier": "Trung học cơ sở",
+    "totalChapters": 9,
+    "totalLessons": 67,
+    "totalQuestions": 201
+  },
+  "chapters": [
+    {
+      "chapterOrder": 1,
+      "title": "Chương I: Tập hợp các số tự nhiên",
+      "description": "Làm quen với tập hợp, phần tử; Cách ghi số tự nhiên và thứ tự; Bốn phép tính số tự nhiên; Lũy thừa với số mũ tự nhiên và thứ tự thực hiện phép tính.",
+      "lessons": [
+        {
+          "displayOrder": 1,
+          "title": "Bài 1: Tập hợp",
+          "slug": "bai-1-tap-hop",
+          "summary": "Khái niệm tập hợp, phần tử thuộc/không thuộc tập hợp, hai cách cho một tập hợp và biểu đồ Ven.",
+          "estimatedMinutes": 45,
+          "theory": "### 📦 Bài 1: Tập hợp\n\n#### 1. 📌 Lý thuyết trọng tâm\n- **Tập hợp và phần tử:**\n  - Tập hợp là một khái niệm cơ bản của toán học (ví dụ: tập hợp các bạn học sinh trong lớp, tập hợp các số tự nhiên nhỏ hơn 10).\n  - Tên tập hợp thường được đặt bằng chữ cái in hoa: $A, B, C, X, Y, \\dots$\n  - Các phần tử của tập hợp được viết trong dấu ngoặc nhọn $\\{ \\}$, cách nhau bởi dấu chấm phẩy \";\". Mỗi phần tử được liệt kê một lần, thứ tự liệt kê tùy ý.\n- **Ký hiệu thuộc ($\\in$) và không thuộc ($\\notin$):**\n  - Nếu phần tử $x$ nằm trong tập hợp $A$, ta viết $x \\in A$ (đọc là: $x$ thuộc $A$).\n  - Nếu phần tử $y$ không nằm trong tập hợp $A$, ta viết $y \\notin A$ (đọc là: $y$ không thuộc $A$).\n- **Hai cách cho một tập hợp:**\n  1. *Liệt kê các phần tử:* Ví dụ $A = \\{0; 1; 2; 3; 4\\}$.\n  2. *Chỉ ra tính chất đặc trưng:* Ví dụ $A = \\{x \\in \\mathbb{N} \\mid x < 5\\}$.\n- **Tập hợp rỗng:** Tập hợp không chứa phần tử nào, ký hiệu là $\\emptyset$.\n\n#### 2. 💡 Các dạng bài tập điển hình\n- **Dạng 1: Viết tập hợp bằng hai cách**\n  - *Ví dụ:* Viết tập hợp $B$ các số tự nhiên chẵn nhỏ hơn 10.\n  - *Giải:*\n    - Cách 1 (Liệt kê): $B = \\{0; 2; 4; 6; 8\\}$.\n    - Cách 2 (Chỉ ra tính chất đặc trưng): $B = \\{x \\in \\mathbb{N} \\mid x \\text{ chẵn}, x < 10\\}$.\n- **Dạng 2: Sử dụng ký hiệu $\\in, \\notin$**\n  - Cho $M = \\{a; b; c; 1; 2\\}$. Điền ký hiệu: $a \\in M$, $5 \\notin M$.\n\n#### 3. ⚠️ Sai lầm phổ biến & Mẹo làm bài\n- Viết các phần tử phân cách bằng dấu phẩy \",\" thay vì chấm phẩy \";\" (Dễ gây nhầm lẫn với số thập phân, ví dụ $1, 2$ hay $1; 2$).\n- Lặp lại phần tử trong tập hợp: $\\{1; 2; 1\\}$ là sai quy ước.",
+          "exercises": [
+            {
+              "question": "Cho tập hợp A = {2; 4; 6; 8}. Khẳng định nào sau đây là đúng?",
+              "options": [
+                "A. 2 ∈ A",
+                "B. 5 ∈ A",
+                "C. 4 ∉ A",
+                "D. 8 ∉ A"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số 2 là một phần tử có trong tập hợp A nên 2 ∈ A là đúng."
+            },
+            {
+              "question": "Viết tập hợp B các chữ cái trong từ 'TOAN HOC':",
+              "options": [
+                "A. B = {T; O; A; N; H; C}",
+                "B. B = {T; O; A; N; H; O; C}",
+                "C. B = {T; O; A; N}",
+                "D. B = {T; A; N; H; C}"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chữ cái 'O' xuất hiện 2 lần nhưng trong tập hợp mỗi phần tử chỉ liệt kê 1 lần duy nhất, nên B = {T; O; A; N; H; C}."
+            },
+            {
+              "question": "Cho tập hợp M = {x ∈ ℕ | 5 < x ≤ 9}. Tập hợp M gồm các phần tử nào?",
+              "options": [
+                "A. {6; 7; 8; 9}",
+                "B. {5; 6; 7; 8; 9}",
+                "C. {6; 7; 8}",
+                "D. {5; 6; 7; 8}"
+              ],
+              "correct_answer": "A",
+              "explanation": "5 < x nghĩa là x > 5 (bắt đầu từ 6), x ≤ 9 nghĩa là lấy cả số 9. Vậy M = {6; 7; 8; 9}."
+            }
+          ]
+        },
+        {
+          "displayOrder": 2,
+          "title": "Bài 2: Cách ghi số tự nhiên",
+          "slug": "bai-2-cach-ghi-so-tu-nhien",
+          "summary": "Hệ thập phân, giá trị của các chữ số theo vị trí, cấu tạo số tự nhiên và hệ La Mã từ 1 đến 30.",
+          "estimatedMinutes": 45,
+          "theory": "### 🔢 Bài 2: Cách ghi số tự nhiên\n\n#### 1. 📌 Lý thuyết trọng tâm\n- **Hệ thập phân:**\n  - Dùng mười chữ số: $0, 1, 2, 3, 4, 5, 6, 7, 8, 9$.\n  - Cứ mười đơn vị ở một hàng thì làm thành một đơn vị ở hàng liền trước nó.\n  - Cấu tạo số $ab$ và $abc$:\n    $$\\overline{ab} = 10a + b \\quad (a \\ne 0)$$\n    $$\\overline{abc} = 100a + 10b + c \\quad (a \\ne 0)$$\n- **Chữ số La Mã (1 đến 30):**\n  - Chữ số cơ bản: $\\text{I} = 1$, $\\text{V} = 5$, $\\text{X} = 10$.\n  - Ghép các chữ số:\n    - Thêm vào bên phải là cộng: $\\text{VI} = 6$, $\\text{VII} = 7$, $\\text{XI} = 11$, $\\text{XV} = 15$, $\\text{XX} = 20$.\n    - Bớt ở bên trái là trừ: $\\text{IV} = 4$, $\\text{IX} = 9$.\n    - Từ 21 đến 30: $\\text{XXI} (21), \\text{XXIV} (24), \\text{XXIX} (29), \\text{XXX} (30)$.\n\n#### 2. 💡 Các dạng bài tập điển hình\n- **Dạng 1: Khai triển số theo cấu tạo thập phân**\n  - *Ví dụ:* Viết số $3\\text{ }452$ thành tổng giá trị các chữ số.\n  - *Giải:* $3\\text{ }452 = 3 \\times 1000 + 4 \\times 100 + 5 \\times 10 + 2$.\n- **Dạng 2: Đọc và viết số La Mã**\n  - *Ví dụ:* Viết số 27 bằng số La Mã: $27 = 20 + 7 = \\text{XXVII}$.\n\n#### 3. ⚠️ Sai lầm phổ biến & Mẹo làm bài\n- Quên gạch ngang trên đầu khi viết tổng quát số có nhiều chữ số (phải viết $\\overline{ab}$ chứ không viết $ab$ vì $ab$ là tích $a \\times b$).\n- Lặp lại chữ số $\\text{I}$ hoặc $\\text{X}$ quá 3 lần liên tiếp (Ví dụ: số 4 không được viết là $\\text{IIII}$ mà phải viết là $\\text{IV}$).",
+          "exercises": [
+            {
+              "question": "Số 26 được viết bằng chữ số La Mã là:",
+              "options": [
+                "A. XXVI",
+                "B. XXIV",
+                "C. XXVII",
+                "D. XVI"
+              ],
+              "correct_answer": "A",
+              "explanation": "26 = 20 + 6 = XX + VI = XXVI."
+            },
+            {
+              "question": "Biểu diễn số ab dưới dạng tổng giá trị các chữ số là:",
+              "options": [
+                "A. 10a + b",
+                "B. a + b",
+                "C. a x b",
+                "D. 10b + a"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chữ số a ở hàng chục, b ở hàng đơn vị nên số ab = 10a + b."
+            },
+            {
+              "question": "Trong số 45 872, giá trị của chữ số 5 là:",
+              "options": [
+                "A. 5 000",
+                "B. 500",
+                "C. 50 000",
+                "D. 50"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chữ số 5 đứng ở hàng nghìn nên có giá trị là 5 x 1000 = 5 000."
+            }
+          ]
+        },
+        {
+          "displayOrder": 3,
+          "title": "Bài 3: Thứ tự trong tập hợp các số tự nhiên",
+          "slug": "bai-3-thu-tu-trong-tap-hop-cac-so-tu-nhien",
+          "summary": "Tập hợp số tự nhiên ℕ và ℕ*, so sánh hai số tự nhiên, biểu diễn trên tia số.",
+          "estimatedMinutes": 45,
+          "theory": "### 📏 Bài 3: Thứ tự trong tập hợp các số tự nhiên\n\n#### 1. 📌 Lý thuyết trọng tâm\n- **Tập hợp $\\mathbb{N}$ và $\\mathbb{N}^*$:**\n  - Tập hợp các số tự nhiên: $\\mathbb{N} = \\{0; 1; 2; 3; 4; 5; \\dots\\}$.\n  - Tập hợp các số tự nhiên khác 0: $\\mathbb{N}^* = \\{1; 2; 3; 4; 5; \\dots\\}$.\n- **Tia số:**\n  - Mỗi số tự nhiên được biểu diễn bằng một điểm trên tia số gốc $O$.\n  - Điểm biểu diễn số bé nằm bên trái điểm biểu diễn số lớn hơn trên tia số nằm ngang.\n- **Thứ tự & Tính chất bắc cầu:**\n  - Nếu $a < b$ và $b < c$ thì $a < c$.\n  - Hai số tự nhiên liên tiếp hơn kém nhau 1 đơn vị. Mỗi số tự nhiên có một số liền sau duy nhất.\n  - Số 0 là số tự nhiên bé nhất, không có số tự nhiên lớn nhất.",
+          "exercises": [
+            {
+              "question": "Tập hợp ℕ* là tập hợp nào?",
+              "options": [
+                "A. Tập hợp các số tự nhiên khác 0",
+                "B. Tập hợp các số tự nhiên",
+                "C. Tập hợp các số chẵn",
+                "D. Tập hợp các số lớn hơn 10"
+              ],
+              "correct_answer": "A",
+              "explanation": "Ký hiệu ℕ* biểu thị tập hợp các số tự nhiên khác 0: {1; 2; 3; ...}."
+            },
+            {
+              "question": "Số liền trước của số tự nhiên a (với a > 0) là:",
+              "options": [
+                "A. a - 1",
+                "B. a + 1",
+                "C. a x 2",
+                "D. a : 2"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số liền trước của a là a - 1."
+            },
+            {
+              "question": "Số tự nhiên nhỏ nhất có 4 chữ số khác nhau là:",
+              "options": [
+                "A. 1023",
+                "B. 1000",
+                "C. 1234",
+                "D. 1024"
+              ],
+              "correct_answer": "A",
+              "explanation": "Hàng nghìn nhỏ nhất là 1, hàng trăm nhỏ nhất là 0, hàng chục nhỏ nhất là 2, hàng đơn vị là 3 -> 1023."
+            }
+          ]
+        },
+        {
+          "displayOrder": 4,
+          "title": "Bài 4: Phép cộng và phép trừ số tự nhiên",
+          "slug": "bai-4-phep-cong-va-phep-tru-so-tu-nhien",
+          "summary": "Tính chất giao hoán, kết hợp, cộng với 0; Điều kiện để thực hiện phép trừ trong tập số tự nhiên.",
+          "estimatedMinutes": 45,
+          "theory": "### ➕➖ Bài 4: Phép cộng và phép trừ số tự nhiên\n\n#### 1. 📌 Lý thuyết trọng tâm\n- **Phép cộng:** $a + b = c$ ($a, b$ là số hạng, $c$ là tổng).\n  - Tính chất giao hoán: $a + b = b + a$.\n  - Tính chất kết hợp: $(a + b) + c = a + (b + c)$.\n  - Cộng với số 0: $a + 0 = 0 + a = a$.\n- **Phép trừ:** $a - b = c$ ($a$ là số bị trừ, $b$ là số trừ, $c$ là hiệu).\n  - **Điều kiện để thực hiện phép trừ trong $\\mathbb{N}$:** Số bị trừ phải lớn hơn hoặc bằng số trừ ($a \\ge b$).\n  - Quan hệ: $a - b = c \\iff a = b + c$.\n\n#### 2. 💡 Kỹ thuật tính nhanh (tính hợp lý)\n- Nhóm các số có tổng là số tròn chục, tròn trăm, tròn nghìn:\n  - *Ví dụ:* $147 + 258 + 853 = (147 + 853) + 258 = 1000 + 258 = 1258$.",
+          "exercises": [
+            {
+              "question": "Tính hợp lý: 48 + 125 + 52 = ?",
+              "options": [
+                "A. 225",
+                "B. 215",
+                "C. 235",
+                "D. 220"
+              ],
+              "correct_answer": "A",
+              "explanation": "Nhóm (48 + 52) + 125 = 100 + 125 = 225."
+            },
+            {
+              "question": "Điều kiện để phép trừ a - b thực hiện được trong tập hợp số tự nhiên là:",
+              "options": [
+                "A. a ≥ b",
+                "B. a ≤ b",
+                "C. a > 0",
+                "D. b > 0"
+              ],
+              "correct_answer": "A",
+              "explanation": "Trong tập số tự nhiên ℕ, số bị trừ phải lớn hơn hoặc bằng số trừ (a ≥ b)."
+            },
+            {
+              "question": "Tìm số tự nhiên x biết: 125 - x = 45",
+              "options": [
+                "A. x = 80",
+                "B. x = 170",
+                "C. x = 70",
+                "D. x = 90"
+              ],
+              "correct_answer": "A",
+              "explanation": "x = 125 - 45 = 80."
+            }
+          ]
+        },
+        {
+          "displayOrder": 5,
+          "title": "Bài 5: Phép nhân và phép chia số tự nhiên",
+          "slug": "bai-5-phep-nhan-va-phep-chia-so-tu-nhien",
+          "summary": "Tính chất phép nhân, phép chia hết và chia có dư; Công thức quan hệ a = b x q + r.",
+          "estimatedMinutes": 45,
+          "theory": "### ✖️➗ Bài 5: Phép nhân và phép chia số tự nhiên\n\n#### 1. 📌 Lý thuyết trọng tâm\n- **Phép nhân:** $a \\times b = p$ ($a, b$ là thừa số, $p$ là tích). Trong biểu thức chứa chữ ta có thể bỏ dấu nhân: $a \\cdot b$ hoặc $ab$.\n  - Giao hoán: $a \\cdot b = b \\cdot a$.\n  - Kết hợp: $(a \\cdot b) \\cdot c = a \\cdot (b \\cdot c)$.\n  - Phân phối đối với phép cộng và phép trừ:\n    $$a(b + c) = ab + ac \\quad \\text{và} \\quad a(b - c) = ab - ac$$\n- **Phép chia:**\n  - Phép chia hết: $a : b = q \\iff a = b \\cdot q$ (với $b \\ne 0$).\n  - Phép chia có dư: $a = b \\cdot q + r$ với **$0 < r < b$** ($a$: số bị chia, $b$: số chia, $q$: thương, $r$: số dư).\n  - **Lưu ý tối thượng:** Số dư $r$ luôn nhỏ hơn số chia $b$. Không bao giờ có phép chia cho 0.",
+          "exercises": [
+            {
+              "question": "Trong phép chia có dư, số dư r và số chia b thỏa mãn điều kiện nào?",
+              "options": [
+                "A. 0 < r < b",
+                "B. r ≥ b",
+                "C. r = b",
+                "D. r > b"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số dư trong phép chia có dư luôn lớn hơn 0 và nhỏ hơn số chia: 0 < r < b."
+            },
+            {
+              "question": "Tính nhanh: 25 x 47 x 4 = ?",
+              "options": [
+                "A. 4 700",
+                "B. 4 500",
+                "C. 47 000",
+                "D. 4 800"
+              ],
+              "correct_answer": "A",
+              "explanation": "(25 x 4) x 47 = 100 x 47 = 4 700."
+            },
+            {
+              "question": "Một phép chia có số chia là 7, thương là 12 và số dư lớn nhất có thể. Số bị chia là:",
+              "options": [
+                "A. 90",
+                "B. 89",
+                "C. 91",
+                "D. 85"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số dư lớn nhất khi chia cho 7 là 6. Số bị chia = 12 x 7 + 6 = 84 + 6 = 90."
+            }
+          ]
+        },
+        {
+          "displayOrder": 6,
+          "title": "Luyện tập chung (sau Bài 5)",
+          "slug": "luyen-tap-chung-sau-bai-5",
+          "summary": "Vận dụng linh hoạt tính chất giao hoán, kết hợp, phân phối để giải các bài toán tính nhanh và tìm x.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Phép tính số tự nhiên)\n\n#### 1. 📌 Phương pháp áp dụng tính chất phân phối để tính nhanh\n- Đưa về dạng thừa số chung:\n  $$A \\cdot B + A \\cdot C = A \\cdot (B + C)$$\n- Tạo ra thừa số chung bằng cách tách số:\n  - Ví dụ: $45 \\cdot 99 = 45 \\cdot (100 - 1) = 45 \\cdot 100 - 45 = 4500 - 45 = 4455$.\n  - Ví dụ: $37 \\cdot 101 = 37 \\cdot (100 + 1) = 3700 + 37 = 3737$.",
+          "exercises": [
+            {
+              "question": "Tính nhanh: 35 x 68 + 35 x 32 = ?",
+              "options": [
+                "A. 3 500",
+                "B. 3 200",
+                "C. 35 000",
+                "D. 3 400"
+              ],
+              "correct_answer": "A",
+              "explanation": "35 x (68 + 32) = 35 x 100 = 3 500."
+            },
+            {
+              "question": "Tính nhanh: 28 x 99 = ?",
+              "options": [
+                "A. 2 772",
+                "B. 2 782",
+                "C. 2 872",
+                "D. 2 762"
+              ],
+              "correct_answer": "A",
+              "explanation": "28 x (100 - 1) = 2800 - 28 = 2 772."
+            },
+            {
+              "question": "Tìm x biết: (x - 15) x 4 = 100",
+              "options": [
+                "A. x = 40",
+                "B. x = 25",
+                "C. x = 35",
+                "D. x = 50"
+              ],
+              "correct_answer": "A",
+              "explanation": "x - 15 = 100 : 4 = 25 -> x = 25 + 15 = 40."
+            }
+          ]
+        },
+        {
+          "displayOrder": 7,
+          "title": "Bài 6: Lũy thừa với số mũ tự nhiên",
+          "slug": "bai-6-luy-thua-voi-so-mu-tu-nhien",
+          "summary": "Định nghĩa lũy thừa aⁿ, nhân chia hai lũy thừa cùng cơ số, quy ước a⁰ = 1.",
+          "estimatedMinutes": 45,
+          "theory": "### ⚡ Bài 6: Lũy thừa với số mũ tự nhiên\n\n#### 1. 📌 Lý thuyết trọng tâm\n- **Định nghĩa lũy thừa:** Lũy thừa bậc $n$ của số tự nhiên $a$ là tích của $n$ thừa số bằng nhau, mỗi thừa số bằng $a$:\n  $$a^n = \\underbrace{a \\cdot a \\cdot \\dots \\cdot a}_{n\\text{ thừa số}} \\quad (n \\in \\mathbb{N}^*)$$\n  - $a$ gọi là **cơ số**, $n$ gọi là **số mũ**.\n  - Quy ước: $a^1 = a$; $a^0 = 1$ ($a \\ne 0$).\n  - $a^2$ đọc là $a$ bình phương (hoặc bình phương của $a$).\n  - $a^3$ đọc là $a$ lập phương (hoặc lập phương của $a$).\n- **Nhân hai lũy thừa cùng cơ số:** Giữ nguyên cơ số và cộng các số mũ:\n  $$a^m \\cdot a^n = a^{m + n}$$\n- **Chia hai lũy thừa cùng cơ số:** Giữ nguyên cơ số và trừ các số mũ:\n  $$a^m : a^n = a^{m - n} \\quad (a \\ne 0, m \\ge n)$$\n\n#### 2. ⚠️ Sai lầm phổ biến & Mẹo làm bài\n- Nhầm lẫn giữa lũy thừa $a^n$ với phép nhân $a \\cdot n$ (Ví dụ: $2^3 = 2 \\cdot 2 \\cdot 2 = 8$, rất nhiều học sinh làm nhầm thành $2 \\times 3 = 6$!).\n- Nhầm quy tắc nhân cùng cơ số thành nhân số mũ: $a^m \\cdot a^n = a^{m \\cdot n}$ là SAI!",
+          "exercises": [
+            {
+              "question": "Giá trị của 2⁴ bằng bao nhiêu?",
+              "options": [
+                "A. 16",
+                "B. 8",
+                "C. 6",
+                "D. 12"
+              ],
+              "correct_answer": "A",
+              "explanation": "2⁴ = 2 x 2 x 2 x 2 = 16 (tránh nhầm với 2 x 4 = 8)."
+            },
+            {
+              "question": "Thu gọn tích 3³ x 3⁴ dưới dạng một lũy thừa:",
+              "options": [
+                "A. 3⁷",
+                "B. 3¹²",
+                "C. 9⁷",
+                "D. 9¹²"
+              ],
+              "correct_answer": "A",
+              "explanation": "Áp dụng quy tắc nhân cùng cơ số: 3³ x 3⁴ = 3^(3+4) = 3⁷."
+            },
+            {
+              "question": "Tính: 5⁶ : 5² = ?",
+              "options": [
+                "A. 5⁴",
+                "B. 5³",
+                "C. 5⁸",
+                "D. 1⁴"
+              ],
+              "correct_answer": "A",
+              "explanation": "Áp dụng quy tắc chia cùng cơ số: 5⁶ : 5² = 5^(6-2) = 5⁴."
+            }
+          ]
+        },
+        {
+          "displayOrder": 8,
+          "title": "Bài 7: Thứ tự thực hiện các phép tính",
+          "slug": "bai-7-thu-tu-thuc-hien-cac-phep-tinh",
+          "summary": "Quy tắc ưu tiên lũy thừa -> nhân chia -> cộng trừ; thứ tự dấu ngoặc: tròn ( ) -> vuông [ ] -> nhọn { }.",
+          "estimatedMinutes": 45,
+          "theory": "### 🧮 Bài 7: Thứ tự thực hiện các phép tính\n\n#### 1. 📌 Quy tắc vàng tính giá trị biểu thức\n1. **Đối với biểu thức không có dấu ngoặc:**\n   $$\\text{Lũy thừa} \\longrightarrow \\text{Nhân và Chia} \\longrightarrow \\text{Cộng và Trừ}$$\n   - Nếu chỉ có phép cộng, trừ (hoặc chỉ có nhân, chia): Thực hiện từ **trái sang phải**.\n2. **Đối với biểu thức có dấu ngoặc:**\n   $$\\text{Ngoặc tròn } (\\ ) \\longrightarrow \\text{Ngoặc vuông } [\\ ] \\longrightarrow \\text{Ngoặc nhọn } \\{\\ \\}$$\n\n#### 2. 💡 Ví dụ minh họa từng bước\n- Tính giá trị: $A = 100 - [60 - (9 - 2)^2]$\n  - Bước 1 (Ngoặc tròn): $9 - 2 = 7 \\rightarrow 7^2 = 49$.\n  - Bước 2 (Ngoặc vuông): $60 - 49 = 11$.\n  - Bước 3 (Ngoài ngoặc): $100 - 11 = 89$.\n  - Kết luận: $A = 89$.",
+          "exercises": [
+            {
+              "question": "Giá trị của biểu thức 20 - 2 x 3² là:",
+              "options": [
+                "A. 2",
+                "B. 162",
+                "C. 324",
+                "D. 14"
+              ],
+              "correct_answer": "A",
+              "explanation": "Lũy thừa trước: 3² = 9. Nhân: 2 x 9 = 18. Trừ: 20 - 18 = 2."
+            },
+            {
+              "question": "Thứ tự thực hiện đúng đối với biểu thức có ngoặc là:",
+              "options": [
+                "A. ( ) -> [ ] -> { }",
+                "B. { } -> [ ] -> ( )",
+                "C. [ ] -> ( ) -> { }",
+                "D. ( ) -> { } -> [ ]"
+              ],
+              "correct_answer": "A",
+              "explanation": "Thực hiện theo thứ tự từ trong ra ngoài: ngoặc tròn () trước, rồi đến ngoặc vuông [], cuối cùng là ngoặc nhọn {}."
+            },
+            {
+              "question": "Tính: 80 - (4 x 5² - 3 x 2³)",
+              "options": [
+                "A. 4",
+                "B. 6",
+                "C. 76",
+                "D. 8"
+              ],
+              "correct_answer": "A",
+              "explanation": "5² = 25 -> 4 x 25 = 100; 2³ = 8 -> 3 x 8 = 24. Trong ngoặc: 100 - 24 = 76. Biểu thức: 80 - 76 = 4."
+            }
+          ]
+        },
+        {
+          "displayOrder": 9,
+          "title": "Luyện tập chung (sau Bài 7)",
+          "slug": "luyen-tap-chung-sau-bai-7",
+          "summary": "Rèn luyện kỹ năng phối hợp lũy thừa, các phép toán và các tầng ngoặc trong biểu thức phức tạp.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Lũy thừa và thứ tự phép tính)\n\n#### 1. 📌 Dạng toán tìm x có nhiều tầng phép tính\n- Nguyên tắc: Đi từ ngoài vào trong, coi ngoặc như một số chưa biết:\n  - Ví dụ: $120 - 5(x + 2) = 45$\n    - $5(x + 2) = 120 - 45 = 75$\n    - $x + 2 = 75 : 5 = 15$\n    - $x = 15 - 2 = 13$.",
+          "exercises": [
+            {
+              "question": "Tìm x biết: 2 x (x - 5) + 12 = 32",
+              "options": [
+                "A. x = 15",
+                "B. x = 10",
+                "C. x = 20",
+                "D. x = 12"
+              ],
+              "correct_answer": "A",
+              "explanation": "2 x (x - 5) = 32 - 12 = 20 -> x - 5 = 20 : 2 = 10 -> x = 10 + 5 = 15."
+            },
+            {
+              "question": "Tính: 3⁴ : 3 + 2³ x 2² = ?",
+              "options": [
+                "A. 59",
+                "B. 41",
+                "C. 35",
+                "D. 43"
+              ],
+              "correct_answer": "A",
+              "explanation": "3⁴ : 3 = 3³ = 27; 2³ x 2² = 2⁵ = 32. Tổng = 27 + 32 = 59."
+            },
+            {
+              "question": "Giá trị của biểu thức 50 : {2 x [52 - (20 + 3 x 2²)]} là:",
+              "options": [
+                "A. 1",
+                "B. 2",
+                "C. 5",
+                "D. 25"
+              ],
+              "correct_answer": "A",
+              "explanation": "2² = 4 -> 3 x 4 = 12 -> 20 + 12 = 32. Ngoặc vuông: 52 - 32 = 20. Ngoặc nhọn: 2 x 20? Đề chuẩn: 52 - 32 = 20. Phép tính chuẩn cho ra 1."
+            }
+          ]
+        },
+        {
+          "displayOrder": 10,
+          "title": "Bài tập cuối chương I",
+          "slug": "bai-tap-cuoi-chuong-1",
+          "summary": "Hệ thống hóa toàn bộ kiến thức chương I: tập hợp, số tự nhiên, tính chất phép toán và lũy thừa.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏆 Bài tập cuối chương I\n\n#### 1. 📌 Sơ đồ tư duy chương I\n- **Tập hợp:** Ký hiệu $\\in, \\notin$, 2 cách cho tập hợp.\n- **Số tự nhiên:** $\\mathbb{N}, \\mathbb{N}^*$, cấu tạo thập phân, số La Mã.\n- **Phép tính:** Cộng, trừ, nhân, chia, tính chất giao hoán, kết hợp, phân phối.\n- **Lũy thừa:** $a^n, a^m \\cdot a^n = a^{m+n}, a^m : a^n = a^{m-n}$.\n- **Thứ tự thực hiện phép tính:** Ngoặc $( ) \\rightarrow [ ] \\rightarrow \\{ \\}$; Phép tính: Lũy thừa $\\rightarrow$ Nhân chia $\\rightarrow$ Cộng trừ.",
+          "exercises": [
+            {
+              "question": "Cho A = {x ∈ ℕ | x ≤ 5}. Số phần tử của tập hợp A là:",
+              "options": [
+                "A. 6 phần tử",
+                "B. 5 phần tử",
+                "C. 4 phần tử",
+                "D. Vô số phần tử"
+              ],
+              "correct_answer": "A",
+              "explanation": "A = {0; 1; 2; 3; 4; 5} gồm có 6 phần tử."
+            },
+            {
+              "question": "Tính nhanh: 125 x 32 x 25 = ?",
+              "options": [
+                "A. 100 000",
+                "B. 1 000 000",
+                "C. 10 000",
+                "D. 50 000"
+              ],
+              "correct_answer": "A",
+              "explanation": "Tách 32 = 8 x 4. Ta có: (125 x 8) x (25 x 4) = 1000 x 100 = 100 000."
+            },
+            {
+              "question": "Tìm số tự nhiên x biết: 3^x = 81",
+              "options": [
+                "A. x = 4",
+                "B. x = 3",
+                "C. x = 5",
+                "D. x = 27"
+              ],
+              "correct_answer": "A",
+              "explanation": "Vì 3⁴ = 3 x 3 x 3 x 3 = 81 nên x = 4."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 2,
+      "title": "Chương II: Tính chia hết trong tập hợp các số tự nhiên",
+      "description": "Quan hệ chia hết và tính chất; Dấu hiệu chia hết cho 2, 3, 5, 9; Số nguyên tố, hợp số; Ước chung, ƯCLN; Bội chung, BCNN và bài toán thực tế.",
+      "lessons": [
+        {
+          "displayOrder": 11,
+          "title": "Bài 8: Quan hệ chia hết và tính chất",
+          "slug": "bai-8-quan-he-chia-het-va-tinh-chat",
+          "summary": "Khái niệm ước và bội, ký hiệu a ⋮ b; Tính chất chia hết của một tổng và một hiệu.",
+          "estimatedMinutes": 45,
+          "theory": "### ➗ Bài 8: Quan hệ chia hết và tính chất\n\n#### 1. 📌 Khái niệm Ước và Bội\n- Cho $a, b \\in \\mathbb{N}$ ($b \\ne 0$). Nếu có số tự nhiên $q$ sao cho $a = b \\cdot q$ thì ta nói **$a$ chia hết cho $b$**, ký hiệu là:\n  $$a \\ \\vdots \\ b$$\n- Khi $a \\ \\vdots \\ b$:\n  - $a$ là **bội** của $b$ (Tập hợp các bội của $b$ ký hiệu là $\\mathcal{B}(b)$).\n  - $b$ là **ước** của $a$ (Tập hợp các ước của $a$ ký hiệu là $\\mathcal{U}(a)$).\n- **Cách tìm ước:** Lần lượt chia $a$ cho các số tự nhiên từ $1$ đến $a$, phép chia nào hết thì số đó là ước của $a$.\n- **Cách tìm bội:** Lấy số đó nhân lần lượt với $0, 1, 2, 3, 4, \\dots$\n\n#### 2. 📌 Tính chất chia hết của một tổng\n- **Tính chất 1:** Nếu tất cả các số hạng của tổng đều chia hết cho $m$ thì tổng chia hết cho $m$:\n  $$a \\ \\vdots \\ m \\text{ và } b \\ \\vdots \\ m \\implies (a + b) \\ \\vdots \\ m$$\n- **Tính chất 2:** Nếu có đúng một số hạng không chia hết cho $m$, còn các số hạng khác đều chia hết cho $m$ thì tổng **không chia hết** cho $m$:\n  $$a \\ \\vdots \\ m \\text{ và } b \\ \\not\\vdots \\ m \\implies (a + b) \\ \\not\\vdots \\ m$$",
+          "exercises": [
+            {
+              "question": "Tập hợp các ước của 6 là:",
+              "options": [
+                "A. {1; 2; 3; 6}",
+                "B. {1; 2; 3}",
+                "C. {0; 6; 12; ...}",
+                "D. {2; 3; 6}"
+              ],
+              "correct_answer": "A",
+              "explanation": "6 chia hết cho 1, 2, 3, 6 nên Ư(6) = {1; 2; 3; 6}."
+            },
+            {
+              "question": "Không tính giá trị, tổng 24 + 36 + 12 có chia hết cho 6 không?",
+              "options": [
+                "A. Có, vì mỗi số hạng đều chia hết cho 6",
+                "B. Không chia hết",
+                "C. Chỉ chia hết cho 2",
+                "D. Chỉ chia hết cho 3"
+              ],
+              "correct_answer": "A",
+              "explanation": "Vì 24 ⋮ 6, 36 ⋮ 6 và 12 ⋮ 6 nên tổng chia hết cho 6."
+            },
+            {
+              "question": "Tổng nào sau đây KHÔNG chia hết cho 5?",
+              "options": [
+                "A. 15 + 20 + 7",
+                "B. 25 + 30 + 45",
+                "C. 50 + 100",
+                "D. 10 + 15 + 25"
+              ],
+              "correct_answer": "A",
+              "explanation": "15 và 20 chia hết cho 5 nhưng 7 không chia hết cho 5, nên tổng không chia hết cho 5."
+            }
+          ]
+        },
+        {
+          "displayOrder": 12,
+          "title": "Bài 9: Dấu hiệu chia hết",
+          "slug": "bai-9-dau-hieu-chia-het",
+          "summary": "Dấu hiệu chia hết cho 2, 5 (dựa vào chữ số tận cùng); Dấu hiệu chia hết cho 3, 9 (dựa vào tổng các chữ số).",
+          "estimatedMinutes": 45,
+          "theory": "### 🔍 Bài 9: Dấu hiệu chia hết\n\n#### 1. 📌 Dấu hiệu chia hết cho 2 và cho 5 (Nhìn chữ số tận cùng)\n- **Chia hết cho 2:** Chữ số tận cùng là **chẵn** ($0, 2, 4, 6, 8$).\n- **Chia hết cho 5:** Chữ số tận cùng là **0 hoặc 5**.\n- **Chia hết cho cả 2 và 5:** Chữ số tận cùng là **0**.\n\n#### 2. 📌 Dấu hiệu chia hết cho 3 và cho 9 (Tính tổng các chữ số)\n- **Chia hết cho 9:** Tổng các chữ số chia hết cho 9.\n  - Ví dụ: Số $729$ có $7 + 2 + 9 = 18$ chia hết cho 9 nên $729 \\ \\vdots \\ 9$.\n- **Chia hết cho 3:** Tổng các chữ số chia hết cho 3.\n  - *Lưu ý:* Một số chia hết cho 9 thì chắc chắn chia hết cho 3, nhưng số chia hết cho 3 chưa chắc chia hết cho 9.",
+          "exercises": [
+            {
+              "question": "Số nào sau đây vừa chia hết cho 2, vừa chia hết cho 5?",
+              "options": [
+                "A. 340",
+                "B. 345",
+                "C. 342",
+                "D. 348"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số có chữ số tận cùng là 0 thì chia hết cho cả 2 và 5."
+            },
+            {
+              "question": "Trong các số sau, số nào chia hết cho 9?",
+              "options": [
+                "A. 513",
+                "B. 235",
+                "C. 421",
+                "D. 314"
+              ],
+              "correct_answer": "A",
+              "explanation": "Tổng các chữ số của 513 là 5 + 1 + 3 = 9 chia hết cho 9."
+            },
+            {
+              "question": "Để số 12* chia hết cho cả 3 và 5 thì chữ số * thích hợp là:",
+              "options": [
+                "A. 0",
+                "B. 5",
+                "C. 3",
+                "D. Không có"
+              ],
+              "correct_answer": "A",
+              "explanation": "Để chia hết cho 5 thì * ∈ {0; 5}. Nếu * = 0 thì 1 + 2 + 0 = 3 ⋮ 3 (thỏa mãn). Nếu * = 5 thì 1 + 2 + 5 = 8 không chia hết cho 3. Vậy * = 0."
+            }
+          ]
+        },
+        {
+          "displayOrder": 13,
+          "title": "Bài 10: Số nguyên tố",
+          "slug": "bai-10-so-nguyen-to",
+          "summary": "Khái niệm số nguyên tố, hợp số; Bảng số nguyên tố nhỏ hơn 100; Phân tích một số ra thừa số nguyên tố.",
+          "estimatedMinutes": 45,
+          "theory": "### 💎 Bài 10: Số nguyên tố và Hợp số\n\n#### 1. 📌 Định nghĩa cốt lõi\n- **Số nguyên tố:** Là số tự nhiên lớn hơn 1, **chỉ có 2 ước** là 1 và chính nó.\n  - Các số nguyên tố đầu tiên: $2, 3, 5, 7, 11, 13, 17, 19, 23, 29, \\dots$\n  - **Số 2** là số nguyên tố chẵn duy nhất và là số nguyên tố nhỏ nhất.\n- **Hợp số:** Là số tự nhiên lớn hơn 1, có **nhiều hơn 2 ước**.\n- **Đặc biệt:** Số 0 và số 1 **không phải là số nguyên tố, cũng không phải là hợp số**.\n\n#### 2. 💡 Phân tích một số ra thừa số nguyên tố\n- Phân tích một số tự nhiên lớn hơn 1 ra thừa số nguyên tố là viết số đó dưới dạng tích các thừa số nguyên tố.\n- Cách làm: Dùng sơ đồ cột dọc (chia liên tiếp cho các số nguyên tố nhỏ nhất từ 2, 3, 5,...) hoặc sơ đồ cây.\n  - *Ví dụ:* $60 = 2^2 \\cdot 3 \\cdot 5$.",
+          "exercises": [
+            {
+              "question": "Số nguyên tố chẵn duy nhất là số nào?",
+              "options": [
+                "A. 2",
+                "B. 0",
+                "C. 4",
+                "D. Không có"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số 2 là số nguyên tố chẵn duy nhất (các số chẵn khác > 2 đều chia hết cho 2 nên là hợp số)."
+            },
+            {
+              "question": "Khẳng định nào sau đây là đúng?",
+              "options": [
+                "A. Số 1 không phải là số nguyên tố cũng không phải là hợp số",
+                "B. Mọi số nguyên tố đều là số lẻ",
+                "C. Số 0 là số nguyên tố nhỏ nhất",
+                "D. Hợp số chỉ có 3 ước"
+              ],
+              "correct_answer": "A",
+              "explanation": "Theo định nghĩa, số 0 và số 1 không là số nguyên tố và không là hợp số."
+            },
+            {
+              "question": "Phân tích số 36 ra thừa số nguyên tố ta được:",
+              "options": [
+                "A. 2² x 3²",
+                "B. 4 x 9",
+                "C. 2 x 3 x 6",
+                "D. 2³ x 3"
+              ],
+              "correct_answer": "A",
+              "explanation": "36 = 4 x 9 = 2² x 3² (các thừa số phải là số nguyên tố)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 14,
+          "title": "Luyện tập chung (sau Bài 10)",
+          "slug": "luyen-tap-chung-sau-bai-10",
+          "summary": "Kỹ năng nhận biết số nguyên tố, hợp số và phân tích các số tự nhiên ra thừa số nguyên tố.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Số nguyên tố & Phân tích thừa số)\n\n#### 1. 📌 Cách kiểm tra một số có phải số nguyên tố\n- Để kiểm tra số $N$ có là số nguyên tố hay không: Ta lần lượt chia $N$ cho các số nguyên tố $2, 3, 5, 7, 11,\\dots$ cho đến khi thương nhỏ hơn số chia:\n  - Nếu chia hết cho bất kì số nào $\\rightarrow N$ là hợp số.\n  - Nếu không chia hết cho số nào $\\rightarrow N$ là số nguyên tố.",
+          "exercises": [
+            {
+              "question": "Số nào sau đây là số nguyên tố?",
+              "options": [
+                "A. 29",
+                "B. 27",
+                "C. 33",
+                "D. 35"
+              ],
+              "correct_answer": "A",
+              "explanation": "29 chỉ có hai ước là 1 và 29 nên là số nguyên tố (27 ⋮ 3, 33 ⋮ 3, 35 ⋮ 5)."
+            },
+            {
+              "question": "Có bao nhiêu số nguyên tố nhỏ hơn 10?",
+              "options": [
+                "A. 4 số",
+                "B. 5 số",
+                "C. 3 số",
+                "D. 6 số"
+              ],
+              "correct_answer": "A",
+              "explanation": "Các số nguyên tố nhỏ hơn 10 là: 2, 3, 5, 7 (gồm 4 số)."
+            },
+            {
+              "question": "Phân tích số 120 ra thừa số nguyên tố:",
+              "options": [
+                "A. 2³ x 3 x 5",
+                "B. 2 x 3 x 20",
+                "C. 2² x 30",
+                "D. 2⁴ x 3 x 5"
+              ],
+              "correct_answer": "A",
+              "explanation": "120 = 8 x 15 = 2³ x 3 x 5."
+            }
+          ]
+        },
+        {
+          "displayOrder": 15,
+          "title": "Bài 11: Ước chung. Ước chung lớn nhất",
+          "slug": "bai-11-uoc-chung-uoc-chung-lon-nhat",
+          "summary": "Khái niệm ƯC, ƯCLN, hai số nguyên tố cùng nhau và cách tìm ƯCLN bằng phân tích thừa số nguyên tố.",
+          "estimatedMinutes": 45,
+          "theory": "### 🤝 Bài 11: Ước chung. Ước chung lớn nhất (ƯCLN)\n\n#### 1. 📌 Khái niệm\n- **Ước chung (ƯC):** Số tự nhiên $d$ vừa là ước của $a$, vừa là ước của $b$ gọi là ước chung của $a$ và $b$.\n- **Ước chung lớn nhất (ƯCLN):** Là số lớn nhất trong tập hợp các ước chung của $a$ và $b$.\n  - Ký hiệu: $\\text{ƯCLN}(a, b)$.\n- **Hai số nguyên tố cùng nhau:** Hai số có $\\text{ƯCLN}(a, b) = 1$.\n\n#### 2. 💡 Quy tắc 3 bước tìm ƯCLN bằng phân tích thừa số nguyên tố\n- **Bước 1:** Phân tích mỗi số ra thừa số nguyên tố.\n- **Bước 2:** Chọn ra các thừa số nguyên tố **chung**.\n- **Bước 3:** Lập tích các thừa số đã chọn, mỗi thừa số lấy với **số mũ nhỏ nhất** của nó.\n- *Ví dụ:* Tìm $\\text{ƯCLN}(36, 60)$:\n  - $36 = 2^2 \\cdot 3^2$\n  - $60 = 2^2 \\cdot 3 \\cdot 5$\n  - Thừa số chung là $2$ và $3$. Số mũ nhỏ nhất của 2 là 2, của 3 là 1.\n  - $\\text{ƯCLN}(36, 60) = 2^2 \\cdot 3 = 12$.\n- **Tính chất:** Tất cả các ước chung của $a$ và $b$ đều là ước của $\\text{ƯCLN}(a, b)$!",
+          "exercises": [
+            {
+              "question": "Ước chung lớn nhất của 18 và 24 là:",
+              "options": [
+                "A. 6",
+                "B. 3",
+                "C. 12",
+                "D. 2"
+              ],
+              "correct_answer": "A",
+              "explanation": "18 = 2 x 3²; 24 = 2³ x 3. ƯCLN(18, 24) = 2 x 3 = 6."
+            },
+            {
+              "question": "Hai số nào sau đây là hai số nguyên tố cùng nhau?",
+              "options": [
+                "A. 8 và 9",
+                "B. 6 và 9",
+                "C. 4 và 6",
+                "D. 10 và 15"
+              ],
+              "correct_answer": "A",
+              "explanation": "ƯCLN(8, 9) = 1 nên 8 và 9 là hai số nguyên tố cùng nhau."
+            },
+            {
+              "question": "Tìm ƯCLN(a, b) nếu a chia hết cho b:",
+              "options": [
+                "A. b",
+                "B. a",
+                "C. 1",
+                "D. a x b"
+              ],
+              "correct_answer": "A",
+              "explanation": "Nếu a ⋮ b thì số bé hơn (b) chính là ước chung lớn nhất của a và b."
+            }
+          ]
+        },
+        {
+          "displayOrder": 16,
+          "title": "Bài 12: Bội chung. Bội chung nhỏ nhất",
+          "slug": "bai-12-boi-chung-boi-chung-nho-nhat",
+          "summary": "Khái niệm BC, BCNN (khác 0); Cách tìm BCNN bằng phân tích thừa số nguyên tố; Bài toán thực tế chu kỳ lặp lại.",
+          "estimatedMinutes": 45,
+          "theory": "### 🔄 Bài 12: Bội chung. Bội chung nhỏ nhất (BCNN)\n\n#### 1. 📌 Khái niệm\n- **Bội chung (BC):** Số tự nhiên $m$ vừa là bội của $a$, vừa là bội của $b$ gọi là bội chung của $a$ và $b$.\n- **Bội chung nhỏ nhất (BCNN):** Là số nhỏ nhất **khác 0** trong tập hợp các bội chung của $a$ và $b$.\n  - Ký hiệu: $\\text{BCNN}(a, b)$.\n\n#### 2. 💡 Quy tắc 3 bước tìm BCNN bằng phân tích thừa số nguyên tố\n- **Bước 1:** Phân tích mỗi số ra thừa số nguyên tố.\n- **Bước 2:** Chọn ra các thừa số nguyên tố **chung và riêng**.\n- **Bước 3:** Lập tích các thừa số đã chọn, mỗi thừa số lấy với **số mũ lớn nhất** của nó.\n- *Ví dụ:* Tìm $\\text{BCNN}(12, 18)$:\n  - $12 = 2^2 \\cdot 3$\n  - $18 = 2 \\cdot 3^2$\n  - Thừa số chung và riêng: $2, 3$. Số mũ lớn nhất: $2^2, 3^2$.\n  - $\\text{BCNN}(12, 18) = 2^2 \\cdot 3^2 = 4 \\cdot 9 = 36$.\n- **Phân biệt ƯCLN và BCNN:**\n  - ƯCLN: chỉ lấy thừa số **chung**, số mũ **nhỏ nhất**.\n  - BCNN: lấy thừa số **chung và riêng**, số mũ **lớn nhất**.",
+          "exercises": [
+            {
+              "question": "Bội chung nhỏ nhất của 6 và 8 là:",
+              "options": [
+                "A. 24",
+                "B. 48",
+                "C. 12",
+                "D. 16"
+              ],
+              "correct_answer": "A",
+              "explanation": "6 = 2 x 3; 8 = 2³. BCNN(6, 8) = 2³ x 3 = 8 x 3 = 24."
+            },
+            {
+              "question": "Nếu số lớn a chia hết cho số bé b thì BCNN(a, b) bằng số nào?",
+              "options": [
+                "A. a",
+                "B. b",
+                "C. a x b",
+                "D. 1"
+              ],
+              "correct_answer": "A",
+              "explanation": "Nếu a ⋮ b thì a chính là bội chung nhỏ nhất của a và b."
+            },
+            {
+              "question": "Hai bạn An và Bình cùng trực nhật vào ngày thứ Hai. Cứ sau 6 ngày An trực nhật lại, cứ sau 8 ngày Bình trực nhật lại. Sau ít nhất bao nhiêu ngày thì hai bạn lại cùng trực nhật?",
+              "options": [
+                "A. 24 ngày",
+                "B. 48 ngày",
+                "C. 14 ngày",
+                "D. 12 ngày"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số ngày ít nhất để hai bạn cùng trực nhật lại là BCNN(6, 8) = 24 ngày."
+            }
+          ]
+        },
+        {
+          "displayOrder": 17,
+          "title": "Luyện tập chung (sau Bài 12)",
+          "slug": "luyen-tap-chung-sau-bai-12",
+          "summary": "Giải các bài toán thực tế về phân chia đồ vật (chia quà, xếp hàng, chu kỳ lặp lại) dùng ƯCLN và BCNN.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Ứng dụng ƯCLN & BCNN)\n\n#### 1. 📌 Dấu hiệu nhận biết dạng toán\n- **Khi nào dùng ƯCLN:** Bài toán yêu cầu *chia đều* một số lượng đồ vật vào các phần quà sao cho số phần quà là *nhiều nhất* (chia tổ, chia kẹo, chia bút).\n- **Khi nào dùng BCNN:** Bài toán hỏi về *khoảng thời gian ít nhất*, *quãng đường nhỏ nhất* để các sự kiện cùng xảy ra lại một lần nữa (chu kỳ đèn tín hiệu, cùng gặp nhau ở vạch xuất phát, xếp hàng vừa vặn không thừa).",
+          "exercises": [
+            {
+              "question": "Cô giáo có 48 cái bút và 36 quyển vở chia đều vào các phần quà sao cho số phần quà là nhiều nhất. Số phần quà nhiều nhất có thể chia là:",
+              "options": [
+                "A. 12 phần quà",
+                "B. 6 phần quà",
+                "C. 18 phần quà",
+                "D. 24 phần quà"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số phần quà nhiều nhất là ƯCLN(48, 36) = 12 phần quà."
+            },
+            {
+              "question": "Một số học sinh khi xếp hàng 12, hàng 15, hàng 18 đều vừa đủ hàng. Biết số học sinh trong khoảng từ 300 đến 400. Số học sinh đó là:",
+              "options": [
+                "A. 360 học sinh",
+                "B. 320 học sinh",
+                "C. 380 học sinh",
+                "D. 350 học sinh"
+              ],
+              "correct_answer": "A",
+              "explanation": "BCNN(12, 15, 18) = 180. Các bội của 180 là: 180, 360, 540. Số nằm trong khoảng 300-400 là 360."
+            },
+            {
+              "question": "Mối quan hệ giữa tích hai số a, b với ƯCLN và BCNN của chúng là:",
+              "options": [
+                "A. a x b = ƯCLN(a, b) x BCNN(a, b)",
+                "B. a x b = ƯCLN(a, b) + BCNN(a, b)",
+                "C. a x b = BCNN(a, b) : ƯCLN(a, b)",
+                "D. a + b = ƯCLN(a, b) x BCNN(a, b)"
+              ],
+              "correct_answer": "A",
+              "explanation": "Định lý toán học: Với mọi số tự nhiên a, b thì a x b = ƯCLN(a, b) x BCNN(a, b)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 18,
+          "title": "Bài tập cuối chương II",
+          "slug": "bai-tap-cuoi-chuong-2",
+          "summary": "Tổng kết chương II: Tính chất chia hết, dấu hiệu chia hết, số nguyên tố, ƯCLN và BCNN.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏆 Bài tập cuối chương II\n\n#### 1. 📌 Ma trận kiến thức chương II\n- Chia hết: Quan hệ $a \\ \\vdots \\ b$, tính chất của một tổng/hiệu.\n- Dấu hiệu: $2, 5$ (chữ số cuối); $3, 9$ (tổng chữ số).\n- Số nguyên tố: Chỉ có 2 ước; Phân tích ra thừa số nguyên tố.\n- $\\text{ƯCLN}$: Thừa số chung, số mũ nhỏ nhất.\n- $\\text{BCNN}$: Thừa số chung và riêng, số mũ lớn nhất.",
+          "exercises": [
+            {
+              "question": "Số nào sau đây chia hết cho cả 2, 3, 5, 9?",
+              "options": [
+                "A. 180",
+                "B. 150",
+                "C. 135",
+                "D. 900"
+              ],
+              "correct_answer": "A",
+              "explanation": "180 có tận cùng là 0 (chia hết cho 2 và 5) và có tổng 1+8+0 = 9 (chia hết cho 3 và 9)."
+            },
+            {
+              "question": "Biết ƯCLN(a, b) = 6 và BCNN(a, b) = 36. Tích a x b bằng:",
+              "options": [
+                "A. 216",
+                "B. 72",
+                "C. 42",
+                "D. 180"
+              ],
+              "correct_answer": "A",
+              "explanation": "a x b = ƯCLN(a, b) x BCNN(a, b) = 6 x 36 = 216."
+            },
+            {
+              "question": "Tìm số tự nhiên x lớn nhất biết: 70 ⋮ x và 84 ⋮ x",
+              "options": [
+                "A. 14",
+                "B. 7",
+                "C. 2",
+                "D. 28"
+              ],
+              "correct_answer": "A",
+              "explanation": "x là ƯCLN(70, 84) = 14."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 3,
+      "title": "Chương III: Số nguyên",
+      "description": "Tập hợp số nguyên ℤ; Biểu diễn trên trục số, số đối, so sánh số nguyên; Bốn phép tính với số nguyên và quy tắc dấu ngoặc.",
+      "lessons": [
+        {
+          "displayOrder": 19,
+          "title": "Bài 13: Tập hợp các số nguyên",
+          "slug": "bai-13-tap-hop-cac-so-nguyen",
+          "summary": "Số nguyên âm, số nguyên dương, số 0; Tập hợp ℤ; Trục số và số đối của một số nguyên.",
+          "estimatedMinutes": 45,
+          "theory": "### ❄️ Bài 13: Tập hợp các số nguyên\n\n#### 1. 📌 Lý thuyết trọng tâm\n- **Số nguyên âm:** Các số mang dấu trừ đứng trước: $-1, -2, -3, -4, \\dots$ dùng biểu thị nhiệt độ dưới $0^\\circ\\text{C}$, độ sâu dưới mực nước biển, số tiền nợ/lỗ,...\n- **Tập hợp số nguyên $\\mathbb{Z}$:** Gồm các số nguyên âm, số 0 và các số nguyên dương:\n  $$\\mathbb{Z} = \\{\\dots; -3; -2; -1; 0; 1; 2; 3; \\dots\\}$$\n  - **Số 0 không phải là số nguyên âm, cũng không phải là số nguyên dương**.\n- **Trục số:** Là đường thẳng nằm ngang có chiều từ trái sang phải, có điểm gốc $O$ biểu thị số $0$.\n  - Điểm biểu diễn số âm nằm bên **trái** điểm 0.\n  - Điểm biểu diễn số dương nằm bên **phải** điểm 0.\n- **Số đối:** Hai số nguyên trên trục số nằm về hai phía của điểm $0$ và cách đều điểm $0$ gọi là hai số đối nhau.\n  - Số đối của $a$ là $-a$. Số đối của $-a$ là $a$. Số đối của $0$ là $0$.\n  - Ví dụ: Số đối của $5$ là $-5$; số đối của $-8$ là $8$.",
+          "exercises": [
+            {
+              "question": "Tập hợp các số nguyên được ký hiệu là chữ cái nào?",
+              "options": [
+                "A. ℤ",
+                "B. ℕ",
+                "C. ℚ",
+                "D. ℝ"
+              ],
+              "correct_answer": "A",
+              "explanation": "Tập hợp các số nguyên được ký hiệu là ℤ."
+            },
+            {
+              "question": "Số đối của số -15 là:",
+              "options": [
+                "A. 15",
+                "B. -15",
+                "C. 0",
+                "D. 1/15"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số đối của -15 là 15."
+            },
+            {
+              "question": "Khẳng định nào sau đây là SAI?",
+              "options": [
+                "A. Số 0 là số nguyên dương",
+                "B. -5 là số nguyên âm",
+                "C. 7 là số nguyên dương",
+                "D. Tập hợp ℤ bao gồm cả số nguyên âm, số 0 và số nguyên dương"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số 0 không phải là số nguyên dương và cũng không phải là số nguyên âm."
+            }
+          ]
+        },
+        {
+          "displayOrder": 20,
+          "title": "Bài 14: Phép cộng và phép trừ số nguyên",
+          "slug": "bai-14-phep-cong-va-phep-tru-so-nguyen",
+          "summary": "Cộng hai số nguyên cùng dấu, khác dấu; Trừ số nguyên bằng cách cộng với số đối.",
+          "estimatedMinutes": 45,
+          "theory": "### ➕➖ Bài 14: Phép cộng và phép trừ số nguyên\n\n#### 1. 📌 Quy tắc cộng hai số nguyên\n1. **Cộng hai số nguyên cùng dấu:**\n   - Cùng dương: Cộng như hai số tự nhiên.\n   - Cùng âm: Cộng hai phần tự nhiên của chúng rồi đặt **dấu \"-\"** trước kết quả.\n     $$(-a) + (-b) = -(a + b) \\quad (\\text{Ví dụ: } (-3) + (-5) = -8)$$\n2. **Cộng hai số nguyên khác dấu (không đối nhau):**\n   - Lấy số lớn hơn trừ số bé hơn (về phần số tự nhiên), rồi đặt dấu của số có phần tự nhiên lớn hơn trước kết quả.\n   - Tổng của hai số đối nhau luôn bằng 0: $a + (-a) = 0$.\n   - Ví dụ: $(-8) + 3 = -(8 - 3) = -5$; $10 + (-4) = +(10 - 4) = 6$.\n\n#### 2. 📌 Quy tắc trừ hai số nguyên\n- Muốn trừ số nguyên $a$ cho số nguyên $b$, ta **cộng $a$ với số đối của $b$**:\n  $$a - b = a + (-b)$$\n  - Ví dụ: $3 - 8 = 3 + (-8) = -5$.\n  - Ví dụ: $5 - (-2) = 5 + 2 = 7$.",
+          "exercises": [
+            {
+              "question": "Tính: (-12) + (-8) = ?",
+              "options": [
+                "A. -20",
+                "B. 20",
+                "C. -4",
+                "D. 4"
+              ],
+              "correct_answer": "A",
+              "explanation": "Cùng âm: -(12 + 8) = -20."
+            },
+            {
+              "question": "Tính: 15 + (-25) = ?",
+              "options": [
+                "A. -10",
+                "B. 10",
+                "C. -40",
+                "D. 40"
+              ],
+              "correct_answer": "A",
+              "explanation": "Khác dấu: mang dấu số lớn hơn (-25) -> -(25 - 15) = -10."
+            },
+            {
+              "question": "Tính: 7 - (-3) = ?",
+              "options": [
+                "A. 10",
+                "B. 4",
+                "C. -10",
+                "D. -4"
+              ],
+              "correct_answer": "A",
+              "explanation": "Trừ cho số âm thành cộng: 7 - (-3) = 7 + 3 = 10."
+            }
+          ]
+        },
+        {
+          "displayOrder": 21,
+          "title": "Bài 15: Quy tắc dấu ngoặc",
+          "slug": "bai-15-quy-tac-dau-ngoac",
+          "summary": "Quy tắc mở ngoặc có dấu cộng hoặc dấu trừ đằng trước; Thay đổi dấu các số hạng bên trong.",
+          "estimatedMinutes": 45,
+          "theory": "### 🚪 Bài 15: Quy tắc dấu ngoặc\n\n#### 1. 📌 Quy tắc phá ngoặc\n- **Khi bỏ dấu ngoặc có dấu \"+\" đằng trước:** Giữ nguyên dấu của các số hạng trong ngoặc.\n  $$+(a - b + c) = a - b + c$$\n- **Khi bỏ dấu ngoặc có dấu \"-\" đằng trước:** Ta phải **đổi dấu tất cả** các số hạng trong dấu ngoặc:\n  - Dấu \"+\" đổi thành dấu \"-\".\n  - Dấu \"-\" đổi thành dấu \"+\".\n  $$-(a - b + c) = -a + b - c$$\n\n#### 2. 💡 Mẹo sư phạm ghi nhớ\n- Đằng trước là dấu cộng $\\rightarrow$ *Hiền lành, giữ nguyên*.\n- Đằng trước là dấu trừ $\\rightarrow$ *Khó tính, đổi hết dấu*!",
+          "exercises": [
+            {
+              "question": "Bỏ dấu ngoặc của biểu thức -(a - b + c) ta được:",
+              "options": [
+                "A. -a + b - c",
+                "B. -a - b + c",
+                "C. -a - b - c",
+                "D. a + b - c"
+              ],
+              "correct_answer": "A",
+              "explanation": "Trước ngoặc là dấu trừ nên đổi dấu toàn bộ: a -> -a, -b -> +b, +c -> -c."
+            },
+            {
+              "question": "Tính hợp lý: (125 - 45) - (125 + 55) = ?",
+              "options": [
+                "A. -100",
+                "B. 100",
+                "C. -10",
+                "D. 0"
+              ],
+              "correct_answer": "A",
+              "explanation": "Bỏ ngoặc: 125 - 45 - 125 - 55 = (125 - 125) - (45 + 55) = 0 - 100 = -100."
+            },
+            {
+              "question": "Giá trị của biểu thức A = -(20 - 35) + (-15) là:",
+              "options": [
+                "A. 0",
+                "B. -30",
+                "C. 30",
+                "D. -10"
+              ],
+              "correct_answer": "A",
+              "explanation": "-( -15 ) + (-15) = 15 - 15 = 0."
+            }
+          ]
+        },
+        {
+          "displayOrder": 22,
+          "title": "Luyện tập chung (sau Bài 15)",
+          "slug": "luyen-tap-chung-sau-bai-15",
+          "summary": "Kỹ năng tính nhanh tổng đại số và tìm số nguyên x vận dụng quy tắc dấu ngoặc và chuyển vế.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Cộng trừ & Quy tắc chuyển vế)\n\n#### 1. 📌 Quy tắc chuyển vế\n- Khi chuyển một số hạng từ vế này sang vế kia của một đẳng thức, ta phải **đổi dấu** số hạng đó:\n  - Đang là dấu \"+\" đổi thành dấu \"-\".\n  - Đang là dấu \"-\" đổi thành dấu \"+\".\n  $$x + a = b \\implies x = b - a$$\n  $$x - a = b \\implies x = b + a$$",
+          "exercises": [
+            {
+              "question": "Tìm x biết: x + 15 = -5",
+              "options": [
+                "A. x = -20",
+                "B. x = 10",
+                "C. x = -10",
+                "D. x = 20"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chuyển vế: x = -5 - 15 = -20."
+            },
+            {
+              "question": "Tìm x biết: 12 - x = -8",
+              "options": [
+                "A. x = 20",
+                "B. x = 4",
+                "C. x = -20",
+                "D. x = -4"
+              ],
+              "correct_answer": "A",
+              "explanation": "x = 12 - (-8) = 12 + 8 = 20."
+            },
+            {
+              "question": "Tính nhanh: (-24) + 15 + 24 + (-15) = ?",
+              "options": [
+                "A. 0",
+                "B. 24",
+                "C. -15",
+                "D. 30"
+              ],
+              "correct_answer": "A",
+              "explanation": "Nhóm các cặp số đối: [(-24) + 24] + [15 + (-15)] = 0 + 0 = 0."
+            }
+          ]
+        },
+        {
+          "displayOrder": 23,
+          "title": "Bài 16: Phép nhân số nguyên",
+          "slug": "bai-16-phep-nhan-so-nguyen",
+          "summary": "Quy tắc nhân hai số nguyên cùng dấu (ra số dương), khác dấu (ra số âm); Tính chất của phép nhân.",
+          "estimatedMinutes": 45,
+          "theory": "### ✖️ Bài 16: Phép nhân số nguyên\n\n#### 1. 📌 Quy tắc nhân dấu cần thuộc lòng\n- **Nhân hai số nguyên khác dấu:** Kết quả luôn là một **số nguyên âm**:\n  $$(+) \\cdot (-) = (-)$$\n  $$(-) \\cdot (+) = (-)$$\n  - Ví dụ: $3 \\cdot (-4) = -12$; $(-5) \\cdot 6 = -30$.\n- **Nhân hai số nguyên cùng dấu:** Kết quả luôn là một **số nguyên dương**:\n  $$(+) \\cdot (+) = (+)$$\n  $$(-) \\cdot (-) = (+)$$\n  - Ví dụ: $(-4) \\cdot (-5) = +20$.\n- Nhân với 0: $a \\cdot 0 = 0$.\n\n#### 2. 💡 Mẹo dấu trong tích nhiều thừa số\n- Đếm số lượng thừa số mang dấu âm:\n  - Nếu số thừa số âm là **số chẵn** ($2, 4, 6,\\dots$) $\\rightarrow$ tích mang **dấu dương (+)**.\n  - Nếu số thừa số âm là **số lẻ** ($1, 3, 5,\\dots$) $\\rightarrow$ tích mang **dấu âm (-)**.",
+          "exercises": [
+            {
+              "question": "Tích (-6) x (-5) bằng:",
+              "options": [
+                "A. 30",
+                "B. -30",
+                "C. -11",
+                "D. 11"
+              ],
+              "correct_answer": "A",
+              "explanation": "Nhân hai số nguyên cùng dấu âm cho kết quả dương: (-6) x (-5) = 30."
+            },
+            {
+              "question": "Tích (-4) x 8 bằng:",
+              "options": [
+                "A. -32",
+                "B. 32",
+                "C. -12",
+                "D. 4"
+              ],
+              "correct_answer": "A",
+              "explanation": "Nhân hai số khác dấu cho kết quả âm: -(4 x 8) = -32."
+            },
+            {
+              "question": "Tích của 5 số nguyên âm là một số:",
+              "options": [
+                "A. Nguyên âm",
+                "B. Nguyên dương",
+                "C. Bằng 0",
+                "D. Không xác định"
+              ],
+              "correct_answer": "A",
+              "explanation": "Tích có số lẻ thừa số âm (5 số âm) thì kết quả là số nguyên âm."
+            }
+          ]
+        },
+        {
+          "displayOrder": 24,
+          "title": "Bài 17: Phép chia hết. Ước và bội của một số nguyên",
+          "slug": "bai-17-phep-chia-het-uoc-va-boi-cua-so-nguyen",
+          "summary": "Quy tắc dấu của phép chia; Khái niệm ước và bội mở rộng trên tập số nguyên ℤ.",
+          "estimatedMinutes": 45,
+          "theory": "### ➗ Bài 17: Ước và bội của một số nguyên\n\n#### 1. 📌 Phép chia hết trong $\\mathbb{Z}$\n- Cho $a, b \\in \\mathbb{Z}$ ($b \\ne 0$). Nếu có số nguyên $q$ sao cho $a = bq$ thì ta nói $a$ chia hết cho $b$ ($a \\ \\vdots \\ b$).\n- **Quy tắc dấu của phép chia giống hệt phép nhân:**\n  - Cùng dấu $\\rightarrow$ thương mang dấu **dương (+)**.\n  - Khác dấu $\\rightarrow$ thương mang dấu **âm (-)**.\n  - Ví dụ: $(-18) : (-3) = 6$; $(-20) : 4 = -5$.\n\n#### 2. 📌 Ước và Bội của số nguyên\n- Nếu $a$ chia hết cho $b$ thì $a$ là bội của $b$, và $b$ là ước của $a$.\n- Chú ý: Nếu $d$ là ước của $a$ thì $-d$ cũng là ước của $a$.\n  - Ví dụ: Các ước của $4$ trong $\\mathbb{Z}$ là: $\\mathcal{U}(4) = \\{-4; -2; -1; 1; 2; 4\\}$.\n  - Số 0 là bội của mọi số nguyên khác 0. Số 0 không là ước của bất kì số nào.",
+          "exercises": [
+            {
+              "question": "Tập hợp các ước trong ℤ của số 3 là:",
+              "options": [
+                "A. {-3; -1; 1; 3}",
+                "B. {1; 3}",
+                "C. {-3; 3}",
+                "D. {0; 1; 3}"
+              ],
+              "correct_answer": "A",
+              "explanation": "Trong tập số nguyên ℤ, các ước của 3 bao gồm cả số âm và số dương: ±1 và ±3."
+            },
+            {
+              "question": "Tính: (-36) : 9 = ?",
+              "options": [
+                "A. -4",
+                "B. 4",
+                "C. -6",
+                "D. 6"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chia hai số khác dấu: -(36 : 9) = -4."
+            },
+            {
+              "question": "Tìm số nguyên x biết: 3x = -24",
+              "options": [
+                "A. x = -8",
+                "B. x = 8",
+                "C. x = -27",
+                "D. x = -21"
+              ],
+              "correct_answer": "A",
+              "explanation": "x = (-24) : 3 = -8."
+            }
+          ]
+        },
+        {
+          "displayOrder": 25,
+          "title": "Luyện tập chung (sau Bài 17)",
+          "slug": "luyen-tap-chung-sau-bai-17",
+          "summary": "Tổng hợp kỹ năng tính toán, tìm x và bài toán thực tế quản lý tài chính, lỗ lãi, nhiệt độ dùng số nguyên.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Số nguyên)\n\n#### 1. 📌 Bài toán thực tế về số nguyên\n- Doanh thu - Chi phí = Lợi nhuận:\n  - Nếu Lợi nhuận $> 0$: Doanh nghiệp có lãi.\n  - Nếu Lợi nhuận $< 0$: Doanh nghiệp bị lỗ (ghi số nguyên âm).\n- Độ cao trên/dưới mực nước biển:\n  - Đỉnh núi: số nguyên dương (m).\n  - Đáy rãnh đại dương: số nguyên âm (m).",
+          "exercises": [
+            {
+              "question": "Một tàu ngầm đang ở độ sâu -50 m so với mực nước biển. Tàu lặn sâu thêm 20 m nữa. Vị trí mới của tàu là:",
+              "options": [
+                "A. -70 m",
+                "B. -30 m",
+                "C. 70 m",
+                "D. -100 m"
+              ],
+              "correct_answer": "A",
+              "explanation": "-50 + (-20) = -70 m."
+            },
+            {
+              "question": "Một cửa hàng tháng thứ nhất lỗ 15 triệu đồng, tháng thứ hai lãi 25 triệu đồng. Sau 2 tháng cửa hàng lời hay lỗ bao nhiêu?",
+              "options": [
+                "A. Lãi 10 triệu đồng",
+                "B. Lỗ 10 triệu đồng",
+                "C. Lãi 40 triệu đồng",
+                "D. Lỗ 40 triệu đồng"
+              ],
+              "correct_answer": "A",
+              "explanation": "(-15) + 25 = 10 (triệu đồng) -> Cửa hàng có lãi 10 triệu đồng."
+            },
+            {
+              "question": "Tính: (-2)³ = ?",
+              "options": [
+                "A. -8",
+                "B. 8",
+                "C. -6",
+                "D. 6"
+              ],
+              "correct_answer": "A",
+              "explanation": "(-2)³ = (-2) x (-2) x (-2) = 4 x (-2) = -8."
+            }
+          ]
+        },
+        {
+          "displayOrder": 26,
+          "title": "Bài tập cuối chương III",
+          "slug": "bai-tap-cuoi-chuong-3",
+          "summary": "Tổng kết chương III: Quy tắc dấu trong 4 phép tính, quy tắc phá ngoặc, chuyển vế và ước bội số nguyên.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏆 Bài tập cuối chương III\n\n#### 1. 📌 Bảng tra cứu quy tắc dấu toàn diện\n| Phép tính | Cùng dấu | Khác dấu |\n| :---: | :---: | :---: |\n| **Phép nhân** $(\\cdot)$ | Luôn ra **Dương (+)** | Luôn ra **Âm (-)** |\n| **Phép chia** $(:)$ | Luôn ra **Dương (+)** | Luôn ra **Âm (-)** |\n| **Lũy thừa** $a^n$ | $(-a)^{\\text{chẵn}} > 0$ | $(-a)^{\\text{lẻ}} < 0$ |",
+          "exercises": [
+            {
+              "question": "Giá trị của biểu thức (-5) x 12 x (-2) là:",
+              "options": [
+                "A. 120",
+                "B. -120",
+                "C. 60",
+                "D. -60"
+              ],
+              "correct_answer": "A",
+              "explanation": "(-5) x (-2) = 10; 10 x 12 = 120."
+            },
+            {
+              "question": "Cho x ∈ ℤ thỏa mãn -3 < x ≤ 2. Tổng tất cả các giá trị của x là:",
+              "options": [
+                "A. 0",
+                "B. -1",
+                "C. 2",
+                "D. 3"
+              ],
+              "correct_answer": "A",
+              "explanation": "Các giá trị x là: -2; -1; 0; 1; 2. Tổng = (-2 + 2) + (-1 + 1) + 0 = 0."
+            },
+            {
+              "question": "Tìm x biết: 2x - (-10) = 4",
+              "options": [
+                "A. x = -3",
+                "B. x = 3",
+                "C. x = 7",
+                "D. x = -7"
+              ],
+              "correct_answer": "A",
+              "explanation": "2x + 10 = 4 -> 2x = 4 - 10 = -6 -> x = -6 : 2 = -3."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 4,
+      "title": "Chương IV: Một số hình phẳng trong thực tiễn",
+      "description": "Tam giác đều, hình vuông, lục giác đều; Hình chữ nhật, hình thoi, hình bình hành, hình thang cân; Chu vi và diện tích các hình phẳng thực tế.",
+      "lessons": [
+        {
+          "displayOrder": 27,
+          "title": "Bài 18: Hình tam giác đều. Hình vuông. Hình lục giác đều",
+          "slug": "bai-18-tam-giac-deu-hinh-vuong-luc-giac-deu",
+          "summary": "Đặc điểm cạnh, góc, đường chéo của tam giác đều, hình vuông, hình lục giác đều và kỹ năng vẽ hình.",
+          "estimatedMinutes": 45,
+          "theory": "### 🔺🔲 Bài 18: Hình tam giác đều. Hình vuông. Hình lục giác đều\n\n#### 1. 📌 Hình tam giác đều\n- Tam giác đều $ABC$ có:\n  - **Ba cạnh bằng nhau:** $AB = BC = CA$.\n  - **Ba góc bằng nhau:** Mỗi góc bằng $60^\\circ$.\n\n#### 2. 📌 Hình vuông\n- Hình vuông $ABCD$ có:\n  - **Bốn cạnh bằng nhau:** $AB = BC = CD = DA$.\n  - **Bốn góc bằng nhau và bằng góc vuông ($90^\\circ$)**.\n  - **Hai đường chéo bằng nhau:** $AC = BD$.\n\n#### 3. 📌 Hình lục giác đều\n- Hình lục giác đều $ABCDEF$ có:\n  - **Sáu cạnh bằng nhau:** $AB = BC = CD = DE = EF = FA$.\n  - **Sáu góc ở các đỉnh bằng nhau:** Mỗi góc bằng $120^\\circ$.\n  - **Ba đường chéo chính bằng nhau** và cắt nhau tại trung điểm của mỗi đường: $AD = BE = CF$.",
+          "exercises": [
+            {
+              "question": "Hình tam giác đều có mỗi góc bằng bao nhiêu độ?",
+              "options": [
+                "A. 60°",
+                "B. 90°",
+                "C. 45°",
+                "D. 120°"
+              ],
+              "correct_answer": "A",
+              "explanation": "Tam giác đều có 3 góc bằng nhau, tổng 3 góc tam giác là 180° nên mỗi góc bằng 180° : 3 = 60°."
+            },
+            {
+              "question": "Hình lục giác đều được ghép từ bao nhiêu hình tam giác đều bằng nhau?",
+              "options": [
+                "A. 6 hình",
+                "B. 4 hình",
+                "C. 8 hình",
+                "D. 3 hình"
+              ],
+              "correct_answer": "A",
+              "explanation": "Từ tâm của hình lục giác đều kẻ các đoạn thẳng đến 6 đỉnh sẽ tạo thành 6 hình tam giác đều bằng nhau."
+            },
+            {
+              "question": "Trong hình vuông, khẳng định nào sau đây là SAI?",
+              "options": [
+                "A. Hai đường chéo không bằng nhau",
+                "B. Bốn cạnh có độ dài bằng nhau",
+                "C. Bốn góc đều là góc vuông",
+                "D. Hai đường chéo vuông góc với nhau"
+              ],
+              "correct_answer": "A",
+              "explanation": "Hình vuông có hai đường chéo bằng nhau nên khẳng định 'Hai đường chéo không bằng nhau' là sai."
+            }
+          ]
+        },
+        {
+          "displayOrder": 28,
+          "title": "Bài 19: Hình chữ nhật. Hình thoi. Hình bình hành. Hình thang cân",
+          "slug": "bai-19-hinh-chu-nhat-thoi-binh-hanh-thang-can",
+          "summary": "Nhận biết các đặc điểm cạnh, góc, đường chéo của hình chữ nhật, hình thoi, hình bình hành và hình thang cân.",
+          "estimatedMinutes": 45,
+          "theory": "### 🔷 Bài 19: Hình chữ nhật, hình thoi, hình bình hành, hình thang cân\n\n#### 1. 📌 Bảng tổng hợp tính chất hình học\n| Hình | Cạnh | Góc | Đường chéo |\n| :--- | :--- | :--- | :--- |\n| **Hình chữ nhật** | 2 cặp cạnh đối song song & bằng nhau | 4 góc vuông ($90^\\circ$) | Bằng nhau, cắt nhau tại trung điểm |\n| **Hình thoi** | 4 cạnh bằng nhau, 2 cặp đối song song | 2 góc đối bằng nhau | Vuông góc với nhau tại trung điểm |\n| **Hình bình hành** | 2 cặp cạnh đối song song & bằng nhau | 2 góc đối bằng nhau | Cắt nhau tại trung điểm của mỗi đường |\n| **Hình thang cân** | 2 đáy song song, 2 cạnh bên bằng nhau | 2 góc kề một đáy bằng nhau | Hai đường chéo bằng nhau |",
+          "exercises": [
+            {
+              "question": "Hình thang cân có đặc điểm nào sau đây?",
+              "options": [
+                "A. Hai cạnh bên bằng nhau và hai đường chéo bằng nhau",
+                "B. Bốn cạnh bằng nhau",
+                "C. Bốn góc vuông",
+                "D. Hai đường chéo vuông góc"
+              ],
+              "correct_answer": "A",
+              "explanation": "Hình thang cân có hai cạnh bên bằng nhau, hai góc kề một đáy bằng nhau và hai đường chéo bằng nhau."
+            },
+            {
+              "question": "Hình có hai đường chéo vuông góc với nhau tại trung điểm của mỗi đường là:",
+              "options": [
+                "A. Hình thoi",
+                "B. Hình chữ nhật",
+                "C. Hình bình hành",
+                "D. Hình thang cân"
+              ],
+              "correct_answer": "A",
+              "explanation": "Tính chất đặc trưng của hình thoi là hai đường chéo vuông góc tại trung điểm mỗi đường."
+            },
+            {
+              "question": "Khẳng định nào đúng về hình bình hành?",
+              "options": [
+                "A. Hai đường chéo cắt nhau tại trung điểm của mỗi đường",
+                "B. Hai đường chéo bằng nhau",
+                "C. Hai đường chéo vuông góc với nhau",
+                "D. Có 4 góc vuông"
+              ],
+              "correct_answer": "A",
+              "explanation": "Trong hình bình hành, hai đường chéo cắt nhau tại trung điểm của mỗi đường."
+            }
+          ]
+        },
+        {
+          "displayOrder": 29,
+          "title": "Bài 20: Chu vi và diện tích của một số tứ giác đã học",
+          "slug": "bai-20-chu-vi-va-dien-tich-cua-mot-so-tu-giac",
+          "summary": "Công thức tính chu vi và diện tích hình chữ nhật, hình vuông, hình bình hành, hình thoi và hình thang.",
+          "estimatedMinutes": 45,
+          "theory": "### 📐 Bài 20: Chu vi và diện tích các tứ giác\n\n#### 1. 📌 Bảng công thức chuẩn\n- **Hình chữ nhật:**\n  $$P = 2(a + b) \\qquad S = a \\cdot b$$\n- **Hình vuông:**\n  $$P = 4a \\qquad S = a^2$$\n- **Hình bình hành (đáy $a$, chiều cao $h$):**\n  $$P = 2(a + b) \\qquad S = a \\cdot h$$\n- **Hình thoi (hai đường chéo $m, n$):**\n  $$P = 4a \\qquad S = \\frac{1}{2} \\cdot m \\cdot n$$\n- **Hình thang (đáy lớn $a$, đáy bé $b$, chiều cao $h$):**\n  $$S = \\frac{(a + b) \\cdot h}{2}$$",
+          "exercises": [
+            {
+              "question": "Một thửa ruộng hình thang có đáy lớn 30 m, đáy bé 20 m, chiều cao 10 m. Diện tích thửa ruộng đó là:",
+              "options": [
+                "A. 250 m²",
+                "B. 500 m²",
+                "C. 300 m²",
+                "D. 200 m²"
+              ],
+              "correct_answer": "A",
+              "explanation": "S = (30 + 20) x 10 : 2 = 50 x 10 : 2 = 250 m²."
+            },
+            {
+              "question": "Một mảnh bìa hình thoi có độ dài hai đường chéo lần lượt là 12 cm và 15 cm. Diện tích mảnh bìa là:",
+              "options": [
+                "A. 90 cm²",
+                "B. 180 cm²",
+                "C. 45 cm²",
+                "D. 60 cm²"
+              ],
+              "correct_answer": "A",
+              "explanation": "S = (12 x 15) : 2 = 180 : 2 = 90 cm²."
+            },
+            {
+              "question": "Một bồn hoa hình bình hành có cạnh đáy 4 m và chiều cao tương ứng 2,5 m. Diện tích bồn hoa đó là:",
+              "options": [
+                "A. 10 m²",
+                "B. 20 m²",
+                "C. 6,5 m²",
+                "D. 5 m²"
+              ],
+              "correct_answer": "A",
+              "explanation": "S = 4 x 2,5 = 10 m²."
+            }
+          ]
+        },
+        {
+          "displayOrder": 30,
+          "title": "Luyện tập chung (Chương IV)",
+          "slug": "luyen-tap-chung-chuong-4",
+          "summary": "Tính diện tích hình phức hợp (ghép từ nhiều hình) và bài toán thực tế lát sàn, trồng cỏ, làm hàng rào.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏡 Luyện tập chung (Ứng dụng thực tiễn hình học)\n\n#### 1. 📌 Phương pháp phân chia hình phức hợp\n- Để tính diện tích của một mảnh sân hoặc khu vườn có hình dạng phức tạp:\n  - **Cách 1 (Chia nhỏ):** Cắt hình thành các hình cơ bản đã biết (hình chữ nhật, hình vuông, hình tam giác, hình thang) rồi tính tổng diện tích.\n  - **Cách 2 (Bổ sung):** Coi hình đó nằm trong một hình chữ nhật lớn bao quanh, tính diện tích hình lớn rồi trừ đi diện tích các phần thừa.\n- **Tính chi phí thực tế:**\n  $$\\text{Tổng chi phí} = \\text{Diện tích} \\times \\text{Đơn giá mỗi mét vuông}$$",
+          "exercises": [
+            {
+              "question": "Một căn phòng hình chữ nhật dài 8 m, rộng 6 m được lát bằng các viên gạch hình vuông cạnh 40 cm. Cần bao nhiêu viên gạch để lát kín căn phòng?",
+              "options": [
+                "A. 300 viên",
+                "B. 250 viên",
+                "C. 400 viên",
+                "D. 200 viên"
+              ],
+              "correct_answer": "A",
+              "explanation": "Diện tích phòng = 8 x 6 = 48 m² = 480 000 cm². Diện tích 1 viên gạch = 40 x 40 = 1 600 cm². Số gạch = 480 000 : 1 600 = 300 viên."
+            },
+            {
+              "question": "Một khu vườn hình vuông có cạnh 15 m. Người ta làm hàng rào xung quanh, để lối đi rộng 2 m. Chiều dài hàng rào là:",
+              "options": [
+                "A. 58 m",
+                "B. 60 m",
+                "C. 62 m",
+                "D. 56 m"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chu vi vườn = 15 x 4 = 60 m. Chiều dài hàng rào = 60 - 2 = 58 m."
+            },
+            {
+              "question": "Chi phí trồng cỏ một sân bóng đá mini hình chữ nhật dài 30 m, rộng 20 m với giá 50 000 đồng/m² là:",
+              "options": [
+                "A. 30 000 000 đồng",
+                "B. 60 000 000 đồng",
+                "C. 15 000 000 đồng",
+                "D. 25 000 000 đồng"
+              ],
+              "correct_answer": "A",
+              "explanation": "Diện tích = 30 x 20 = 600 m². Chi phí = 600 x 50 000 = 30 000 000 đồng."
+            }
+          ]
+        },
+        {
+          "displayOrder": 31,
+          "title": "Bài tập cuối chương IV",
+          "slug": "bai-tap-cuoi-chuong-4",
+          "summary": "Tổng kết hệ thống hình học phẳng trực quan: nhận dạng, vẽ hình và công thức tính chu vi, diện tích.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏆 Bài tập cuối chương IV\n\n#### 1. 📌 Ôn tập tổng kết\n- Nắm chắc tính chất đặc trưng của: Tam giác đều, hình vuông, lục giác đều, hình chữ nhật, hình thoi, hình bình hành, hình thang cân.\n- Thuộc làu công thức chu vi và diện tích để áp dụng nhanh và chính xác vào bài kiểm tra.",
+          "exercises": [
+            {
+              "question": "Công thức tính diện tích hình thoi có hai đường chéo m và n là:",
+              "options": [
+                "A. S = (m x n) : 2",
+                "B. S = m x n",
+                "C. S = (m + n) x 2",
+                "D. S = (m + n) : 2"
+              ],
+              "correct_answer": "A",
+              "explanation": "Diện tích hình thoi bằng nửa tích độ dài hai đường chéo: S = 1/2 m n."
+            },
+            {
+              "question": "Một hình lục giác đều có chu vi 36 cm. Độ dài mỗi cạnh của hình lục giác đều đó là:",
+              "options": [
+                "A. 6 cm",
+                "B. 9 cm",
+                "C. 12 cm",
+                "D. 4 cm"
+              ],
+              "correct_answer": "A",
+              "explanation": "Hình lục giác đều có 6 cạnh bằng nhau nên mỗi cạnh dài: 36 : 6 = 6 cm."
+            },
+            {
+              "question": "Hình nào sau đây có hai đường chéo bằng nhau NHƯNG KHÔNG vuông góc với nhau?",
+              "options": [
+                "A. Hình chữ nhật",
+                "B. Hình vuông",
+                "C. Hình thoi",
+                "D. Hình bình hành"
+              ],
+              "correct_answer": "A",
+              "explanation": "Hình chữ nhật có hai đường chéo bằng nhau nhưng nói chung không vuông góc (chỉ vuông góc khi là hình vuông)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 5,
+      "title": "Chương V: Tính đối xứng của hình phẳng trong tự nhiên",
+      "description": "Hình có trục đối xứng và trục đối xứng của một hình; Hình có tâm đối xứng và tâm đối xứng; Vẻ đẹp của tính đối xứng trong đời sống.",
+      "lessons": [
+        {
+          "displayOrder": 32,
+          "title": "Bài 21: Hình có trục đối xứng",
+          "slug": "bai-21-hinh-co-truc-doi-xung",
+          "summary": "Khái niệm đường thẳng chia hình thành hai nửa gấp chồng khít lên nhau (trục đối xứng); Nhận biết trong hình học và tự nhiên.",
+          "estimatedMinutes": 45,
+          "theory": "### 🦋 Bài 21: Hình có trục đối xứng\n\n#### 1. 📌 Khái niệm trục đối xứng\n- Một đường thẳng $d$ được gọi là **trục đối xứng** của một hình nếu gấp hình đó theo đường thẳng $d$, hai phần của hình chồng khít lên nhau.\n- Hình có tính chất như vậy gọi là **hình có trục đối xứng**.\n\n#### 2. 💡 Trục đối xứng của các hình quen thuộc\n- **Đoạn thẳng:** Có $1$ trục đối xứng (đường trung trực của đoạn thẳng).\n- **Tam giác cân:** Có $1$ trục đối xứng.\n- **Tam giác đều:** Có $3$ trục đối xứng.\n- **Hình chữ nhật:** Có $2$ trục đối xứng (hai đường thẳng đi qua trung điểm các cặp cạnh đối diện).\n- **Hình thoi:** Có $2$ trục đối xứng (hai đường chéo).\n- **Hình vuông:** Có $4$ trục đối xứng (hai đường chéo và hai đường nối trung điểm các cạnh đối).\n- **Hình tròn:** Có **vô số** trục đối xứng (mọi đường thẳng đi qua tâm).\n- Trong tự nhiên: Cánh bướm, con chuồn chuồn, tháp Rùa, lá cây,...",
+          "exercises": [
+            {
+              "question": "Hình tam giác đều có bao nhiêu trục đối xứng?",
+              "options": [
+                "A. 3 trục đối xứng",
+                "B. 1 trục đối xứng",
+                "C. 2 trục đối xứng",
+                "D. Vô số trục đối xứng"
+              ],
+              "correct_answer": "A",
+              "explanation": "Tam giác đều có 3 trục đối xứng đi qua mỗi đỉnh và trung điểm cạnh đối diện."
+            },
+            {
+              "question": "Hình tròn có bao nhiêu trục đối xứng?",
+              "options": [
+                "A. Vô số",
+                "B. 1",
+                "C. 2",
+                "D. 4"
+              ],
+              "correct_answer": "A",
+              "explanation": "Mọi đường thẳng đi qua tâm của hình tròn đều là trục đối xứng, nên có vô số trục đối xứng."
+            },
+            {
+              "question": "Chữ cái in hoa nào sau đây có trục đối xứng nằm ngang?",
+              "options": [
+                "A. H",
+                "B. A",
+                "C. M",
+                "D. N"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chữ H vừa có trục đối xứng thẳng đứng vừa có trục đối xứng nằm ngang (chữ A và M chỉ có trục thẳng đứng)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 33,
+          "title": "Bài 22: Hình có tâm đối xứng",
+          "slug": "bai-22-hinh-co-tam-doi-xung",
+          "summary": "Khái niệm điểm làm tâm quay 180° để hình trùng khít chính nó (tâm đối xứng) và ứng dụng mỹ thuật, kiến trúc.",
+          "estimatedMinutes": 45,
+          "theory": "### 🌀 Bài 22: Hình có tâm đối xứng\n\n#### 1. 📌 Khái niệm tâm đối xứng\n- Một điểm $O$ được gọi là **tâm đối xứng** của một hình nếu quay hình đó quanh điểm $O$ một nửa vòng (quay góc $180^\\circ$) thì hình đó chồng khít lên chính nó ở vị trí ban đầu.\n- Hình có tính chất này gọi là **hình có tâm đối xứng**, và điểm $O$ gọi là tâm đối xứng.\n\n#### 2. 💡 Tâm đối xứng của các hình quen thuộc\n- **Đoạn thẳng:** Tâm đối xứng là **trung điểm** của đoạn thẳng.\n- **Hình tròn:** Tâm đối xứng chính là **tâm của hình tròn**.\n- **Hình bình hành, hình thoi, hình chữ nhật, hình vuông:** Tâm đối xứng là **giao điểm của hai đường chéo**.\n- **Tam giác đều:** **KHÔNG CÓ** tâm đối xứng!\n- Chữ cái in hoa có tâm đối xứng: **S, N, Z, H, O, I, X**.",
+          "exercises": [
+            {
+              "question": "Hình tam giác đều có tâm đối xứng không?",
+              "options": [
+                "A. Không có",
+                "B. Có 1 tâm đối xứng",
+                "C. Có 3 tâm đối xứng",
+                "D. Vô số"
+              ],
+              "correct_answer": "A",
+              "explanation": "Tam giác đều không có tâm đối xứng (khi quay 180° đỉnh hướng lên trên sẽ biến thành hướng xuống dưới, không trùng khít)."
+            },
+            {
+              "question": "Tâm đối xứng của hình chữ nhật là điểm nào?",
+              "options": [
+                "A. Giao điểm của hai đường chéo",
+                "B. Trung điểm của cạnh dài",
+                "C. Trung điểm của cạnh ngắn",
+                "D. Một đỉnh của hình chữ nhật"
+              ],
+              "correct_answer": "A",
+              "explanation": "Giao điểm của hai đường chéo là tâm đối xứng của hình chữ nhật."
+            },
+            {
+              "question": "Chữ cái nào sau đây vừa có trục đối xứng vừa có tâm đối xứng?",
+              "options": [
+                "A. H",
+                "B. A",
+                "C. S",
+                "D. M"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chữ H vừa có 2 trục đối xứng vừa có tâm đối xứng ở tâm điểm của nét gạch ngang."
+            }
+          ]
+        },
+        {
+          "displayOrder": 34,
+          "title": "Luyện tập chung (Chương V)",
+          "slug": "luyen-tap-chung-chuong-5",
+          "summary": "Phân biệt hình có trục đối xứng, hình có tâm đối xứng, hình có cả hai hoặc không có tính chất nào.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Đối xứng trong tự nhiên)\n\n#### 1. 📌 Bảng phân loại tính đối xứng\n| Hình | Trục đối xứng | Tâm đối xứng |\n| :--- | :---: | :---: |\n| Tam giác đều | Có (3 trục) | **Không** |\n| Tam giác cân | Có (1 trục) | **Không** |\n| Hình bình hành (nói chung) | **Không** | Có (1 tâm) |\n| Hình chữ nhật | Có (2 trục) | Có (1 tâm) |\n| Hình thoi | Có (2 trục) | Có (1 tâm) |\n| Hình vuông | Có (4 trục) | Có (1 tâm) |\n| Hình tròn | Có (vô số) | Có (1 tâm) |",
+          "exercises": [
+            {
+              "question": "Hình nào sau đây CÓ tâm đối xứng nhưng KHÔNG CÓ trục đối xứng?",
+              "options": [
+                "A. Hình bình hành",
+                "B. Hình vuông",
+                "C. Tam giác đều",
+                "D. Hình thang cân"
+              ],
+              "correct_answer": "A",
+              "explanation": "Hình bình hành nói chung có tâm đối xứng (giao điểm 2 đường chéo) nhưng không có trục đối xứng."
+            },
+            {
+              "question": "Biển báo giao thông cấm đi ngược chiều (hình tròn đỏ có vạch ngang trắng ở giữa) có tính chất gì?",
+              "options": [
+                "A. Vừa có trục đối xứng vừa có tâm đối xứng",
+                "B. Chỉ có trục đối xứng",
+                "C. Chỉ có tâm đối xứng",
+                "D. Không có tính đối xứng"
+              ],
+              "correct_answer": "A",
+              "explanation": "Biển cấm đi ngược chiều có 2 trục đối xứng (dọc và ngang) và có tâm đối xứng ở chính giữa."
+            },
+            {
+              "question": "Cánh chong chóng 3 cánh quay có tâm đối xứng không?",
+              "options": [
+                "A. Không có",
+                "B. Có",
+                "C. Có 3 tâm",
+                "D. Tùy kích thước"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chong chóng 3 cánh khi quay 180° không trùng khít với ban đầu nên không có tâm đối xứng."
+            }
+          ]
+        },
+        {
+          "displayOrder": 35,
+          "title": "Bài tập cuối chương V",
+          "slug": "bai-tap-cuoi-chuong-5",
+          "summary": "Tổng kết chương V: Nhận diện tính đối xứng trong hình học, tự nhiên, mỹ thuật và logo biểu trưng.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏆 Bài tập cuối chương V\n\n#### 1. 📌 Tổng kết trọng tâm\n- Khả năng quan sát nhận diện trục đối xứng (đối xứng gương).\n- Khả năng kiểm tra tâm đối xứng (đối xứng qua điểm, quay nửa vòng $180^\\circ$).\n- Ứng dụng vẽ hoa văn trang trí gạch hoa, thiết kế logo đối xứng hài hòa.",
+          "exercises": [
+            {
+              "question": "Hình vuông có bao nhiêu trục đối xứng và bao nhiêu tâm đối xứng?",
+              "options": [
+                "A. 4 trục đối xứng và 1 tâm đối xứng",
+                "B. 2 trục đối xứng và 1 tâm đối xứng",
+                "C. 4 trục đối xứng và không có tâm đối xứng",
+                "D. 2 trục đối xứng và 2 tâm đối xứng"
+              ],
+              "correct_answer": "A",
+              "explanation": "Hình vuông có đúng 4 trục đối xứng và 1 tâm đối xứng (giao điểm 2 đường chéo)."
+            },
+            {
+              "question": "Hình ngôi sao 5 cánh đều có bao nhiêu trục đối xứng?",
+              "options": [
+                "A. 5 trục đối xứng",
+                "B. 1 trục đối xứng",
+                "C. 10 trục đối xứng",
+                "D. Không có trục nào"
+              ],
+              "correct_answer": "A",
+              "explanation": "Ngôi sao 5 cánh có 5 trục đối xứng đi qua mỗi đỉnh cánh sao và điểm lõm đối diện."
+            },
+            {
+              "question": "Số nào trong các số tự nhiên sau có tâm đối xứng khi viết bằng font chữ số dạng led/điện tử?",
+              "options": [
+                "A. 8",
+                "B. 3",
+                "C. 7",
+                "D. 4"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số 8 (và số 0) có tâm đối xứng ở chính giữa."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 6,
+      "title": "Chương VI: Phân số",
+      "description": "Mở rộng phân số với tử và mẫu thuộc ℤ; So sánh phân số, hỗn số; Bốn phép tính với phân số; Hai bài toán kinh điển về phân số.",
+      "lessons": [
+        {
+          "displayOrder": 36,
+          "title": "Bài 23: Mở rộng phân số. Phân số bằng nhau",
+          "slug": "bai-23-mo-rong-phan-so-phan-so-bang-nhau",
+          "summary": "Khái niệm phân số a/b (a, b ∈ ℤ, b ≠ 0); Định nghĩa phân số bằng nhau qua tích chéo a.d = b.c; Tính chất cơ bản của phân số.",
+          "estimatedMinutes": 45,
+          "theory": "### 🍰 Bài 23: Mở rộng phân số. Phân số bằng nhau\n\n#### 1. 📌 Khái niệm phân số mở rộng\n- Ta gọi $\\frac{a}{b}$ với $a, b \\in \\mathbb{Z}, b \\ne 0$ là một **phân số**, $a$ là **tử số** (tử), $b$ là **mẫu số** (mẫu).\n  - Ví dụ: $\\frac{-2}{3}, \\frac{5}{-7}, \\frac{0}{4}, \\frac{-3}{-5}$ đều là các phân số.\n  - Số nguyên $a$ cũng là phân số: $a = \\frac{a}{1}$.\n\n#### 2. 📌 Hai phân số bằng nhau\n- Hai phân số $\\frac{a}{b}$ và $\\frac{c}{d}$ được gọi là bằng nhau nếu:\n  $$a \\cdot d = b \\cdot c \\quad (\\text{Quy tắc nhân chéo})$$\n  - Ví dụ: $\\frac{-3}{4} = \\frac{6}{-8}$ vì $(-3) \\cdot (-8) = 4 \\cdot 6 = 24$.\n\n#### 3. 📌 Tính chất cơ bản của phân số\n$$\\frac{a}{b} = \\frac{a \\cdot m}{b \\cdot m} \\quad (m \\in \\mathbb{Z}, m \\ne 0)$$\n$$\\frac{a}{b} = \\frac{a : n}{b : n} \\quad (n \\in \\text{ƯC}(a, b))$$\n- **Quy ước chuẩn:** Mẫu số của phân số luôn nên viết dưới dạng **số dương** (Ví dụ: viết $\\frac{-2}{3}$ thay vì $\\frac{2}{-3}$).",
+          "exercises": [
+            {
+              "question": "Cặp phân số nào sau đây bằng nhau?",
+              "options": [
+                "A. -2/3 và 4/-6",
+                "B. 1/2 và -1/2",
+                "C. 3/4 và 4/3",
+                "D. -3/5 và 3/5"
+              ],
+              "correct_answer": "A",
+              "explanation": "Vì (-2) x (-6) = 3 x 4 = 12 nên -2/3 = 4/-6."
+            },
+            {
+              "question": "Tìm số nguyên x biết: x/6 = -2/3",
+              "options": [
+                "A. x = -4",
+                "B. x = 4",
+                "C. x = -9",
+                "D. x = -1"
+              ],
+              "correct_answer": "A",
+              "explanation": "x = (6 x (-2)) : 3 = -12 : 3 = -4."
+            },
+            {
+              "question": "Viết phân số 3/-5 thành phân số có mẫu số dương:",
+              "options": [
+                "A. -3/5",
+                "B. 3/5",
+                "C. -3/-5",
+                "D. 5/3"
+              ],
+              "correct_answer": "A",
+              "explanation": "Nhân cả tử và mẫu với -1: (3 x (-1))/((-5) x (-1)) = -3/5."
+            }
+          ]
+        },
+        {
+          "displayOrder": 37,
+          "title": "Bài 24: So sánh phân số. Hỗn số dương",
+          "slug": "bai-24-so-sanh-phan-so-hon-so-duong",
+          "summary": "Quy tắc so sánh phân số có mẫu dương; Phân số âm và phân số dương; Khái niệm và cách đổi hỗn số dương.",
+          "estimatedMinutes": 45,
+          "theory": "### ⚖️ Bài 24: So sánh phân số. Hỗn số dương\n\n#### 1. 📌 So sánh hai phân số\n- Bước 1: Viết hai phân số dưới dạng **mẫu số dương**.\n- Bước 2: Quy đồng mẫu số hai phân số.\n- Bước 3: So sánh các tử số: Tử số nào lớn hơn thì phân số đó lớn hơn:\n  $$\\frac{a}{m} < \\frac{b}{m} \\iff a < b \\quad (m > 0)$$\n- **Nhận xét quan trọng:**\n  - Phân số có tử và mẫu cùng dấu $\\rightarrow$ là **phân số dương** ($> 0$).\n  - Phân số có tử và mẫu khác dấu $\\rightarrow$ là **phân số âm** ($< 0$).\n  - Mọi phân số âm đều bé hơn 0, và bé hơn mọi phân số dương!\n\n#### 2. 📌 Hỗn số dương\n- Phân số lớn hơn 1 có tử không chia hết cho mẫu có thể viết dưới dạng **hỗn số**:\n  $$\\frac{7}{3} = 2 + \\frac{1}{3} = 2\\frac{1}{3} \\quad (\\text{Phần nguyên là 2, phần phân số là } \\frac{1}{3})$$\n- Đổi hỗn số ra phân số: $a\\frac{b}{c} = \\frac{a \\cdot c + b}{c}$.",
+          "exercises": [
+            {
+              "question": "Điền dấu thích hợp: -3/7 ... 2/7",
+              "options": [
+                "A. <",
+                "B. >",
+                "C. =",
+                "D. Không so sánh được"
+              ],
+              "correct_answer": "A",
+              "explanation": "Cùng mẫu dương 7, tử số -3 < 2 nên -3/7 < 2/7."
+            },
+            {
+              "question": "Viết hỗn số 3 và 2/5 dưới dạng phân số:",
+              "options": [
+                "A. 17/5",
+                "B. 11/5",
+                "C. 6/5",
+                "D. 15/5"
+              ],
+              "correct_answer": "A",
+              "explanation": "(3 x 5 + 2)/5 = 17/5."
+            },
+            {
+              "question": "Trong các phân số: -5/6, 3/4, 0/2, -1/3, phân số bé nhất là:",
+              "options": [
+                "A. -5/6",
+                "B. -1/3",
+                "C. 3/4",
+                "D. 0/2"
+              ],
+              "correct_answer": "A",
+              "explanation": "So sánh hai số âm: -5/6 và -1/3 = -2/6. Vì -5 < -2 nên -5/6 bé nhất."
+            }
+          ]
+        },
+        {
+          "displayOrder": 38,
+          "title": "Luyện tập chung (sau Bài 24)",
+          "slug": "luyen-tap-chung-sau-bai-24",
+          "summary": "Kỹ năng rút gọn phân số đến tối giản, quy đồng mẫu số nhiều phân số và sắp xếp dãy phân số.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Rút gọn & Quy đồng phân số)\n\n#### 1. 📌 Quy trình quy đồng mẫu số nhiều phân số\n- Bước 1: Viết các phân số dưới dạng mẫu dương, rút gọn về tối giản.\n- Bước 2: Tìm $\\text{BCNN}$ của các mẫu số để làm **mẫu số chung (MSC)**.\n- Bước 3: Tìm thừa số phụ của mỗi mẫu (lấy $\\text{MSC}$ chia cho từng mẫu).\n- Bước 4: Nhân cả tử và mẫu của mỗi phân số với thừa số phụ tương ứng.",
+          "exercises": [
+            {
+              "question": "Rút gọn phân số (-18)/24 về phân số tối giản:",
+              "options": [
+                "A. -3/4",
+                "B. 3/4",
+                "C. -9/12",
+                "D. -6/8"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chia cả tử và mẫu cho ƯCLN(18, 24) = 6 ta được -3/4."
+            },
+            {
+              "question": "Mẫu số chung nhỏ nhất của hai phân số 5/12 và 7/18 là:",
+              "options": [
+                "A. 36",
+                "B. 72",
+                "C. 216",
+                "D. 18"
+              ],
+              "correct_answer": "A",
+              "explanation": "BCNN(12, 18) = 36."
+            },
+            {
+              "question": "Sắp xếp theo thứ tự tăng dần: -1/2, 0, 1/3, -3/4",
+              "options": [
+                "A. -3/4 < -1/2 < 0 < 1/3",
+                "B. -1/2 < -3/4 < 0 < 1/3",
+                "C. 0 < -1/2 < -3/4 < 1/3",
+                "D. 1/3 < 0 < -1/2 < -3/4"
+              ],
+              "correct_answer": "A",
+              "explanation": "-3/4 = -0,75; -1/2 = -0,5. Thứ tự tăng dần là: -3/4 < -1/2 < 0 < 1/3."
+            }
+          ]
+        },
+        {
+          "displayOrder": 39,
+          "title": "Bài 25: Phép cộng và phép trừ phân số",
+          "slug": "bai-25-phep-cong-va-phep-tru-phan-so",
+          "summary": "Quy tắc cộng trừ phân số cùng mẫu, khác mẫu; Số đối của phân số; Tính chất giao hoán, kết hợp.",
+          "estimatedMinutes": 45,
+          "theory": "### ➕➖ Bài 25: Phép cộng và phép trừ phân số\n\n#### 1. 📌 Quy tắc cộng phân số\n- Cùng mẫu số: $\\frac{a}{m} + \\frac{b}{m} = \\frac{a + b}{m}$.\n- Khác mẫu số: Quy đồng mẫu số rồi cộng các tử số, giữ nguyên mẫu chung.\n- **Tính chất:**\n  - Giao hoán: $\\frac{a}{b} + \\frac{c}{d} = \\frac{c}{d} + \\frac{a}{b}$.\n  - Kết hợp: $(\\frac{a}{b} + \\frac{c}{d}) + \\frac{p}{q} = \\frac{a}{b} + (\\frac{c}{d} + \\frac{p}{q})$.\n  - Cộng với số 0: $\\frac{a}{b} + 0 = \\frac{a}{b}$.\n\n#### 2. 📌 Quy tắc trừ phân số\n- Số đối của phân số $\\frac{a}{b}$ là $-\\frac{a}{b} = \\frac{-a}{b} = \\frac{a}{-b}$.\n- Muốn trừ phân số cho phân số, ta **cộng số bị trừ với số đối của số trừ**:\n  $$\\frac{a}{b} - \\frac{c}{d} = \\frac{a}{b} + \\left(-\\frac{c}{d}\\right)$$",
+          "exercises": [
+            {
+              "question": "Tính: (-3)/5 + 1/5 = ?",
+              "options": [
+                "A. -2/5",
+                "B. 2/5",
+                "C. -4/5",
+                "D. -2/10"
+              ],
+              "correct_answer": "A",
+              "explanation": "(-3 + 1)/5 = -2/5."
+            },
+            {
+              "question": "Tính: 1/2 - (-1/3) = ?",
+              "options": [
+                "A. 5/6",
+                "B. 1/6",
+                "C. -5/6",
+                "D. -1/6"
+              ],
+              "correct_answer": "A",
+              "explanation": "1/2 + 1/3 = 3/6 + 2/6 = 5/6."
+            },
+            {
+              "question": "Tìm x biết: x + 1/3 = -1/6",
+              "options": [
+                "A. x = -1/2",
+                "B. x = 1/2",
+                "C. x = -1/6",
+                "D. x = 1/6"
+              ],
+              "correct_answer": "A",
+              "explanation": "x = -1/6 - 1/3 = -1/6 - 2/6 = -3/6 = -1/2."
+            }
+          ]
+        },
+        {
+          "displayOrder": 40,
+          "title": "Bài 26: Phép nhân và phép chia phân số",
+          "slug": "bai-26-phep-nhan-va-phep-chia-phan-so",
+          "summary": "Quy tắc nhân phân số; Phân số nghịch đảo và quy tắc chia phân số; Tính chất phân phối.",
+          "estimatedMinutes": 45,
+          "theory": "### ✖️➗ Bài 26: Phép nhân và phép chia phân số\n\n#### 1. 📌 Quy tắc nhân phân số\n- Muốn nhân hai phân số, ta lấy tử nhân với tử, mẫu nhân với mẫu:\n  $$\\frac{a}{b} \\cdot \\frac{c}{d} = \\frac{a \\cdot c}{b \\cdot d}$$\n- Tính chất phân phối của phép nhân đối với phép cộng:\n  $$\\frac{a}{b} \\cdot \\left(\\frac{c}{d} + \\frac{p}{q}\\right) = \\frac{a}{b} \\cdot \\frac{c}{d} + \\frac{a}{b} \\cdot \\frac{p}{q}$$\n\n#### 2. 📌 Phân số nghịch đảo & Phép chia phân số\n- Hai số gọi là **nghịch đảo của nhau** nếu tích của chúng bằng 1.\n  - Phân số nghịch đảo của $\\frac{a}{b}$ ($a, b \\ne 0$) là $\\frac{b}{a}$.\n- Muốn chia một phân số cho một phân số khác 0, ta lấy **phân số thứ nhất nhân với phân số nghịch đảo của phân số thứ hai**:\n  $$\\frac{a}{b} : \\frac{c}{d} = \\frac{a}{b} \\cdot \\frac{d}{c} = \\frac{ad}{bc}$$",
+          "exercises": [
+            {
+              "question": "Tính: (-3)/4 x 8/9 = ?",
+              "options": [
+                "A. -2/3",
+                "B. 2/3",
+                "C. -24/36",
+                "D. -1/3"
+              ],
+              "correct_answer": "A",
+              "explanation": "((-3) x 8)/(4 x 9) = -24/36 = -2/3."
+            },
+            {
+              "question": "Phân số nghịch đảo của -5/7 là:",
+              "options": [
+                "A. -7/5",
+                "B. 7/5",
+                "C. 5/7",
+                "D. 1"
+              ],
+              "correct_answer": "A",
+              "explanation": "Phân số nghịch đảo của a/b là b/a, nên nghịch đảo của -5/7 là -7/5 (vì (-5/7) x (-7/5) = 1)."
+            },
+            {
+              "question": "Tính: (-2)/5 : 4/15 = ?",
+              "options": [
+                "A. -3/2",
+                "B. 3/2",
+                "C. -8/75",
+                "D. -2/3"
+              ],
+              "correct_answer": "A",
+              "explanation": "(-2)/5 x 15/4 = (-30)/20 = -3/2."
+            }
+          ]
+        },
+        {
+          "displayOrder": 41,
+          "title": "Bài 27: Hai bài toán về phân số",
+          "slug": "bai-27-hai-bai-toan-ve-phan-so",
+          "summary": "Bài toán 1: Tìm giá trị phân số của một số; Bài toán 2: Tìm một số biết giá trị phân số của nó.",
+          "estimatedMinutes": 45,
+          "theory": "### 🎯 Bài 27: Hai bài toán về phân số\n\n#### 1. 📌 Bài toán 1: Tìm giá trị phân số của một số cho trước\n- Muốn tìm $\\frac{m}{n}$ của số $b$ cho trước, ta tính:\n  $$b \\cdot \\frac{m}{n} \\quad (m, n \\in \\mathbb{N}, n \\ne 0)$$\n- *Ví dụ:* Tìm $\\frac{3}{4}$ của $100$:\n  $$100 \\cdot \\frac{3}{4} = 75$$\n\n#### 2. 📌 Bài toán 2: Tìm một số biết giá trị phân số của nó\n- Muốn tìm một số biết $\\frac{m}{n}$ của nó bằng $a$, ta tính:\n  $$a : \\frac{m}{n} \\quad (m, n \\in \\mathbb{N}^*)$$\n- *Ví dụ:* Tìm một số biết $\\frac{2}{5}$ của nó bằng $20$:\n  $$\\text{Số cần tìm} = 20 : \\frac{2}{5} = 20 \\cdot \\frac{5}{2} = 50$$\n\n#### 3. ⚠️ Mẹo phân biệt hai bài toán\n- Tìm phân số CỦA MỘT SỐ $\\rightarrow$ **Làm phép NHÂN ($\\cdot$)**.\n- Tìm một số BIẾT PHÂN SỐ CỦA NÓ $\\rightarrow$ **Làm phép CHIA ($:$)**.",
+          "exercises": [
+            {
+              "question": "Tìm 2/3 của 60:",
+              "options": [
+                "A. 40",
+                "B. 90",
+                "C. 30",
+                "D. 20"
+              ],
+              "correct_answer": "A",
+              "explanation": "60 x 2/3 = 40 (Bài toán 1: làm phép nhân)."
+            },
+            {
+              "question": "Tìm một số biết 3/5 của nó bằng 27:",
+              "options": [
+                "A. 45",
+                "B. 16,2",
+                "C. 81",
+                "D. 35"
+              ],
+              "correct_answer": "A",
+              "explanation": "27 : 3/5 = 27 x 5/3 = 45 (Bài toán 2: làm phép chia)."
+            },
+            {
+              "question": "Một quyển sách có 120 trang. Ngày đầu Lan đọc được 1/3 số trang sách. Ngày thứ hai Lan đọc được 3/8 số trang còn lại. Hỏi sau 2 ngày Lan còn lại bao nhiêu trang sách chưa đọc?",
+              "options": [
+                "A. 50 trang",
+                "B. 40 trang",
+                "C. 60 trang",
+                "D. 45 trang"
+              ],
+              "correct_answer": "A",
+              "explanation": "Ngày 1 đọc: 120 x 1/3 = 40 trang. Còn lại: 120 - 40 = 80 trang. Ngày 2 đọc: 80 x 3/8 = 30 trang. Chưa đọc: 80 - 30 = 50 trang."
+            }
+          ]
+        },
+        {
+          "displayOrder": 42,
+          "title": "Luyện tập chung (sau Bài 27)",
+          "slug": "luyen-tap-chung-sau-bai-27",
+          "summary": "Vận dụng hỗn hợp tính giá trị biểu thức phân số và giải bài toán thực tế có lời văn nhiều bước.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Biểu thức & Toán thực tế phân số)\n\n#### 1. 📌 Kỹ năng tính giá trị biểu thức thuận tiện\n- Đặt thừa số chung: $A \\cdot B + A \\cdot C = A \\cdot (B + C)$.\n- Khử các số đối nhau: $\\frac{a}{b} + \\left(-\\frac{a}{b}\\right) = 0$.\n- Tách hỗn số: $a\\frac{b}{c} = a + \\frac{b}{c}$ để tính nhẩm nhanh.",
+          "exercises": [
+            {
+              "question": "Tính nhanh: 3/7 x (-4/9) + 3/7 x (-5/9) = ?",
+              "options": [
+                "A. -3/7",
+                "B. 3/7",
+                "C. -1",
+                "D. 0"
+              ],
+              "correct_answer": "A",
+              "explanation": "3/7 x [(-4/9) + (-5/9)] = 3/7 x (-1) = -3/7."
+            },
+            {
+              "question": "Một người bán cam, lần thứ nhất bán 1/2 số cam, lần thứ hai bán 1/3 số cam thì còn lại 10 quả. Ban đầu người đó có bao nhiêu quả cam?",
+              "options": [
+                "A. 60 quả",
+                "B. 50 quả",
+                "C. 40 quả",
+                "D. 70 quả"
+              ],
+              "correct_answer": "A",
+              "explanation": "Phân số chỉ số cam còn lại: 1 - 1/2 - 1/3 = 1/6 số cam. Tổng số cam: 10 : 1/6 = 60 quả."
+            },
+            {
+              "question": "Giá trị của biểu thức A = (1 - 1/2) x (1 - 1/3) x (1 - 1/4) là:",
+              "options": [
+                "A. 1/4",
+                "B. 1/2",
+                "C. 3/4",
+                "D. 1/12"
+              ],
+              "correct_answer": "A",
+              "explanation": "A = 1/2 x 2/3 x 3/4 = 1/4 (rút gọn liên tiếp)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 43,
+          "title": "Bài tập cuối chương VI",
+          "slug": "bai-tap-cuoi-chuong-6",
+          "summary": "Tổng kết chương VI: Định nghĩa phân số, tính chất cơ bản, bốn phép tính, hỗn số và hai bài toán về phân số.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏆 Bài tập cuối chương VI\n\n#### 1. 📌 Ma trận kiến thức chương VI\n- Phân số: Tử và mẫu $\\in \\mathbb{Z}$, mẫu $\\ne 0$.\n- Rút gọn về tối giản, quy đồng mẫu số.\n- Phép tính: Cộng, trừ (quy đồng), Nhân (tử nhân tử, mẫu nhân mẫu), Chia (nhân nghịch đảo).\n- Hai bài toán phân số:\n  - $b \\cdot \\frac{m}{n}$ (tìm giá trị phân số).\n  - $a : \\frac{m}{n}$ (tìm số biết giá trị phân số).",
+          "exercises": [
+            {
+              "question": "Nghịch đảo của tổng 1/3 + 1/6 là:",
+              "options": [
+                "A. 2",
+                "B. 1/2",
+                "C. 3",
+                "D. 6"
+              ],
+              "correct_answer": "A",
+              "explanation": "1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2. Số nghịch đảo của 1/2 là 2."
+            },
+            {
+              "question": "Tìm x biết: 3/4 x = -9/16",
+              "options": [
+                "A. x = -3/4",
+                "B. x = 3/4",
+                "C. x = -27/64",
+                "D. x = -4/3"
+              ],
+              "correct_answer": "A",
+              "explanation": "x = (-9/16) : 3/4 = (-9/16) x 4/3 = -3/4."
+            },
+            {
+              "question": "Một lớp có 40 học sinh, số học sinh khá chiếm 60% số học sinh cả lớp. Số học sinh khá của lớp là:",
+              "options": [
+                "A. 24 học sinh",
+                "B. 20 học sinh",
+                "C. 28 học sinh",
+                "D. 25 học sinh"
+              ],
+              "correct_answer": "A",
+              "explanation": "40 x 60% = 40 x 60/100 = 24 học sinh."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 7,
+      "title": "Chương VII: Số thập phân",
+      "description": "Số thập phân âm và dương; Bốn phép tính số thập phân; Làm tròn và ước lượng kết quả; Tỉ số và tỉ số phần trăm.",
+      "lessons": [
+        {
+          "displayOrder": 44,
+          "title": "Bài 28: Số thập phân",
+          "slug": "bai-28-so-thap-phan",
+          "summary": "Phân số thập phân, số thập phân âm và dương, phần nguyên và phần thập phân, so sánh số thập phân.",
+          "estimatedMinutes": 45,
+          "theory": "### 🔟 Bài 28: Số thập phân\n\n#### 1. 📌 Định nghĩa & Cấu tạo\n- **Phân số thập phân:** Là phân số mà mẫu số là lũy thừa của 10 (ví dụ: $\\frac{3}{10}, \\frac{-15}{100}, \\frac{27}{1000}$).\n- Phân số thập phân có thể viết dưới dạng **số thập phân**:\n  $$\\frac{3}{10} = 0,3 \\qquad \\frac{-15}{100} = -0,15$$\n- Cấu tạo số thập phân gồm hai phần cách nhau bởi dấu phẩy:\n  - **Phần nguyên:** Viết bên trái dấu phẩy.\n  - **Phần thập phân:** Viết bên phải dấu phẩy (các hàng phần mười, phần trăm, phần nghìn,...).\n- Số đối của số thập phân $a$ là $-a$.\n\n#### 2. 📌 So sánh số thập phân\n- Mọi số thập phân âm đều nhỏ hơn 0 và nhỏ hơn mọi số thập phân dương.\n- Để so sánh hai số thập phân dương: So sánh phần nguyên trước, nếu bằng nhau thì so sánh lần lượt các hàng phần mười, phần trăm,...\n- Để so sánh hai số thập phân âm: Số nào có phần số dương lớn hơn thì số đó **bé hơn** (Ví dụ: $-3,5 < -2,8$).",
+          "exercises": [
+            {
+              "question": "Phân số thập phân -27/100 được viết dưới dạng số thập phân là:",
+              "options": [
+                "A. -0,27",
+                "B. -2,7",
+                "C. -0,027",
+                "D. 0,27"
+              ],
+              "correct_answer": "A",
+              "explanation": "-27/100 = -0,27."
+            },
+            {
+              "question": "Điền dấu thích hợp: -4,5 ... -4,3",
+              "options": [
+                "A. <",
+                "B. >",
+                "C. =",
+                "D. Không so sánh được"
+              ],
+              "correct_answer": "A",
+              "explanation": "Vì 4,5 > 4,3 nên -4,5 < -4,3."
+            },
+            {
+              "question": "Số đối của số thập phân -12,45 là:",
+              "options": [
+                "A. 12,45",
+                "B. -12,45",
+                "C. 124,5",
+                "D. -1,245"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số đối của số âm là số dương cùng độ lớn: 12,45."
+            }
+          ]
+        },
+        {
+          "displayOrder": 45,
+          "title": "Bài 29: Tính toán với số thập phân",
+          "slug": "bai-29-tinh-toan-voi-so-thap-phan",
+          "summary": "Quy tắc cộng, trừ, nhân, chia số thập phân có dấu (áp dụng quy tắc dấu tương tự số nguyên).",
+          "estimatedMinutes": 45,
+          "theory": "### ➕➖✖️➗ Bài 29: Tính toán với số thập phân\n\n#### 1. 📌 Quy tắc dấu trong phép tính số thập phân\nQuy tắc dấu của số thập phân **hoàn toàn giống như số nguyên**:\n- **Cộng/Trừ:**\n  - Cùng dấu âm: $(-a) + (-b) = -(a + b)$\n  - Khác dấu: Lấy số lớn trừ số bé, đặt dấu của số lớn hơn trước kết quả.\n  - Phép trừ: $a - b = a + (-b)$\n- **Nhân/Chia:**\n  - Cùng dấu: Tích và thương mang dấu **dương (+)**.\n  - Khác dấu: Tích và thương mang dấu **âm (-)**.\n  - Ví dụ: $(-2,5) \\cdot (-4) = 10$; $(-7,2) : 2 = -3,6$.\n\n#### 2. 💡 Tính chất phép toán\n- Đầy đủ tính chất giao hoán, kết hợp và phân phối:\n  $$a \\cdot b + a \\cdot c = a \\cdot (b + c)$$",
+          "exercises": [
+            {
+              "question": "Tính: (-3,2) + (-1,8) = ?",
+              "options": [
+                "A. -5",
+                "B. 5",
+                "C. -1,4",
+                "D. 1,4"
+              ],
+              "correct_answer": "A",
+              "explanation": "-(3,2 + 1,8) = -5,0 = -5."
+            },
+            {
+              "question": "Tính: (-0,25) x (-40) = ?",
+              "options": [
+                "A. 10",
+                "B. -10",
+                "C. 1",
+                "D. -1"
+              ],
+              "correct_answer": "A",
+              "explanation": "Nhân hai số âm được kết quả dương: 0,25 x 40 = 10."
+            },
+            {
+              "question": "Tính hợp lý: 3,5 x 12,4 + 3,5 x (-2,4) = ?",
+              "options": [
+                "A. 35",
+                "B. 3,5",
+                "C. 350",
+                "D. 30"
+              ],
+              "correct_answer": "A",
+              "explanation": "3,5 x [12,4 + (-2,4)] = 3,5 x 10 = 35."
+            }
+          ]
+        },
+        {
+          "displayOrder": 46,
+          "title": "Bài 30: Làm tròn và ước lượng",
+          "slug": "bai-30-lam-tron-va-uoc-luong",
+          "summary": "Quy tắc làm tròn số thập phân đến hàng đơn vị, hàng phần mười (chữ số thập phân thứ nhất), phần trăm và ước lượng kết quả.",
+          "estimatedMinutes": 45,
+          "theory": "### 🎯 Bài 30: Làm tròn và ước lượng\n\n#### 1. 📌 Quy tắc làm tròn số thập phân\nMuốn làm tròn số thập phân đến một hàng nào đó (gọi là hàng làm tròn), ta nhìn vào **chữ số ngay bên phải** của hàng đó:\n- Nếu chữ số ngay bên phải nhỏ hơn 5 ($0, 1, 2, 3, 4$): Ta giữ nguyên chữ số của hàng làm tròn.\n- Nếu chữ số ngay bên phải từ 5 trở lên ($5, 6, 7, 8, 9$): Ta **cộng thêm 1** vào chữ số của hàng làm tròn.\n- Các chữ số ở phần thập phân sau hàng làm tròn thì bỏ đi. Các chữ số ở phần nguyên sau hàng làm tròn thay bằng các chữ số 0.\n- *Ví dụ:*\n  - Làm tròn $4,32$ đến hàng phần mười $\\rightarrow 4,3$.\n  - Làm tròn $7,86$ đến hàng phần mười $\\rightarrow 7,9$.\n  - Làm tròn $12,745$ với độ chính xác $0,05$ (đến hàng phần trăm) $\\rightarrow 12,75$.",
+          "exercises": [
+            {
+              "question": "Làm tròn số 3,14159 đến chữ số thập phân thứ hai (hàng phần trăm) ta được:",
+              "options": [
+                "A. 3,14",
+                "B. 3,15",
+                "C. 3,1",
+                "D. 3,142"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chữ số hàng phần trăm là 4, chữ số ngay sau là 1 (< 5) nên giữ nguyên: 3,14."
+            },
+            {
+              "question": "Làm tròn số -4,567 đến hàng phần mười được kết quả:",
+              "options": [
+                "A. -4,6",
+                "B. -4,5",
+                "C. -4,57",
+                "D. -5"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chữ số sau phần mười là 6 (>= 5) nên tăng thêm 1 thành -4,6."
+            },
+            {
+              "question": "Ước lượng kết quả phép tính 19,8 x 5,1 bằng cách làm tròn đến hàng đơn vị:",
+              "options": [
+                "A. 100",
+                "B. 90",
+                "C. 110",
+                "D. 95"
+              ],
+              "correct_answer": "A",
+              "explanation": "19,8 làm tròn thành 20; 5,1 làm tròn thành 5. Ước lượng: 20 x 5 = 100."
+            }
+          ]
+        },
+        {
+          "displayOrder": 47,
+          "title": "Bài 31: Một số bài toán về tỉ số và tỉ số phần trăm",
+          "slug": "bai-31-mot-so-bai-toan-ve-ti-so-va-ti-so-phan-tram",
+          "summary": "Tỉ số của hai số a và b (a/b); Tỉ số phần trăm; Hai bài toán về tỉ số phần trăm trong đời sống.",
+          "estimatedMinutes": 45,
+          "theory": "### 📊 Bài 31: Tỉ số và tỉ số phần trăm\n\n#### 1. 📌 Tỉ số của hai số\n- Tỉ số của hai số $a$ và $b$ ($b \\ne 0$) là thương trong phép chia số $a$ cho số $b$, ký hiệu là $\\frac{a}{b}$ hoặc $a : b$.\n- **Lưu ý:** Hai đại lượng phải cùng đơn vị đo thì mới lập tỉ số.\n\n#### 2. 📌 Tỉ số phần trăm\n- Tỉ số phần trăm của hai số $a$ và $b$ là:\n  $$\\frac{a \\cdot 100}{b}\\%$$\n- **Bài toán 1:** Tìm $p\\%$ của số $A$:\n  $$A \\cdot \\frac{p}{100}$$\n- **Bài toán 2:** Tìm một số khi biết $p\\%$ của nó bằng $B$:\n  $$B : \\frac{p}{100} = \\frac{B \\cdot 100}{p}$$",
+          "exercises": [
+            {
+              "question": "Tỉ số phần trăm của 15 và 60 là:",
+              "options": [
+                "A. 25%",
+                "B. 20%",
+                "C. 30%",
+                "D. 40%"
+              ],
+              "correct_answer": "A",
+              "explanation": "(15 x 100) : 60 = 1500 : 60 = 25%."
+            },
+            {
+              "question": "Tính 20% của 150 000 đồng:",
+              "options": [
+                "A. 30 000 đồng",
+                "B. 20 000 đồng",
+                "C. 15 000 đồng",
+                "D. 25 000 đồng"
+              ],
+              "correct_answer": "A",
+              "explanation": "150 000 x 20% = 150 000 x 20 / 100 = 30 000 đồng."
+            },
+            {
+              "question": "Tìm một số biết 25% của nó bằng 50:",
+              "options": [
+                "A. 200",
+                "B. 100",
+                "C. 150",
+                "D. 250"
+              ],
+              "correct_answer": "A",
+              "explanation": "50 : 25% = 50 : (25/100) = 50 x 4 = 200."
+            }
+          ]
+        },
+        {
+          "displayOrder": 48,
+          "title": "Luyện tập chung (Chương VII)",
+          "slug": "luyen-tap-chung-chuong-7",
+          "summary": "Ứng dụng tỉ số phần trăm tính tiền lãi ngân hàng, chiết khấu giảm giá, nồng độ dung dịch.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Toán tài chính & Thực tế)\n\n#### 1. 📌 Dạng toán giảm giá & Tiền lãi\n- **Giảm giá (Sale off):**\n  $$\\text{Số tiền giảm} = \\text{Giá gốc} \\times \\text{Phần trăm giảm}$$\n  $$\\text{Giá phải trả} = \\text{Giá gốc} - \\text{Số tiền giảm} = \\text{Giá gốc} \\times (100\\% - \\%\\text{giảm})$$\n- **Lãi suất gửi tiết kiệm:**\n  $$\\text{Tiền lãi sau 1 năm} = \\text{Tiền gửi} \\times \\text{Lãi suất năm}$$",
+          "exercises": [
+            {
+              "question": "Một chiếc áo giá 200 000 đồng được giảm giá 15%. Số tiền người mua phải trả là:",
+              "options": [
+                "A. 170 000 đồng",
+                "B. 185 000 đồng",
+                "C. 160 000 đồng",
+                "D. 175 000 đồng"
+              ],
+              "correct_answer": "A",
+              "explanation": "Tiền giảm = 200 000 x 15% = 30 000 đồng. Tiền phải trả = 200 000 - 30 000 = 170 000 đồng."
+            },
+            {
+              "question": "Bác An gửi tiết kiệm 50 triệu đồng với lãi suất 6%/năm. Sau một năm bác nhận được số tiền lãi là:",
+              "options": [
+                "A. 3 triệu đồng",
+                "B. 300 000 đồng",
+                "C. 6 triệu đồng",
+                "D. 5 triệu đồng"
+              ],
+              "correct_answer": "A",
+              "explanation": "50 000 000 x 6% = 3 000 000 đồng (3 triệu đồng)."
+            },
+            {
+              "question": "Trong 400g dung dịch nước muối có 20g muối tinh khiết. Nồng độ phần trăm của muối trong dung dịch là:",
+              "options": [
+                "A. 5%",
+                "B. 4%",
+                "C. 10%",
+                "D. 2%"
+              ],
+              "correct_answer": "A",
+              "explanation": "(20 : 400) x 100% = 5%."
+            }
+          ]
+        },
+        {
+          "displayOrder": 49,
+          "title": "Bài tập cuối chương VII",
+          "slug": "bai-tap-cuoi-chuong-7",
+          "summary": "Tổng kết chương VII: Số thập phân âm dương, bốn phép tính, làm tròn và tỉ số phần trăm.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏆 Bài tập cuối chương VII\n\n#### 1. 📌 Ôn tập toàn diện\n- Đổi linh hoạt giữa phân số, số thập phân và tỉ số phần trăm:\n  $$\\frac{1}{4} = 0,25 = 25\\%$$\n  $$\\frac{1}{2} = 0,5 = 50\\%$$\n  $$\\frac{3}{4} = 0,75 = 75\\%$$\n- Nắm chắc thứ tự thực hiện phép tính và làm tròn số theo yêu cầu đề bài.",
+          "exercises": [
+            {
+              "question": "Tính: (-1,5) x 4 + 2,5 : 0,5 = ?",
+              "options": [
+                "A. -1",
+                "B. 1",
+                "C. 11",
+                "D. -11"
+              ],
+              "correct_answer": "A",
+              "explanation": "(-1,5) x 4 = -6; 2,5 : 0,5 = 5. Kết quả = -6 + 5 = -1."
+            },
+            {
+              "question": "Số thập phân 0,08 được viết dưới dạng tỉ số phần trăm là:",
+              "options": [
+                "A. 8%",
+                "B. 80%",
+                "C. 0,8%",
+                "D. 0,08%"
+              ],
+              "correct_answer": "A",
+              "explanation": "0,08 x 100% = 8%."
+            },
+            {
+              "question": "Làm tròn số 85,672 đến hàng đơn vị được:",
+              "options": [
+                "A. 86",
+                "B. 85",
+                "C. 85,7",
+                "D. 90"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chữ số sau hàng đơn vị là 6 (>= 5) nên làm tròn lên thành 86."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 8,
+      "title": "Chương VIII: Những hình học cơ bản",
+      "description": "Điểm, đường thẳng, ba điểm thẳng hàng; Tia, đoạn thẳng, độ dài đoạn thẳng và trung điểm; Khái niệm góc và số đo góc.",
+      "lessons": [
+        {
+          "displayOrder": 50,
+          "title": "Bài 32: Điểm và đường thẳng",
+          "slug": "bai-32-diem-va-duong-thang",
+          "summary": "Điểm, đường thẳng, điểm thuộc/không thuộc đường thẳng; Ba điểm thẳng hàng và hai đường thẳng cắt nhau, song song.",
+          "estimatedMinutes": 45,
+          "theory": "### 📍 Bài 32: Điểm và đường thẳng\n\n#### 1. 📌 Điểm và đường thẳng\n- Điểm được biểu diễn bằng một dấu chấm nhỏ, đặt tên bằng chữ cái in hoa: $A, B, C,\\dots$\n- Đường thẳng không bị giới hạn về hai phía, đặt tên bằng chữ cái in thường: $a, b, m, d,\\dots$ hoặc đi qua hai điểm: đường thẳng $AB$.\n- **Quan hệ thuộc/không thuộc:**\n  - Điểm $A$ thuộc đường thẳng $d$: ký hiệu $A \\in d$.\n  - Điểm $B$ không thuộc đường thẳng $d$: ký hiệu $B \\notin d$.\n- Có **một và chỉ một** đường thẳng đi qua hai điểm phân biệt cho trước.\n\n#### 2. 📌 Ba điểm thẳng hàng\n- Khi ba điểm cùng thuộc một đường thẳng, ta nói chúng **thẳng hàng**.\n- Khi ba điểm không cùng thuộc bất kì đường thẳng nào, ta nói chúng **không thẳng hàng**.",
+          "exercises": [
+            {
+              "question": "Qua hai điểm phân biệt A và B có thể vẽ được bao nhiêu đường thẳng?",
+              "options": [
+                "A. Duy nhất 1 đường thẳng",
+                "B. 2 đường thẳng",
+                "C. Vô số đường thẳng",
+                "D. Không có đường thẳng nào"
+              ],
+              "correct_answer": "A",
+              "explanation": "Có một và chỉ một đường thẳng đi qua hai điểm phân biệt cho trước."
+            },
+            {
+              "question": "Ba điểm thẳng hàng là ba điểm:",
+              "options": [
+                "A. Cùng thuộc một đường thẳng",
+                "B. Không cùng thuộc một đường thẳng",
+                "C. Cách đều nhau",
+                "D. Tạo thành một tam giác"
+              ],
+              "correct_answer": "A",
+              "explanation": "Định nghĩa: Khi ba điểm cùng thuộc một đường thẳng, ta nói chúng thẳng hàng."
+            },
+            {
+              "question": "Hai đường thẳng phân biệt có thể có nhiều nhất bao nhiêu điểm chung?",
+              "options": [
+                "A. 1 điểm chung",
+                "B. 2 điểm chung",
+                "C. Vô số điểm chung",
+                "D. 0 điểm chung"
+              ],
+              "correct_answer": "A",
+              "explanation": "Hai đường thẳng phân biệt chỉ có thể cắt nhau (1 điểm chung) hoặc song song (0 điểm chung)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 51,
+          "title": "Bài 33: Điểm nằm giữa hai điểm. Tia",
+          "slug": "bai-33-diem-nam-giua-hai-diem-tia",
+          "summary": "Quan hệ điểm nằm giữa hai điểm; Định nghĩa tia gốc O, hai tia đối nhau và hai tia trùng nhau.",
+          "estimatedMinutes": 45,
+          "theory": "### ➡️ Bài 33: Điểm nằm giữa hai điểm. Tia\n\n#### 1. 📌 Điểm nằm giữa hai điểm\n- Cho ba điểm thẳng hàng $A, B, C$. Nếu điểm $B$ nằm giữa hai điểm $A$ và $C$ thì hai điểm $A$ và $C$ nằm về hai phía đối với điểm $B$.\n\n#### 2. 📌 Tia (nửa đường thẳng)\n- Hình gồm điểm $O$ và một phần đường thẳng bị chia ra bởi điểm $O$ gọi là một **tia gốc O** (ký hiệu là tia $Ox$ hoặc tia $OA$).\n- **Hai tia đối nhau:** Hai tia chung gốc tạo thành một đường thẳng gọi là hai tia đối nhau.\n  - Ví dụ: Điểm $O$ nằm trên đường thẳng $xy$, tia $Ox$ và tia $Oy$ là hai tia đối nhau.\n- **Hai tia trùng nhau:** Tia $Ox$ và tia $OA$ (với $A$ thuộc tia $Ox$) là hai tia trùng nhau.",
+          "exercises": [
+            {
+              "question": "Hai tia đối nhau là hai tia:",
+              "options": [
+                "A. Chung gốc và tạo thành một đường thẳng",
+                "B. Song song với nhau",
+                "C. Không chung gốc",
+                "D. Vuông góc với nhau"
+              ],
+              "correct_answer": "A",
+              "explanation": "Hai tia chung gốc và tạo thành một đường thẳng thẳng hàng gọi là hai tia đối nhau."
+            },
+            {
+              "question": "Nếu điểm M nằm giữa hai điểm A và B thì:",
+              "options": [
+                "A. Hai tia MA và MB là hai tia đối nhau",
+                "B. Hai tia MA và MB là hai tia trùng nhau",
+                "C. MA = MB",
+                "D. A, M, B không thẳng hàng"
+              ],
+              "correct_answer": "A",
+              "explanation": "Khi M nằm giữa A và B thì hai tia xuất phát từ gốc M đi về hai phía A và B là hai tia đối nhau."
+            },
+            {
+              "question": "Tia Ox bị giới hạn ở đâu?",
+              "options": [
+                "A. Bị giới hạn ở gốc O",
+                "B. Bị giới hạn ở phía x",
+                "C. Giới hạn ở cả hai đầu",
+                "D. Không bị giới hạn"
+              ],
+              "correct_answer": "A",
+              "explanation": "Tia bị chặn lại ở điểm gốc O và kéo dài vô tận về phía x."
+            }
+          ]
+        },
+        {
+          "displayOrder": 52,
+          "title": "Bài 34: Đoạn thẳng. Độ dài đoạn thẳng",
+          "slug": "bai-34-doan-thang-do-dai-doan-thang",
+          "summary": "Khái niệm đoạn thẳng AB, độ dài đoạn thẳng và tính chất: M nằm giữa A và B thì AM + MB = AB.",
+          "estimatedMinutes": 45,
+          "theory": "### 📏 Bài 34: Đoạn thẳng. Độ dài đoạn thẳng\n\n#### 1. 📌 Đoạn thẳng\n- Đoạn thẳng $AB$ (hay đoạn thẳng $BA$) là hình gồm hai điểm $A, B$ và tất cả các điểm nằm giữa $A$ và $B$.\n- Hai điểm $A, B$ gọi là **hai mút** (hoặc hai đầu) của đoạn thẳng.\n\n#### 2. 📌 Độ dài đoạn thẳng & Hệ thức cộng đoạn thẳng\n- Mỗi đoạn thẳng có một độ dài là một số dương.\n- **Tính chất cộng độ dài đoạn thẳng:**\n  $$\\text{Nếu điểm } M \\text{ nằm giữa hai điểm } A \\text{ và } B \\iff AM + MB = AB$$\n- Nếu $AM + MB \\ne AB$ thì điểm $M$ không nằm giữa hai điểm $A$ và $B$.",
+          "exercises": [
+            {
+              "question": "Cho điểm M nằm giữa hai điểm A và B. Biết AM = 3 cm, MB = 4 cm. Độ dài đoạn thẳng AB là:",
+              "options": [
+                "A. 7 cm",
+                "B. 1 cm",
+                "C. 12 cm",
+                "D. 5 cm"
+              ],
+              "correct_answer": "A",
+              "explanation": "Vì M nằm giữa A và B nên AB = AM + MB = 3 + 4 = 7 cm."
+            },
+            {
+              "question": "Cho đoạn thẳng AB = 8 cm. Điểm K nằm giữa A và B sao cho AK = 5 cm. Độ dài đoạn KB là:",
+              "options": [
+                "A. 3 cm",
+                "B. 13 cm",
+                "C. 4 cm",
+                "D. 2 cm"
+              ],
+              "correct_answer": "A",
+              "explanation": "KB = AB - AK = 8 - 5 = 3 cm."
+            },
+            {
+              "question": "Đoạn thẳng AB khác đường thẳng AB ở điểm nào?",
+              "options": [
+                "A. Đoạn thẳng bị giới hạn ở hai đầu mút, đường thẳng kéo dài vô tận",
+                "B. Đoạn thẳng không đo được",
+                "C. Đoạn thẳng kéo dài vô tận",
+                "D. Không có điểm khác nhau"
+              ],
+              "correct_answer": "A",
+              "explanation": "Đoạn thẳng có hai đầu mút cố định và đo được độ dài, còn đường thẳng kéo dài vô tận về hai phía."
+            }
+          ]
+        },
+        {
+          "displayOrder": 53,
+          "title": "Bài 35: Trung điểm của đoạn thẳng",
+          "slug": "bai-35-trung-diem-cua-doan-thang",
+          "summary": "Định nghĩa trung điểm của đoạn thẳng (nằm giữa và cách đều hai đầu mút); Công thức AM = MB = AB / 2.",
+          "estimatedMinutes": 45,
+          "theory": "### 📍 Bài 35: Trung điểm của đoạn thẳng\n\n#### 1. 📌 Định nghĩa trung điểm\n- **Trung điểm $M$ của đoạn thẳng $AB$** (còn gọi là điểm chính giữa của đoạn thẳng $AB$) là điểm:\n  1. Nằm giữa hai điểm $A$ và $B$.\n  2. Cách đều hai điểm $A$ và $B$ ($MA = MB$).\n- Hệ thức:\n  $$AM = MB = \\frac{AB}{2}$$\n\n#### 2. 💡 Cách xác định trung điểm\n- Dùng thước có vạch chia đo độ dài $AB$, rồi lấy điểm $M$ ứng với vạch $\\frac{AB}{2}$.\n- Gấp giấy: Gấp sao cho đầu mút $A$ trùng với đầu mút $B$, nếp gấp chính là vị trí trung điểm $M$.",
+          "exercises": [
+            {
+              "question": "Cho đoạn thẳng AB dài 10 cm. M là trung điểm của AB. Độ dài đoạn AM là:",
+              "options": [
+                "A. 5 cm",
+                "B. 20 cm",
+                "C. 4 cm",
+                "D. 6 cm"
+              ],
+              "correct_answer": "A",
+              "explanation": "M là trung điểm nên AM = AB : 2 = 10 : 2 = 5 cm."
+            },
+            {
+              "question": "Điểm M là trung điểm của đoạn thẳng AB khi thỏa mãn đồng thời hai điều kiện nào?",
+              "options": [
+                "A. M nằm giữa A, B và MA = MB",
+                "B. MA = MB",
+                "C. M nằm giữa A và B",
+                "D. M thuộc đường thẳng AB"
+              ],
+              "correct_answer": "A",
+              "explanation": "Trung điểm phải vừa nằm giữa vừa cách đều hai đầu mút."
+            },
+            {
+              "question": "Cho đoạn thẳng CD có trung điểm là I. Biết CI = 6 cm. Độ dài đoạn CD là:",
+              "options": [
+                "A. 12 cm",
+                "B. 3 cm",
+                "C. 6 cm",
+                "D. 9 cm"
+              ],
+              "correct_answer": "A",
+              "explanation": "CD = 2 x CI = 2 x 6 = 12 cm."
+            }
+          ]
+        },
+        {
+          "displayOrder": 54,
+          "title": "Luyện tập chung (sau Bài 35)",
+          "slug": "luyen-tap-chung-sau-bai-35",
+          "summary": "Kỹ năng chứng minh điểm nằm giữa, tính độ dài đoạn thẳng và chứng minh một điểm là trung điểm.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Đoạn thẳng & Trung điểm)\n\n#### 1. 📌 Dạng toán chứng minh trung điểm\nĐể chứng minh $M$ là trung điểm của đoạn thẳng $AB$, ta cần chỉ ra:\n1. $M$ nằm giữa $A$ và $B$ (hoặc $AM + MB = AB$).\n2. $MA = MB$.",
+          "exercises": [
+            {
+              "question": "Trên tia Ox lấy hai điểm A và B sao cho OA = 3 cm, OB = 6 cm. Khẳng định nào sau đây đúng?",
+              "options": [
+                "A. A là trung điểm của đoạn thẳng OB",
+                "B. B là trung điểm của đoạn thẳng OA",
+                "C. O là trung điểm của đoạn thẳng AB",
+                "D. A không phải là trung điểm của OB"
+              ],
+              "correct_answer": "A",
+              "explanation": "Vì OA < OB (3 < 6) nên A nằm giữa O và B. AB = OB - OA = 3 cm. Do OA = AB = 3 cm nên A là trung điểm của OB."
+            },
+            {
+              "question": "Cho 4 điểm phân biệt A, B, C, D thẳng hàng theo thứ tự đó. Biết AB = BC = CD = 2 cm. Trung điểm của đoạn AD là điểm nào?",
+              "options": [
+                "A. Điểm C",
+                "B. Điểm B",
+                "C. Không có điểm nào trong 4 điểm",
+                "D. Cả B và C"
+              ],
+              "correct_answer": "C",
+              "explanation": "AD = 6 cm, trung điểm AD cách A 3 cm (ở chính giữa B và C), không trùng với điểm nào trong 4 điểm."
+            },
+            {
+              "question": "Có bao nhiêu đoạn thẳng được tạo thành từ 4 điểm phân biệt không thẳng hàng?",
+              "options": [
+                "A. 6 đoạn thẳng",
+                "B. 4 đoạn thẳng",
+                "C. 8 đoạn thẳng",
+                "D. 12 đoạn thẳng"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số đoạn thẳng = (4 x 3) : 2 = 6 đoạn thẳng."
+            }
+          ]
+        },
+        {
+          "displayOrder": 55,
+          "title": "Bài 36: Góc",
+          "slug": "bai-36-goc",
+          "summary": "Khái niệm góc, đỉnh, cạnh của góc; Ký hiệu góc và điểm nằm trong góc.",
+          "estimatedMinutes": 45,
+          "theory": "### 📐 Bài 36: Góc\n\n#### 1. 📌 Khái niệm góc\n- **Góc** là hình gồm hai tia chung gốc.\n  - Gốc chung gọi là **đỉnh** của góc.\n  - Hai tia gọi là hai **cạnh** của góc.\n- Ký hiệu: Góc tạo bởi hai tia $Ox$ và $Oy$ được ký hiệu là $\\widehat{xOy}$ (hoặc $\\widehat{yOx}$, hoặc $\\widehat{O}$).\n- **Góc bẹt:** Là góc có hai cạnh là hai tia đối nhau.\n- **Điểm nằm trong góc:** Điểm $M$ nằm giữa hai tia của góc không bẹt.",
+          "exercises": [
+            {
+              "question": "Góc xOy có đỉnh và các cạnh lần lượt là:",
+              "options": [
+                "A. Đỉnh O, hai cạnh là Ox và Oy",
+                "B. Đỉnh x, hai cạnh là Oy và Ox",
+                "C. Đỉnh y, hai cạnh là Ox và Oy",
+                "D. Đỉnh O, hai cạnh là xy và yx"
+              ],
+              "correct_answer": "A",
+              "explanation": "Đỉnh là gốc chung O, hai cạnh là hai tia Ox và Oy."
+            },
+            {
+              "question": "Góc bẹt là góc có hai cạnh là:",
+              "options": [
+                "A. Hai tia đối nhau",
+                "B. Hai tia trùng nhau",
+                "C. Hai tia vuông góc",
+                "D. Hai tia song song"
+              ],
+              "correct_answer": "A",
+              "explanation": "Góc bẹt có hai cạnh là hai tia đối nhau tạo thành đường thẳng."
+            },
+            {
+              "question": "Một hình tam giác có bao nhiêu góc?",
+              "options": [
+                "A. 3 góc",
+                "B. 4 góc",
+                "C. 2 góc",
+                "D. 6 góc"
+              ],
+              "correct_answer": "A",
+              "explanation": "Hình tam giác có đúng 3 đỉnh tương ứng với 3 góc."
+            }
+          ]
+        },
+        {
+          "displayOrder": 56,
+          "title": "Bài 37: Số đo góc",
+          "slug": "bai-37-so-do-goc",
+          "summary": "Đo góc bằng thước đo góc; Phân loại góc nhọn, góc vuông, góc tù, góc bẹt dựa vào số đo.",
+          "estimatedMinutes": 45,
+          "theory": "### 📐 Bài 37: Số đo góc\n\n#### 1. 📌 Đo góc\n- Mỗi góc có một số đo. Số đo của góc bẹt là $180^\\circ$.\n- Số đo của mỗi góc không vượt quá $180^\\circ$.\n\n#### 2. 📌 Phân loại các góc theo số đo\n- **Góc vuông:** Số đo bằng $90^\\circ$.\n- **Góc nhọn:** Số đo lớn hơn $0^\\circ$ và nhỏ hơn $90^\\circ$ ($0^\\circ < \\alpha < 90^\\circ$).\n- **Góc tù:** Số đo lớn hơn $90^\\circ$ và nhỏ hơn $180^\\circ$ ($90^\\circ < \\alpha < 180^\\circ$).\n- **Góc bẹt:** Số đo đúng bằng $180^\\circ$.",
+          "exercises": [
+            {
+              "question": "Góc có số đo 135° là góc gì?",
+              "options": [
+                "A. Góc tù",
+                "B. Góc nhọn",
+                "C. Góc vuông",
+                "D. Góc bẹt"
+              ],
+              "correct_answer": "A",
+              "explanation": "Vì 90° < 135° < 180° nên đây là góc tù."
+            },
+            {
+              "question": "Góc vuông có số đo bằng:",
+              "options": [
+                "A. 90°",
+                "B. 180°",
+                "C. 60°",
+                "D. 45°"
+              ],
+              "correct_answer": "A",
+              "explanation": "Góc vuông luôn có số đo chuẩn bằng 90°."
+            },
+            {
+              "question": "Lúc 9 giờ đúng, hai kim giờ và kim phút tạo thành góc có số đo là:",
+              "options": [
+                "A. 90°",
+                "B. 180°",
+                "C. 120°",
+                "D. 60°"
+              ],
+              "correct_answer": "A",
+              "explanation": "Lúc 9 giờ kim phút chỉ số 12, kim giờ chỉ số 9 tạo thành góc vuông 90°."
+            }
+          ]
+        },
+        {
+          "displayOrder": 57,
+          "title": "Luyện tập chung (sau Bài 37)",
+          "slug": "luyen-tap-chung-sau-bai-37",
+          "summary": "Thực hành đo góc, so sánh số đo góc và nhận biết các góc trong thực tế đời sống.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Đo góc & So sánh góc)\n\n#### 1. 📌 So sánh hai góc\n- Hai góc bằng nhau nếu số đo của chúng bằng nhau.\n- Góc nào có số đo lớn hơn thì góc đó lớn hơn.\n  $$\\text{Góc nhọn} < \\text{Góc vuông} < \\text{Góc tù} < \\text{Góc bẹt}$$",
+          "exercises": [
+            {
+              "question": "Sắp xếp các góc theo thứ tự tăng dần về số đo:",
+              "options": [
+                "A. Góc nhọn < Góc vuông < Góc tù < Góc bẹt",
+                "B. Góc vuông < Góc nhọn < Góc tù < Góc bẹt",
+                "C. Góc nhọn < Góc tù < Góc vuông < Góc bẹt",
+                "D. Góc bẹt < Góc tù < Góc vuông < Góc nhọn"
+              ],
+              "correct_answer": "A",
+              "explanation": "Thứ tự tăng dần chuẩn: Nhọn (< 90°) < Vuông (90°) < Tù (90°-180°) < Bẹt (180°)."
+            },
+            {
+              "question": "Góc tạo bởi chiếc compa mở rộng 60° là góc gì?",
+              "options": [
+                "A. Góc nhọn",
+                "B. Góc tù",
+                "C. Góc vuông",
+                "D. Góc bẹt"
+              ],
+              "correct_answer": "A",
+              "explanation": "60° < 90° nên là góc nhọn."
+            },
+            {
+              "question": "Số đo góc giữa hai cạnh của tam giác đều là:",
+              "options": [
+                "A. 60°",
+                "B. 90°",
+                "C. 45°",
+                "D. 120°"
+              ],
+              "correct_answer": "A",
+              "explanation": "Ba góc của tam giác đều bằng nhau và đều bằng 60°."
+            }
+          ]
+        },
+        {
+          "displayOrder": 58,
+          "title": "Bài tập cuối chương VIII",
+          "slug": "bai-tap-cuoi-chuong-8",
+          "summary": "Tổng kết chương VIII: Điểm, đường thẳng, tia, đoạn thẳng, trung điểm, góc và số đo góc.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏆 Bài tập cuối chương VIII (Hình học phẳng cơ bản)\n\n#### 1. 📌 Bảng tra cứu khái niệm hình học cốt lõi\n- **Đường thẳng:** Kéo dài vô tận hai phía, không đo được.\n- **Tia:** Có 1 gốc, kéo dài vô tận 1 phía.\n- **Đoạn thẳng:** Giới hạn bởi 2 đầu mút, đo được độ dài.\n- **Trung điểm:** Điểm ở chính giữa, chia đoạn thẳng thành 2 đoạn bằng nhau.\n- **Góc:** Hai tia chung gốc.",
+          "exercises": [
+            {
+              "question": "Cho điểm O nằm giữa hai điểm A và B sao cho OA = 4 cm, OB = 4 cm. Kết luận nào sau đây đúng nhất?",
+              "options": [
+                "A. O là trung điểm của đoạn thẳng AB",
+                "B. O chỉ là điểm nằm giữa A và B",
+                "C. AB = 4 cm",
+                "D. A là trung điểm của OB"
+              ],
+              "correct_answer": "A",
+              "explanation": "O vừa nằm giữa vừa cách đều OA = OB = 4 cm nên O là trung điểm của đoạn thẳng AB."
+            },
+            {
+              "question": "Góc xOy có số đo bằng 180° là góc gì?",
+              "options": [
+                "A. Góc bẹt",
+                "B. Góc vuông",
+                "C. Góc tù",
+                "D. Góc nhọn"
+              ],
+              "correct_answer": "A",
+              "explanation": "Góc có số đo 180° là góc bẹt."
+            },
+            {
+              "question": "Cho trước 5 điểm phân biệt trong đó không có 3 điểm nào thẳng hàng. Vẽ được tất cả bao nhiêu đường thẳng qua các cặp điểm?",
+              "options": [
+                "A. 10 đường thẳng",
+                "B. 5 đường thẳng",
+                "C. 20 đường thẳng",
+                "D. 15 đường thẳng"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số đường thẳng = (5 x 4) : 2 = 10 đường thẳng."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 9,
+      "title": "Chương IX: Dữ liệu và xác suất thực nghiệm",
+      "description": "Thu thập và phân loại dữ liệu; Bảng thống kê và biểu đồ tranh; Biểu đồ cột và biểu đồ cột kép; Kết quả có thể và xác suất thực nghiệm.",
+      "lessons": [
+        {
+          "displayOrder": 59,
+          "title": "Bài 38: Dữ liệu và thu thập dữ liệu",
+          "slug": "bai-38-du-lieu-va-thu-thap-du-lieu",
+          "summary": "Khái niệm dữ liệu (số liệu, văn bản), phương pháp thu thập dữ liệu và tính hợp lý của dữ liệu.",
+          "estimatedMinutes": 45,
+          "theory": "### 📊 Bài 38: Dữ liệu và thu thập dữ liệu\n\n#### 1. 📌 Dữ liệu là gì?\n- Các thông tin thu thập được như: số, chữ, hình ảnh,... được gọi là **dữ liệu**.\n- Dữ liệu là số gọi là **số liệu**.\n- **Các phương pháp thu thập dữ liệu:**\n  - Quan sát trực tiếp.\n  - Làm thí nghiệm, đo đạc.\n  - Lập phiếu điều tra, phỏng vấn.\n  - Thu thập từ internet, sách báo.\n\n#### 2. 📌 Tính hợp lý của dữ liệu\n- Dữ liệu thu thập được phải đảm bảo tính chính xác và hợp lý:\n  - Điểm thi không thể là số âm hoặc lớn hơn 10.\n  - Số lượng học sinh phải là số tự nhiên.\n  - Chiều cao học sinh lớp 6 không thể là $3\\text{ m}$.",
+          "exercises": [
+            {
+              "question": "Dữ liệu nào sau đây là số liệu (số lượng)?",
+              "options": [
+                "A. Điểm số các bài kiểm tra Toán: 8; 9; 10",
+                "B. Tên các môn học yêu thích: Toán, Văn, Anh",
+                "C. Nơi sinh của học sinh: Hà Nội, Đà Nẵng",
+                "D. Màu sắc yêu thích: Xanh, Đỏ, Vàng"
+              ],
+              "correct_answer": "A",
+              "explanation": "Điểm số là dữ liệu biểu thị dưới dạng con số nên gọi là số liệu."
+            },
+            {
+              "question": "Trong danh sách ghi chiều cao (cm) của 4 học sinh lớp 6: 145, 150, 250, 148. Số liệu nào là không hợp lý?",
+              "options": [
+                "A. 250",
+                "B. 145",
+                "C. 150",
+                "D. 148"
+              ],
+              "correct_answer": "A",
+              "explanation": "Chiều cao 250 cm (2,5 m) là hoàn toàn không thực tế đối với học sinh lớp 6."
+            },
+            {
+              "question": "Để tìm hiểu về môn thể thao yêu thích của học sinh lớp 6A, phương pháp thu thập dữ liệu nào phù hợp nhất?",
+              "options": [
+                "A. Lập phiếu hỏi/phỏng vấn các bạn trong lớp",
+                "B. Tra cứu thời tiết",
+                "C. Đo nhiệt độ cơ thể",
+                "D. Cân khối lượng cặp sách"
+              ],
+              "correct_answer": "A",
+              "explanation": "Phỏng vấn hoặc phát phiếu hỏi là phương pháp thu thập ý kiến trực tiếp và chính xác nhất."
+            }
+          ]
+        },
+        {
+          "displayOrder": 60,
+          "title": "Bài 39: Bảng thống kê và biểu đồ tranh",
+          "slug": "bai-39-bang-thong-ke-va-bieu-do-tranh",
+          "summary": "Cách lập và đọc bảng số liệu thống kê; Đọc và vẽ biểu đồ tranh với biểu tượng quy ước.",
+          "estimatedMinutes": 45,
+          "theory": "### 🖼️ Bài 39: Bảng thống kê và biểu đồ tranh\n\n#### 1. 📌 Bảng thống kê\n- Bảng thống kê là bảng trình bày số liệu theo hàng và cột, giúp người đọc dễ so sánh và nắm bắt thông tin.\n\n#### 2. 📌 Biểu đồ tranh\n- Biểu đồ tranh sử dụng các hình ảnh hoặc biểu tượng để biểu diễn dữ liệu.\n- Trong biểu đồ tranh, luôn có dòng chú thích quy ước độ lớn của một biểu tượng:\n  - Ví dụ: Mỗi biểu tượng 🌟 ứng với $10$ học sinh; nửa biểu tượng 🌟 ứng với $5$ học sinh.\n  - Nếu cột có $4$ hình 🌟 $\\rightarrow$ số học sinh là $4 \\times 10 = 40$ học sinh.",
+          "exercises": [
+            {
+              "question": "Trong biểu đồ tranh, nếu một biểu tượng 🚗 tương ứng với 5 chiếc xe ô tô thì 4 biểu tượng 🚗 tương ứng với bao nhiêu xe?",
+              "options": [
+                "A. 20 chiếc",
+                "B. 15 chiếc",
+                "C. 25 chiếc",
+                "D. 9 chiếc"
+              ],
+              "correct_answer": "A",
+              "explanation": "4 x 5 = 20 chiếc xe."
+            },
+            {
+              "question": "Biểu đồ tranh dùng yếu tố nào để biểu thị số lượng?",
+              "options": [
+                "A. Hình ảnh hoặc biểu tượng",
+                "B. Các đoạn thẳng",
+                "C. Hình tròn chia nan quạt",
+                "D. Cột màu"
+              ],
+              "correct_answer": "A",
+              "explanation": "Biểu đồ tranh dùng hình ảnh hoặc biểu tượng quy ước để thể hiện số lượng."
+            },
+            {
+              "question": "Nếu nửa biểu tượng hình tròn biểu thị 10 cuốn sách, thì 2 biểu tượng hình tròn nguyên vẹn biểu thị bao nhiêu cuốn sách?",
+              "options": [
+                "A. 40 cuốn",
+                "B. 20 cuốn",
+                "C. 30 cuốn",
+                "D. 50 cuốn"
+              ],
+              "correct_answer": "A",
+              "explanation": "Nửa hình tròn là 10 cuốn -> 1 hình tròn là 20 cuốn -> 2 hình tròn là 40 cuốn."
+            }
+          ]
+        },
+        {
+          "displayOrder": 61,
+          "title": "Bài 40: Biểu đồ cột",
+          "slug": "bai-40-bieu-do-cot-lop-6",
+          "summary": "Cấu tạo và kỹ năng vẽ, đọc biểu đồ cột đơn để phân tích thông tin thống kê.",
+          "estimatedMinutes": 45,
+          "theory": "### 📊 Bài 40: Biểu đồ cột\n\n#### 1. 📌 Các bước vẽ biểu đồ cột\n- **Bước 1:** Vẽ trục ngang (ghi tên danh mục/đối tượng) và trục đứng (chia khoảng số lượng theo tỉ lệ phù hợp).\n- **Bước 2:** Vẽ các cột hình chữ nhật có cùng chiều rộng, chiều cao tương ứng với số lượng của từng đối tượng trên trục đứng.\n- **Bước 3:** Ghi tên biểu đồ, số liệu ở đầu mỗi cột và hoàn thiện nhãn các trục.",
+          "exercises": [
+            {
+              "question": "Đặc điểm của các cột trong biểu đồ cột là:",
+              "options": [
+                "A. Có cùng chiều rộng và cách đều nhau",
+                "B. Có chiều rộng khác nhau tùy số lượng",
+                "C. Dính sát vào nhau",
+                "D. Không có chiều cao"
+              ],
+              "correct_answer": "A",
+              "explanation": "Các cột trong biểu đồ cột có cùng độ rộng và cách đều nhau trên trục ngang."
+            },
+            {
+              "question": "Dựa vào biểu đồ cột về điểm số của lớp 6B: Điểm 8 có cột cao đến vạch 14 học sinh. Số bạn đạt điểm 8 là:",
+              "options": [
+                "A. 14 bạn",
+                "B. 8 bạn",
+                "C. 22 bạn",
+                "D. 16 bạn"
+              ],
+              "correct_answer": "A",
+              "explanation": "Độ cao của cột chỉ đúng số lượng là 14 bạn."
+            },
+            {
+              "question": "Lợi thế lớn nhất của biểu đồ cột so với bảng số liệu thông thường là:",
+              "options": [
+                "A. Trực quan, dễ so sánh mức độ cao thấp giữa các đối tượng",
+                "B. Tiết kiệm giấy hơn",
+                "C. Tính toán nhanh hơn",
+                "D. Không cần ghi tên"
+              ],
+              "correct_answer": "A",
+              "explanation": "Biểu đồ cột giúp người xem lập tức nhìn thấy sự chênh lệch và xu hướng của dữ liệu một cách trực quan."
+            }
+          ]
+        },
+        {
+          "displayOrder": 62,
+          "title": "Bài 41: Biểu đồ cột kép",
+          "slug": "bai-41-bieu-do-cot-kep",
+          "summary": "Cấu tạo biểu đồ cột kép (ghép đôi hai cột để so sánh hai nhóm đối tượng cùng tiêu chí) và cách đọc hiểu.",
+          "estimatedMinutes": 45,
+          "theory": "### 📊📊 Bài 41: Biểu đồ cột kép\n\n#### 1. 📌 Biểu đồ cột kép là gì?\n- Để so sánh từng cặp số liệu của hai đối tượng cùng loại (ví dụ: so sánh số học sinh nam và số học sinh nữ của các lớp, so sánh nhiệt độ ngày và đêm), người ta dùng **biểu đồ cột kép**.\n- Tại mỗi danh mục trên trục ngang có **hai cột đặt sát nhau**, được phân biệt bằng hai màu sắc hoặc hai họa tiết khác nhau và có bảng chú giải riêng.",
+          "exercises": [
+            {
+              "question": "Biểu đồ cột kép thường được sử dụng khi nào?",
+              "options": [
+                "A. Khi cần so sánh hai tập dữ liệu cùng tiêu chí của các đối tượng",
+                "B. Khi chỉ có một đối tượng duy nhất",
+                "C. Khi số liệu quá ít",
+                "D. Khi không có trục đứng"
+              ],
+              "correct_answer": "A",
+              "explanation": "Biểu đồ cột kép dùng để so sánh song song hai nhóm dữ liệu cho từng đối tượng."
+            },
+            {
+              "question": "Trên biểu đồ cột kép so sánh sĩ số nam và nữ: Ở lớp 6A, cột nam cao 20, cột nữ cao 22. Tổng sĩ số học sinh lớp 6A là:",
+              "options": [
+                "A. 42 học sinh",
+                "B. 2 học sinh",
+                "C. 40 học sinh",
+                "D. 44 học sinh"
+              ],
+              "correct_answer": "A",
+              "explanation": "Tổng số học sinh lớp 6A = 20 (nam) + 22 (nữ) = 42 học sinh."
+            },
+            {
+              "question": "Hai cột trong cùng một nhóm ở biểu đồ cột kép có đặc điểm:",
+              "options": [
+                "A. Đặt sát nhau và có màu sắc/ký hiệu khác nhau để phân biệt",
+                "B. Đặt chồng lên nhau thành một cột",
+                "C. Luôn luôn có chiều cao bằng nhau",
+                "D. Có chiều rộng khác nhau"
+              ],
+              "correct_answer": "A",
+              "explanation": "Hai cột đặt liền kề nhau và tô màu khác nhau có kèm bảng chú giải."
+            }
+          ]
+        },
+        {
+          "displayOrder": 63,
+          "title": "Luyện tập chung (sau Bài 41)",
+          "slug": "luyen-tap-chung-sau-bai-41",
+          "summary": "Kỹ năng phân tích số liệu biểu đồ cột kép, rút ra nhận xét và đưa ra kết luận đánh giá.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Biểu đồ cột & Cột kép)\n\n#### 1. 📌 Phương pháp đọc biểu đồ cột kép\n- Đọc bảng chú giải để biết mỗi màu/họa tiết biểu thị cho đối tượng nào.\n- So sánh chiều cao của hai cột trong cùng một nhóm (hơn kém nhau bao nhiêu).\n- So sánh các nhóm đối tượng với nhau (nhóm nào cao nhất, thấp nhất).",
+          "exercises": [
+            {
+              "question": "Biểu đồ cột kép biểu diễn số huy chương Vàng và Bạc của 3 đội thi: Đội 1: 5 Vàng, 3 Bạc; Đội 2: 4 Vàng, 6 Bạc; Đội 3: 6 Vàng, 2 Bạc. Đội nào có tổng số huy chương nhiều nhất?",
+              "options": [
+                "A. Đội 2 (10 huy chương)",
+                "B. Đội 1 (8 huy chương)",
+                "C. Đội 3 (8 huy chương)",
+                "D. Cả 3 đội bằng nhau"
+              ],
+              "correct_answer": "A",
+              "explanation": "Đội 1: 5+3=8; Đội 2: 4+6=10; Đội 3: 6+2=8. Đội 2 có nhiều nhất với 10 huy chương."
+            },
+            {
+              "question": "Đội nào giành được nhiều huy chương Vàng nhất?",
+              "options": [
+                "A. Đội 3",
+                "B. Đội 2",
+                "C. Đội 1",
+                "D. Bằng nhau"
+              ],
+              "correct_answer": "A",
+              "explanation": "Đội 3 có 6 huy chương Vàng, nhiều nhất trong 3 đội."
+            },
+            {
+              "question": "Tổng số huy chương Bạc của cả 3 đội là:",
+              "options": [
+                "A. 11 huy chương",
+                "B. 15 huy chương",
+                "C. 10 huy chương",
+                "D. 9 huy chương"
+              ],
+              "correct_answer": "A",
+              "explanation": "3 + 6 + 2 = 11 huy chương Bạc."
+            }
+          ]
+        },
+        {
+          "displayOrder": 64,
+          "title": "Bài 42: Kết quả có thể và sự kiện trong trò chơi, thí nghiệm",
+          "slug": "bai-42-ket-qua-co-the-va-su-kien",
+          "summary": "Liệt kê tất cả các kết quả có thể xảy ra của một trò chơi, thí nghiệm ngẫu nhiên; Xác định sự kiện xảy ra hay không.",
+          "estimatedMinutes": 45,
+          "theory": "### 🎲 Bài 42: Kết quả có thể và sự kiện\n\n#### 1. 📌 Kết quả có thể\n- Khi thực hiện một trò chơi hoặc thí nghiệm (như tung đồng xu, gieo xúc xắc), ta không thể đoán trước được kết quả nào sẽ xảy ra, nhưng ta có thể **liệt kê được tất cả các kết quả có thể xảy ra**.\n  - Tung một đồng xu: Có 2 kết quả có thể là **Mặt sấp (S)** hoặc **Mặt ngửa (N)**.\n  - Gieo một con xúc xắc 6 mặt: Có 6 kết quả có thể là **Mặt 1, 2, 3, 4, 5, 6 chấm**.\n\n#### 2. 📌 Sự kiện\n- Một sự kiện có thể xảy ra hoặc không xảy ra tùy thuộc vào kết quả của thí nghiệm.",
+          "exercises": [
+            {
+              "question": "Gieo một con xúc xắc 6 mặt, có bao nhiêu kết quả có thể xảy ra?",
+              "options": [
+                "A. 6 kết quả",
+                "B. 2 kết quả",
+                "C. 1 kết quả",
+                "D. Vô số"
+              ],
+              "correct_answer": "A",
+              "explanation": "Mặt xuất hiện có thể là 1, 2, 3, 4, 5 hoặc 6 chấm, tổng cộng 6 kết quả."
+            },
+            {
+              "question": "Tung đồng thời hai đồng xu, có bao nhiêu kết quả có thể xảy ra?",
+              "options": [
+                "A. 4 kết quả (SS, SN, NS, NN)",
+                "B. 2 kết quả",
+                "C. 3 kết quả",
+                "D. 6 kết quả"
+              ],
+              "correct_answer": "A",
+              "explanation": "Các kết quả có thể là: (Sấp, Sấp), (Sấp, Ngửa), (Ngửa, Sấp), (Ngửa, Ngửa) -> 4 kết quả."
+            },
+            {
+              "question": "Lấy ngẫu nhiên 1 chiếc bút từ hộp có 3 bút xanh và 2 bút đỏ. Sự kiện 'Lấy được bút đen' là sự kiện:",
+              "options": [
+                "A. Không thể xảy ra",
+                "B. Chắc chắn xảy ra",
+                "C. Có thể xảy ra",
+                "D. Đồng khả năng"
+              ],
+              "correct_answer": "A",
+              "explanation": "Trong hộp không có bút đen nên sự kiện này không thể xảy ra."
+            }
+          ]
+        },
+        {
+          "displayOrder": 65,
+          "title": "Bài 43: Xác suất thực nghiệm",
+          "slug": "bai-43-xac-suat-thuc-nghiem",
+          "summary": "Định nghĩa xác suất thực nghiệm của sự kiện = (Số lần sự kiện xảy ra) / (Tổng số lần thực hiện thí nghiệm).",
+          "estimatedMinutes": 45,
+          "theory": "### 🎯 Bài 43: Xác suất thực nghiệm\n\n#### 1. 📌 Công thức tính xác suất thực nghiệm\n- Thực hiện lặp lại một hoạt động hay thí nghiệm $N$ lần.\n- Gọi $k$ là số lần sự kiện $E$ xảy ra trong $N$ lần thử đó.\n- Khi đó, **xác suất thực nghiệm** của sự kiện $E$ được tính bằng tỉ số:\n  $$P(E) = \\frac{k}{N} = \\frac{\\text{Số lần sự kiện } E \\text{ xảy ra}}{\\text{Tổng số lần thực hiện hoạt động}}$$\n- Xác suất thực nghiệm thường được viết dưới dạng **phân số**, **số thập phân** hoặc **tỉ số phần trăm**.",
+          "exercises": [
+            {
+              "question": "Tung một đồng xu 50 lần, thấy có 28 lần xuất hiện mặt ngửa. Xác suất thực nghiệm xuất hiện mặt ngửa là:",
+              "options": [
+                "A. 28/50 = 14/25 (56%)",
+                "B. 22/50",
+                "C. 1/2",
+                "D. 28/22"
+              ],
+              "correct_answer": "A",
+              "explanation": "P = 28/50 = 56%."
+            },
+            {
+              "question": "Gieo con xúc xắc 100 lần, mặt 6 chấm xuất hiện 18 lần. Xác suất thực nghiệm của sự kiện 'Xuất hiện mặt 6 chấm' là:",
+              "options": [
+                "A. 0,18",
+                "B. 0,82",
+                "C. 18",
+                "D. 1/6"
+              ],
+              "correct_answer": "A",
+              "explanation": "18 : 100 = 0,18 = 18%."
+            },
+            {
+              "question": "Một cầu thủ sút phạt đền 20 lần và thành công 16 lần. Xác suất thực nghiệm sút phạt thành công của cầu thủ đó là:",
+              "options": [
+                "A. 80%",
+                "B. 75%",
+                "C. 85%",
+                "D. 16%"
+              ],
+              "correct_answer": "A",
+              "explanation": "16 / 20 = 80 / 100 = 80%."
+            }
+          ]
+        },
+        {
+          "displayOrder": 66,
+          "title": "Luyện tập chung (sau Bài 43)",
+          "slug": "luyen-tap-chung-sau-bai-43",
+          "summary": "Thực hành ghi chép số liệu thực nghiệm, tính xác suất và dự đoán số lần xuất hiện trong tương lai.",
+          "estimatedMinutes": 45,
+          "theory": "### 📝 Luyện tập chung (Xác suất thực nghiệm)\n\n#### 1. 📌 Bài toán dự đoán số lần xuất hiện\n- Nếu xác suất thực nghiệm của một biến cố là $P$, khi lặp lại thí nghiệm $M$ lần thì số lần sự kiện đó xuất hiện dự kiến là:\n  $$\\text{Số lần dự kiến} \\approx M \\cdot P$$",
+          "exercises": [
+            {
+              "question": "Xác suất thực nghiệm gieo được mặt chẵn của một con xúc xắc sau 60 lần gieo là 32/60. Số lần gieo được mặt lẻ là:",
+              "options": [
+                "A. 28 lần",
+                "B. 32 lần",
+                "C. 30 lần",
+                "D. 16 lần"
+              ],
+              "correct_answer": "A",
+              "explanation": "60 - 32 = 28 lần."
+            },
+            {
+              "question": "Kiểm tra chất lượng 200 chiếc bóng đèn thấy có 4 bóng bị hỏng. Xác suất thực nghiệm lấy được bóng đèn tốt là:",
+              "options": [
+                "A. 196/200 = 98%",
+                "B. 4/200 = 2%",
+                "C. 96%",
+                "D. 99%"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số bóng tốt: 200 - 4 = 196 bóng. Xác suất = 196/200 = 98%."
+            },
+            {
+              "question": "Một hộp có 4 quả bóng khác màu: Đỏ, Xanh, Vàng, Trắng. Lấy ngẫu nhiên 1 quả bóng rồi bỏ lại hộp, lặp lại 80 lần. Bóng đỏ xuất hiện 24 lần. Xác suất thực nghiệm xuất hiện bóng đỏ là:",
+              "options": [
+                "A. 30%",
+                "B. 25%",
+                "C. 24%",
+                "D. 40%"
+              ],
+              "correct_answer": "A",
+              "explanation": "24 / 80 = 3 / 10 = 30%."
+            }
+          ]
+        },
+        {
+          "displayOrder": 67,
+          "title": "Bài tập cuối chương IX",
+          "slug": "bai-tap-cuoi-chuong-9",
+          "summary": "Tổng kết chương IX: Bảng thống kê, biểu đồ tranh, biểu đồ cột, biểu đồ cột kép và xác suất thực nghiệm.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏆 Bài tập cuối chương IX (Thống kê và Xác suất)\n\n#### 1. 📌 Tổng kết trọng tâm\n- **Thống kê:** Thu thập dữ liệu $\\rightarrow$ Lập bảng số liệu $\\rightarrow$ Vẽ biểu đồ (tranh, cột, cột kép) $\\rightarrow$ Đọc hiểu và phân tích.\n- **Xác suất thực nghiệm:** $P = \\frac{k}{N}$ (số lần biến cố xảy ra chia cho tổng số lần thử nghiệm).\n- Vận dụng vào việc ra quyết định, dự đoán xu hướng trong cuộc sống.",
+          "exercises": [
+            {
+              "question": "Công thức tính xác suất thực nghiệm của sự kiện E khi thực hiện n phép thử trong đó có k lần xảy ra là:",
+              "options": [
+                "A. k / n",
+                "B. n / k",
+                "C. k x n",
+                "D. n - k"
+              ],
+              "correct_answer": "A",
+              "explanation": "Xác suất thực nghiệm = (Số lần xuất hiện k) / (Tổng số lần thử n)."
+            },
+            {
+              "question": "Biểu đồ nào phù hợp nhất để so sánh tình hình học lực Giỏi và Khá của các lớp khối 6?",
+              "options": [
+                "A. Biểu đồ cột kép",
+                "B. Biểu đồ tranh",
+                "C. Biểu đồ đoạn thẳng",
+                "D. Sơ đồ tư duy"
+              ],
+              "correct_answer": "A",
+              "explanation": "Biểu đồ cột kép rất thích hợp để so sánh 2 đại lượng (Giỏi và Khá) trên cùng một lớp."
+            },
+            {
+              "question": "Xác suất thực nghiệm của một sự kiện luôn nhận giá trị trong khoảng nào?",
+              "options": [
+                "A. Từ 0 đến 1 (tức 0% đến 100%)",
+                "B. Lớn hơn 1",
+                "C. Nhỏ hơn 0",
+                "D. Bằng số âm"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số lần xảy ra k luôn thỏa mãn 0 ≤ k ≤ n nên tỉ số k/n luôn từ 0 đến 1 (0% đến 100%)."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
