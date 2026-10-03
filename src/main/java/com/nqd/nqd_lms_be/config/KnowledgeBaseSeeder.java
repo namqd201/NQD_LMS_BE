@@ -47,7 +47,7 @@ public class KnowledgeBaseSeeder {
         log.info("Checking Knowledge Base (Admin GDPT Curriculum) baseline data...");
 
         // Safely archive any legacy courses from teacher courses table
-        List.of("MATH_GRADE_1", "MATH_GRADE_2", "MATH_GRADE_3").forEach(code -> {
+        List.of("MATH_GRADE_1", "MATH_GRADE_2", "MATH_GRADE_3", "MATH_GRADE_4").forEach(code -> {
             try {
                 courseRepository.findByCode(code).ifPresent(legacyCourse -> {
                     log.info("Archiving legacy {} from teacher courses table (ID: {})...", code, legacyCourse.getId());
@@ -63,6 +63,7 @@ public class KnowledgeBaseSeeder {
         seedCurriculumResource("data/toan_lop_1_course_data.json");
         seedCurriculumResource("data/toan_lop_2_course_data.json");
         seedCurriculumResource("data/toan_lop_3_course_data.json");
+        seedCurriculumResource("data/toan_lop_4_course_data.json");
     }
 
     private void seedCurriculumResource(String resourcePath) {
@@ -101,7 +102,7 @@ public class KnowledgeBaseSeeder {
                 log.info("Creating Knowledge Curriculum '{}' ({}) in knowledge_curriculums table...",
                         courseNode.get("name").asText(), courseCode);
 
-                int order = courseCode.endsWith("_3") ? 3 : (courseCode.endsWith("_2") ? 2 : 1);
+                int order = courseCode.endsWith("_4") ? 4 : (courseCode.endsWith("_3") ? 3 : (courseCode.endsWith("_2") ? 2 : 1));
                 String thumb = courseNode.has("thumbnailUrl") ? courseNode.get("thumbnailUrl").asText() : ("/images/courses/toan-" + order + ".jpg");
 
                 curriculum = KnowledgeCurriculum.builder()
