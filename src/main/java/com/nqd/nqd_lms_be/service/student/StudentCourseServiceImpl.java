@@ -40,7 +40,8 @@ public class StudentCourseServiceImpl implements StudentCourseService {
     @Override
     @Transactional(readOnly = true)
     public List<StudentCourseResponse> getPublishedCourses(UUID studentId) {
-        return courseRepository.findByStatus(CourseStatus.ACTIVE).stream()
+        return courseRepository.findByStatusInAndIsDeletedFalse(List.of(CourseStatus.ACTIVE, CourseStatus.PUBLISHED)).stream()
+                .filter(course -> !Boolean.TRUE.equals(course.getIsDisabled()))
                 .map(course -> mapToStudentCourseResponse(course, studentId))
                 .collect(Collectors.toList());
     }
@@ -159,7 +160,8 @@ public class StudentCourseServiceImpl implements StudentCourseService {
 
     private StudentCourseResponse mapToStudentCourseResponse(Course course, UUID studentId) {
         Optional<CourseEnrollment> enrollment = courseEnrollmentRepository.findByCourseIdAndStudentId(course.getId(), studentId);
-        boolean isOwner = course.getCreator() != null && course.getCreator().getId().equals(studentId);
+        boolean isOwner = (course.getCreator() != null && course.getCreator().getId().equals(studentId))
+                || courseRepository.isTeacherOwnerOrAssigned(course.getId(), studentId);
 
         boolean isEnrolled = isOwner || enrollment.map(e -> e.getStatus() == EnrollmentStatus.ENROLLED || e.getStatus() == EnrollmentStatus.COMPLETED).orElse(false);
 

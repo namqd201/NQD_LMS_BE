@@ -61,6 +61,10 @@ public class OrderServiceImpl implements OrderService {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy khóa học với ID: " + courseId));
 
+        if (course.getCreator() != null && course.getCreator().getId().equals(userId)) {
+            throw new ForbiddenOperationException("Bạn là giảng viên tạo khóa học này nên không cần mua khóa học của chính mình.");
+        }
+
         // Find or provision Product for this course
         Product product = productRepository.findByTargetEntityIdAndProductTypeAndIsDeletedFalse(courseId, ProductType.COURSE)
                 .orElseGet(() -> {
@@ -223,6 +227,10 @@ public class OrderServiceImpl implements OrderService {
         Chapter chapter = chapterRepository.findById(chapterId)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy chương học với ID: " + chapterId));
 
+        if (chapter.getCourse() != null && chapter.getCourse().getCreator() != null && chapter.getCourse().getCreator().getId().equals(userId)) {
+            throw new ForbiddenOperationException("Bạn là giảng viên tạo khóa học này nên không cần mua nội dung của chính mình.");
+        }
+
         BigDecimal basePrice = chapter.getPrice() != null && chapter.getPrice().compareTo(BigDecimal.ZERO) > 0
                 ? chapter.getPrice()
                 : new BigDecimal("99000.00");
@@ -297,6 +305,12 @@ public class OrderServiceImpl implements OrderService {
 
         Lesson lesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy bài học với ID: " + lessonId));
+
+        if (lesson.getChapter() != null && lesson.getChapter().getCourse() != null &&
+                lesson.getChapter().getCourse().getCreator() != null &&
+                lesson.getChapter().getCourse().getCreator().getId().equals(userId)) {
+            throw new ForbiddenOperationException("Bạn là giảng viên tạo khóa học này nên không cần mua bài học của chính mình.");
+        }
 
         BigDecimal basePrice = lesson.getPrice() != null && lesson.getPrice().compareTo(BigDecimal.ZERO) > 0
                 ? lesson.getPrice()
