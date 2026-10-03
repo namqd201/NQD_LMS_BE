@@ -1,0 +1,3355 @@
+{
+  "course": {
+    "name": "Toán 2",
+    "code": "MATH_GRADE_2",
+    "subjectCode": "MATH",
+    "subjectName": "Toán Học",
+    "gradeLevel": "Lớp 2",
+    "description": "Khóa học Toán 2 chuẩn Chương trình Giáo dục phổ thông mới của Bộ Giáo dục & Đào tạo (Bộ sách Kết nối tri thức với cuộc sống). Cung cấp toàn diện 14 chương kiến thức: Ôn tập bổ sung, Phép cộng trừ trong phạm vi 20 và 100, Khối lượng và Dung tích, Hình phẳng và Hình khối, Đo lường thời gian và độ dài, Tiền Việt Nam, Phép nhân và phép chia, Các số và phép tính trong phạm vi 1000, Yếu tố thống kê & xác suất cùng hệ thống bài tập trắc nghiệm củng cố sinh động, trực quan.",
+    "pricingType": "FREE",
+    "price": 0,
+    "status": "ACTIVE",
+    "thumbnailUrl": "/images/courses/toan-2.jpg",
+    "totalChapters": 14,
+    "totalLessons": 75,
+    "totalQuestions": 225
+  },
+  "chapters": [
+    {
+      "chapterOrder": 1,
+      "title": "Chương 1: Ôn tập và bổ sung",
+      "description": "Ôn tập củng cố các số đến 100, cấu tạo số, tia số, số liền trước, số liền sau, các thành phần phép tính cộng trừ và bài toán so sánh hơn kém.",
+      "lessons": [
+        {
+          "displayOrder": 1,
+          "title": "Bài 1: Ôn tập các số đến 100",
+          "slug": "bai-1-on-tap-cac-so-den-100",
+          "summary": "Đọc, viết, đếm và nắm vững cấu tạo các số có hai chữ số trong phạm vi 100.",
+          "estimatedMinutes": 40,
+          "theory": "### 🔢 Bài 1: Ôn tập các số đến 100\n\n#### 1. Đọc và viết các số có hai chữ số\n- Số có hai chữ số gồm hàng chục và hàng đơn vị.\n- Ví dụ: Số **54** đọc là *năm mươi tư*, gồm **5 chục** và **4 đơn vị**.\n- Chú ý cách đọc các chữ số đặc biệt:\n  - Khi chữ số hàng chục từ 2 trở lên, số tận cùng là 1 đọc là **mốt** (ví dụ: 21 đọc là *hai mươi mốt*).\n  - Số tận cùng là 4 thường đọc là **tư** (ví dụ: 34 đọc là *ba mươi tư*).\n  - Số tận cùng là 5 đọc là **lăm** (ví dụ: 45 đọc là *bốn mươi lăm*).\n\n#### 2. Cấu tạo số thành tổng các chục và đơn vị\n- Mọi số có hai chữ số đều viết được dưới dạng tổng:\n  $$38 = 30 + 8$$\n  $$75 = 70 + 5$$\n  $$90 = 90 + 0$$\n\n#### 3. Bảng các số từ 1 đến 100\n- Số bé nhất có một chữ số là **0**, số lớn nhất có một chữ số là **9**.\n- Số bé nhất có hai chữ số là **10**, số lớn nhất có hai chữ số là **99**.\n- Số **100** là số nhỏ nhất có ba chữ số.",
+          "exercises": [
+            {
+              "question": "Số 75 gồm mấy chục và mấy đơn vị?",
+              "options": [
+                "A. 5 chục và 7 đơn vị",
+                "B. 7 chục và 5 đơn vị",
+                "C. 70 chục và 5 đơn vị",
+                "D. 7 chục và 50 đơn vị"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số 75 có chữ số 7 ở hàng chục và chữ số 5 ở hàng đơn vị, nên gồm 7 chục và 5 đơn vị (75 = 70 + 5)."
+            },
+            {
+              "question": "Số 'Ba mươi mốt' được viết là:",
+              "options": [
+                "A. 13",
+                "B. 301",
+                "C. 31",
+                "D. 30"
+              ],
+              "correct_answer": "C",
+              "explanation": "Số Ba mươi mốt gồm 3 chục và 1 đơn vị, viết là 31."
+            },
+            {
+              "question": "Số lớn nhất có hai chữ số là số nào?",
+              "options": [
+                "A. 90",
+                "B. 98",
+                "C. 99",
+                "D. 100"
+              ],
+              "correct_answer": "C",
+              "explanation": "Số lớn nhất có hai chữ số là 99 (số 100 có ba chữ số)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 2,
+          "title": "Bài 2: Tia số. Số liền trước, số liền sau",
+          "slug": "bai-2-tia-so-so-lien-truoc-so-lien-sau",
+          "summary": "Nhận biết tia số, xác định vị trí các số trên tia số và tìm số liền trước, số liền sau của một số.",
+          "estimatedMinutes": 40,
+          "theory": "### 📏 Bài 2: Tia số. Số liền trước, số liền sau\n\n#### 1. Tia số\n- Tia số có gốc là điểm **0**, kéo dài về phía bên phải và có mũi tên.\n- Các vạch chia trên tia số cách đều nhau: $0, 1, 2, 3, 4, 5, ...$\n- Trên tia số nằm ngang, số ở bên trái luôn bé hơn số ở bên phải.\n\n#### 2. Số liền trước và số liền sau\n- **Số liền trước**: Muốn tìm số liền trước của một số, ta lấy số đó **trừ đi 1**.\n  - Ví dụ: Số liền trước của 19 là $19 - 1 = 18$.\n- **Số liền sau**: Muốn tìm số liền sau của một số, ta lấy số đó **cộng thêm 1**.\n  - Ví dụ: Số liền sau của 19 là $19 + 1 = 20$.\n- Ba số liên tiếp: $18, 19, 20$ là ba số tự nhiên liên tiếp tăng dần.",
+          "exercises": [
+            {
+              "question": "Số liền trước của số 60 là số nào?",
+              "options": [
+                "A. 59",
+                "B. 61",
+                "C. 50",
+                "D. 70"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số liền trước của 60 là 60 - 1 = 59."
+            },
+            {
+              "question": "Số liền sau của số 89 là số nào?",
+              "options": [
+                "A. 88",
+                "B. 90",
+                "C. 99",
+                "D. 100"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số liền sau của 89 là 89 + 1 = 90."
+            },
+            {
+              "question": "Điền số thích hợp vào chỗ chấm trên tia số: 47, 48, ..., 50",
+              "options": [
+                "A. 46",
+                "B. 49",
+                "C. 51",
+                "D. 52"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số đứng giữa 48 và 50 trên tia số là số liền sau 48, tức là số 49."
+            }
+          ]
+        },
+        {
+          "displayOrder": 3,
+          "title": "Bài 3: Các thành phần của phép cộng, phép trừ",
+          "slug": "bai-3-cac-thanh-phan-cua-phep-cong-phep-tru",
+          "summary": "Gọi đúng tên các thành phần trong phép cộng (số hạng, tổng) và phép trừ (số bị trừ, số trừ, hiệu).",
+          "estimatedMinutes": 35,
+          "theory": "### ➕➖ Bài 3: Các thành phần của phép cộng, phép trừ\n\n#### 1. Thành phần của phép cộng\nTrong phép tính cộng:\n$$\\text{Số hạng} + \\text{Số hạng} = \\text{Tổng}$$\n- Ví dụ: $32 + 15 = 47$\n  - **32** gọi là *số hạng*.\n  - **15** gọi là *số hạng*.\n  - **47** gọi là *tổng*.\n  - Biểu thức $32 + 15$ cũng được gọi là một *tổng*.\n\n#### 2. Thành phần của phép trừ\nTrong phép tính trừ:\n$$\\text{Số bị trừ} - \\text{Số trừ} = \\text{Hiệu}$$\n- Ví dụ: $58 - 24 = 34$\n  - **58** gọi là *số bị trừ*.\n  - **24** gọi là *số trừ*.\n  - **34** gọi là *hiệu*.\n  - Biểu thức $58 - 24$ cũng được gọi là một *hiệu*.",
+          "exercises": [
+            {
+              "question": "Trong phép tính 45 + 23 = 68, số 68 được gọi là gì?",
+              "options": [
+                "A. Số hạng",
+                "B. Số bị trừ",
+                "C. Tổng",
+                "D. Hiệu"
+              ],
+              "correct_answer": "C",
+              "explanation": "Kết quả của phép cộng được gọi là Tổng."
+            },
+            {
+              "question": "Trong phép tính 76 - 32 = 44, số 76 được gọi là gì?",
+              "options": [
+                "A. Số bị trừ",
+                "B. Số trừ",
+                "C. Hiệu",
+                "D. Số hạng"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số đứng trước dấu trừ trong phép trừ gọi là Số bị trừ."
+            },
+            {
+              "question": "Tìm hiệu biết số bị trừ là 50 và số trừ là 20:",
+              "options": [
+                "A. 70",
+                "B. 30",
+                "C. 20",
+                "D. 40"
+              ],
+              "correct_answer": "B",
+              "explanation": "Hiệu = Số bị trừ - Số trừ = 50 - 20 = 30."
+            }
+          ]
+        },
+        {
+          "displayOrder": 4,
+          "title": "Bài 4: Hơn, kém nhau bao nhiêu?",
+          "slug": "bai-4-hon-kem-nhau-bao-nhieu",
+          "summary": "Biết cách tìm phần chênh lệch giữa hai số bằng phép tính trừ.",
+          "estimatedMinutes": 40,
+          "theory": "### ⚖️ Bài 4: Hơn, kém nhau bao nhiêu?\n\n#### 1. Quy tắc tìm phần hơn, kém\n- Muốn biết số lớn hơn số bé bao nhiêu đơn vị (hoặc số bé kém số lớn bao nhiêu đơn vị), ta lấy **số lớn trừ đi số bé**:\n$$\\text{Phần chênh lệch} = \\text{Số lớn} - \\text{Số bé}$$\n\n#### 2. Ví dụ minh họa\n- Bạn Mai có 15 bông hoa, bạn Lan có 10 bông hoa.\n  - Bạn Mai có nhiều hơn bạn Lan số bông hoa là: $15 - 10 = 5$ (bông hoa).\n  - Ta cũng có thể nói: Bạn Lan có ít hơn (kém) bạn Mai 5 bông hoa.",
+          "exercises": [
+            {
+              "question": "Số 28 hơn số 20 bao nhiêu đơn vị?",
+              "options": [
+                "A. 48 đơn vị",
+                "B. 8 đơn vị",
+                "C. 18 đơn vị",
+                "D. 10 đơn vị"
+              ],
+              "correct_answer": "B",
+              "explanation": "Lấy số lớn trừ số bé: 28 - 20 = 8 đơn vị."
+            },
+            {
+              "question": "Lớp 2A có 35 học sinh, lớp 2B có 32 học sinh. Lớp 2B kém lớp 2A bao nhiêu học sinh?",
+              "options": [
+                "A. 3 học sinh",
+                "B. 5 học sinh",
+                "C. 67 học sinh",
+                "D. 2 học sinh"
+              ],
+              "correct_answer": "A",
+              "explanation": "Phần kém hơn là: 35 - 32 = 3 (học sinh)."
+            },
+            {
+              "question": "Cành cây thứ nhất có 16 con chim, cành cây thứ hai có 9 con chim. Cành thứ nhất nhiều hơn cành thứ hai mấy con chim?",
+              "options": [
+                "A. 25 con",
+                "B. 7 con",
+                "C. 8 con",
+                "D. 6 con"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số chim cành thứ nhất nhiều hơn là: 16 - 9 = 7 (con chim)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 5,
+          "title": "Bài 5: Ôn tập phép cộng, phép trừ (không nhớ) trong phạm vi 100",
+          "slug": "bai-5-on-tap-phep-cong-phep-tru-khong-nho-trong-pham-vi-100",
+          "summary": "Thực hiện thành thạo đặt tính rồi tính phép cộng và phép trừ không nhớ trong phạm vi 100.",
+          "estimatedMinutes": 40,
+          "theory": "### 📝 Bài 5: Phép cộng, phép trừ (không nhớ) trong phạm vi 100\n\n#### 1. Đặt tính rồi tính\n- Viết số hạng này dưới số hạng kia sao cho các chữ số ở cùng một hàng thẳng cột với nhau (hàng đơn vị thẳng hàng đơn vị, hàng chục thẳng hàng chục).\n- Viết dấu cộng (+) hoặc trừ (-) ở giữa hai số bên trái.\n- Kẻ một đường gạch ngang dưới hai số.\n- Tính lần lượt từ **phải sang trái** (từ hàng đơn vị rồi đến hàng chục).\n\n#### 2. Ví dụ\n- Cộng: $43 + 25 = 68$\n  - 3 cộng 5 bằng 8, viết 8.\n  - 4 cộng 2 bằng 6, viết 6.\n- Trừ: $76 - 34 = 42$\n  - 6 trừ 4 bằng 2, viết 2.\n  - 7 trừ 3 bằng 4, viết 4.",
+          "exercises": [
+            {
+              "question": "Kết quả của phép tính 34 + 52 là:",
+              "options": [
+                "A. 86",
+                "B. 76",
+                "C. 88",
+                "D. 96"
+              ],
+              "correct_answer": "A",
+              "explanation": "Ta có: 4 + 2 = 6, 3 + 5 = 8. Vậy 34 + 52 = 86."
+            },
+            {
+              "question": "Kết quả của phép tính 97 - 45 là:",
+              "options": [
+                "A. 51",
+                "B. 52",
+                "C. 42",
+                "D. 53"
+              ],
+              "correct_answer": "B",
+              "explanation": "Ta có: 7 - 5 = 2, 9 - 4 = 5. Vậy 97 - 45 = 52."
+            },
+            {
+              "question": "Tìm x biết: x + 21 = 65",
+              "options": [
+                "A. x = 86",
+                "B. x = 44",
+                "C. x = 43",
+                "D. x = 34"
+              ],
+              "correct_answer": "B",
+              "explanation": "Muốn tìm số hạng chưa biết, ta lấy tổng trừ đi số hạng kia: x = 65 - 21 = 44."
+            }
+          ]
+        },
+        {
+          "displayOrder": 6,
+          "title": "Bài 6: Luyện tập chung",
+          "slug": "bai-6-luyen-tap-chung",
+          "summary": "Tổng hợp kỹ năng đọc viết số, so sánh số, xác định thành phần và tính toán cộng trừ không nhớ.",
+          "estimatedMinutes": 40,
+          "theory": "### 🎯 Bài 6: Luyện tập chung\n\n#### 1. Hệ thống kiến thức trọng tâm Chương 1\n- Đọc, viết thành thạo các số từ 0 đến 100.\n- Tìm số liền trước ($- 1$), số liền sau ($+ 1$).\n- Nhận biết đúng tên các thành phần:\n  - Phép cộng: Số hạng + Số hạng = Tổng\n  - Phép trừ: Số bị trừ - Số trừ = Hiệu\n- Tính toán chính xác các phép cộng, phép trừ không nhớ dạng hai chữ số.\n\n#### 2. Kỹ năng giải toán lời văn\n- Bước 1: Đọc kỹ đề bài để xác định bài toán cho biết gì và hỏi gì.\n- Bước 2: Chọn phép tính phù hợp (tìm tổng dùng phép cộng, tìm phần chênh lệch hay còn lại dùng phép trừ).\n- Bước 3: Trình bày bài giải rõ ràng: Câu lời giải, phép tính kèm đơn vị và đáp số.",
+          "exercises": [
+            {
+              "question": "Dãy số nào sau đây được sắp xếp theo thứ tự từ bé đến lớn?",
+              "options": [
+                "A. 34, 56, 43, 89",
+                "B. 12, 28, 45, 76",
+                "C. 90, 78, 65, 43",
+                "D. 23, 19, 45, 60"
+              ],
+              "correct_answer": "B",
+              "explanation": "Dãy 12, 28, 45, 76 sắp xếp đúng theo thứ tự từ bé đến lớn."
+            },
+            {
+              "question": "Một cửa hàng buổi sáng bán được 42 quả dưa, buổi chiều bán được 35 quả dưa. Cả ngày cửa hàng bán được bao nhiêu quả dưa?",
+              "options": [
+                "A. 7 quả",
+                "B. 77 quả",
+                "C. 67 quả",
+                "D. 70 quả"
+              ],
+              "correct_answer": "B",
+              "explanation": "Cả hai buổi bán được là: 42 + 35 = 77 (quả dưa)."
+            },
+            {
+              "question": "Tính nhẩm: 40 + 50 - 30 = ?",
+              "options": [
+                "A. 60",
+                "B. 70",
+                "C. 50",
+                "D. 80"
+              ],
+              "correct_answer": "A",
+              "explanation": "40 + 50 = 90, 90 - 30 = 60."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 2,
+      "title": "Chương 2: Phép cộng, phép trừ trong phạm vi 20",
+      "slug": "chuong-2-phep-cong-phep-tru-trong-pham-vi-20",
+      "description": "Hình thành và ghi nhớ bảng cộng, bảng trừ qua 10 trong phạm vi 20 bằng phương pháp tách số làm tròn 10 và giải bài toán thêm, bớt, nhiều hơn, ít hơn.",
+      "lessons": [
+        {
+          "displayOrder": 7,
+          "title": "Bài 7: Phép cộng (qua 10) trong phạm vi 20",
+          "slug": "bai-7-phep-cong-qua-10-trong-pham-vi-20",
+          "summary": "Kỹ thuật cộng qua 10 trong phạm vi 20 bằng cách tách số để làm tròn 10 rồi cộng số còn lại.",
+          "estimatedMinutes": 40,
+          "theory": "### ➕ Bài 7: Phép cộng (qua 10) trong phạm vi 20\n\n#### 1. Phương pháp \"Tách số để được 10 rồi cộng với số còn lại\"\n- Muốn cộng một số với một số qua 10, ta làm như sau:\n  - Tách số thứ hai sao cho khi cộng với số thứ nhất thì vừa đủ **10**.\n  - Lấy 10 cộng với phần còn lại của số thứ hai.\n\n#### 2. Ví dụ cụ thể\n- Tính $9 + 5$:\n  - 9 cần thêm 1 để được 10. Ta tách 5 thành 1 và 4.\n  - $9 + 1 = 10$\n  - $10 + 4 = 14$\n  - Vậy: **$9 + 5 = 14$**.\n- Tính $8 + 6$:\n  - 8 cần thêm 2 để được 10. Ta tách 6 thành 2 và 4.\n  - $8 + 2 = 10$; $10 + 4 = 14$.\n  - Vậy: **$8 + 6 = 14$**.",
+          "exercises": [
+            {
+              "question": "Tính: 9 + 4 = ?",
+              "options": [
+                "A. 12",
+                "B. 13",
+                "C. 14",
+                "D. 15"
+              ],
+              "correct_answer": "B",
+              "explanation": "Tách 4 thành 1 và 3. Ta có: 9 + 1 = 10, 10 + 3 = 13."
+            },
+            {
+              "question": "Tính: 8 + 5 = ?",
+              "options": [
+                "A. 12",
+                "B. 13",
+                "C. 14",
+                "D. 11"
+              ],
+              "correct_answer": "B",
+              "explanation": "Tách 5 thành 2 và 3. Ta có: 8 + 2 = 10, 10 + 3 = 13."
+            },
+            {
+              "question": "Trong phép tính 7 + 6, ta nên tách số 6 thành mấy và mấy để cộng qua 10?",
+              "options": [
+                "A. 2 và 4",
+                "B. 3 và 3",
+                "C. 1 và 5",
+                "D. 4 và 2"
+              ],
+              "correct_answer": "B",
+              "explanation": "Vì 7 + 3 = 10 nên tách 6 thành 3 và 3."
+            }
+          ]
+        },
+        {
+          "displayOrder": 8,
+          "title": "Bài 8: Bảng cộng (qua 10)",
+          "slug": "bai-8-bang-cong-qua-10",
+          "summary": "Học thuộc và vận dụng nhanh bảng cộng các số qua 10 trong phạm vi 20.",
+          "estimatedMinutes": 40,
+          "theory": "### 📋 Bài 8: Bảng cộng (qua 10)\n\n#### 1. Hệ thống bảng cộng qua 10\n- **Cộng với 9**:\n  - $9 + 2 = 11$, $9 + 3 = 12$, $9 + 4 = 13$, $9 + 5 = 14$\n  - $9 + 6 = 15$, $9 + 7 = 16$, $9 + 8 = 17$, $9 + 9 = 18$\n- **Cộng với 8**:\n  - $8 + 3 = 11$, $8 + 4 = 12$, $8 + 5 = 13$, $8 + 6 = 14$\n  - $8 + 7 = 15$, $8 + 8 = 16$, $8 + 9 = 17$\n- **Cộng với 7**:\n  - $7 + 4 = 11$, $7 + 5 = 12$, $7 + 6 = 13$, $7 + 7 = 14$, $7 + 8 = 15$, $7 + 9 = 16$\n- **Cộng với 6**:\n  - $6 + 5 = 11$, $6 + 6 = 12$, $6 + 7 = 13$, $6 + 8 = 14$, $6 + 9 = 15$\n\n#### 2. Tính chất giao hoán của phép cộng\n- Khi đổi chỗ các số hạng trong một tổng thì tổng không thay đổi:\n  $$a + b = b + a$$\n  Ví dụ: $9 + 4 = 4 + 9 = 13$.",
+          "exercises": [
+            {
+              "question": "Tính: 7 + 8 = ?",
+              "options": [
+                "A. 14",
+                "B. 15",
+                "C. 16",
+                "D. 13"
+              ],
+              "correct_answer": "B",
+              "explanation": "7 + 8 = 15 (hoặc 8 + 7 = 15)."
+            },
+            {
+              "question": "Phép tính nào dưới đây có kết quả bằng 14?",
+              "options": [
+                "A. 9 + 4",
+                "B. 8 + 7",
+                "C. 6 + 8",
+                "D. 7 + 6"
+              ],
+              "correct_answer": "C",
+              "explanation": "6 + 8 = 14 (9 + 4 = 13, 8 + 7 = 15, 7 + 6 = 13)."
+            },
+            {
+              "question": "Điền số thích hợp: 9 + 7 = 7 + ...",
+              "options": [
+                "A. 8",
+                "B. 9",
+                "C. 10",
+                "D. 16"
+              ],
+              "correct_answer": "B",
+              "explanation": "Theo tính chất giao hoán của phép cộng: 9 + 7 = 7 + 9."
+            }
+          ]
+        },
+        {
+          "displayOrder": 9,
+          "title": "Bài 9: Bài toán về thêm, bớt một số đơn vị",
+          "slug": "bai-9-bai-toan-ve-them-bot-mot-so-don-vi",
+          "summary": "Nhận biết và giải các bài toán đơn về thêm (phép cộng) và bớt (phép trừ).",
+          "estimatedMinutes": 35,
+          "theory": "### 💡 Bài 9: Bài toán về thêm, bớt một số đơn vị\n\n#### 1. Bài toán về \"Thêm một số đơn vị\"\n- Khi bài toán có từ **\"thêm\"**, **\"cho thêm\"**, **\"mua thêm\"**, **\"bay đến\"**... ta dùng **phép tính cộng**.\n- Công thức: $\\text{Số mới} = \\text{Số ban đầu} + \\text{Số thêm vào}$\n\n#### 2. Bài toán về \"Bớt một số đơn vị\"\n- Khi bài toán có từ **\"bớt\"**, **\"cho đi\"**, **\"bán đi\"**, **\"bay đi\"**, **\"rơi mất\"**... ta dùng **phép tính trừ**.\n- Công thức: $\\text{Số còn lại} = \\text{Số ban đầu} - \\text{Số bớt đi}$",
+          "exercises": [
+            {
+              "question": "Tổ một có 8 bạn, cô giáo chuyển thêm vào tổ 4 bạn nữa. Hỏi tổ một có tất cả bao nhiêu bạn?",
+              "options": [
+                "A. 11 bạn",
+                "B. 12 bạn",
+                "C. 13 bạn",
+                "D. 4 bạn"
+              ],
+              "correct_answer": "B",
+              "explanation": "Bài toán về thêm một số đơn vị, ta lấy 8 + 4 = 12 (bạn)."
+            },
+            {
+              "question": "Đàn gà có 15 con, mẹ đem bán đi 6 con. Hỏi đàn gà còn lại bao nhiêu con?",
+              "options": [
+                "A. 8 con",
+                "B. 9 con",
+                "C. 10 con",
+                "D. 21 con"
+              ],
+              "correct_answer": "B",
+              "explanation": "Bài toán bớt một số đơn vị, lấy 15 - 6 = 9 (con)."
+            },
+            {
+              "question": "Nam có 9 viên bi, Nam được bố cho thêm 7 viên bi. Phép tính đúng để tìm số bi của Nam là:",
+              "options": [
+                "A. 9 - 7 = 2",
+                "B. 9 + 7 = 16",
+                "C. 9 + 7 = 15",
+                "D. 7 + 9 = 17"
+              ],
+              "correct_answer": "B",
+              "explanation": "Được cho thêm nên dùng phép tính cộng: 9 + 7 = 16."
+            }
+          ]
+        },
+        {
+          "displayOrder": 10,
+          "title": "Bài 10: Luyện tập chung",
+          "slug": "bai-10-luyen-tap-chung",
+          "summary": "Củng cố các phép cộng qua 10 và giải bài toán có lời văn liên quan đến thêm bớt.",
+          "estimatedMinutes": 40,
+          "theory": "### 🎯 Bài 10: Luyện tập chung\n\n#### 1. Trọng tâm luyện tập\n- Ôn tập phản xạ nhanh các phép tính trong bảng cộng qua 10:\n  - $9 + 6 = 15$, $8 + 7 = 15$, $7 + 7 = 14$, $6 + 9 = 15$\n- Tính giá trị của biểu thức gồm hai phép tính cộng, trừ từ trái sang phải.\n  - Ví dụ: $9 + 4 - 3 = 13 - 3 = 10$.\n- Phân tích và giải toán có lời văn về thêm một số đơn vị.",
+          "exercises": [
+            {
+              "question": "Tính giá trị biểu thức: 8 + 5 - 3 = ?",
+              "options": [
+                "A. 10",
+                "B. 11",
+                "C. 12",
+                "D. 9"
+              ],
+              "correct_answer": "A",
+              "explanation": "8 + 5 = 13; 13 - 3 = 10."
+            },
+            {
+              "question": "Điền dấu thích hợp: 9 + 5 ... 8 + 6",
+              "options": [
+                "A. >",
+                "B. <",
+                "C. =",
+                "D. +"
+              ],
+              "correct_answer": "C",
+              "explanation": "9 + 5 = 14 và 8 + 6 = 14 nên 9 + 5 = 8 + 6."
+            },
+            {
+              "question": "Bác nông dân có 8 luống bắp cải, bác trồng thêm 5 luống nữa. Hỏi bác có tất cả bao nhiêu luống bắp cải?",
+              "options": [
+                "A. 12 luống",
+                "B. 13 luống",
+                "C. 14 luống",
+                "D. 3 luống"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số luống bắp cải là: 8 + 5 = 13 (luống)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 11,
+          "title": "Bài 11: Phép trừ (qua 10) trong phạm vi 20",
+          "slug": "bai-11-phep-tru-qua-10-trong-pham-vi-20",
+          "summary": "Kỹ thuật trừ qua 10 trong phạm vi 20 bằng phương pháp trừ để được 10 rồi trừ tiếp số còn lại.",
+          "estimatedMinutes": 40,
+          "theory": "### ➖ Bài 11: Phép trừ (qua 10) trong phạm vi 20\n\n#### 1. Cách 1: \"Trừ để được 10 rồi trừ tiếp số còn lại\"\n- Muốn thực hiện phép trừ qua 10 (ví dụ: $12 - 5$):\n  - Tách số trừ 5 thành 2 và 3 (vì 12 trừ 2 bằng 10).\n  - Lấy $12 - 2 = 10$.\n  - Lấy $10 - 3 = 7$.\n  - Vậy: **$12 - 5 = 7$**.\n\n#### 2. Cách 2: \"Lấy 10 trừ đi số trừ rồi cộng với phần đơn vị\"\n- Ví dụ $14 - 6$:\n  - Tách 14 thành 10 và 4.\n  - Lấy $10 - 6 = 4$.\n  - Lấy $4 + 4 = 8$.\n  - Vậy: **$14 - 6 = 8$**.",
+          "exercises": [
+            {
+              "question": "Tính: 11 - 4 = ?",
+              "options": [
+                "A. 6",
+                "B. 7",
+                "C. 8",
+                "D. 9"
+              ],
+              "correct_answer": "B",
+              "explanation": "11 - 1 = 10; 10 - 3 = 7. Vậy 11 - 4 = 7."
+            },
+            {
+              "question": "Tính: 15 - 8 = ?",
+              "options": [
+                "A. 6",
+                "B. 7",
+                "C. 8",
+                "D. 9"
+              ],
+              "correct_answer": "B",
+              "explanation": "15 - 5 = 10; 10 - 3 = 7. Vậy 15 - 8 = 7."
+            },
+            {
+              "question": "Trong phép tính 13 - 6, ta tách số 6 thành mấy và mấy để trừ về 10?",
+              "options": [
+                "A. 2 và 4",
+                "B. 3 và 3",
+                "C. 1 và 5",
+                "D. 4 và 2"
+              ],
+              "correct_answer": "B",
+              "explanation": "Vì 13 có 3 đơn vị nên tách 6 thành 3 và 3 để 13 - 3 = 10."
+            }
+          ]
+        },
+        {
+          "displayOrder": 12,
+          "title": "Bài 12: Bảng trừ (qua 10)",
+          "slug": "bai-12-bang-tru-qua-10",
+          "summary": "Học thuộc và ghi nhớ bảng trừ qua 10 trong phạm vi 20.",
+          "estimatedMinutes": 40,
+          "theory": "### 📋 Bài 12: Bảng trừ (qua 10)\n\n#### 1. Hệ thống bảng trừ trong phạm vi 20\n- **Bảng 11 trừ đi một số**:\n  - $11 - 2 = 9$; $11 - 3 = 8$; $11 - 4 = 7$; $11 - 5 = 6$\n  - $11 - 6 = 5$; $11 - 7 = 4$; $11 - 8 = 3$; $11 - 9 = 2$\n- **Bảng 12 trừ đi một số**:\n  - $12 - 3 = 9$; $12 - 4 = 8$; $12 - 5 = 7$; $12 - 6 = 6$\n  - $12 - 7 = 5$; $12 - 8 = 4$; $12 - 9 = 3$\n- **Bảng 13 trừ đi một số**:\n  - $13 - 4 = 9$; $13 - 5 = 8$; $13 - 6 = 7$; $13 - 7 = 6$; $13 - 8 = 5$; $13 - 9 = 4$\n- **Bảng 14, 15, 16, 17, 18 trừ đi một số**:\n  - $14 - 5 = 9$; $14 - 9 = 5$; $15 - 6 = 9$; $15 - 9 = 6$\n  - $16 - 7 = 9$; $16 - 9 = 7$; $17 - 8 = 9$; $17 - 9 = 8$; $18 - 9 = 9$.",
+          "exercises": [
+            {
+              "question": "Tính: 16 - 8 = ?",
+              "options": [
+                "A. 7",
+                "B. 8",
+                "C. 9",
+                "D. 6"
+              ],
+              "correct_answer": "B",
+              "explanation": "16 - 8 = 8 (vì 8 + 8 = 16)."
+            },
+            {
+              "question": "Phép tính nào sau đây có kết quả bằng 9?",
+              "options": [
+                "A. 13 - 5",
+                "B. 14 - 6",
+                "C. 15 - 6",
+                "D. 12 - 4"
+              ],
+              "correct_answer": "C",
+              "explanation": "15 - 6 = 9 (13 - 5 = 8, 14 - 6 = 8, 12 - 4 = 8)."
+            },
+            {
+              "question": "Tìm x biết: 17 - x = 9",
+              "options": [
+                "A. x = 8",
+                "B. x = 9",
+                "C. x = 7",
+                "D. x = 6"
+              ],
+              "correct_answer": "A",
+              "explanation": "x = 17 - 9 = 8."
+            }
+          ]
+        },
+        {
+          "displayOrder": 13,
+          "title": "Bài 13: Bài toán về nhiều hơn, ít hơn một số đơn vị",
+          "slug": "bai-13-bai-toan-ve-nhieu-hon-it-hon-mot-so-don-vi",
+          "summary": "Giải bài toán tìm số lớn (khi biết số bé và phần nhiều hơn) và tìm số bé (khi biết số lớn và phần ít hơn).",
+          "estimatedMinutes": 40,
+          "theory": "### 💡 Bài 13: Bài toán về nhiều hơn, ít hơn một số đơn vị\n\n#### 1. Bài toán về \"Nhiều hơn\" (Tìm số lớn)\n- Biết số bé và phần nhiều hơn, muốn tìm số lớn ta làm **phép tính cộng**:\n$$\\text{Số lớn} = \\text{Số bé} + \\text{Phần nhiều hơn}$$\n- Ví dụ: Mai gấp được 8 ngôi sao, Hoa gấp được nhiều hơn Mai 5 ngôi sao. Hoa gấp được:\n  $$8 + 5 = 13 \\text{ (ngôi sao)}$$\n\n#### 2. Bài toán về \"Ít hơn\" (Tìm số bé)\n- Biết số lớn và phần ít hơn, muốn tìm số bé ta làm **phép tính trừ**:\n$$\\text{Số bé} = \\text{Số lớn} - \\text{Phần ít hơn}$$\n- Ví dụ: Thùng to đựng 16 lít nước, thùng bé đựng ít hơn thùng to 7 lít. Thùng bé đựng được:\n  $$16 - 7 = 9 \\text{ (lít nước)}$$",
+          "exercises": [
+            {
+              "question": "An có 7 cái kẹo, Bình có nhiều hơn An 5 cái kẹo. Hỏi Bình có bao nhiêu cái kẹo?",
+              "options": [
+                "A. 11 cái",
+                "B. 12 cái",
+                "C. 13 cái",
+                "D. 2 cái"
+              ],
+              "correct_answer": "B",
+              "explanation": "Bài toán tìm số lớn: Lấy số kẹo của An cộng phần nhiều hơn: 7 + 5 = 12 (cái kẹo)."
+            },
+            {
+              "question": "Lớp 2A trồng được 15 cây xanh, lớp 2B trồng được ít hơn lớp 2A là 6 cây. Hỏi lớp 2B trồng được bao nhiêu cây xanh?",
+              "options": [
+                "A. 9 cây",
+                "B. 8 cây",
+                "C. 21 cây",
+                "D. 11 cây"
+              ],
+              "correct_answer": "A",
+              "explanation": "Bài toán tìm số bé: 15 - 6 = 9 (cây xanh)."
+            },
+            {
+              "question": "Đoạn thẳng AB dài 9 cm, đoạn thẳng CD dài hơn đoạn thẳng AB là 4 cm. Đoạn thẳng CD dài bao nhiêu xăng-ti-mét?",
+              "options": [
+                "A. 12 cm",
+                "B. 13 cm",
+                "C. 14 cm",
+                "D. 5 cm"
+              ],
+              "correct_answer": "B",
+              "explanation": "Độ dài đoạn thẳng CD là: 9 + 4 = 13 (cm)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 14,
+          "title": "Bài 14: Luyện tập chung",
+          "slug": "bai-14-luyen-tap-chung",
+          "summary": "Tổng kết chương 2: phối hợp phép cộng, phép trừ qua 10 và giải toán lời văn nhiều hơn, ít hơn.",
+          "estimatedMinutes": 40,
+          "theory": "### 🎯 Bài 14: Luyện tập chung Chương 2\n\n#### 1. Khắc sâu bảng cộng, bảng trừ trong phạm vi 20\n- Thành thạo mối quan hệ giữa phép cộng và phép trừ:\n  - Nếu $8 + 7 = 15$ thì $15 - 7 = 8$ và $15 - 8 = 7$.\n- Tính giá trị các biểu thức kết hợp cộng trừ:\n  - $14 - 6 + 5 = 8 + 5 = 13$.\n\n#### 2. Kỹ năng nhận dạng bài toán thực tế\n- Dạng tìm tổng / tìm số lớn: sử dụng phép cộng.\n- Dạng tìm hiệu / tìm số bé / phần còn lại: sử dụng phép trừ.",
+          "exercises": [
+            {
+              "question": "Tính giá trị của biểu thức: 13 - 7 + 8 = ?",
+              "options": [
+                "A. 13",
+                "B. 14",
+                "C. 15",
+                "D. 12"
+              ],
+              "correct_answer": "B",
+              "explanation": "13 - 7 = 6, sau đó 6 + 8 = 14."
+            },
+            {
+              "question": "Điền số thích hợp: 16 - ... = 7",
+              "options": [
+                "A. 8",
+                "B. 9",
+                "C. 7",
+                "D. 6"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số trừ = Số bị trừ - Hiệu = 16 - 7 = 9."
+            },
+            {
+              "question": "Vườn nhà bác Hải có 14 cây cam và cây bưởi, trong đó có 8 cây cam. Hỏi vườn nhà bác Hải có bao nhiêu cây bưởi?",
+              "options": [
+                "A. 6 cây",
+                "B. 7 cây",
+                "C. 8 cây",
+                "D. 22 cây"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số cây bưởi là: 14 - 8 = 6 (cây)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 3,
+      "title": "Chương 3: Làm quen với khối lượng, dung tích",
+      "slug": "chuong-3-lam-quen-voi-khoi-luong-dung-tich",
+      "description": "Làm quen với khái niệm nặng hơn - nhẹ hơn, ki-lô-gam (kg), dung tích, lít (l) và kỹ năng thực hành ước lượng, cân đo trong đời sống.",
+      "lessons": [
+        {
+          "displayOrder": 15,
+          "title": "Bài 15: Khối lượng và đơn vị đo khối lượng",
+          "slug": "bai-15-khoi-luong-va-don-vi-do-khoi-luong",
+          "summary": "Nhận biết nặng hơn, nhẹ hơn, làm quen với cân đĩa, cân đồng hồ và đơn vị ki-lô-gam (kg).",
+          "estimatedMinutes": 40,
+          "theory": "### ⚖️ Bài 15: Khối lượng và đơn vị đo khối lượng\n\n#### 1. Nặng hơn, nhẹ hơn\n- Quan sát cân đĩa:\n  - Đĩa cân nào hạ xuống thấp hơn thì vật đặt trên đĩa đó **nặng hơn**.\n  - Đĩa cân nào bổng lên cao hơn thì vật đặt trên đĩa đó **nhẹ hơn**.\n  - Khi hai đĩa cân thăng bằng ngang nhau thì hai vật đặt trên đó **nặng bằng nhau**.\n\n#### 2. Ki-lô-gam (kg)\n- **Ki-lô-gam** là đơn vị chuẩn dùng để đo khối lượng.\n- Ki-lô-gam viết tắt là **kg**.\n- Ta có thể thực hiện các phép tính với đơn vị kg:\n  $$3\\text{ kg} + 5\\text{ kg} = 8\\text{ kg}$$\n  $$12\\text{ kg} - 4\\text{ kg} = 8\\text{ kg}$$",
+          "exercises": [
+            {
+              "question": "Ki-lô-gam được viết tắt là gì?",
+              "options": [
+                "A. k",
+                "B. g",
+                "C. kg",
+                "D. km"
+              ],
+              "correct_answer": "C",
+              "explanation": "Ki-lô-gam được viết tắt là kg."
+            },
+            {
+              "question": "Tính: 15 kg + 8 kg = ?",
+              "options": [
+                "A. 22 kg",
+                "B. 23 kg",
+                "C. 23",
+                "D. 24 kg"
+              ],
+              "correct_answer": "B",
+              "explanation": "15 + 8 = 23, kèm theo đơn vị đo là kg: 23 kg."
+            },
+            {
+              "question": "Một bao gạo nặng 25 kg, người ta lấy ra 10 kg gạo. Hỏi bao gạo còn lại bao nhiêu ki-lô-gam?",
+              "options": [
+                "A. 15 kg",
+                "B. 35 kg",
+                "C. 14 kg",
+                "D. 10 kg"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số gạo còn lại là: 25 kg - 10 kg = 15 kg."
+            }
+          ]
+        },
+        {
+          "displayOrder": 16,
+          "title": "Bài 16: Dung tích và đơn vị đo dung tích",
+          "slug": "bai-16-dung-tich-va-don-vi-do-dung-tich",
+          "summary": "Nhận biết sức chứa (dung tích) của bình chứa và làm quen với đơn vị lít (l).",
+          "estimatedMinutes": 40,
+          "theory": "### 🥛 Bài 16: Dung tích và đơn vị đo dung tích\n\n#### 1. Khái niệm Dung tích\n- Dung tích là lượng chất lỏng tối đa mà một vật có thể chứa được.\n- Đổ nước từ bình này sang bình khác để so sánh: bình nào chứa được nhiều nước hơn thì có dung tích lớn hơn.\n\n#### 2. Lít (l)\n- **Lít** là đơn vị chuẩn đo dung tích chất lỏng (nước, sữa, dầu ăn...).\n- Lít viết tắt là **l** (đọc là *lít*).\n- Thực hiện phép tính cộng, trừ với đơn vị lít:\n  $$5\\text{ l} + 7\\text{ l} = 12\\text{ l}$$\n  $$18\\text{ l} - 9\\text{ l} = 9\\text{ l}$$",
+          "exercises": [
+            {
+              "question": "Đơn vị lít được viết tắt là chữ cái nào?",
+              "options": [
+                "A. L",
+                "B. l",
+                "C. lit",
+                "D. lt"
+              ],
+              "correct_answer": "B",
+              "explanation": "Đơn vị lít viết tắt chuẩn theo SGK là l (chữ l viết thường)."
+            },
+            {
+              "question": "Tính: 9 l + 6 l = ?",
+              "options": [
+                "A. 14 l",
+                "B. 15 l",
+                "C. 16 l",
+                "D. 15"
+              ],
+              "correct_answer": "B",
+              "explanation": "9 + 6 = 15, đơn vị là l: 15 l."
+            },
+            {
+              "question": "Một can đựng 10 l dầu, mẹ rót ra 3 l để xào nấu. Trong can còn lại bao nhiêu lít dầu?",
+              "options": [
+                "A. 13 l",
+                "B. 7 l",
+                "C. 6 l",
+                "D. 8 l"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số lít dầu còn lại là: 10 l - 3 l = 7 l."
+            }
+          ]
+        },
+        {
+          "displayOrder": 17,
+          "title": "Bài 17: Thực hành và trải nghiệm đo khối lượng, dung tích",
+          "slug": "bai-17-thuc-hanh-va-trai-nghiem-do-khoi-luong-dung-tich",
+          "summary": "Kỹ năng thực hành dùng cân đồng hồ, dùng ca 1 lít và ước lượng khối lượng, dung tích đồ dùng thực tế.",
+          "estimatedMinutes": 35,
+          "theory": "### 🧪 Bài 17: Thực hành đo khối lượng, dung tích\n\n#### 1. Đọc số chỉ trên cân đồng hồ\n- Kim đồng hồ chỉ vào vạch số nào thì vật nặng bấy nhiêu ki-lô-gam.\n- Ví dụ: Đặt quả dưa hấu lên cân, kim chỉ đúng vạch số **3** $\\rightarrow$ Quả dưa hấu nặng **3 kg**.\n\n#### 2. Dùng ca 1 lít đong nước\n- Đong 1 ca đầy nước đổ vào bình: ta đã rót vào bình đúng 1 lít nước.\n- Đổ 5 ca đầy nước vào xô: xô chứa được 5 lít nước.",
+          "exercises": [
+            {
+              "question": "Khi đặt túi cam lên cân đồng hồ, kim chỉ vào vạch số 2. Túi cam đó nặng bao nhiêu?",
+              "options": [
+                "A. 1 kg",
+                "B. 2 kg",
+                "C. 3 kg",
+                "D. 20 kg"
+              ],
+              "correct_answer": "B",
+              "explanation": "Kim chỉ số 2 tương ứng với khối lượng 2 kg."
+            },
+            {
+              "question": "Để đổ đầy một xô nước 6 lít bằng ca 1 lít, ta cần đổ bao nhiêu ca nước đầy?",
+              "options": [
+                "A. 3 ca",
+                "B. 5 ca",
+                "C. 6 ca",
+                "D. 7 ca"
+              ],
+              "correct_answer": "C",
+              "explanation": "Mỗi ca là 1 lít, xô 6 lít cần đúng 6 ca nước."
+            },
+            {
+              "question": "Vật nào sau đây thường có khối lượng lớn hơn 1 kg?",
+              "options": [
+                "A. Một quả trứng gà",
+                "B. Một cục tẩy",
+                "C. Một chiếc bút chì",
+                "D. Một bao gạo to"
+              ],
+              "correct_answer": "D",
+              "explanation": "Bao gạo to thường nặng 5 kg, 10 kg hoặc 20 kg, lớn hơn rất nhiều so với 1 kg."
+            }
+          ]
+        },
+        {
+          "displayOrder": 18,
+          "title": "Bài 18: Luyện tập chung",
+          "slug": "bai-18-luyen-tap-chung",
+          "summary": "Ôn tập các phép tính và bài toán có lời văn với đơn vị đo ki-lô-gam và lít.",
+          "estimatedMinutes": 40,
+          "theory": "### 🎯 Bài 18: Luyện tập chung Chương 3\n\n#### 1. Củng cố quy tắc tính với đơn vị đo\n- Luôn giữ nguyên tên đơn vị đo sau kết quả tính:\n  - $14\\text{ kg} + 6\\text{ kg} - 8\\text{ kg} = 20\\text{ kg} - 8\\text{ kg} = 12\\text{ kg}$.\n  - $17\\text{ l} - 8\\text{ l} + 5\\text{ l} = 9\\text{ l} + 5\\text{ l} = 14\\text{ l}$.\n- Khi giải bài toán có lời văn: câu lời giải và đáp số phải ghi đầy đủ đơn vị (kg hoặc l).",
+          "exercises": [
+            {
+              "question": "Tính: 18 kg - 9 kg + 4 kg = ?",
+              "options": [
+                "A. 13 kg",
+                "B. 14 kg",
+                "C. 12 kg",
+                "D. 15 kg"
+              ],
+              "correct_answer": "A",
+              "explanation": "18 - 9 = 9; 9 + 4 = 13 (kg)."
+            },
+            {
+              "question": "Bình to có 15 l nước, bình nhỏ có ít hơn bình to 6 l nước. Hỏi bình nhỏ có bao nhiêu lít nước?",
+              "options": [
+                "A. 21 l",
+                "B. 9 l",
+                "C. 8 l",
+                "D. 10 l"
+              ],
+              "correct_answer": "B",
+              "explanation": "Lượng nước bình nhỏ có là: 15 l - 6 l = 9 l."
+            },
+            {
+              "question": "Bao ngô nặng 30 kg, bao thóc nặng hơn bao ngô 15 kg. Bao thóc nặng bao nhiêu ki-lô-gam?",
+              "options": [
+                "A. 15 kg",
+                "B. 45 kg",
+                "C. 40 kg",
+                "D. 50 kg"
+              ],
+              "correct_answer": "B",
+              "explanation": "Bao thóc nặng: 30 + 15 = 45 (kg)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 4,
+      "title": "Chương 4: Phép cộng, phép trừ (có nhớ) trong phạm vi 100",
+      "slug": "chuong-4-phep-cong-phep-tru-co-nho-trong-pham-vi-100",
+      "description": "Nắm vững kỹ thuật đặt tính và tính phép cộng, phép trừ có nhớ trong phạm vi 100 giữa số có hai chữ số với số có một chữ số và số có hai chữ số.",
+      "lessons": [
+        {
+          "displayOrder": 19,
+          "title": "Bài 19: Phép cộng (có nhớ) số có hai chữ số với số có một chữ số",
+          "slug": "bai-19-phep-cong-co-nho-so-co-hai-chu-so-voi-so-co-mot-chu-so",
+          "summary": "Kỹ thuật đặt tính rồi tính phép cộng có nhớ dạng 37 + 5, nhớ 1 sang hàng chục.",
+          "estimatedMinutes": 40,
+          "theory": "### ➕ Bài 19: Phép cộng (có nhớ) số có hai chữ số với số có một chữ số\n\n#### 1. Cách đặt tính và tính dạng $37 + 5$\n- **Đặt tính**: Viết số 5 thẳng cột với chữ số 7 ở hàng đơn vị. Viết dấu $+$, kẻ vạch ngang.\n- **Tính từ phải sang trái**:\n  - 7 cộng 5 bằng 12, **viết 2 nhớ 1**.\n  - 3 thêm 1 bằng 4, **viết 4**.\n  - Vậy: **$37 + 5 = 42$**.\n\n#### 2. Lưu ý quan trọng\n- Khi cộng ở hàng đơn vị có kết quả từ 10 trở lên, ta viết chữ số hàng đơn vị và **nhớ 1 chục** sang hàng chục của kết quả.",
+          "exercises": [
+            {
+              "question": "Tính: 48 + 6 = ?",
+              "options": [
+                "A. 52",
+                "B. 54",
+                "C. 55",
+                "D. 44"
+              ],
+              "correct_answer": "B",
+              "explanation": "8 + 6 = 14, viết 4 nhớ 1; 4 thêm 1 bằng 5, viết 5. Kết quả là 54."
+            },
+            {
+              "question": "Kết quả của phép tính 65 + 8 là:",
+              "options": [
+                "A. 72",
+                "B. 73",
+                "C. 74",
+                "D. 63"
+              ],
+              "correct_answer": "B",
+              "explanation": "5 + 8 = 13, viết 3 nhớ 1; 6 thêm 1 là 7. Vậy 65 + 8 = 73."
+            },
+            {
+              "question": "Một bao gạo có 27 kg, mẹ mua thêm 9 kg nữa. Hỏi có tất cả bao nhiêu ki-lô-gam gạo?",
+              "options": [
+                "A. 35 kg",
+                "B. 36 kg",
+                "C. 37 kg",
+                "D. 34 kg"
+              ],
+              "correct_answer": "B",
+              "explanation": "27 + 9 = 36 (kg)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 20,
+          "title": "Bài 20: Phép cộng (có nhớ) số có hai chữ số với số có hai chữ số",
+          "slug": "bai-20-phep-cong-co-nho-so-co-hai-chu-so-voi-so-co-hai-chu-so",
+          "summary": "Thực hiện phép cộng có nhớ dạng 47 + 25 bằng cách cộng hàng đơn vị (nhớ 1) rồi cộng hàng chục thêm 1.",
+          "estimatedMinutes": 40,
+          "theory": "### ➕ Bài 20: Phép cộng (có nhớ) số có hai chữ số với số có hai chữ số\n\n#### 1. Quy tắc tính dạng $47 + 25$\n- **Đặt tính**: Đặt các chữ số thẳng cột: đơn vị thẳng đơn vị, chục thẳng chục.\n- **Thực hiện tính**:\n  - $7 + 5 = 12$, viết **2**, **nhớ 1**.\n  - $4 + 2 = 6$, thêm 1 bằng **7**, viết **7**.\n  - Vậy: **$47 + 25 = 72$**.\n\n#### 2. Mẹo kiểm tra\n- Ước lượng kết quả: $47$ gần $50$, $25$ cộng vào phải trên $70$. Kết quả $72$ là hợp lý!",
+          "exercises": [
+            {
+              "question": "Tính: 36 + 28 = ?",
+              "options": [
+                "A. 54",
+                "B. 64",
+                "C. 62",
+                "D. 58"
+              ],
+              "correct_answer": "B",
+              "explanation": "6 + 8 = 14, viết 4 nhớ 1; 3 + 2 = 5 thêm 1 là 6. Kết quả là 64."
+            },
+            {
+              "question": "Tính: 59 + 17 = ?",
+              "options": [
+                "A. 76",
+                "B. 66",
+                "C. 75",
+                "D. 77"
+              ],
+              "correct_answer": "A",
+              "explanation": "9 + 7 = 16, viết 6 nhớ 1; 5 + 1 = 6 thêm 1 là 7. Kết quả là 76."
+            },
+            {
+              "question": "Học sinh lớp 2A quyên góp được 48 quyển sách, lớp 2B quyên góp được 37 quyển sách. Cả hai lớp quyên góp được bao nhiêu quyển sách?",
+              "options": [
+                "A. 75 quyển",
+                "B. 84 quyển",
+                "C. 85 quyển",
+                "D. 86 quyển"
+              ],
+              "correct_answer": "C",
+              "explanation": "48 + 37 = 85 (quyển sách)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 21,
+          "title": "Bài 21: Luyện tập chung",
+          "slug": "bai-21-luyen-tap-chung",
+          "summary": "Củng cố phép cộng có nhớ trong phạm vi 100 và giải toán có lời văn.",
+          "estimatedMinutes": 40,
+          "theory": "### 🎯 Bài 21: Luyện tập chung phép cộng có nhớ\n\n#### 1. Rèn luyện kỹ năng tính toán\n- Luyện tính nhẩm các tổng tròn chục: $26 + 14 = 40$, $35 + 25 = 60$.\n- So sánh giá trị biểu thức: Tính từng vế rồi so sánh kết quả.\n  - Ví dụ: $38 + 15$ so với $29 + 25$:\n    $38 + 15 = 53$; $29 + 25 = 54 \\rightarrow 53 < 54$.",
+          "exercises": [
+            {
+              "question": "Tìm x biết: x - 26 = 37",
+              "options": [
+                "A. x = 53",
+                "B. x = 63",
+                "C. x = 61",
+                "D. x = 11"
+              ],
+              "correct_answer": "B",
+              "explanation": "x là số bị trừ: x = 37 + 26 = 63."
+            },
+            {
+              "question": "Điền dấu thích hợp: 47 + 18 ... 39 + 26",
+              "options": [
+                "A. >",
+                "B. <",
+                "C. =",
+                "D. Không so sánh được"
+              ],
+              "correct_answer": "C",
+              "explanation": "47 + 18 = 65 và 39 + 26 = 65 nên hai vế bằng nhau."
+            },
+            {
+              "question": "Đoạn dây thứ nhất dài 38 cm, đoạn dây thứ hai dài 45 cm. Cả hai đoạn dây dài bao nhiêu xăng-ti-mét?",
+              "options": [
+                "A. 83 cm",
+                "B. 73 cm",
+                "C. 82 cm",
+                "D. 78 cm"
+              ],
+              "correct_answer": "A",
+              "explanation": "38 + 45 = 83 (cm)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 22,
+          "title": "Bài 22: Phép trừ (có nhớ) số có hai chữ số cho số có một chữ số",
+          "slug": "bai-22-phep-tru-co-nho-so-co-hai-chu-so-cho-so-co-mot-chu-so",
+          "summary": "Kỹ thuật đặt tính và tính phép trừ có nhớ dạng 52 - 7 (mượn 1 chục ở hàng chục).",
+          "estimatedMinutes": 40,
+          "theory": "### ➖ Bài 22: Phép trừ (có nhớ) số có hai chữ số cho số có một chữ số\n\n#### 1. Quy tắc tính dạng $52 - 7$\n- **Đặt tính**: Đặt số 7 thẳng hàng với chữ số 2 ở hàng đơn vị.\n- **Thực hiện tính**:\n  - 2 không trừ được 7, lấy **12 trừ 7 bằng 5, viết 5, nhớ 1**.\n  - 5 trừ 1 bằng **4, viết 4**.\n  - Vậy: **$52 - 7 = 45$**.\n\n#### 2. Ghi nhớ quan trọng\n- Khi hàng đơn vị của số bị trừ bé hơn số trừ, ta phải **mượn 1 chục** (10) để trừ, rồi sau đó phải **bớt 1** ở hàng chục của số bị trừ.",
+          "exercises": [
+            {
+              "question": "Tính: 43 - 8 = ?",
+              "options": [
+                "A. 35",
+                "B. 36",
+                "C. 34",
+                "D. 25"
+              ],
+              "correct_answer": "A",
+              "explanation": "13 - 8 = 5, viết 5 nhớ 1; 4 - 1 = 3, viết 3. Kết quả là 35."
+            },
+            {
+              "question": "Tính: 71 - 6 = ?",
+              "options": [
+                "A. 64",
+                "B. 65",
+                "C. 66",
+                "D. 75"
+              ],
+              "correct_answer": "B",
+              "explanation": "11 - 6 = 5, viết 5 nhớ 1; 7 - 1 = 6. Kết quả là 65."
+            },
+            {
+              "question": "Bác thợ mộc có thanh gỗ dài 60 cm, bác cưa bớt đi một đoạn dài 8 cm. Thanh gỗ còn lại dài bao nhiêu xăng-ti-mét?",
+              "options": [
+                "A. 52 cm",
+                "B. 51 cm",
+                "C. 54 cm",
+                "D. 58 cm"
+              ],
+              "correct_answer": "A",
+              "explanation": "60 - 8 = 52 (cm)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 23,
+          "title": "Bài 23: Phép trừ (có nhớ) số có hai chữ số cho số có hai chữ số",
+          "slug": "bai-23-phep-tru-co-nho-so-co-hai-chu-so-cho-so-co-hai-chu-so",
+          "summary": "Thực hiện phép trừ có nhớ dạng 63 - 27 bằng cách mượn 1 ở hàng chục và thêm 1 vào số trừ khi trừ hàng chục.",
+          "estimatedMinutes": 40,
+          "theory": "### ➖ Bài 23: Phép trừ (có nhớ) số có hai chữ số cho số có hai chữ số\n\n#### 1. Quy tắc tính dạng $63 - 27$\n- **Đặt tính**: Thẳng cột đơn vị và chục.\n- **Tính từ phải sang trái**:\n  - 3 không trừ được 7, lấy $13 - 7 = 6$, **viết 6, nhớ 1**.\n  - 2 thêm 1 bằng 3; 6 trừ 3 bằng 3, **viết 3**.\n  - Vậy: **$63 - 27 = 36$**.\n\n#### 2. Dạng trừ số tròn chục: $70 - 34$\n- 0 không trừ được 4, lấy $10 - 4 = 6$, viết 6 nhớ 1.\n- 3 thêm 1 bằng 4; 7 trừ 4 bằng 3, viết 3. Kết quả: $36$.",
+          "exercises": [
+            {
+              "question": "Tính: 72 - 38 = ?",
+              "options": [
+                "A. 34",
+                "B. 44",
+                "C. 35",
+                "D. 36"
+              ],
+              "correct_answer": "A",
+              "explanation": "12 - 8 = 4, nhớ 1; 3 + 1 = 4; 7 - 4 = 3. Kết quả là 34."
+            },
+            {
+              "question": "Kết quả của phép tính 80 - 45 là:",
+              "options": [
+                "A. 45",
+                "B. 35",
+                "C. 36",
+                "D. 40"
+              ],
+              "correct_answer": "B",
+              "explanation": "10 - 5 = 5, nhớ 1; 4 + 1 = 5; 8 - 5 = 3. Kết quả là 35."
+            },
+            {
+              "question": "Đàn vịt có 54 con ở dưới ao, có 18 con đã lên bờ. Hỏi còn bao nhiêu con vịt ở dưới ao?",
+              "options": [
+                "A. 36 con",
+                "B. 34 con",
+                "C. 35 con",
+                "D. 46 con"
+              ],
+              "correct_answer": "A",
+              "explanation": "54 - 18 = 36 (con vịt)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 24,
+          "title": "Bài 24: Luyện tập chung",
+          "slug": "bai-24-luyen-tap-chung",
+          "summary": "Tổng kết rèn luyện thành thạo kỹ năng cộng, trừ có nhớ trong phạm vi 100 và giải toán tổng hợp.",
+          "estimatedMinutes": 40,
+          "theory": "### 🎯 Bài 24: Luyện tập chung Chương 4\n\n#### 1. Hệ thống hóa quy tắc nhớ\n- Phép cộng có nhớ: Nhớ 1 sang hàng chục của kết quả.\n- Phép trừ có nhớ: Mượn 1 chục ở hàng chục để trừ hàng đơn vị, rồi trả 1 vào hàng chục.\n\n#### 2. Kỹ năng tìm thành phần chưa biết\n- Tìm số hạng: $\\text{Số hạng} = \\text{Tổng} - \\text{Số hạng đã biết}$.\n- Tìm số bị trừ: $\\text{Số bị trừ} = \\text{Hiệu} + \\text{Số trừ}$.\n- Tìm số trừ: $\\text{Số trừ} = \\text{Số bị trừ} - \\text{Hiệu}$.",
+          "exercises": [
+            {
+              "question": "Tìm y biết: 62 - y = 29",
+              "options": [
+                "A. y = 33",
+                "B. y = 43",
+                "C. y = 32",
+                "D. y = 91"
+              ],
+              "correct_answer": "A",
+              "explanation": "y = 62 - 29 = 33."
+            },
+            {
+              "question": "Tính: 100 - 37 = ?",
+              "options": [
+                "A. 63",
+                "B. 73",
+                "C. 62",
+                "D. 53"
+              ],
+              "correct_answer": "A",
+              "explanation": "100 - 37 = 63."
+            },
+            {
+              "question": "Một cửa hàng có 92 mét vải, tuần qua bán được 48 mét vải. Cửa hàng còn lại bao nhiêu mét vải?",
+              "options": [
+                "A. 54 m",
+                "B. 44 m",
+                "C. 43 m",
+                "D. 46 m"
+              ],
+              "correct_answer": "B",
+              "explanation": "92 - 48 = 44 (m vải)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 5,
+      "title": "Chương 5: Làm quen với hình phẳng",
+      "slug": "chuong-5-lam-quen-voi-hinh-phang",
+      "description": "Nhận biết điểm, đoạn thẳng, đường thẳng, đường cong, ba điểm thẳng hàng, đường gấp khúc, tính độ dài đường gấp khúc và hình tứ giác.",
+      "lessons": [
+        {
+          "displayOrder": 25,
+          "title": "Bài 25: Điểm, đoạn thẳng, đường thẳng, đường cong, ba điểm thẳng hàng",
+          "slug": "bai-25-diem-doan-thang-duong-thang-duong-cong-ba-diem-thang-hang",
+          "summary": "Phân biệt điểm, đoạn thẳng có hai đầu mút, đường thẳng kéo dài vô tận, đường cong mềm mại và ba điểm cùng nằm trên một đường thẳng.",
+          "estimatedMinutes": 40,
+          "theory": "### 📐 Bài 25: Điểm, đoạn thẳng, đường thẳng, đường cong, ba điểm thẳng hàng\n\n#### 1. Điểm và Đoạn thẳng\n- **Điểm**: Là một chấm nhỏ trên trang giấy, đặt tên bằng chữ cái in hoa (ví dụ: điểm A, điểm B).\n- **Đoạn thẳng AB**: Nối điểm A với điểm B bằng thước thẳng. Đoạn thẳng AB bị giới hạn ở hai đầu mút A và B.\n\n#### 2. Đường thẳng và Đường cong\n- **Đường thẳng**: Kéo dài đoạn thẳng AB về hai phía ta được đường thẳng AB (không bị giới hạn ở hai đầu).\n- **Đường cong**: Là đường uốn lượn, mềm mại (ví dụ: đường cầu vồng, sợi chỉ uốn lượn).\n\n#### 3. Ba điểm thẳng hàng\n- Khi ba điểm cùng nằm trên **một đường thẳng** thì ba điểm đó được gọi là **ba điểm thẳng hàng**.",
+          "exercises": [
+            {
+              "question": "Hình nào sau đây bị giới hạn bởi hai đầu mút?",
+              "options": [
+                "A. Đường thẳng",
+                "B. Đoạn thẳng",
+                "C. Đường cong",
+                "D. Tia số"
+              ],
+              "correct_answer": "B",
+              "explanation": "Đoạn thẳng có hai đầu mút xác định và đo được độ dài."
+            },
+            {
+              "question": "Ba điểm A, B, C được gọi là thẳng hàng khi nào?",
+              "options": [
+                "A. Cùng nằm trên một đường thẳng",
+                "B. Cùng nằm trên một đường cong",
+                "C. Tạo thành một hình tam giác",
+                "D. Nằm ở ba góc của bàn học"
+              ],
+              "correct_answer": "A",
+              "explanation": "Ba điểm cùng nằm trên một đường thẳng thì thẳng hàng."
+            },
+            {
+              "question": "Dùng thước thẳng nối 2 điểm phân biệt ta được:",
+              "options": [
+                "A. Một điểm",
+                "B. Một đoạn thẳng",
+                "C. Một hình tròn",
+                "D. Một hình vuông"
+              ],
+              "correct_answer": "B",
+              "explanation": "Nối 2 điểm phân biệt cho ta một đoạn thẳng."
+            }
+          ]
+        },
+        {
+          "displayOrder": 26,
+          "title": "Bài 26: Đường gấp khúc. Hình tứ giác",
+          "slug": "bai-26-duong-gap-khuc-hinh-tu-giac",
+          "summary": "Nhận biết đường gấp khúc gồm nhiều đoạn thẳng nối tiếp nhau, tính độ dài đường gấp khúc và nhận dạng hình tứ giác có 4 cạnh.",
+          "estimatedMinutes": 40,
+          "theory": "### 📏 Bài 26: Đường gấp khúc. Hình tứ giác\n\n#### 1. Đường gấp khúc\n- Đường gấp khúc gồm nhiều đoạn thẳng nối tiếp nhau mà không thẳng hàng.\n- Tên đường gấp khúc đọc theo thứ tự các điểm nối: Ví dụ đường gấp khúc **ABCD** gồm 3 đoạn thẳng: $AB, BC, CD$.\n\n#### 2. Tính độ dài đường gấp khúc\n- **Quy tắc**: Độ dài đường gấp khúc bằng **tổng độ dài các đoạn thẳng** tạo nên đường gấp khúc đó.\n  $$\\text{Độ dài ABCD} = AB + BC + CD$$\n\n#### 3. Hình tứ giác\n- Hình tứ giác là hình khép kín gồm **4 cạnh** và **4 đỉnh**.",
+          "exercises": [
+            {
+              "question": "Đường gấp khúc MNP gồm 2 đoạn thẳng: MN dài 5 cm và NP dài 7 cm. Độ dài đường gấp khúc MNP là:",
+              "options": [
+                "A. 11 cm",
+                "B. 12 cm",
+                "C. 13 cm",
+                "D. 2 cm"
+              ],
+              "correct_answer": "B",
+              "explanation": "Độ dài đường gấp khúc = 5 cm + 7 cm = 12 cm."
+            },
+            {
+              "question": "Hình tứ giác có bao nhiêu cạnh?",
+              "options": [
+                "A. 3 cạnh",
+                "B. 4 cạnh",
+                "C. 5 cạnh",
+                "D. 6 cạnh"
+              ],
+              "correct_answer": "B",
+              "explanation": "\"Tứ\" nghĩa là 4, hình tứ giác có đúng 4 cạnh."
+            },
+            {
+              "question": "Đường gấp khúc ABC có AB = 10 cm, BC = 15 cm. Độ dài đường gấp khúc ABC là bao nhiêu đề-xi-mét?",
+              "options": [
+                "A. 25 cm",
+                "B. 25 dm",
+                "C. 2 dm 5 cm",
+                "D. 5 cm"
+              ],
+              "correct_answer": "A",
+              "explanation": "10 cm + 15 cm = 25 cm."
+            }
+          ]
+        },
+        {
+          "displayOrder": 27,
+          "title": "Bài 27: Thực hành gấp, cắt, ghép, xếp hình. Vẽ đoạn thẳng",
+          "slug": "bai-27-thuc-hanh-gap-cat-ghep-xep-hinh-ve-doan-thang",
+          "summary": "Kỹ năng dùng thước đo độ dài và vẽ đoạn thẳng có độ dài cho trước; thực hành xếp hình tứ giác, tam giác.",
+          "estimatedMinutes": 35,
+          "theory": "### ✂️ Bài 27: Thực hành gấp, cắt, ghép, xếp hình. Vẽ đoạn thẳng\n\n#### 1. Các bước vẽ đoạn thẳng có độ dài cho trước (ví dụ vẽ đoạn thẳng AB dài 6 cm)\n- Đặt thước thẳng trên giấy trắng.\n- Dùng bút chì chấm một điểm trùng với vạch số **0** (điểm A).\n- Tìm vạch số **6** trên thước rồi chấm một điểm thứ hai (điểm B).\n- Nối điểm A với điểm B theo mép thước, nhấc thước ra và ghi chữ A, B cùng độ dài $6\\text{ cm}$.\n\n#### 2. Ghép hình sáng tạo\n- Ghép các hình tam giác nhỏ để tạo thành hình vuông, hình chữ nhật hoặc hình tứ giác.",
+          "exercises": [
+            {
+              "question": "Để vẽ đoạn thẳng CD dài 8 cm, điểm C cần đặt trùng với vạch số mấy của thước kẻ?",
+              "options": [
+                "A. Vạch số 1",
+                "B. Vạch số 0",
+                "C. Vạch số 8",
+                "D. Đầu mép thước không có số"
+              ],
+              "correct_answer": "B",
+              "explanation": "Luôn bắt đầu từ vạch số 0 của thước để đo hoặc vẽ đoạn thẳng chính xác."
+            },
+            {
+              "question": "Ghép 2 hình tam giác vuông giống nhau có thể tạo thành hình gì?",
+              "options": [
+                "A. Hình chữ nhật hoặc hình tam giác lớn",
+                "B. Hình tròn",
+                "C. Khối lập phương",
+                "D. Khối cầu"
+              ],
+              "correct_answer": "A",
+              "explanation": "Ghép 2 tam giác vuông bằng nhau có thể tạo thành hình tam giác lớn hoặc hình chữ nhật/hình vuông."
+            },
+            {
+              "question": "Khi đo độ dài chiếc bút chì, đầu bút đặt ở vạch 0, đuôi bút chỉ vạch 14 cm. Chiếc bút dài bao nhiêu?",
+              "options": [
+                "A. 13 cm",
+                "B. 14 cm",
+                "C. 15 cm",
+                "D. 10 cm"
+              ],
+              "correct_answer": "B",
+              "explanation": "Bút chì có độ dài đúng bằng khoảng cách từ vạch 0 đến 14, tức là 14 cm."
+            }
+          ]
+        },
+        {
+          "displayOrder": 28,
+          "title": "Bài 28: Luyện tập chung",
+          "slug": "bai-28-luyen-tap-chung",
+          "summary": "Ôn tập tổng hợp về điểm, đoạn thẳng, ba điểm thẳng hàng, đường gấp khúc và các hình phẳng.",
+          "estimatedMinutes": 40,
+          "theory": "### 🎯 Bài 28: Luyện tập chung Chương 5\n\n#### 1. Trọng tâm củng cố\n- Nhận biết nhanh các hình phẳng: hình tam giác (3 cạnh), hình tứ giác (4 cạnh).\n- Kiểm tra ba điểm thẳng hàng bằng thước kẻ.\n- Tính độ dài đường gấp khúc gồm 2, 3 hoặc 4 đoạn thẳng.\n  - Chú ý: Các đoạn thẳng phải có **cùng đơn vị đo** trước khi cộng!",
+          "exercises": [
+            {
+              "question": "Đường gấp khúc gồm 3 đoạn thẳng có độ dài lần lượt là 12 cm, 18 cm và 20 cm. Độ dài đường gấp khúc đó là:",
+              "options": [
+                "A. 40 cm",
+                "B. 50 cm",
+                "C. 48 cm",
+                "D. 52 cm"
+              ],
+              "correct_answer": "B",
+              "explanation": "12 + 18 + 20 = 30 + 20 = 50 (cm)."
+            },
+            {
+              "question": "Hình nào dưới đây KHÔNG phải là hình tứ giác?",
+              "options": [
+                "A. Hình vuông",
+                "B. Hình chữ nhật",
+                "C. Hình tam giác",
+                "D. Hình thoi"
+              ],
+              "correct_answer": "C",
+              "explanation": "Hình tam giác có 3 cạnh, không phải là hình tứ giác (có 4 cạnh)."
+            },
+            {
+              "question": "Cho đoạn thẳng AB = 5 cm, BC = 5 cm, CD = 5 cm. Độ dài đường gấp khúc ABCD là:",
+              "options": [
+                "A. 10 cm",
+                "B. 15 cm",
+                "C. 20 cm",
+                "D. 25 cm"
+              ],
+              "correct_answer": "B",
+              "explanation": "5 + 5 + 5 = 15 (cm)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 6,
+      "title": "Chương 6: Ngày – Giờ, Giờ – Phút, Ngày – Tháng",
+      "slug": "chuong-6-ngay-gio-gio-phut-ngay-thang",
+      "description": "Làm quen với đơn vị thời gian ngày, giờ, phút, tháng; kỹ năng xem đồng hồ (đúng giờ, hơn 15 phút, rưỡi 30 phút) và xem tờ lịch tháng.",
+      "lessons": [
+        {
+          "displayOrder": 29,
+          "title": "Bài 29: Ngày – giờ, giờ – phút",
+          "slug": "bai-29-ngay-gio-gio-phut",
+          "summary": "Nhận biết 1 ngày có 24 giờ, 1 giờ có 60 phút và kỹ năng đọc đồng hồ khi kim phút chỉ số 12 và số 6.",
+          "estimatedMinutes": 40,
+          "theory": "### ⏰ Bài 29: Ngày – giờ, giờ – phút\n\n#### 1. Ngày và Giờ\n- Một ngày có **24 giờ**.\n- Một ngày được tính từ 12 giờ đêm hôm trước đến 12 giờ đêm hôm sau:\n  - Buổi sáng: từ 1 giờ sáng đến 10 giờ sáng.\n  - Buổi trưa: 11 giờ trưa và 12 giờ trưa.\n  - Buổi chiều: từ 1 giờ chiều (13 giờ) đến 6 giờ chiều (18 giờ).\n  - Buổi tối: từ 7 giờ tối (19 giờ) đến 9 giờ tối (21 giờ).\n  - Buổi đêm: từ 10 giờ đêm (22 giờ) đến 12 giờ đêm (24 giờ).\n\n#### 2. Giờ và Phút\n- Một giờ có **60 phút** ($1\\text{ giờ} = 60\\text{ phút}$).\n- **Xem đồng hồ**:\n  - Kim ngắn chỉ **giờ**, kim dài chỉ **phút**.\n  - Khi kim phút chỉ số **12**: Đồng hồ chỉ đúng giờ (ví dụ kim ngắn chỉ số 8, kim dài chỉ số 12 $\\rightarrow$ 8 giờ đúng).\n  - Khi kim phút chỉ số **6**: Đồng hồ chỉ 30 phút (còn gọi là **rưỡi**, ví dụ 8 giờ 30 phút hay 8 giờ rưỡi).",
+          "exercises": [
+            {
+              "question": "Một ngày có bao nhiêu giờ?",
+              "options": [
+                "A. 12 giờ",
+                "B. 24 giờ",
+                "C. 60 giờ",
+                "D. 30 giờ"
+              ],
+              "correct_answer": "B",
+              "explanation": "Một ngày trọn vẹn có đúng 24 giờ."
+            },
+            {
+              "question": "1 giờ bằng bao nhiêu phút?",
+              "options": [
+                "A. 24 phút",
+                "B. 100 phút",
+                "C. 60 phút",
+                "D. 30 phút"
+              ],
+              "correct_answer": "C",
+              "explanation": "1 giờ = 60 phút."
+            },
+            {
+              "question": "Khi kim ngắn chỉ số 4 và kim dài chỉ số 6, đồng hồ chỉ mấy giờ?",
+              "options": [
+                "A. 4 giờ đúng",
+                "B. 4 giờ 6 phút",
+                "C. 4 giờ rưỡi (4 giờ 30 phút)",
+                "D. 6 giờ 4 phút"
+              ],
+              "correct_answer": "C",
+              "explanation": "Kim dài chỉ số 6 là 30 phút (giờ rưỡi), vậy là 4 giờ 30 phút."
+            }
+          ]
+        },
+        {
+          "displayOrder": 30,
+          "title": "Bài 30: Ngày – tháng",
+          "slug": "bai-30-ngay-thang",
+          "summary": "Nhận biết các ngày trong tuần, các tháng trong năm và số ngày trong từng tháng.",
+          "estimatedMinutes": 40,
+          "theory": "### 📅 Bài 30: Ngày – tháng\n\n#### 1. Các ngày trong tuần\n- Một tuần lễ có **7 ngày**: Thứ Hai, Thứ Ba, Thứ Tư, Thứ Năm, Thứ Sáu, Thứ Bảy, Chủ nhật.\n\n#### 2. Các tháng trong năm\n- Một năm có **12 tháng** (từ Tháng 1 đến Tháng 12).\n- Các tháng có **31 ngày**: Tháng 1, Tháng 3, Tháng 5, Tháng 7, Tháng 8, Tháng 10, Tháng 12.\n- Các tháng có **30 ngày**: Tháng 4, Tháng 6, Tháng 9, Tháng 11.\n- Tháng 2 có **28 ngày** (năm nhuận có 29 ngày).\n\n#### 3. Mẹo đếm ngày trên khớp ngón tay\n- Mu bàn tay: Khớp nhô lên là tháng có 31 ngày, khe lõm xuống là tháng có 30 ngày (riêng Tháng 2 có 28 hoặc 29 ngày).",
+          "exercises": [
+            {
+              "question": "Một tuần lễ có mấy ngày?",
+              "options": [
+                "A. 5 ngày",
+                "B. 6 ngày",
+                "C. 7 ngày",
+                "D. 8 ngày"
+              ],
+              "correct_answer": "C",
+              "explanation": "Một tuần lễ có 7 ngày."
+            },
+            {
+              "question": "Tháng nào sau đây luôn có 31 ngày?",
+              "options": [
+                "A. Tháng 4",
+                "B. Tháng 6",
+                "C. Tháng 9",
+                "D. Tháng 12"
+              ],
+              "correct_answer": "D",
+              "explanation": "Tháng 12 có 31 ngày."
+            },
+            {
+              "question": "Nếu hôm nay là Thứ Ba ngày 5 thì Thứ Ba tuần sau là ngày mấy?",
+              "options": [
+                "A. Ngày 10",
+                "B. Ngày 11",
+                "C. Ngày 12",
+                "D. Ngày 13"
+              ],
+              "correct_answer": "C",
+              "explanation": "Một tuần có 7 ngày, lấy 5 + 7 = 12. Vậy là ngày 12."
+            }
+          ]
+        },
+        {
+          "displayOrder": 31,
+          "title": "Bài 31: Thực hành và trải nghiệm xem đồng hồ, xem lịch",
+          "slug": "bai-31-thuc-hanh-va-trai-nghiem-xem-dong-ho-xem-lich",
+          "summary": "Kỹ năng thực tế xem lịch treo tường, lịch để bàn và chỉnh kim đồng hồ theo giờ sinh hoạt hàng ngày.",
+          "estimatedMinutes": 35,
+          "theory": "### 🕰️ Bài 31: Thực hành xem đồng hồ, xem lịch\n\n#### 1. Đọc lịch tờ và lịch bàn\n- Mỗi tờ lịch ngày cho biết: **Thứ**, **Ngày** và **Tháng**.\n- Ô số to nhất chỉ ngày dương lịch, chữ bên trên chỉ thứ trong tuần.\n\n#### 2. Thời gian biểu hàng ngày của em\n- 7 giờ sáng: Bé vào lớp học bài 🎒.\n- 11 giờ 30 phút: Bé ăn trưa bán trú 🍱.\n- 17 giờ (5 giờ chiều): Bé tan học về nhà 🏡.\n- 21 giờ (9 giờ tối): Bé đi ngủ đúng giờ 🌙.",
+          "exercises": [
+            {
+              "question": "14 giờ trong ngày còn được gọi là mấy giờ chiều?",
+              "options": [
+                "A. 1 giờ chiều",
+                "B. 2 giờ chiều",
+                "C. 3 giờ chiều",
+                "D. 4 giờ chiều"
+              ],
+              "correct_answer": "B",
+              "explanation": "14 - 12 = 2, tức là 2 giờ chiều."
+            },
+            {
+              "question": "Tờ lịch ghi: 'Thứ Năm, Ngày 20, Tháng 11'. Ngày 20 tháng 11 là thứ mấy?",
+              "options": [
+                "A. Thứ Tư",
+                "B. Thứ Năm",
+                "C. Thứ Sáu",
+                "D. Thứ Bảy"
+              ],
+              "correct_answer": "B",
+              "explanation": "Theo thông tin trên tờ lịch, ngày 20 tháng 11 là Thứ Năm."
+            },
+            {
+              "question": "Kim dài chỉ số 12, kim ngắn chỉ số 7 vào buổi tối. Thời gian đó là:",
+              "options": [
+                "A. 7 giờ sáng",
+                "B. 19 giờ (7 giờ tối)",
+                "C. 17 giờ",
+                "D. 20 giờ"
+              ],
+              "correct_answer": "B",
+              "explanation": "Buổi tối, 7 giờ tối tương ứng với 19 giờ."
+            }
+          ]
+        },
+        {
+          "displayOrder": 32,
+          "title": "Bài 32: Luyện tập chung",
+          "slug": "bai-32-luyen-tap-chung",
+          "summary": "Ôn tập tổng kết mối quan hệ giữa các đơn vị thời gian và giải toán thực tế liên quan đến giờ giấc.",
+          "estimatedMinutes": 40,
+          "theory": "### 🎯 Bài 32: Luyện tập chung Chương 6\n\n#### 1. Ghi nhớ các mốc quy đổi thời gian\n- $1\\text{ ngày} = 24\\text{ giờ}$.\n- $1\\text{ giờ} = 60\\text{ phút}$.\n- $1\\text{ tuần lễ} = 7\\text{ ngày}$.\n- $1\\text{ năm} = 12\\text{ tháng}$.\n\n#### 2. Kỹ năng tính khoảng thời gian\n- Bắt đầu lúc 8 giờ, kết thúc lúc 10 giờ $\\rightarrow$ thời gian đã trôi qua là: $10 - 8 = 2\\text{ giờ}$.",
+          "exercises": [
+            {
+              "question": "Nam bắt đầu học bài lúc 8 giờ tối và học xong lúc 9 giờ tối. Nam đã học bài trong bao lâu?",
+              "options": [
+                "A. 30 phút",
+                "B. 1 giờ",
+                "C. 2 giờ",
+                "D. 15 phút"
+              ],
+              "correct_answer": "B",
+              "explanation": "Khoảng thời gian từ 8 giờ đến 9 giờ là đúng 1 giờ (60 phút)."
+            },
+            {
+              "question": "Nếu hôm nay là ngày 28 tháng 4 thì ngày mai là ngày mấy?",
+              "options": [
+                "A. Ngày 29 tháng 4",
+                "B. Ngày 30 tháng 4",
+                "C. Ngày 1 tháng 5",
+                "D. Ngày 27 tháng 4"
+              ],
+              "correct_answer": "A",
+              "explanation": "Sau ngày 28 tháng 4 là ngày 29 tháng 4."
+            },
+            {
+              "question": "20 giờ đêm tương ứng với mấy giờ tối?",
+              "options": [
+                "A. 7 giờ tối",
+                "B. 8 giờ tối",
+                "C. 9 giờ tối",
+                "D. 10 giờ tối"
+              ],
+              "correct_answer": "B",
+              "explanation": "20 - 12 = 8, tức là 8 giờ tối."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 7,
+      "title": "Chương 7: Ôn tập học kì 1",
+      "slug": "chuong-7-on-tap-hoc-ki-1",
+      "description": "Tổng kết toàn bộ kiến thức Học kì 1: phép tính cộng trừ trong phạm vi 20 và 100, hình phẳng, đo lường khối lượng, dung tích và thời gian.",
+      "lessons": [
+        {
+          "displayOrder": 33,
+          "title": "Bài 33: Ôn tập phép cộng, phép trừ trong phạm vi 20, 100",
+          "slug": "bai-33-on-tap-phep-cong-phep-tru-trong-pham-vi-20-100",
+          "summary": "Luyện tập tính nhẩm, đặt tính và tìm thành phần phép tính cộng trừ có nhớ và không nhớ.",
+          "estimatedMinutes": 40,
+          "theory": "### 📝 Bài 33: Ôn tập phép cộng, phép trừ trong phạm vi 20, 100\n\n#### 1. Hệ thống phép tính trọng tâm Học kì 1\n- **Phạm vi 20**: Thuộc làu bảng cộng qua 10 và bảng trừ qua 10 ($9 + 5 = 14$; $14 - 6 = 8$...).\n- **Phạm vi 100**:\n  - Đặt tính thẳng cột đơn vị và chục.\n  - Phép cộng có nhớ: thêm 1 vào hàng chục.\n  - Phép trừ có nhớ: mượn 1 chục ở hàng chục để trừ hàng đơn vị.\n\n#### 2. Tìm thành phần chưa biết\n- Muốn tìm số hạng: Tổng trừ đi số hạng đã biết.\n- Muốn tìm số bị trừ: Hiệu cộng với số trừ.\n- Muốn tìm số trừ: Số bị trừ trừ đi hiệu.",
+          "exercises": [
+            {
+              "question": "Tính nhẩm: 46 + 9 = ?",
+              "options": [
+                "A. 54",
+                "B. 55",
+                "C. 56",
+                "D. 65"
+              ],
+              "correct_answer": "B",
+              "explanation": "46 + 9 = 55."
+            },
+            {
+              "question": "Tính: 83 - 37 = ?",
+              "options": [
+                "A. 46",
+                "B. 56",
+                "C. 44",
+                "D. 45"
+              ],
+              "correct_answer": "A",
+              "explanation": "13 - 7 = 6, nhớ 1; 3 + 1 = 4; 8 - 4 = 4. Kết quả là 46."
+            },
+            {
+              "question": "Tìm x biết: x + 35 = 80",
+              "options": [
+                "A. x = 45",
+                "B. x = 55",
+                "C. x = 35",
+                "D. x = 115"
+              ],
+              "correct_answer": "A",
+              "explanation": "x = 80 - 35 = 45."
+            }
+          ]
+        },
+        {
+          "displayOrder": 34,
+          "title": "Bài 34: Ôn tập hình phẳng",
+          "slug": "bai-34-on-tap-hinh-phang",
+          "summary": "Củng cố nhận diện điểm, đoạn thẳng, ba điểm thẳng hàng, đường gấp khúc và hình tứ giác.",
+          "estimatedMinutes": 40,
+          "theory": "### 📐 Bài 34: Ôn tập hình phẳng\n\n#### 1. Khắc sâu kiến thức hình học phẳng\n- Nhận biết các điểm và đoạn thẳng trên hình vẽ.\n- Đếm số hình tam giác, hình tứ giác.\n- Tính độ dài đường gấp khúc bằng tổng độ dài các đoạn thẳng thành phần.",
+          "exercises": [
+            {
+              "question": "Đường gấp khúc gồm 4 đoạn thẳng, mỗi đoạn thẳng dài 5 cm. Độ dài đường gấp khúc đó là:",
+              "options": [
+                "A. 15 cm",
+                "B. 20 cm",
+                "C. 25 cm",
+                "D. 10 cm"
+              ],
+              "correct_answer": "B",
+              "explanation": "5 + 5 + 5 + 5 = 20 (cm)."
+            },
+            {
+              "question": "Một hình tứ giác có độ dài các cạnh lần lượt là 3 cm, 4 cm, 5 cm và 6 cm. Tổng độ dài các cạnh của hình tứ giác là:",
+              "options": [
+                "A. 18 cm",
+                "B. 17 cm",
+                "C. 19 cm",
+                "D. 16 cm"
+              ],
+              "correct_answer": "A",
+              "explanation": "3 + 4 + 5 + 6 = 18 (cm)."
+            },
+            {
+              "question": "Điểm B nằm giữa hai điểm A và C trên cùng một đường thẳng. Ba điểm A, B, C gọi là:",
+              "options": [
+                "A. Ba điểm song song",
+                "B. Ba điểm thẳng hàng",
+                "C. Ba điểm vuông góc",
+                "D. Ba điểm bằng nhau"
+              ],
+              "correct_answer": "B",
+              "explanation": "Ba điểm cùng nằm trên một đường thẳng gọi là ba điểm thẳng hàng."
+            }
+          ]
+        },
+        {
+          "displayOrder": 35,
+          "title": "Bài 35: Ôn tập đo lường",
+          "slug": "bai-35-on-tap-do-luong",
+          "summary": "Ôn tập các đại lượng và đơn vị đo đã học: ki-lô-gam (kg), lít (l), ngày, giờ, phút.",
+          "estimatedMinutes": 40,
+          "theory": "### ⚖️ Bài 35: Ôn tập đo lường\n\n#### 1. Bảng tổng hợp các đơn vị đo Học kì 1\n- **Khối lượng**: Ki-lô-gam (kg).\n- **Dung tích**: Lít (l).\n- **Thời gian**: Ngày, giờ, phút, tuần lễ, tháng.\n\n#### 2. Kỹ năng thực hiện phép tính có kèm đơn vị\n- Cộng, trừ các số rồi viết đơn vị đo vào sau kết quả.\n  - Ví dụ: $35\\text{ kg} + 18\\text{ kg} = 53\\text{ kg}$.\n  - $42\\text{ l} - 17\\text{ l} = 25\\text{ l}$.",
+          "exercises": [
+            {
+              "question": "Tính: 36 l + 27 l = ?",
+              "options": [
+                "A. 63 l",
+                "B. 53 l",
+                "C. 63",
+                "D. 64 l"
+              ],
+              "correct_answer": "A",
+              "explanation": "36 + 27 = 63 (l)."
+            },
+            {
+              "question": "Mẹ mua một con gà nặng 2 kg và một con vịt nặng 3 kg. Cả gà và vịt nặng bao nhiêu ki-lô-gam?",
+              "options": [
+                "A. 6 kg",
+                "B. 5 kg",
+                "C. 4 kg",
+                "D. 7 kg"
+              ],
+              "correct_answer": "B",
+              "explanation": "2 + 3 = 5 (kg)."
+            },
+            {
+              "question": "Một can 20 lít chứa đầy nước. Người ta đã dùng hết 8 lít. Trong can còn lại bao nhiêu lít?",
+              "options": [
+                "A. 12 l",
+                "B. 14 l",
+                "C. 10 l",
+                "D. 18 l"
+              ],
+              "correct_answer": "A",
+              "explanation": "20 - 8 = 12 (l)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 36,
+          "title": "Bài 36: Ôn tập chung",
+          "slug": "bai-36-on-tap-chung",
+          "summary": "Đề ôn tập tổng hợp toàn diện kiến thức Học kì 1 chuẩn bị cho bài kiểm tra định kì.",
+          "estimatedMinutes": 45,
+          "theory": "### 🏆 Bài 36: Ôn tập chung Học kì 1\n\n#### 1. Đề cương trọng tâm bài kiểm tra Học kì 1\n- Số học: Đọc, viết số, cấu tạo số đến 100; tính nhẩm và đặt tính phép cộng, trừ có nhớ.\n- Đại lượng: kg, lít, xem giờ đồng hồ và xem lịch.\n- Hình học: Đoạn thẳng, ba điểm thẳng hàng, độ dài đường gấp khúc.\n- Giải toán có lời văn: Bài toán nhiều hơn, ít hơn, thêm, bớt.\n\n#### 2. Kỹ năng làm bài thi đạt điểm cao\n- Đọc kỹ đề bài, gạch chân các từ khóa quan trọng.\n- Trình bày bài giải sạch đẹp, tính nháp cẩn thận trước khi viết vào bài.",
+          "exercises": [
+            {
+              "question": "Tính giá trị biểu thức: 74 - 28 + 19 = ?",
+              "options": [
+                "A. 65",
+                "B. 55",
+                "C. 46",
+                "D. 64"
+              ],
+              "correct_answer": "A",
+              "explanation": "74 - 28 = 46; 46 + 19 = 65."
+            },
+            {
+              "question": "Năm nay mẹ 36 tuổi, con 8 tuổi. Hỏi mẹ hơn con bao nhiêu tuổi?",
+              "options": [
+                "A. 26 tuổi",
+                "B. 28 tuổi",
+                "C. 44 tuổi",
+                "D. 27 tuổi"
+              ],
+              "correct_answer": "B",
+              "explanation": "36 - 8 = 28 (tuổi)."
+            },
+            {
+              "question": "Số lớn nhất có hai chữ số khác nhau là số nào?",
+              "options": [
+                "A. 99",
+                "B. 98",
+                "C. 90",
+                "D. 89"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số lớn nhất có 2 chữ số khác nhau là 98 (99 có hai chữ số giống nhau)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 8,
+      "title": "Chương 8: Phép nhân, phép chia",
+      "slug": "chuong-8-phep-nhan-phep-chia",
+      "description": "Hình thành ý nghĩa của phép nhân (tổng các số hạng bằng nhau), phép chia (chia thành các phần bằng nhau hoặc chia nhóm), bảng nhân 2, 5 và bảng chia 2, 5.",
+      "lessons": [
+        {
+          "displayOrder": 37,
+          "title": "Bài 37: Phép nhân",
+          "slug": "bai-37-phep-nhan",
+          "summary": "Hình thành khái niệm phép nhân từ tổng của nhiều số hạng bằng nhau.",
+          "estimatedMinutes": 40,
+          "theory": "### ✖️ Bài 37: Phép nhân\n\n#### 1. Ý nghĩa của phép nhân\n- Phép nhân là cách viết gọn của **tổng các số hạng bằng nhau**.\n- Ví dụ: Có 4 đĩa táo, mỗi đĩa có 2 quả táo:\n  - Tổng số quả táo là: $2 + 2 + 2 + 2 = 8$.\n  - Số 2 được lấy **4 lần**. Ta viết thành phép nhân:\n    $$2 \\times 4 = 8$$\n  - Đọc là: *Hai nhân bốn bằng tám*.\n  - Dấu $\\times$ gọi là **dấu nhân**.\n\n#### 2. Quy tắc chuyển đổi\n- Tổng $a + a + a + ... + a$ ($n$ số hạng $a$) được viết thành:\n  $$a \\times n$$",
+          "exercises": [
+            {
+              "question": "Tổng 5 + 5 + 5 được viết dưới dạng phép nhân là:",
+              "options": [
+                "A. 5 × 3",
+                "B. 3 × 5",
+                "C. 5 × 5",
+                "D. 5 + 3"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số 5 được lấy 3 lần nên viết là 5 × 3."
+            },
+            {
+              "question": "Phép nhân 2 × 5 có nghĩa là:",
+              "options": [
+                "A. Số 2 cộng với 5",
+                "B. Số 2 được lấy 5 lần (2 + 2 + 2 + 2 + 2)",
+                "C. Số 5 được lấy 2 lần",
+                "D. Số 2 nhân với chính nó"
+              ],
+              "correct_answer": "B",
+              "explanation": "2 × 5 tức là số 2 được lấy 5 lần: 2 + 2 + 2 + 2 + 2 = 10."
+            },
+            {
+              "question": "Mỗi chiếc xe đạp có 2 bánh xe. Hỏi 6 chiếc xe đạp có tất cả bao nhiêu bánh xe?",
+              "options": [
+                "A. 8 bánh",
+                "B. 10 bánh",
+                "C. 12 bánh",
+                "D. 14 bánh"
+              ],
+              "correct_answer": "C",
+              "explanation": "Số bánh xe là: 2 × 6 = 12 (bánh xe)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 38,
+          "title": "Bài 38: Thừa số, tích",
+          "slug": "bai-38-thua-so-tich",
+          "summary": "Nhận biết tên gọi các thành phần trong phép nhân: thừa số và tích.",
+          "estimatedMinutes": 35,
+          "theory": "### ✖️ Bài 38: Thừa số, tích\n\n#### 1. Thành phần của phép nhân\nTrong phép tính nhân:\n$$\\text{Thừa số} \\times \\text{Thừa số} = \\text{Tích}$$\n- Ví dụ: $2 \\times 6 = 12$\n  - **2** gọi là *thừa số*.\n  - **6** gọi là *thừa số*.\n  - **12** gọi là *tích*.\n  - Biểu thức $2 \\times 6$ cũng được gọi là một *tích*.\n\n#### 2. Mối quan hệ\n- Tích chính là kết quả của phép nhân hai thừa số với nhau.",
+          "exercises": [
+            {
+              "question": "Trong phép nhân 5 × 4 = 20, số 20 được gọi là gì?",
+              "options": [
+                "A. Thừa số",
+                "B. Tích",
+                "C. Tổng",
+                "D. Thương"
+              ],
+              "correct_answer": "B",
+              "explanation": "Kết quả của phép nhân được gọi là Tích."
+            },
+            {
+              "question": "Trong phép nhân 2 × 7 = 14, các thừa số là:",
+              "options": [
+                "A. 2 và 14",
+                "B. 7 và 14",
+                "C. 2 và 7",
+                "D. Chỉ có số 2"
+              ],
+              "correct_answer": "C",
+              "explanation": "2 và 7 là hai thừa số trong phép nhân."
+            },
+            {
+              "question": "Tìm tích biết hai thừa số lần lượt là 2 và 8:",
+              "options": [
+                "A. 10",
+                "B. 16",
+                "C. 14",
+                "D. 18"
+              ],
+              "correct_answer": "B",
+              "explanation": "Tích = 2 × 8 = 16."
+            }
+          ]
+        },
+        {
+          "displayOrder": 39,
+          "title": "Bài 39: Bảng nhân 2",
+          "slug": "bai-39-bang-nhan-2",
+          "summary": "Học thuộc và vận dụng thành thạo bảng nhân 2 để giải toán.",
+          "estimatedMinutes": 40,
+          "theory": "### 📋 Bài 39: Bảng nhân 2\n\n#### 1. Bảng nhân 2\n- $2 \\times 1 = 2$\n- $2 \\times 2 = 4$\n- $2 \\times 3 = 6$\n- $2 \\times 4 = 8$\n- $2 \\times 5 = 10$\n- $2 \\times 6 = 12$\n- $2 \\times 7 = 14$\n- $2 \\times 8 = 16$\n- $2 \\times 9 = 18$\n- $2 \\times 10 = 20$\n\n#### 2. Đặc điểm ghi nhớ\n- Các tích trong bảng nhân 2 đều là các số chẵn cách nhau **2 đơn vị**.",
+          "exercises": [
+            {
+              "question": "Tính: 2 × 7 = ?",
+              "options": [
+                "A. 12",
+                "B. 14",
+                "C. 16",
+                "D. 9"
+              ],
+              "correct_answer": "B",
+              "explanation": "Theo bảng nhân 2: 2 × 7 = 14."
+            },
+            {
+              "question": "Mỗi bạn học sinh có 2 hộp bút. Hỏi 9 bạn học sinh có tất cả bao nhiêu hộp bút?",
+              "options": [
+                "A. 16 hộp",
+                "B. 18 hộp",
+                "C. 20 hộp",
+                "D. 11 hộp"
+              ],
+              "correct_answer": "B",
+              "explanation": "2 × 9 = 18 (hộp bút)."
+            },
+            {
+              "question": "Điền số thích hợp: 2 × ... = 16",
+              "options": [
+                "A. 6",
+                "B. 7",
+                "C. 8",
+                "D. 9"
+              ],
+              "correct_answer": "C",
+              "explanation": "2 × 8 = 16."
+            }
+          ]
+        },
+        {
+          "displayOrder": 40,
+          "title": "Bài 40: Bảng nhân 5",
+          "slug": "bai-40-bang-nhan-5",
+          "summary": "Học thuộc và ghi nhớ bảng nhân 5; ứng dụng đếm nhóm 5.",
+          "estimatedMinutes": 40,
+          "theory": "### 🖐️ Bài 40: Bảng nhân 5\n\n#### 1. Bảng nhân 5\n- $5 \\times 1 = 5$\n- $5 \\times 2 = 10$\n- $5 \\times 3 = 15$\n- $5 \\times 4 = 20$\n- $5 \\times 5 = 25$\n- $5 \\times 6 = 30$\n- $5 \\times 7 = 35$\n- $5 \\times 8 = 40$\n- $5 \\times 9 = 45$\n- $5 \\times 10 = 50$\n\n#### 2. Đặc điểm ghi nhớ\n- Các tích trong bảng nhân 5 đều có chữ số tận cùng là **0** hoặc **5** và cách nhau **5 đơn vị**.",
+          "exercises": [
+            {
+              "question": "Tính: 5 × 6 = ?",
+              "options": [
+                "A. 25",
+                "B. 30",
+                "C. 35",
+                "D. 40"
+              ],
+              "correct_answer": "B",
+              "explanation": "Theo bảng nhân 5: 5 × 6 = 30."
+            },
+            {
+              "question": "Mỗi bàn tay có 5 ngón tay. Hỏi 8 bàn tay có bao nhiêu ngón tay?",
+              "options": [
+                "A. 35 ngón",
+                "B. 40 ngón",
+                "C. 45 ngón",
+                "D. 30 ngón"
+              ],
+              "correct_answer": "B",
+              "explanation": "5 × 8 = 40 (ngón tay)."
+            },
+            {
+              "question": "Tìm số thích hợp điền vào chỗ chấm: 5 × 4 + 15 = ...",
+              "options": [
+                "A. 30",
+                "B. 35",
+                "C. 40",
+                "D. 25"
+              ],
+              "correct_answer": "B",
+              "explanation": "5 × 4 = 20; 20 + 15 = 35."
+            }
+          ]
+        },
+        {
+          "displayOrder": 41,
+          "title": "Bài 41: Phép chia",
+          "slug": "bai-41-phep-chia",
+          "summary": "Hình thành khái niệm phép chia từ bài toán chia đều đồ vật thành các phần bằng nhau hoặc chia theo nhóm.",
+          "estimatedMinutes": 40,
+          "theory": "### ➗ Bài 41: Phép chia\n\n#### 1. Ý nghĩa của phép chia\n- Phép chia xuất phát từ thao tác **chia đều**:\n  - Có 6 quả cam chia đều cho 3 bạn, mỗi bạn được mấy quả cam?\n  - Ta thực hiện phép chia: $6 : 3 = 2$ (quả cam).\n  - Đọc là: *Sáu chia ba bằng hai*.\n  - Dấu $:$ gọi là **dấu chia**.\n\n#### 2. Quan hệ giữa phép nhân và phép chia\n- Từ một phép nhân, ta có thể viết được hai phép chia tương ứng:\n  - Nếu $2 \\times 3 = 6$ thì:\n    $$6 : 2 = 3$$\n    $$6 : 3 = 2$$",
+          "exercises": [
+            {
+              "question": "Có 10 chiếc kẹo chia đều cho 2 bạn. Hỏi mỗi bạn được mấy chiếc kẹo?",
+              "options": [
+                "A. 4 chiếc",
+                "B. 5 chiếc",
+                "C. 6 chiếc",
+                "D. 3 chiếc"
+              ],
+              "correct_answer": "B",
+              "explanation": "10 : 2 = 5 (chiếc kẹo)."
+            },
+            {
+              "question": "Từ phép nhân 2 × 4 = 8, phép chia nào sau đây là ĐÚNG?",
+              "options": [
+                "A. 8 : 2 = 4",
+                "B. 8 : 4 = 2",
+                "C. Cả A và B đều đúng",
+                "D. 8 - 2 = 6"
+              ],
+              "correct_answer": "C",
+              "explanation": "Từ 2 × 4 = 8 ta suy ra được hai phép chia: 8 : 2 = 4 và 8 : 4 = 2."
+            },
+            {
+              "question": "Có 12 bông hoa cắm đều vào 2 bình hoa. Mỗi bình có mấy bông hoa?",
+              "options": [
+                "A. 5 bông",
+                "B. 6 bông",
+                "C. 7 bông",
+                "D. 4 bông"
+              ],
+              "correct_answer": "B",
+              "explanation": "12 : 2 = 6 (bông hoa)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 42,
+          "title": "Bài 42: Số bị chia, số chia, thương",
+          "slug": "bai-42-so-bi-chia-so-chia-thuong",
+          "summary": "Nhận biết tên gọi các thành phần trong phép chia: số bị chia, số chia và thương.",
+          "estimatedMinutes": 35,
+          "theory": "### ➗ Bài 42: Số bị chia, số chia, thương\n\n#### 1. Thành phần của phép chia\nTrong phép tính chia:\n$$\\text{Số bị chia} : \\text{Số chia} = \\text{Thương}$$\n- Ví dụ: $14 : 2 = 7$\n  - **14** gọi là *số bị chia*.\n  - **2** gọi là *số chia*.\n  - **7** gọi là *thương*.\n  - Biểu thức $14 : 2$ cũng được gọi là một *thương*.\n\n#### 2. Chú ý\n- Số chia luôn phải khác 0.",
+          "exercises": [
+            {
+              "question": "Trong phép chia 15 : 5 = 3, số 15 được gọi là gì?",
+              "options": [
+                "A. Số chia",
+                "B. Số bị chia",
+                "C. Thương",
+                "D. Tích"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số đứng trước dấu chia gọi là Số bị chia."
+            },
+            {
+              "question": "Tìm thương biết số bị chia là 18 và số chia là 2:",
+              "options": [
+                "A. 9",
+                "B. 8",
+                "C. 7",
+                "D. 16"
+              ],
+              "correct_answer": "A",
+              "explanation": "Thương = Số bị chia : Số chia = 18 : 2 = 9."
+            },
+            {
+              "question": "Trong phép chia 20 : 5 = 4, số 5 được gọi là gì?",
+              "options": [
+                "A. Số bị chia",
+                "B. Số chia",
+                "C. Thương",
+                "D. Thừa số"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số đứng sau dấu chia gọi là Số chia."
+            }
+          ]
+        },
+        {
+          "displayOrder": 43,
+          "title": "Bài 43: Bảng chia 2",
+          "slug": "bai-43-bang-chia-2",
+          "summary": "Hình thành từ bảng nhân 2 và học thuộc bảng chia 2.",
+          "estimatedMinutes": 40,
+          "theory": "### 📋 Bài 43: Bảng chia 2\n\n#### 1. Bảng chia 2\n- $2 : 2 = 1$\n- $4 : 2 = 2$\n- $6 : 2 = 3$\n- $8 : 2 = 4$\n- $10 : 2 = 5$\n- $12 : 2 = 6$\n- $14 : 2 = 7$\n- $16 : 2 = 8$\n- $18 : 2 = 9$\n- $20 : 2 = 10$\n\n#### 2. Nhận xét\n- Số chia luôn là 2.\n- Số bị chia là các số chẵn từ 2 đến 20.",
+          "exercises": [
+            {
+              "question": "Tính: 16 : 2 = ?",
+              "options": [
+                "A. 7",
+                "B. 8",
+                "C. 9",
+                "D. 6"
+              ],
+              "correct_answer": "B",
+              "explanation": "Theo bảng chia 2: 16 : 2 = 8 (vì 2 × 8 = 16)."
+            },
+            {
+              "question": "Có 18 lít dầu chia đều vào 2 can. Mỗi can có bao nhiêu lít dầu?",
+              "options": [
+                "A. 8 l",
+                "B. 9 l",
+                "C. 10 l",
+                "D. 7 l"
+              ],
+              "correct_answer": "B",
+              "explanation": "18 : 2 = 9 (l)."
+            },
+            {
+              "question": "Tính: 20 : 2 - 4 = ?",
+              "options": [
+                "A. 5",
+                "B. 6",
+                "C. 7",
+                "D. 8"
+              ],
+              "correct_answer": "B",
+              "explanation": "20 : 2 = 10; 10 - 4 = 6."
+            }
+          ]
+        },
+        {
+          "displayOrder": 44,
+          "title": "Bài 44: Bảng chia 5",
+          "slug": "bai-44-bang-chia-5",
+          "summary": "Hình thành từ bảng nhân 5 và học thuộc bảng chia 5.",
+          "estimatedMinutes": 40,
+          "theory": "### 📋 Bài 44: Bảng chia 5\n\n#### 1. Bảng chia 5\n- $5 : 5 = 1$\n- $10 : 5 = 2$\n- $15 : 5 = 3$\n- $20 : 5 = 4$\n- $25 : 5 = 5$\n- $30 : 5 = 6$\n- $35 : 5 = 7$\n- $40 : 5 = 8$\n- $45 : 5 = 9$\n- $50 : 5 = 10$\n\n#### 2. Ứng dụng thực tế\n- Chia đều cho 5 người hoặc chia mỗi túi 5 phần.",
+          "exercises": [
+            {
+              "question": "Tính: 35 : 5 = ?",
+              "options": [
+                "A. 6",
+                "B. 7",
+                "C. 8",
+                "D. 5"
+              ],
+              "correct_answer": "B",
+              "explanation": "35 : 5 = 7 (vì 5 × 7 = 35)."
+            },
+            {
+              "question": "Cô giáo có 45 quyển vở thưởng đều cho 5 bạn học sinh giỏi. Mỗi bạn được bao nhiêu quyển vở?",
+              "options": [
+                "A. 8 quyển",
+                "B. 9 quyển",
+                "C. 10 quyển",
+                "D. 7 quyển"
+              ],
+              "correct_answer": "B",
+              "explanation": "45 : 5 = 9 (quyển vở)."
+            },
+            {
+              "question": "Điền dấu thích hợp: 30 : 5 ... 12 : 2",
+              "options": [
+                "A. >",
+                "B. <",
+                "C. =",
+                "D. +"
+              ],
+              "correct_answer": "C",
+              "explanation": "30 : 5 = 6 và 12 : 2 = 6 nên hai vế bằng nhau."
+            }
+          ]
+        },
+        {
+          "displayOrder": 45,
+          "title": "Bài 45: Luyện tập chung",
+          "slug": "bai-45-luyen-tap-chung",
+          "summary": "Tổng hợp kỹ năng tính nhân và chia trong bảng nhân, chia 2 và 5.",
+          "estimatedMinutes": 40,
+          "theory": "### 🎯 Bài 45: Luyện tập chung Chương 8\n\n#### 1. Trọng tâm ôn tập\n- Bảng nhân 2, 5 và bảng chia 2, 5.\n- Thực hiện biểu thức phối hợp: Nhân chia trước, cộng trừ sau.\n  - Ví dụ: $5 \\times 4 + 18 = 20 + 18 = 38$.\n  - $40 : 5 - 3 = 8 - 3 = 5$.\n- Giải toán có lời văn về phép nhân và phép chia đều.",
+          "exercises": [
+            {
+              "question": "Tính: 5 × 8 - 12 = ?",
+              "options": [
+                "A. 28",
+                "B. 38",
+                "C. 18",
+                "D. 26"
+              ],
+              "correct_answer": "A",
+              "explanation": "5 × 8 = 40; 40 - 12 = 28."
+            },
+            {
+              "question": "Có 20 bông hoa cắm vào các lọ, mỗi lọ 5 bông hoa. Hỏi cắm được mấy lọ hoa?",
+              "options": [
+                "A. 3 lọ",
+                "B. 4 lọ",
+                "C. 5 lọ",
+                "D. 6 lọ"
+              ],
+              "correct_answer": "B",
+              "explanation": "20 : 5 = 4 (lọ hoa)."
+            },
+            {
+              "question": "Một con vịt có 2 cái chân. Hỏi 7 con vịt có tất cả bao nhiêu cái chân?",
+              "options": [
+                "A. 12 cái",
+                "B. 14 cái",
+                "C. 16 cái",
+                "D. 9 cái"
+              ],
+              "correct_answer": "B",
+              "explanation": "2 × 7 = 14 (cái chân)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 9,
+      "title": "Chương 9: Làm quen với hình khối",
+      "slug": "chuong-9-lam-quen-voi-hinh-khoi",
+      "description": "Nhận biết, phân biệt hình dạng và đặc điểm của khối trụ, khối cầu trong cuộc sống thực tế.",
+      "lessons": [
+        {
+          "displayOrder": 46,
+          "title": "Bài 46: Khối trụ, khối cầu",
+          "slug": "bai-46-khoi-tru-khoi-cau",
+          "summary": "Nhận biết khối trụ và khối cầu thông qua các đồ vật trực quan quen thuộc.",
+          "estimatedMinutes": 40,
+          "theory": "### 🧊 Bài 46: Khối trụ, khối cầu\n\n#### 1. Khối trụ\n- Có hai mặt đáy phẳng là hình tròn bằng nhau.\n- Thân hình trụ tròn xung quanh.\n- Khối trụ có thể **đặt đứng**, **trượt** và **lăn được** khi đặt nằm ngang.\n- Đồ vật hình khối trụ trong đời sống: Hộp sữa bột, lon nước ngọt, khúc gỗ tròn, viên pin 🥫.\n\n#### 2. Khối cầu\n- Toàn bộ bề mặt khối cầu cong tròn đều, không có mặt phẳng hay góc cạnh nào.\n- Khối cầu có thể **lăn được về mọi phía**.\n- Đồ vật hình khối cầu: Quả bóng đá ⚽, viên bi ve, quả địa cầu 🌍.",
+          "exercises": [
+            {
+              "question": "Đồ vật nào dưới đây có dạng khối cầu?",
+              "options": [
+                "A. Lon nước ngọt",
+                "B. Hộp phấn viết bảng",
+                "C. Quả bóng đá",
+                "D. Viên gạch xây nhà"
+              ],
+              "correct_answer": "C",
+              "explanation": "Quả bóng đá có dạng khối cầu tròn xoe và lăn được về mọi hướng."
+            },
+            {
+              "question": "Lon sữa đặc thường có dạng khối gì?",
+              "options": [
+                "A. Khối trụ",
+                "B. Khối cầu",
+                "C. Khối lập phương",
+                "D. Khối hộp chữ nhật"
+              ],
+              "correct_answer": "A",
+              "explanation": "Lon sữa đặc có 2 mặt đáy phẳng hình tròn và thân tròn, là dạng khối trụ."
+            },
+            {
+              "question": "Đặc điểm nào sau đây là của khối cầu?",
+              "options": [
+                "A. Có 6 mặt bằng nhau",
+                "B. Có 2 mặt đáy hình tròn",
+                "C. Lăn được về mọi phía",
+                "D. Có 8 đỉnh nhọn"
+              ],
+              "correct_answer": "C",
+              "explanation": "Khối cầu không có cạnh, không có đỉnh và lăn được về mọi phía."
+            }
+          ]
+        },
+        {
+          "displayOrder": 47,
+          "title": "Bài 47: Luyện tập chung",
+          "slug": "bai-47-luyen-tap-chung",
+          "summary": "Phân loại, đếm số lượng khối lập phương, khối hộp chữ nhật, khối trụ, khối cầu trong một mô hình ghép.",
+          "estimatedMinutes": 35,
+          "theory": "### 🎯 Bài 47: Luyện tập chung Chương 9\n\n#### 1. Bốn khối hình học cơ bản đã học\n- **Khối lập phương**: Có 6 mặt đều là hình vuông bằng nhau.\n- **Khối hộp chữ nhật**: Có 6 mặt là hình chữ nhật (hoặc có 2 mặt hình vuông).\n- **Khối trụ**: Có 2 mặt đáy hình tròn bằng nhau, thân tròn lăn được khi nằm.\n- **Khối cầu**: Tròn xoe, lăn được mọi phía.\n\n#### 2. Thực hành phân loại đồ vật\n- Phân nhóm đồ chơi theo hình khối giúp bé phát triển tư duy không gian trực quan.",
+          "exercises": [
+            {
+              "question": "Viên gạch men lát nền nhà có dạng hình vuông. Khi xếp nhiều viên gạch tạo thành chiếc hộp rubik thì chiếc hộp đó có dạng khối gì?",
+              "options": [
+                "A. Khối cầu",
+                "B. Khối trụ",
+                "C. Khối lập phương",
+                "D. Khối tròn"
+              ],
+              "correct_answer": "C",
+              "explanation": "Khối rubik có 6 mặt hình vuông đều nhau, là khối lập phương."
+            },
+            {
+              "question": "Khối hình nào có thể lăn được khi đặt nằm ngang nhưng không lăn được khi đặt đứng?",
+              "options": [
+                "A. Khối cầu",
+                "B. Khối trụ",
+                "C. Khối lập phương",
+                "D. Khối hộp chữ nhật"
+              ],
+              "correct_answer": "B",
+              "explanation": "Khối trụ khi đặt đứng thì đứng yên trên mặt đáy phẳng, khi đặt nằm ngang thì lăn được."
+            },
+            {
+              "question": "Trong các vật sau: Quả bóng bàn, Lon coca, Hộp quà lập phương, Bánh quy tròn. Có mấy vật dạng khối trụ?",
+              "options": [
+                "A. 1 vật (Lon coca)",
+                "B. 2 vật",
+                "C. 3 vật",
+                "D. Không có vật nào"
+              ],
+              "correct_answer": "A",
+              "explanation": "Lon coca có dạng khối trụ."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 10,
+      "title": "Chương 10: Các số trong phạm vi 1000",
+      "slug": "chuong-10-cac-so-trong-pham-vi-1000",
+      "description": "Mở rộng hệ đếm lên phạm vi 1000: đơn vị, chục, trăm, nghìn; đọc viết số có ba chữ số, phân tích cấu tạo và so sánh số.",
+      "lessons": [
+        {
+          "displayOrder": 48,
+          "title": "Bài 48: Đơn vị, chục, trăm, nghìn",
+          "slug": "bai-48-don-vi-chuc-tram-nghin",
+          "summary": "Hình thành các hàng: đơn vị, chục, trăm và nhận biết số 1000 (một nghìn).",
+          "estimatedMinutes": 40,
+          "theory": "### 🔢 Bài 48: Đơn vị, chục, trăm, nghìn\n\n#### 1. Mối quan hệ giữa các hàng\n- $10\\text{ đơn vị} = 1\\text{ chục}$\n- $10\\text{ chục} = 1\\text{ trăm}$ ($100$)\n- $10\\text{ trăm} = 1\\text{ nghìn}$ ($1000$)\n\n#### 2. Số 1000 (Một nghìn)\n- Số **1000** là số có **bốn chữ số** gồm: chữ số 1 ở hàng nghìn và ba chữ số 0 ở các hàng trăm, chục, đơn vị.\n- Số 1000 đọc là: *Một nghìn*.",
+          "exercises": [
+            {
+              "question": "10 chục bằng mấy trăm?",
+              "options": [
+                "A. 1 trăm",
+                "B. 2 trăm",
+                "C. 10 trăm",
+                "D. 1 nghìn"
+              ],
+              "correct_answer": "A",
+              "explanation": "10 chục = 1 trăm (100)."
+            },
+            {
+              "question": "10 trăm bằng bao nhiêu?",
+              "options": [
+                "A. 100",
+                "B. 1000",
+                "C. 10",
+                "D. 10000"
+              ],
+              "correct_answer": "B",
+              "explanation": "10 trăm = 1 nghìn (1000)."
+            },
+            {
+              "question": "Số 'Một nghìn' có bao nhiêu chữ số 0?",
+              "options": [
+                "A. 1 chữ số 0",
+                "B. 2 chữ số 0",
+                "C. 3 chữ số 0",
+                "D. 4 chữ số 0"
+              ],
+              "correct_answer": "C",
+              "explanation": "Số 1000 có 1 chữ số 1 và 3 chữ số 0."
+            }
+          ]
+        },
+        {
+          "displayOrder": 49,
+          "title": "Bài 49: Các số tròn trăm, tròn chục",
+          "slug": "bai-49-cac-so-tron-tram-tron-chuc",
+          "summary": "Đọc, viết các số tròn trăm (100, 200, ..., 900) và các số tròn chục lớn hơn 100.",
+          "estimatedMinutes": 40,
+          "theory": "### 💯 Bài 49: Các số tròn trăm, tròn chục\n\n#### 1. Các số tròn trăm\n- $100$ (Một trăm), $200$ (Hai trăm), $300$ (Ba trăm), $400$ (Bốn trăm)\n- $500$ (Năm trăm), $600$ (Sáu trăm), $700$ (Bảy trăm), $800$ (Tám trăm), $900$ (Chín trăm)\n- Số tròn trăm luôn có tận cùng là **hai chữ số 0**.\n\n#### 2. Các số tròn chục trong phạm vi 1000\n- Là các số có tận cùng là **một chữ số 0**:\n  - Ví dụ: $110, 120, 250, 480, 760, 990$.",
+          "exercises": [
+            {
+              "question": "Số tròn trăm liền sau số 500 là số nào?",
+              "options": [
+                "A. 510",
+                "B. 600",
+                "C. 400",
+                "D. 501"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số tròn trăm liền sau 500 là 600."
+            },
+            {
+              "question": "Số nào dưới đây là số tròn trăm?",
+              "options": [
+                "A. 340",
+                "B. 700",
+                "C. 105",
+                "D. 250"
+              ],
+              "correct_answer": "B",
+              "explanation": "700 có tận cùng là hai chữ số 0 nên là số tròn trăm."
+            },
+            {
+              "question": "Số 'Tám trăm năm mươi' được viết là:",
+              "options": [
+                "A. 805",
+                "B. 850",
+                "C. 85",
+                "D. 8005"
+              ],
+              "correct_answer": "B",
+              "explanation": "Tám trăm năm mươi gồm 8 trăm và 5 chục, viết là 850."
+            }
+          ]
+        },
+        {
+          "displayOrder": 50,
+          "title": "Bài 50: So sánh các số tròn trăm, tròn chục",
+          "slug": "bai-50-so-sanh-cac-so-tron-tram-tron-chuc",
+          "summary": "Cách so sánh hai số tròn trăm, tròn chục dựa vào chữ số hàng trăm và hàng chục.",
+          "estimatedMinutes": 35,
+          "theory": "### 🔍 Bài 50: So sánh các số tròn trăm, tròn chục\n\n#### 1. So sánh hai số tròn trăm\n- So sánh chữ số ở **hàng trăm**: Số nào có chữ số hàng trăm lớn hơn thì số đó lớn hơn.\n  - Ví dụ: So sánh $300$ và $500$: Vì $3 < 5$ nên $300 < 500$.\n\n#### 2. So sánh hai số tròn chục\n- Trước hết so sánh hàng trăm: Hàng trăm lớn hơn thì số lớn hơn.\n- Nếu hàng trăm bằng nhau thì so sánh hàng chục: Hàng chục lớn hơn thì số đó lớn hơn.\n  - Ví dụ: So sánh $470$ và $430$: Hàng trăm cùng là 4, hàng chục có $7 > 3$ nên $470 > 430$.",
+          "exercises": [
+            {
+              "question": "Điền dấu thích hợp: 400 ... 700",
+              "options": [
+                "A. >",
+                "B. <",
+                "C. =",
+                "D. +"
+              ],
+              "correct_answer": "B",
+              "explanation": "Vì 4 trăm < 7 trăm nên 400 < 700."
+            },
+            {
+              "question": "So sánh: 680 ... 650",
+              "options": [
+                "A. >",
+                "B. <",
+                "C. =",
+                "D. Không so sánh được"
+              ],
+              "correct_answer": "A",
+              "explanation": "Cùng hàng trăm là 6, hàng chục có 8 > 5 nên 680 > 650."
+            },
+            {
+              "question": "Số tròn trăm lớn nhất bé hơn 1000 là số nào?",
+              "options": [
+                "A. 990",
+                "B. 900",
+                "C. 800",
+                "D. 999"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số tròn trăm lớn nhất bé hơn 1000 là 900 (990 là số tròn chục)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 51,
+          "title": "Bài 51: Số có ba chữ số",
+          "slug": "bai-51-so-co-ba-chu-so",
+          "summary": "Đọc và viết các số có ba chữ số bất kỳ; nhận diện chữ số hàng trăm, hàng chục, hàng đơn vị.",
+          "estimatedMinutes": 40,
+          "theory": "### 🔢 Bài 51: Số có ba chữ số\n\n#### 1. Cấu tạo số có ba chữ số\n- Số có ba chữ số gồm có: **Hàng trăm**, **Hàng chục**, **Hàng đơn vị** (tính từ trái sang phải).\n- Ví dụ: Số **354**\n  - Chữ số 3 ở hàng trăm (giá trị là 300).\n  - Chữ số 5 ở hàng chục (giá trị là 50).\n  - Chữ số 4 ở hàng đơn vị (giá trị là 4).\n\n#### 2. Chú ý cách đọc các trường hợp đặc biệt\n- Hàng chục là chữ số 0 đọc là **linh** (miền Bắc) hoặc **lẻ** (miền Nam):\n  - $305$: *Ba trăm linh năm*.\n  - $702$: *Bảy trăm linh hai*.",
+          "exercises": [
+            {
+              "question": "Số 428 gồm:",
+              "options": [
+                "A. 4 trăm, 2 chục và 8 đơn vị",
+                "B. 4 chục, 2 trăm và 8 đơn vị",
+                "C. 4 trăm và 28 chục",
+                "D. 42 trăm và 8 đơn vị"
+              ],
+              "correct_answer": "A",
+              "explanation": "Số 428 gồm 4 trăm, 2 chục và 8 đơn vị."
+            },
+            {
+              "question": "Số 'Năm trăm linh bảy' được viết là:",
+              "options": [
+                "A. 570",
+                "B. 507",
+                "C. 57",
+                "D. 5007"
+              ],
+              "correct_answer": "B",
+              "explanation": "Năm trăm linh bảy có hàng trăm là 5, hàng chục là 0, hàng đơn vị là 7, viết là 507."
+            },
+            {
+              "question": "Chữ số 6 trong số 863 có giá trị là bao nhiêu?",
+              "options": [
+                "A. 6",
+                "B. 60",
+                "C. 600",
+                "D. 63"
+              ],
+              "correct_answer": "B",
+              "explanation": "Chữ số 6 ở hàng chục nên có giá trị là 60 (6 chục)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 52,
+          "title": "Bài 52: Viết số thành tổng các trăm, chục, đơn vị",
+          "slug": "bai-52-viet-so-thanh-tong-cac-tram-chuc-don-vi",
+          "summary": "Phân tích số có ba chữ số thành tổng: a00 + b0 + c.",
+          "estimatedMinutes": 40,
+          "theory": "### 🧩 Bài 52: Viết số thành tổng các trăm, chục, đơn vị\n\n#### 1. Quy tắc viết số thành tổng\n- Mọi số có ba chữ số $abc$ đều phân tích thành tổng:\n  $$abc = a00 + b0 + c$$\n- Ví dụ:\n  $$472 = 400 + 70 + 2$$\n  $$835 = 800 + 30 + 5$$\n\n#### 2. Các trường hợp có chữ số 0\n- Khi hàng chục là 0: $608 = 600 + 8$\n- Khi hàng đơn vị là 0: $940 = 900 + 40$",
+          "exercises": [
+            {
+              "question": "Viết số 649 thành tổng các trăm, chục, đơn vị:",
+              "options": [
+                "A. 600 + 40 + 9",
+                "B. 60 + 40 + 9",
+                "C. 600 + 49",
+                "D. 640 + 9"
+              ],
+              "correct_answer": "A",
+              "explanation": "649 = 600 + 40 + 9."
+            },
+            {
+              "question": "Tổng 700 + 5 tương ứng với số nào?",
+              "options": [
+                "A. 750",
+                "B. 705",
+                "C. 75",
+                "D. 7005"
+              ],
+              "correct_answer": "B",
+              "explanation": "700 + 5 = 705 (hàng chục là 0)."
+            },
+            {
+              "question": "Số gồm 9 trăm và 3 chục viết thành tổng là:",
+              "options": [
+                "A. 900 + 3",
+                "B. 900 + 30",
+                "C. 930 + 0",
+                "D. 90 + 30"
+              ],
+              "correct_answer": "B",
+              "explanation": "9 trăm và 3 chục là 930, viết thành tổng là 900 + 30."
+            }
+          ]
+        },
+        {
+          "displayOrder": 53,
+          "title": "Bài 53: So sánh các số có ba chữ số",
+          "slug": "bai-53-so-sanh-cac-so-co-ba-chu-so",
+          "summary": "Quy tắc so sánh hai số có ba chữ số theo thứ tự từ hàng cao nhất (trăm) đến hàng thấp nhất (đơn vị).",
+          "estimatedMinutes": 40,
+          "theory": "### 🔍 Bài 53: So sánh các số có ba chữ số\n\n#### 1. Quy tắc so sánh từ trái sang phải\n- **Bước 1: So sánh chữ số hàng trăm**: Số nào có chữ số hàng trăm lớn hơn thì số đó lớn hơn.\n  - Ví dụ: $524 > 489$ (vì $5 > 4$).\n- **Bước 2: Nếu hàng trăm bằng nhau thì so sánh hàng chục**: Số nào có chữ số hàng chục lớn hơn thì lớn hơn.\n  - Ví dụ: $671 > 635$ (cùng hàng trăm là 6, vì $7 > 3$).\n- **Bước 3: Nếu hàng trăm và hàng chục đều bằng nhau thì so sánh hàng đơn vị**:\n  - Ví dụ: $789 > 782$ (vì $9 > 2$).\n- Nếu tất cả các hàng đều bằng nhau thì hai số đó **bằng nhau** ($= $).",
+          "exercises": [
+            {
+              "question": "Điền dấu thích hợp: 582 ... 591",
+              "options": [
+                "A. >",
+                "B. <",
+                "C. =",
+                "D. Không so sánh được"
+              ],
+              "correct_answer": "B",
+              "explanation": "Cùng hàng trăm là 5, hàng chục có 8 < 9 nên 582 < 591."
+            },
+            {
+              "question": "Số lớn nhất trong các số: 345, 543, 435, 534 là:",
+              "options": [
+                "A. 345",
+                "B. 435",
+                "C. 534",
+                "D. 543"
+              ],
+              "correct_answer": "D",
+              "explanation": "So sánh hàng trăm có hai số 534 và 543. Hàng chục có 4 > 3 nên 543 là số lớn nhất."
+            },
+            {
+              "question": "Số nào sau đây bé hơn 300?",
+              "options": [
+                "A. 301",
+                "B. 310",
+                "C. 299",
+                "D. 350"
+              ],
+              "correct_answer": "C",
+              "explanation": "299 có chữ số hàng trăm là 2 < 3 nên 299 < 300."
+            }
+          ]
+        },
+        {
+          "displayOrder": 54,
+          "title": "Bài 54: Luyện tập chung",
+          "slug": "bai-54-luyen-tap-chung",
+          "summary": "Ôn tập tổng hợp về đọc viết số, thứ tự dãy số và so sánh các số trong phạm vi 1000.",
+          "estimatedMinutes": 40,
+          "theory": "### 🎯 Bài 54: Luyện tập chung Chương 10\n\n#### 1. Hệ thống hóa kiến thức\n- Số bé nhất có ba chữ số là **100**.\n- Số lớn nhất có ba chữ số là **999**.\n- Số nhỏ nhất có bốn chữ số là **1000**.\n- Dãy số tăng dần hoặc giảm dần: Số liền trước kém 1 đơn vị, số liền sau hơn 1 đơn vị.\n- Sắp xếp dãy số theo thứ tự từ bé đến lớn và từ lớn đến bé.",
+          "exercises": [
+            {
+              "question": "Số liền trước của số 1000 là số nào?",
+              "options": [
+                "A. 900",
+                "B. 990",
+                "C. 999",
+                "D. 1001"
+              ],
+              "correct_answer": "C",
+              "explanation": "Số liền trước của 1000 là 1000 - 1 = 999."
+            },
+            {
+              "question": "Sắp xếp các số sau theo thứ tự từ lớn đến bé: 670, 760, 607, 706",
+              "options": [
+                "A. 760, 706, 670, 607",
+                "B. 607, 670, 706, 760",
+                "C. 760, 670, 706, 607",
+                "D. 706, 760, 670, 607"
+              ],
+              "correct_answer": "A",
+              "explanation": "Thứ tự từ lớn đến bé đúng là: 760 > 706 > 670 > 607."
+            },
+            {
+              "question": "Số tròn chục liền sau số 345 là số nào?",
+              "options": [
+                "A. 346",
+                "B. 350",
+                "C. 340",
+                "D. 400"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số tròn chục đứng ngay sau 345 là 350."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 11,
+      "title": "Chương 11: Độ dài và đơn vị đo độ dài. Tiền Việt Nam",
+      "slug": "chuong-11-do-dai-va-don-vi-do-do-dai-tien-viet-nam",
+      "description": "Làm quen với các đơn vị đo độ dài mới: đề-xi-mét (dm), mét (m), ki-lô-mét (km); bảng quy đổi và làm quen với các tờ tiền Việt Nam (100 đồng đến 1000 đồng, 10 000 đồng).",
+      "lessons": [
+        {
+          "displayOrder": 55,
+          "title": "Bài 55: Đề-xi-mét. Mét. Ki-lô-mét",
+          "slug": "bai-55-de-xi-met-met-ki-lo-met",
+          "summary": "Nhận biết các đơn vị đo độ dài dm, m, km và bảng quy đổi giữa chúng.",
+          "estimatedMinutes": 40,
+          "theory": "### 📏 Bài 55: Đề-xi-mét. Mét. Ki-lô-mét\n\n#### 1. Đề-xi-mét (dm)\n- Đề-xi-mét là đơn vị đo độ dài, viết tắt là **dm**.\n- Quy đổi:\n  $$1\\text{ dm} = 10\\text{ cm}$$\n  $$10\\text{ cm} = 1\\text{ dm}$$\n\n#### 2. Mét (m)\n- Mét là đơn vị đo độ dài lớn hơn dm và cm, viết tắt là **m**.\n- Thường dùng đo chiều dài phòng học, sân trường, chiều cao con người.\n- Quy đổi:\n  $$1\\text{ m} = 10\\text{ dm}$$\n  $$1\\text{ m} = 100\\text{ cm}$$\n\n#### 3. Ki-lô-mét (km)\n- Ki-lô-mét là đơn vị đo khoảng cách rất xa giữa các tỉnh, thành phố, viết tắt là **km**.\n- Quy đổi:\n  $$1\\text{ km} = 1000\\text{ m}$$",
+          "exercises": [
+            {
+              "question": "1 m bằng bao nhiêu xăng-ti-mét?",
+              "options": [
+                "A. 10 cm",
+                "B. 100 cm",
+                "C. 1000 cm",
+                "D. 50 cm"
+              ],
+              "correct_answer": "B",
+              "explanation": "1 m = 100 cm."
+            },
+            {
+              "question": "1 km bằng bao nhiêu mét?",
+              "options": [
+                "A. 10 m",
+                "B. 100 m",
+                "C. 1000 m",
+                "D. 10000 m"
+              ],
+              "correct_answer": "C",
+              "explanation": "1 km = 1000 m."
+            },
+            {
+              "question": "Để đo khoảng cách từ Hà Nội đến Thành phố Hồ Chí Minh, người ta dùng đơn vị nào?",
+              "options": [
+                "A. Xăng-ti-mét (cm)",
+                "B. Đề-xi-mét (dm)",
+                "C. Mét (m)",
+                "D. Ki-lô-mét (km)"
+              ],
+              "correct_answer": "D",
+              "explanation": "Khoảng cách giữa các thành phố rất xa nên dùng đơn vị ki-lô-mét (km)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 56,
+          "title": "Bài 56: Giới thiệu tiền Việt Nam",
+          "slug": "bai-56-gioi-thieu-tien-viet-nam",
+          "summary": "Nhận biết mệnh giá các tờ tiền Việt Nam: 100 đồng, 200 đồng, 500 đồng, 1000 đồng.",
+          "estimatedMinutes": 40,
+          "theory": "### 💵 Bài 56: Giới thiệu tiền Việt Nam\n\n#### 1. Nhận biết các mệnh giá tiền giấy\n- Tờ **100 đồng**: In số 100, màu nâu sẫm.\n- Tờ **200 đồng**: In số 200, màu nâu đỏ.\n- Tờ **500 đồng**: In số 500, màu đỏ cánh sen.\n- Tờ **1000 đồng**: In số 1000, màu xanh lá cây hoặc tím than.\n\n#### 2. Kỹ năng tính toán đổi tiền\n- Gom các tờ tiền nhỏ thành tờ tiền mệnh giá lớn hơn:\n  - 2 tờ 500 đồng được: $500\\text{ đồng} + 500\\text{ đồng} = 1000\\text{ đồng}$.\n  - 5 tờ 200 đồng được: $200\\text{ đồng} \\times 5 = 1000\\text{ đồng}$.",
+          "exercises": [
+            {
+              "question": "Hai tờ 500 đồng có tổng giá trị bằng tờ tiền nào sau đây?",
+              "options": [
+                "A. Tờ 200 đồng",
+                "B. Tờ 500 đồng",
+                "C. Tờ 1000 đồng",
+                "D. Tờ 100 đồng"
+              ],
+              "correct_answer": "C",
+              "explanation": "500 + 500 = 1000 đồng."
+            },
+            {
+              "question": "Nam có 1 tờ 500 đồng và 2 tờ 200 đồng. Nam có tất cả bao nhiêu tiền?",
+              "options": [
+                "A. 700 đồng",
+                "B. 800 đồng",
+                "C. 900 đồng",
+                "D. 1000 đồng"
+              ],
+              "correct_answer": "C",
+              "explanation": "500 + 200 + 200 = 900 đồng."
+            },
+            {
+              "question": "Một chiếc bút chì có giá 800 đồng. Bé đưa cô bán hàng 1 tờ 1000 đồng thì được trả lại bao nhiêu tiền?",
+              "options": [
+                "A. 100 đồng",
+                "B. 200 đồng",
+                "C. 300 đồng",
+                "D. 400 đồng"
+              ],
+              "correct_answer": "B",
+              "explanation": "1000 - 800 = 200 đồng."
+            }
+          ]
+        },
+        {
+          "displayOrder": 57,
+          "title": "Bài 57: Thực hành và trải nghiệm đo độ dài",
+          "slug": "bai-57-thuc-hanh-va-trai-nghiem-do-do-dai",
+          "summary": "Thực hành dùng thước dây, thước cuộn đo kích thước bàn học, bảng đen, chiều cao bản thân và đổi đơn vị đo.",
+          "estimatedMinutes": 35,
+          "theory": "### 📏 Bài 57: Thực hành và trải nghiệm đo độ dài\n\n#### 1. Dụng cụ đo độ dài thực tế\n- Thước kẻ học sinh: Đo vật ngắn dưới 30 cm.\n- Thước mét gỗ: Đo bàn học, bảng lớp.\n- Thước dây hoặc thước cuộn: Đo vòng eo, chiều cao, chiều dài sân nhà.\n\n#### 2. Kỹ thuật đo chính xác\n- Đầu một mép vật trùng vạch số 0 của thước.\n- Kéo căng thước thẳng theo chiều dài vật cần đo.\n- Mắt nhìn thẳng góc với đầu kia của vật để đọc kết quả.",
+          "exercises": [
+            {
+              "question": "Bàn học của em dài 1 m 20 cm. Đổi ra xăng-ti-mét là:",
+              "options": [
+                "A. 120 cm",
+                "B. 102 cm",
+                "C. 210 cm",
+                "D. 12 cm"
+              ],
+              "correct_answer": "A",
+              "explanation": "1 m = 100 cm, 100 cm + 20 cm = 120 cm."
+            },
+            {
+              "question": "Bạn Hà cao 125 cm. Chiều cao của bạn Hà là:",
+              "options": [
+                "A. 1 m 5 cm",
+                "B. 1 m 25 cm",
+                "C. 12 m 5 cm",
+                "D. 1 m 50 cm"
+              ],
+              "correct_answer": "B",
+              "explanation": "125 cm = 100 cm + 25 cm = 1 m 25 cm."
+            },
+            {
+              "question": "Để đo chu vi gốc cây xà cừ cổ thụ ở sân trường, dụng cụ nào phù hợp nhất?",
+              "options": [
+                "A. Thước kẻ gỗ cứng 20 cm",
+                "B. Thước dây uốn mềm được",
+                "C. Cân đồng hồ",
+                "D. Ca 1 lít"
+              ],
+              "correct_answer": "B",
+              "explanation": "Thước dây mềm uốn cong theo thân cây được nên đo thân cây chính xác nhất."
+            }
+          ]
+        },
+        {
+          "displayOrder": 58,
+          "title": "Bài 58: Luyện tập chung",
+          "slug": "bai-58-luyen-tap-chung",
+          "summary": "Ôn tập tổng hợp về các đơn vị đo độ dài cm, dm, m, km và giải toán chi tiêu tiền tệ đơn giản.",
+          "estimatedMinutes": 40,
+          "theory": "### 🎯 Bài 58: Luyện tập chung Chương 11\n\n#### 1. Bảng chuyển đổi đơn vị đo độ dài\n- $1\\text{ dm} = 10\\text{ cm}$\n- $1\\text{ m} = 10\\text{ dm} = 100\\text{ cm}$\n- $1\\text{ km} = 1000\\text{ m}$\n\n#### 2. Phép tính phối hợp với đơn vị đo\n- $35\\text{ m} + 48\\text{ m} = 83\\text{ m}$\n- $100\\text{ km} - 65\\text{ km} = 35\\text{ km}$",
+          "exercises": [
+            {
+              "question": "Tính: 34 dm + 28 dm = ?",
+              "options": [
+                "A. 52 dm",
+                "B. 62 dm",
+                "C. 62 cm",
+                "D. 60 dm"
+              ],
+              "correct_answer": "B",
+              "explanation": "34 + 28 = 62 (dm)."
+            },
+            {
+              "question": "Quãng đường từ nhà An đến trường dài 2 km, quãng đường từ nhà Bình đến trường dài 1500 m. Nhà bạn nào xa trường hơn?",
+              "options": [
+                "A. Nhà An",
+                "B. Nhà Bình",
+                "C. Hai bạn cách bằng nhau",
+                "D. Không so sánh được"
+              ],
+              "correct_answer": "A",
+              "explanation": "2 km = 2000 m. Vì 2000 m > 1500 m nên nhà An xa hơn."
+            },
+            {
+              "question": "Bé mua một phong bì thư giá 500 đồng và một con tem giá 300 đồng. Bé phải trả tất cả bao nhiêu tiền?",
+              "options": [
+                "A. 700 đồng",
+                "B. 800 đồng",
+                "C. 900 đồng",
+                "D. 1000 đồng"
+              ],
+              "correct_answer": "B",
+              "explanation": "500 + 300 = 800 (đồng)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 12,
+      "title": "Chương 12: Phép cộng, phép trừ trong phạm vi 1000",
+      "slug": "chuong-12-phep-cong-phep-tru-trong-pham-vi-1000",
+      "description": "Thực hiện thành thạo phép cộng và phép trừ trong phạm vi 1000 (cả dạng không nhớ và có nhớ một lần) giữa các số có ba chữ số.",
+      "lessons": [
+        {
+          "displayOrder": 59,
+          "title": "Bài 59: Phép cộng (không nhớ) trong phạm vi 1000",
+          "slug": "bai-59-phep-cong-khong-nho-trong-pham-vi-1000",
+          "summary": "Đặt tính và tính phép cộng không nhớ giữa các số có ba chữ số.",
+          "estimatedMinutes": 40,
+          "theory": "### ➕ Bài 59: Phép cộng (không nhớ) trong phạm vi 1000\n\n#### 1. Quy tắc cộng dạng $342 + 235$\n- **Đặt tính**: Đặt các chữ số ở cùng một hàng thẳng cột với nhau:\n  - Hàng đơn vị thẳng hàng đơn vị.\n  - Hàng chục thẳng hàng chục.\n  - Hàng trăm thẳng hàng trăm.\n- **Tính từ phải sang trái**:\n  - $2 + 5 = 7$, viết 7.\n  - $4 + 3 = 7$, viết 7.\n  - $3 + 2 = 5$, viết 5.\n  - Vậy: **$342 + 235 = 577$**.",
+          "exercises": [
+            {
+              "question": "Tính: 416 + 253 = ?",
+              "options": [
+                "A. 669",
+                "B. 659",
+                "C. 769",
+                "D. 679"
+              ],
+              "correct_answer": "A",
+              "explanation": "6 + 3 = 9; 1 + 5 = 6; 4 + 2 = 6. Kết quả là 669."
+            },
+            {
+              "question": "Tính: 300 + 500 = ?",
+              "options": [
+                "A. 700",
+                "B. 800",
+                "C. 900",
+                "D. 600"
+              ],
+              "correct_answer": "B",
+              "explanation": "3 trăm + 5 trăm = 8 trăm (800)."
+            },
+            {
+              "question": "Một trường tiểu học có 420 học sinh nam và 435 học sinh nữ. Trường đó có tất cả bao nhiêu học sinh?",
+              "options": [
+                "A. 845 học sinh",
+                "B. 855 học sinh",
+                "C. 865 học sinh",
+                "D. 835 học sinh"
+              ],
+              "correct_answer": "B",
+              "explanation": "420 + 435 = 855 (học sinh)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 60,
+          "title": "Bài 60: Phép cộng (có nhớ) trong phạm vi 1000",
+          "slug": "bai-60-phep-cong-co-nho-trong-pham-vi-1000",
+          "summary": "Kỹ thuật cộng có nhớ một lần (sang hàng chục hoặc sang hàng trăm).",
+          "estimatedMinutes": 40,
+          "theory": "### ➕ Bài 60: Phép cộng (có nhớ) trong phạm vi 1000\n\n#### 1. Nhớ sang hàng chục dạng $247 + 138$\n- $7 + 8 = 15$, **viết 5, nhớ 1**.\n- $4 + 3 = 7$, thêm 1 bằng **8**, viết 8.\n- $2 + 1 = 3$, viết 3.\n- Kết quả: **$385$**.\n\n#### 2. Nhớ sang hàng trăm dạng $374 + 251$\n- $4 + 1 = 5$, viết 5.\n- $7 + 5 = 12$, **viết 2, nhớ 1**.\n- $3 + 2 = 5$, thêm 1 bằng **6**, viết 6.\n- Kết quả: **$625$**.",
+          "exercises": [
+            {
+              "question": "Tính: 356 + 218 = ?",
+              "options": [
+                "A. 564",
+                "B. 574",
+                "C. 584",
+                "D. 572"
+              ],
+              "correct_answer": "B",
+              "explanation": "6 + 8 = 14, viết 4 nhớ 1; 5 + 1 = 6 thêm 1 là 7; 3 + 2 = 5. Kết quả: 574."
+            },
+            {
+              "question": "Tính: 482 + 253 = ?",
+              "options": [
+                "A. 725",
+                "B. 735",
+                "C. 635",
+                "D. 745"
+              ],
+              "correct_answer": "B",
+              "explanation": "2 + 3 = 5; 8 + 5 = 13 viết 3 nhớ 1; 4 + 2 = 6 thêm 1 là 7. Kết quả: 735."
+            },
+            {
+              "question": "Kho thứ nhất có 365 bao xi măng, kho thứ hai có 280 bao xi măng. Cả hai kho có bao nhiêu bao xi măng?",
+              "options": [
+                "A. 635 bao",
+                "B. 645 bao",
+                "C. 655 bao",
+                "D. 545 bao"
+              ],
+              "correct_answer": "B",
+              "explanation": "365 + 280 = 645 (bao)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 61,
+          "title": "Bài 61: Phép trừ (không nhớ) trong phạm vi 1000",
+          "slug": "bai-61-phep-tru-khong-nho-trong-pham-vi-1000",
+          "summary": "Thực hiện phép trừ không nhớ giữa hai số có ba chữ số bằng cách trừ thẳng từng hàng.",
+          "estimatedMinutes": 40,
+          "theory": "### ➖ Bài 61: Phép trừ (không nhớ) trong phạm vi 1000\n\n#### 1. Quy tắc trừ dạng $675 - 241$\n- **Đặt tính**: Thẳng cột đơn vị, chục và trăm.\n- **Tính từ phải sang trái**:\n  - $5 - 1 = 4$, viết 4.\n  - $7 - 4 = 3$, viết 3.\n  - $6 - 2 = 4$, viết 4.\n  - Kết quả: **$675 - 241 = 434$**.",
+          "exercises": [
+            {
+              "question": "Tính: 789 - 345 = ?",
+              "options": [
+                "A. 444",
+                "B. 434",
+                "C. 454",
+                "D. 544"
+              ],
+              "correct_answer": "A",
+              "explanation": "9 - 5 = 4; 8 - 4 = 4; 7 - 3 = 4. Kết quả là 444."
+            },
+            {
+              "question": "Tính: 900 - 400 = ?",
+              "options": [
+                "A. 400",
+                "B. 500",
+                "C. 600",
+                "D. 300"
+              ],
+              "correct_answer": "B",
+              "explanation": "9 trăm - 4 trăm = 5 trăm (500)."
+            },
+            {
+              "question": "Một đội công nhân phải sửa quãng đường dài 860 m, đội đã sửa được 520 m. Hỏi còn phải sửa bao nhiêu mét đường nữa?",
+              "options": [
+                "A. 340 m",
+                "B. 320 m",
+                "C. 350 m",
+                "D. 240 m"
+              ],
+              "correct_answer": "A",
+              "explanation": "860 - 520 = 340 (m)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 62,
+          "title": "Bài 62: Phép trừ (có nhớ) trong phạm vi 1000",
+          "slug": "bai-62-phep-tru-co-nho-trong-pham-vi-1000",
+          "summary": "Kỹ thuật trừ có nhớ một lần (ở hàng chục hoặc hàng trăm) trong phạm vi 1000.",
+          "estimatedMinutes": 40,
+          "theory": "### ➖ Bài 62: Phép trừ (có nhớ) trong phạm vi 1000\n\n#### 1. Dạng nhớ ở hàng chục: $562 - 238$\n- 2 không trừ được 8, lấy $12 - 8 = 4$, **viết 4, nhớ 1**.\n- 3 thêm 1 bằng 4; $6 - 4 = 2$, **viết 2**.\n- $5 - 2 = 3$, **viết 3**.\n- Kết quả: **$324$**.\n\n#### 2. Dạng nhớ ở hàng trăm: $625 - 371$\n- $5 - 1 = 4$, viết 4.\n- 2 không trừ được 7, lấy $12 - 7 = 5$, **viết 5, nhớ 1**.\n- 3 thêm 1 bằng 4; $6 - 4 = 2$, **viết 2**.\n- Kết quả: **$254$**.",
+          "exercises": [
+            {
+              "question": "Tính: 654 - 238 = ?",
+              "options": [
+                "A. 416",
+                "B. 426",
+                "C. 406",
+                "D. 418"
+              ],
+              "correct_answer": "A",
+              "explanation": "14 - 8 = 6, nhớ 1; 3 + 1 = 4; 5 - 4 = 1; 6 - 2 = 4. Kết quả là 416."
+            },
+            {
+              "question": "Tính: 518 - 263 = ?",
+              "options": [
+                "A. 245",
+                "B. 255",
+                "C. 355",
+                "D. 265"
+              ],
+              "correct_answer": "B",
+              "explanation": "8 - 3 = 5; 11 - 6 = 5, nhớ 1; 2 + 1 = 3; 5 - 3 = 2. Kết quả là 255."
+            },
+            {
+              "question": "Tính: 1000 - 350 = ?",
+              "options": [
+                "A. 650",
+                "B. 750",
+                "C. 600",
+                "D. 700"
+              ],
+              "correct_answer": "A",
+              "explanation": "1000 - 350 = 650."
+            }
+          ]
+        },
+        {
+          "displayOrder": 63,
+          "title": "Bài 63: Luyện tập chung",
+          "slug": "bai-63-luyen-tap-chung",
+          "summary": "Rèn luyện phối hợp phép cộng, phép trừ trong phạm vi 1000 và bài toán thực tế.",
+          "estimatedMinutes": 40,
+          "theory": "### 🎯 Bài 63: Luyện tập chung Chương 12\n\n#### 1. Củng cố quy tắc tính toán\n- Đặt tính thẳng hàng và nhớ đúng cột.\n- Thực hiện biểu thức từ trái sang phải: $450 + 230 - 180 = 680 - 180 = 500$.\n- Kỹ năng ước lượng và thử lại bằng phép tính ngược.",
+          "exercises": [
+            {
+              "question": "Tìm x biết: x - 245 = 318",
+              "options": [
+                "A. x = 553",
+                "B. x = 563",
+                "C. x = 73",
+                "D. x = 573"
+              ],
+              "correct_answer": "B",
+              "explanation": "x = 318 + 245 = 563."
+            },
+            {
+              "question": "Tính giá trị biểu thức: 520 + 180 - 300 = ?",
+              "options": [
+                "A. 300",
+                "B. 400",
+                "C. 500",
+                "D. 600"
+              ],
+              "correct_answer": "B",
+              "explanation": "520 + 180 = 700; 700 - 300 = 400."
+            },
+            {
+              "question": "Trang trại có 485 con gà và 230 con vịt. Hỏi số gà nhiều hơn số vịt bao nhiêu con?",
+              "options": [
+                "A. 245 con",
+                "B. 255 con",
+                "C. 265 con",
+                "D. 715 con"
+              ],
+              "correct_answer": "B",
+              "explanation": "485 - 230 = 255 (con)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 13,
+      "title": "Chương 13: Làm quen với yếu tố thống kê, xác suất",
+      "slug": "chuong-13-lam-quen-voi-yeu-to-thong-ke-xac-suat",
+      "description": "Làm quen với kỹ năng thu thập, phân loại, kiểm đếm số liệu, đọc và nhận xét biểu đồ tranh; làm quen với các từ chỉ khả năng: chắc chắn, có thể, không thể.",
+      "lessons": [
+        {
+          "displayOrder": 64,
+          "title": "Bài 64: Thu thập, phân loại, kiểm đếm số liệu",
+          "slug": "bai-64-thu-thap-phan-loai-kiem-dem-so-lieu",
+          "summary": "Kỹ năng quan sát, phân loại đồ vật theo tiêu chí và kiểm đếm ghi lại số lượng.",
+          "estimatedMinutes": 40,
+          "theory": "### 📊 Bài 64: Thu thập, phân loại, kiểm đếm số liệu\n\n#### 1. Thu thập và phân loại\n- **Thu thập**: Quan sát thực tế để lấy thông tin (ví dụ: các loại hoa quả có trên bàn).\n- **Phân loại**: Sắp xếp các đối tượng thành từng nhóm theo đặc điểm chung (ví dụ: nhóm quả cam, nhóm quả táo, nhóm quả chuối).\n\n#### 2. Kiểm đếm\n- Đếm số lượng từng loại và ghi nhận vào bảng số liệu:\n  - Quả táo: có 5 quả.\n  - Quả cam: có 8 quả.\n  - Quả chuối: có 6 quả.",
+          "exercises": [
+            {
+              "question": "Trong rổ có 4 quả táo đỏ, 3 quả táo xanh và 5 quả lê. Có tất cả bao nhiêu quả táo trong rổ?",
+              "options": [
+                "A. 4 quả",
+                "B. 3 quả",
+                "C. 7 quả",
+                "D. 12 quả"
+              ],
+              "correct_answer": "C",
+              "explanation": "Số quả táo (gồm cả đỏ và xanh) là: 4 + 3 = 7 quả."
+            },
+            {
+              "question": "Bước nào sau đây giúp chúng mình biết chính xác số lượng của từng loại đồ vật?",
+              "options": [
+                "A. Phán đoán bừa",
+                "B. Kiểm đếm",
+                "C. Đo độ dài",
+                "D. Ước lượng"
+              ],
+              "correct_answer": "B",
+              "explanation": "Kiểm đếm (đếm từng cái một) giúp biết chính xác số lượng."
+            },
+            {
+              "question": "Lớp 2A có 18 bạn nam và 16 bạn nữ. Cả lớp có bao nhiêu bạn?",
+              "options": [
+                "A. 32 bạn",
+                "B. 34 bạn",
+                "C. 36 bạn",
+                "D. 2 bạn"
+              ],
+              "correct_answer": "B",
+              "explanation": "18 + 16 = 34 (bạn)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 65,
+          "title": "Bài 65: Biểu đồ tranh",
+          "slug": "bai-65-bieu-do-tranh",
+          "summary": "Đọc, hiểu và trả lời câu hỏi dựa trên thông tin biểu diễn bằng hình ảnh trên biểu đồ tranh.",
+          "estimatedMinutes": 40,
+          "theory": "### 🖼️ Bài 65: Biểu đồ tranh\n\n#### 1. Biểu đồ tranh là gì?\n- Biểu đồ tranh sử dụng các biểu tượng, hình vẽ để biểu diễn số lượng của các nhóm đối tượng.\n- Mỗi hình vẽ có thể đại diện cho 1 đồ vật (hoặc một số lượng quy định).\n\n#### 2. Cách đọc biểu đồ tranh\n- Đọc tên biểu đồ để biết biểu đồ nói về điều gì.\n- Đọc các mục phân loại ở hàng/cột.\n- Đếm số lượng biểu tượng của mỗi mục để so sánh nhiều nhất, ít nhất.",
+          "exercises": [
+            {
+              "question": "Trên biểu đồ tranh, nếu mỗi ngôi sao ⭐ đại diện cho 1 điểm tốt. Mai có 5 ngôi sao, Lan có 3 ngôi sao. Mai có nhiều hơn Lan mấy điểm tốt?",
+              "options": [
+                "A. 1 điểm",
+                "B. 2 điểm",
+                "C. 3 điểm",
+                "D. 8 điểm"
+              ],
+              "correct_answer": "B",
+              "explanation": "5 - 3 = 2 điểm tốt."
+            },
+            {
+              "question": "Biểu đồ ghi: 'Số cây trồng được của các tổ'. Tổ 1: 🌳🌳🌳🌳 (mỗi cây là 1 cây xanh). Tổ 1 trồng được bao nhiêu cây?",
+              "options": [
+                "A. 3 cây",
+                "B. 4 cây",
+                "C. 5 cây",
+                "D. 6 cây"
+              ],
+              "correct_answer": "B",
+              "explanation": "Đếm có 4 biểu tượng cây, vậy Tổ 1 trồng được 4 cây."
+            },
+            {
+              "question": "Loại hoa nào được yêu thích nhất nếu số bông hoa được chọn là: Hoa hồng 12 bông, Hoa cúc 8 bông, Hoa sen 15 bông?",
+              "options": [
+                "A. Hoa hồng",
+                "B. Hoa cúc",
+                "C. Hoa sen",
+                "D. Cả ba bằng nhau"
+              ],
+              "correct_answer": "C",
+              "explanation": "Hoa sen có số lượng nhiều nhất (15 bông)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 66,
+          "title": "Bài 66: Lựa chọn khả năng",
+          "slug": "bai-66-lua-chon-kha-nang",
+          "summary": "Làm quen với các thuật ngữ chỉ khả năng xảy ra của một sự kiện: chắc chắn, có thể, không thể.",
+          "estimatedMinutes": 35,
+          "theory": "### 🎲 Bài 66: Lựa chọn khả năng (Chắc chắn, Có thể, Không thể)\n\n#### 1. Ba khả năng của sự kiện\n- **Chắc chắn**: Sự việc nhất định sẽ xảy ra 100%.\n  - Ví dụ: Trong túi chỉ toàn bi đỏ, nhắm mắt lấy ra 1 viên bi thì **chắc chắn** lấy được bi đỏ.\n- **Có thể**: Sự việc có thể xảy ra hoặc không xảy ra.\n  - Ví dụ: Trong túi có cả bi xanh và bi đỏ, nhắm mắt lấy 1 viên bi thì **có thể** lấy được bi đỏ (hoặc có thể lấy được bi xanh).\n- **Không thể**: Sự việc hoàn toàn không bao giờ xảy ra.\n  - Ví dụ: Trong túi chỉ có bi xanh và bi đỏ, nhắm mắt lấy 1 viên bi thì **không thể** lấy được bi vàng.",
+          "exercises": [
+            {
+              "question": "Trong hộp có 5 chiếc bút chì màu xanh. Nam nhắm mắt lấy ra 1 chiếc bút. Khả năng nào sau đây là ĐÚNG?",
+              "options": [
+                "A. Nam có thể lấy được bút chì màu đỏ",
+                "B. Nam chắc chắn lấy được bút chì màu xanh",
+                "C. Nam không thể lấy được bút chì màu xanh",
+                "D. Nam chắc chắn lấy được bút chì màu vàng"
+              ],
+              "correct_answer": "B",
+              "explanation": "Vì trong hộp chỉ có bút màu xanh nên Nam chắc chắn lấy được bút chì màu xanh."
+            },
+            {
+              "question": "Gieo một con xúc xắc có các mặt từ 1 đến 6 chấm. Sự kiện 'Xuất hiện mặt có 7 chấm' là sự kiện:",
+              "options": [
+                "A. Chắc chắn",
+                "B. Có thể",
+                "C. Không thể",
+                "D. Luôn luôn"
+              ],
+              "correct_answer": "C",
+              "explanation": "Con xúc xắc chỉ có từ 1 đến 6 chấm nên không thể xuất hiện mặt 7 chấm."
+            },
+            {
+              "question": "Ngày mai trời mưa hay không mưa là sự kiện mang tính chất:",
+              "options": [
+                "A. Chắc chắn",
+                "B. Có thể",
+                "C. Không thể",
+                "D. Bắt buộc"
+              ],
+              "correct_answer": "B",
+              "explanation": "Thời tiết ngày mai có thể mưa hoặc có thể không mưa."
+            }
+          ]
+        },
+        {
+          "displayOrder": 67,
+          "title": "Bài 67: Thực hành và trải nghiệm thu thập, phân loại, kiểm đếm số liệu",
+          "slug": "bai-67-thuc-hanh-va-trai-nghiem-thu-thap-phan-loai-kiem-dem-so-lieu",
+          "summary": "Tổ chức trò chơi gieo xúc xắc, tung đồng xu và thống kê số liệu trong lớp học.",
+          "estimatedMinutes": 35,
+          "theory": "### 🎲 Bài 67: Thực hành thu thập, phân loại, kiểm đếm\n\n#### 1. Trò chơi thực hành gieo đồng xu hoặc xúc xắc\n- Gieo đồng xu 10 lần: Mỗi lần ghi nhận mặt Sấp (S) hoặc mặt Ngửa (N).\n- Lập bảng kiểm đếm:\n  - Mặt Sấp: đếm xem được bao nhiêu lần.\n  - Mặt Ngửa: đếm xem được bao nhiêu lần.\n- Tổng số lần mặt Sấp và mặt Ngửa luôn bằng 10 lần gieo.",
+          "exercises": [
+            {
+              "question": "Nam tung đồng xu 10 lần, có 6 lần xuất hiện mặt Sấp. Hỏi mặt Ngửa xuất hiện mấy lần?",
+              "options": [
+                "A. 3 lần",
+                "B. 4 lần",
+                "C. 5 lần",
+                "D. 6 lần"
+              ],
+              "correct_answer": "B",
+              "explanation": "10 - 6 = 4 lần."
+            },
+            {
+              "question": "Khi tung đồng xu, khả năng xuất hiện mặt Sấp là:",
+              "options": [
+                "A. Chắc chắn",
+                "B. Có thể",
+                "C. Không thể",
+                "D. Tuyệt đối"
+              ],
+              "correct_answer": "B",
+              "explanation": "Đồng xu có 2 mặt sấp và ngửa nên có thể xuất hiện mặt sấp."
+            },
+            {
+              "question": "Cả tổ 8 bạn bình chọn môn thể thao yêu thích: 5 bạn chọn bóng đá, 3 bạn chọn cầu lông. Môn nào được nhiều bạn chọn hơn?",
+              "options": [
+                "A. Bóng đá",
+                "B. Cầu lông",
+                "C. Bằng nhau",
+                "D. Không bạn nào"
+              ],
+              "correct_answer": "A",
+              "explanation": "Bóng đá có 5 bạn chọn > 3 bạn chọn cầu lông."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapterOrder": 14,
+      "title": "Chương 14: Ôn tập cuối năm",
+      "slug": "chuong-14-on-tap-cuoi-nam",
+      "description": "Hệ thống hóa toàn bộ kiến thức môn Toán lớp 2: số trong phạm vi 1000, 4 phép tính cộng, trừ, nhân, chia, hình học, đo lường, thống kê và xác suất.",
+      "lessons": [
+        {
+          "displayOrder": 68,
+          "title": "Bài 68: Ôn tập các số trong phạm vi 1000",
+          "slug": "bai-68-on-tap-cac-so-trong-pham-vi-1000",
+          "summary": "Ôn tập đọc viết số, cấu tạo số, thứ tự số và so sánh số từ 0 đến 1000.",
+          "estimatedMinutes": 40,
+          "theory": "### 🔢 Bài 68: Ôn tập các số trong phạm vi 1000\n\n#### 1. Trọng tâm kiến thức số học\n- Đọc viết thành thạo số có ba chữ số: $305, 450, 789, 999, 1000$.\n- Phân tích số thành tổng các trăm, chục, đơn vị: $abc = a00 + b0 + c$.\n- Số liền trước ($- 1$), số liền sau ($+ 1$).\n- So sánh các số: Hàng trăm $\\rightarrow$ Hàng chục $\\rightarrow$ Hàng đơn vị.",
+          "exercises": [
+            {
+              "question": "Số gồm 7 trăm và 8 đơn vị viết là:",
+              "options": [
+                "A. 780",
+                "B. 708",
+                "C. 78",
+                "D. 7008"
+              ],
+              "correct_answer": "B",
+              "explanation": "Hàng trăm là 7, hàng chục là 0, hàng đơn vị là 8, viết là 708."
+            },
+            {
+              "question": "Số liền sau số 999 là số nào?",
+              "options": [
+                "A. 998",
+                "B. 1000",
+                "C. 990",
+                "D. 1001"
+              ],
+              "correct_answer": "B",
+              "explanation": "999 + 1 = 1000."
+            },
+            {
+              "question": "Sắp xếp theo thứ tự tăng dần: 450, 399, 504, 405",
+              "options": [
+                "A. 399, 405, 450, 504",
+                "B. 504, 450, 405, 399",
+                "C. 399, 450, 405, 504",
+                "D. 405, 399, 450, 504"
+              ],
+              "correct_answer": "A",
+              "explanation": "399 < 405 < 450 < 504."
+            }
+          ]
+        },
+        {
+          "displayOrder": 69,
+          "title": "Bài 69: Ôn tập phép cộng, phép trừ trong phạm vi 100",
+          "slug": "bai-69-on-tap-phep-cong-phep-tru-trong-pham-vi-100",
+          "summary": "Củng cố phản xạ tính nhẩm và đặt tính phép cộng trừ có nhớ trong phạm vi 100.",
+          "estimatedMinutes": 40,
+          "theory": "### ➕➖ Bài 69: Ôn tập phép cộng, phép trừ trong phạm vi 100\n\n#### 1. Đặt tính thẳng cột\n- Tính từ phải sang trái.\n- Cộng có nhớ: Thêm 1 vào hàng chục.\n- Trừ có nhớ: Mượn 1 chục ở hàng chục, sau đó trả 1 vào hàng chục của số trừ.",
+          "exercises": [
+            {
+              "question": "Tính: 58 + 27 = ?",
+              "options": [
+                "A. 85",
+                "B. 75",
+                "C. 84",
+                "D. 86"
+              ],
+              "correct_answer": "A",
+              "explanation": "8 + 7 = 15 viết 5 nhớ 1; 5 + 2 = 7 thêm 1 là 8. Kết quả: 85."
+            },
+            {
+              "question": "Tính: 91 - 46 = ?",
+              "options": [
+                "A. 44",
+                "B. 45",
+                "C. 55",
+                "D. 46"
+              ],
+              "correct_answer": "B",
+              "explanation": "11 - 6 = 5 nhớ 1; 4 + 1 = 5; 9 - 5 = 4. Kết quả: 45."
+            },
+            {
+              "question": "Lớp 2A có 36 bạn, lớp 2B có nhiều hơn lớp 2A 5 bạn. Lớp 2B có bao nhiêu bạn?",
+              "options": [
+                "A. 40 bạn",
+                "B. 41 bạn",
+                "C. 31 bạn",
+                "D. 42 bạn"
+              ],
+              "correct_answer": "B",
+              "explanation": "36 + 5 = 41 (bạn)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 70,
+          "title": "Bài 70: Ôn tập phép cộng, phép trừ trong phạm vi 1000",
+          "slug": "bai-70-on-tap-phep-cong-phep-tru-trong-pham-vi-1000",
+          "summary": "Rèn luyện kỹ năng thực hiện các phép tính cộng trừ số có ba chữ số không nhớ và có nhớ.",
+          "estimatedMinutes": 40,
+          "theory": "### ➕➖ Bài 70: Ôn tập phép tính trong phạm vi 1000\n\n#### 1. Các dạng tính toán\n- Cộng trừ các số tròn trăm: $400 + 300 = 700$; $800 - 500 = 300$.\n- Đặt tính thẳng hàng đơn vị, chục, trăm.\n- Nhớ không quá 1 lần (sang hàng chục hoặc sang hàng trăm).",
+          "exercises": [
+            {
+              "question": "Tính: 437 + 281 = ?",
+              "options": [
+                "A. 718",
+                "B. 728",
+                "C. 618",
+                "D. 708"
+              ],
+              "correct_answer": "A",
+              "explanation": "7 + 1 = 8; 3 + 8 = 11 viết 1 nhớ 1; 4 + 2 = 6 thêm 1 là 7. Kết quả: 718."
+            },
+            {
+              "question": "Tính: 752 - 328 = ?",
+              "options": [
+                "A. 424",
+                "B. 434",
+                "C. 426",
+                "D. 414"
+              ],
+              "correct_answer": "A",
+              "explanation": "12 - 8 = 4 nhớ 1; 2 + 1 = 3; 5 - 3 = 2; 7 - 3 = 4. Kết quả: 424."
+            },
+            {
+              "question": "Tìm x biết: x + 150 = 500",
+              "options": [
+                "A. x = 650",
+                "B. x = 350",
+                "C. x = 450",
+                "D. x = 300"
+              ],
+              "correct_answer": "B",
+              "explanation": "x = 500 - 150 = 350."
+            }
+          ]
+        },
+        {
+          "displayOrder": 71,
+          "title": "Bài 71: Ôn tập phép nhân, phép chia",
+          "slug": "bai-71-on-tap-phep-nhan-phep-chia",
+          "summary": "Ôn tập củng cố bảng nhân 2, 5 và bảng chia 2, 5.",
+          "estimatedMinutes": 40,
+          "theory": "### ✖️➗ Bài 71: Ôn tập phép nhân, phép chia\n\n#### 1. Bảng nhân và chia trọng tâm\n- Bảng nhân 2 và Bảng chia 2.\n- Bảng nhân 5 và Bảng chia 5.\n\n#### 2. Thứ tự thực hiện phép tính trong biểu thức\n- Nếu biểu thức có phép nhân, chia và cộng, trừ: Thực hiện **nhân, chia trước**, sau đó **cộng, trừ sau**.\n  - Ví dụ: $2 \\times 8 + 14 = 16 + 14 = 30$.\n  - $35 : 5 - 4 = 7 - 4 = 3$.",
+          "exercises": [
+            {
+              "question": "Tính: 5 × 7 + 25 = ?",
+              "options": [
+                "A. 50",
+                "B. 60",
+                "C. 70",
+                "D. 55"
+              ],
+              "correct_answer": "B",
+              "explanation": "5 × 7 = 35; 35 + 25 = 60."
+            },
+            {
+              "question": "Tính: 18 : 2 + 31 = ?",
+              "options": [
+                "A. 39",
+                "B. 40",
+                "C. 41",
+                "D. 42"
+              ],
+              "correct_answer": "B",
+              "explanation": "18 : 2 = 9; 9 + 31 = 40."
+            },
+            {
+              "question": "Có 30 bông hoa chia đều vào 5 giỏ. Mỗi giỏ có mấy bông hoa?",
+              "options": [
+                "A. 5 bông",
+                "B. 6 bông",
+                "C. 7 bông",
+                "D. 8 bông"
+              ],
+              "correct_answer": "B",
+              "explanation": "30 : 5 = 6 (bông hoa)."
+            }
+          ]
+        },
+        {
+          "displayOrder": 72,
+          "title": "Bài 72: Ôn tập hình học",
+          "slug": "bai-72-on-tap-hinh-hoc",
+          "summary": "Tổng kết nhận dạng hình phẳng (tam giác, tứ giác), đường gấp khúc và các hình khối (trụ, cầu, lập phương, hộp chữ nhật).",
+          "estimatedMinutes": 40,
+          "theory": "### 📐 Bài 72: Ôn tập hình học\n\n#### 1. Hình phẳng\n- Điểm, đoạn thẳng, ba điểm thẳng hàng.\n- Đường gấp khúc: Độ dài đường gấp khúc bằng tổng độ dài các đoạn thẳng.\n- Hình tam giác (3 cạnh), Hình tứ giác (4 cạnh).\n\n#### 2. Hình khối\n- Khối lập phương: 6 mặt hình vuông.\n- Khối hộp chữ nhật: 6 mặt hình chữ nhật.\n- Khối trụ: 2 đáy phẳng tròn, lăn được khi nằm.\n- Khối cầu: tròn đều, lăn được mọi hướng.",
+          "exercises": [
+            {
+              "question": "Một đường gấp khúc gồm 3 đoạn thẳng có độ dài lần lượt là 15 cm, 20 cm và 25 cm. Độ dài đường gấp khúc là:",
+              "options": [
+                "A. 50 cm",
+                "B. 60 cm",
+                "C. 55 cm",
+                "D. 65 cm"
+              ],
+              "correct_answer": "B",
+              "explanation": "15 + 20 + 25 = 60 (cm)."
+            },
+            {
+              "question": "Quả địa cầu trong phòng học có dạng khối gì?",
+              "options": [
+                "A. Khối trụ",
+                "B. Khối cầu",
+                "C. Khối lập phương",
+                "D. Hình tròn"
+              ],
+              "correct_answer": "B",
+              "explanation": "Quả địa cầu có dạng khối cầu."
+            },
+            {
+              "question": "Hình nào sau đây có đúng 4 đỉnh?",
+              "options": [
+                "A. Hình tam giác",
+                "B. Hình tròn",
+                "C. Hình tứ giác",
+                "D. Đường thẳng"
+              ],
+              "correct_answer": "C",
+              "explanation": "Hình tứ giác có 4 cạnh và 4 đỉnh."
+            }
+          ]
+        },
+        {
+          "displayOrder": 73,
+          "title": "Bài 73: Ôn tập đo lường",
+          "slug": "bai-73-on-tap-do-luong",
+          "summary": "Hệ thống toàn bộ đơn vị đo độ dài, khối lượng, dung tích và thời gian đã học trong chương trình Toán 2.",
+          "estimatedMinutes": 40,
+          "theory": "### ⚖️ Bài 73: Ôn tập đo lường\n\n#### 1. Hệ thống đơn vị đo\n- **Độ dài**: cm, dm, m, km ($1\\text{ dm} = 10\\text{ cm}$; $1\\text{ m} = 100\\text{ cm}$; $1\\text{ km} = 1000\\text{ m}$).\n- **Khối lượng**: kg.\n- **Dung tích**: l.\n- **Thời gian**: Ngày, giờ, phút, tháng, năm ($1\\text{ ngày} = 24\\text{ giờ}$; $1\\text{ giờ} = 60\\text{ phút}$).\n- **Tiền tệ**: 100 đ, 200 đ, 500 đ, 1000 đ.",
+          "exercises": [
+            {
+              "question": "Điền số thích hợp: 3 m = ... cm",
+              "options": [
+                "A. 30",
+                "B. 300",
+                "C. 3000",
+                "D. 3"
+              ],
+              "correct_answer": "B",
+              "explanation": "1 m = 100 cm nên 3 m = 300 cm."
+            },
+            {
+              "question": "Bao gạo 45 kg nặng hơn bao ngô 18 kg là bao nhiêu ki-lô-gam?",
+              "options": [
+                "A. 27 kg",
+                "B. 37 kg",
+                "C. 23 kg",
+                "D. 63 kg"
+              ],
+              "correct_answer": "A",
+              "explanation": "45 - 18 = 27 (kg)."
+            },
+            {
+              "question": "Hiện tại đồng hồ chỉ 3 giờ chiều. Đến 6 giờ chiều cùng ngày đã trôi qua mấy giờ?",
+              "options": [
+                "A. 2 giờ",
+                "B. 3 giờ",
+                "C. 4 giờ",
+                "D. 1 giờ"
+              ],
+              "correct_answer": "B",
+              "explanation": "6 - 3 = 3 giờ."
+            }
+          ]
+        },
+        {
+          "displayOrder": 74,
+          "title": "Bài 74: Ôn tập kiểm đếm số liệu và lựa chọn khả năng",
+          "slug": "bai-74-on-tap-kiem-dem-so-lieu-va-lua-chon-kha-nang",
+          "summary": "Ôn tập kỹ năng đọc biểu đồ tranh và phán đoán các khả năng chắc chắn, có thể, không thể.",
+          "estimatedMinutes": 40,
+          "theory": "### 📊 Bài 74: Ôn tập kiểm đếm số liệu và lựa chọn khả năng\n\n#### 1. Kiểm đếm và biểu đồ tranh\n- Đọc đúng số lượng biểu tượng của từng nhóm đối tượng trên biểu đồ tranh.\n- Tìm nhóm nhiều nhất, nhóm ít nhất, tính tổng số lượng hoặc phần chênh lệch.\n\n#### 2. Phán đoán khả năng\n- Khả năng **chắc chắn**: Điều tất yếu xảy ra.\n- Khả năng **có thể**: Có thể xảy ra hoặc không.\n- Khả năng **không thể**: Hoàn toàn không xảy ra.",
+          "exercises": [
+            {
+              "question": "Trong hộp kín có 10 viên kẹo sô-cô-la. Khả năng bé lấy ra 1 chiếc kẹo dẻo vị dâu là:",
+              "options": [
+                "A. Chắc chắn",
+                "B. Có thể",
+                "C. Không thể",
+                "D. Thường xuyên"
+              ],
+              "correct_answer": "C",
+              "explanation": "Trong hộp chỉ có kẹo sô-cô-la nên không thể lấy ra kẹo dẻo vị dâu."
+            },
+            {
+              "question": "Biểu đồ tranh ghi số bạn yêu thích màu sắc: Đỏ (8 bạn), Xanh (12 bạn), Vàng (6 bạn). Màu nào được nhiều bạn yêu thích nhất?",
+              "options": [
+                "A. Màu Đỏ",
+                "B. Màu Xanh",
+                "C. Màu Vàng",
+                "D. Cả ba màu bằng nhau"
+              ],
+              "correct_answer": "B",
+              "explanation": "Màu Xanh có 12 bạn chọn, nhiều nhất trong các màu."
+            },
+            {
+              "question": "Nếu hôm nay là Thứ Bảy thì ngày mai chắc chắn là ngày thứ mấy?",
+              "options": [
+                "A. Thứ Sáu",
+                "B. Thứ Hai",
+                "C. Chủ nhật",
+                "D. Có thể là Chủ nhật"
+              ],
+              "correct_answer": "C",
+              "explanation": "Sau Thứ Bảy chắc chắn luôn là ngày Chủ nhật."
+            }
+          ]
+        },
+        {
+          "displayOrder": 75,
+          "title": "Bài 75: Ôn tập chung",
+          "slug": "bai-75-on-tap-chung",
+          "summary": "Bài ôn tập tổng kết toàn diện cuối năm môn Toán Lớp 2 chuẩn bị bước vào Lớp 3.",
+          "estimatedMinutes": 45,
+          "theory": "### 🎓 Bài 75: Ôn tập chung Toàn diện môn Toán Lớp 2\n\n#### 1. Chúc mừng các em đã hoàn thành xuất sắc chương trình Toán 2!\nChúng mình đã cùng nhau đi qua 14 chương với 75 bài học đầy bổ ích:\n1. Đọc, viết, so sánh và thực hiện phép tính trong phạm vi **1000**.\n2. Thành thạo 4 phép tính cơ bản: **Cộng, Trừ (có nhớ), Nhân (bảng 2, 5) và Chia (bảng 2, 5)**.\n3. Làm quen các đại lượng thực tế: **kg, l, dm, m, km, giờ, phút, ngày, tháng và tiền Việt Nam**.\n4. Khám phá các hình hình học: **Đoạn thẳng, đường gấp khúc, tứ giác, khối trụ, khối cầu**.\n5. Nhập môn thống kê và xác suất qua **biểu đồ tranh** và các mức độ **khả năng**.\n\n#### 2. Tự tin bước vào Lớp 3\nNền tảng vững chắc của Lớp 2 chính là bệ phóng giúp các em học thật giỏi môn Toán ở các lớp học tiếp theo! 🚀",
+          "exercises": [
+            {
+              "question": "Tính giá trị biểu thức: 2 × 9 + 482 = ?",
+              "options": [
+                "A. 490",
+                "B. 500",
+                "C. 510",
+                "D. 498"
+              ],
+              "correct_answer": "B",
+              "explanation": "2 × 9 = 18; 18 + 482 = 500."
+            },
+            {
+              "question": "Số lớn nhất có ba chữ số khác nhau là số nào?",
+              "options": [
+                "A. 999",
+                "B. 987",
+                "C. 989",
+                "D. 978"
+              ],
+              "correct_answer": "B",
+              "explanation": "Số lớn nhất có 3 chữ số khác nhau là 987."
+            },
+            {
+              "question": "Một sợi dây dài 2 m, người ta cắt đi 60 cm. Sợi dây còn lại dài bao nhiêu xăng-ti-mét?",
+              "options": [
+                "A. 140 cm",
+                "B. 40 cm",
+                "C. 160 cm",
+                "D. 120 cm"
+              ],
+              "correct_answer": "A",
+              "explanation": "2 m = 200 cm; 200 - 60 = 140 (cm)."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

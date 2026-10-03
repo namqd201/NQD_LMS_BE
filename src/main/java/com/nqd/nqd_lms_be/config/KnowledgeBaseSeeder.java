@@ -46,23 +46,29 @@ public class KnowledgeBaseSeeder {
     public void seedKnowledgeBase() {
         log.info("Checking Knowledge Base (Admin GDPT Curriculum) baseline data...");
 
-        // Safely archive any legacy MATH_GRADE_1 from teacher courses table
-        // (Courses table is strictly for teachers' personal classes)
-        try {
-            courseRepository.findByCode("MATH_GRADE_1").ifPresent(legacyCourse -> {
-                log.info("Archiving legacy MATH_GRADE_1 from teacher courses table (ID: {})...", legacyCourse.getId());
-                legacyCourse.setStatus(CourseStatus.ARCHIVED);
-                legacyCourse.setIsDisabled(true);
-                courseRepository.save(legacyCourse);
-            });
-        } catch (Exception e) {
-            log.warn("Could not archive legacy course MATH_GRADE_1: {}", e.getMessage());
-        }
+        // Safely archive any legacy courses from teacher courses table
+        List.of("MATH_GRADE_1", "MATH_GRADE_2").forEach(code -> {
+            try {
+                courseRepository.findByCode(code).ifPresent(legacyCourse -> {
+                    log.info("Archiving legacy {} from teacher courses table (ID: {})...", code, legacyCourse.getId());
+                    legacyCourse.setStatus(CourseStatus.ARCHIVED);
+                    legacyCourse.setIsDisabled(true);
+                    courseRepository.save(legacyCourse);
+                });
+            } catch (Exception e) {
+                log.warn("Could not archive legacy course {}: {}", code, e.getMessage());
+            }
+        });
 
+        seedCurriculumResource("data/toan_lop_1_course_data.json");
+        seedCurriculumResource("data/toan_lop_2_course_data.json");
+    }
+
+    private void seedCurriculumResource(String resourcePath) {
         try {
-            ClassPathResource resource = new ClassPathResource("data/toan_lop_1_course_data.json");
+            ClassPathResource resource = new ClassPathResource(resourcePath);
             if (!resource.exists()) {
-                log.warn("Resource 'data/toan_lop_1_course_data.json' not found. Skipping Knowledge Base seed.");
+                log.warn("Resource '{}' not found. Skipping Knowledge Base seed.", resourcePath);
                 return;
             }
 
@@ -74,6 +80,7 @@ public class KnowledgeBaseSeeder {
             JsonNode courseNode = root.get("course");
             String courseCode = courseNode.get("code").asText();
             String subjectCode = courseNode.get("subjectCode").asText();
+            int totalChaptersInJson = courseNode.has("totalChapters") ? courseNode.get("totalChapters").asInt() : (root.has("chapters") ? root.get("chapters").size() : 8);
 
             Subject subject = subjectRepository.findByCode(subjectCode)
                     .orElseGet(() -> {
@@ -93,6 +100,9 @@ public class KnowledgeBaseSeeder {
                 log.info("Creating Knowledge Curriculum '{}' ({}) in knowledge_curriculums table...",
                         courseNode.get("name").asText(), courseCode);
 
+                int order = courseCode.endsWith("_2") ? 2 : 1;
+                String thumb = courseNode.has("thumbnailUrl") ? courseNode.get("thumbnailUrl").asText() : "/images/courses/toan-1.jpg";
+
                 curriculum = KnowledgeCurriculum.builder()
                         .subject(subject)
                         .code(courseCode)
@@ -100,16 +110,16 @@ public class KnowledgeBaseSeeder {
                         .title(courseNode.get("name").asText())
                         .description(courseNode.get("description").asText())
                         .educationTier(courseNode.has("educationTier") ? courseNode.get("educationTier").asText() : "Tiểu học")
-                        .thumbnailUrl("/images/courses/toan-1.jpg")
+                        .thumbnailUrl(thumb)
                         .status("ACTIVE")
-                        .displayOrder(1)
+                        .displayOrder(order)
                         .isPublished(true)
                         .build();
                 curriculum = curriculumRepository.save(curriculum);
             } else {
                 curriculum = existingOpt.get();
                 long chapterCount = chapterRepository.countByCurriculumId(curriculum.getId());
-                if (chapterCount >= 8) {
+                if (chapterCount >= totalChaptersInJson) {
                     log.info("Knowledge Curriculum '{}' is already fully seeded with {} chapters. Skipping duplicate seed.",
                             curriculum.getTitle(), chapterCount);
                     return;
@@ -203,12 +213,12 @@ public class KnowledgeBaseSeeder {
                     }
                 }
 
-                log.info("Knowledge Base seed completed successfully: {} chapters, {} lessons, {} reinforcement questions.",
-                        chaptersNode.size(), totalLessonsSeeded, totalQuestionsSeeded);
+                log.info("Knowledge Base seed '{}' completed successfully: {} chapters, {} lessons, {} reinforcement questions.",
+                        finalCurriculum.getTitle(), chaptersNode.size(), totalLessonsSeeded, totalQuestionsSeeded);
             }
 
         } catch (Exception e) {
-            log.error("Error during KnowledgeBaseSeeder execution: {}", e.getMessage(), e);
+            log.error("Error during KnowledgeBaseSeeder execution for '{}': {}", resourcePath, e.getMessage(), e);
         }
     }
 }
