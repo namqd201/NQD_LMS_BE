@@ -1,5 +1,6 @@
 package com.nqd.nqd_lms_be.ai;
 
+import com.nqd.nqd_lms_be.ai.ocr.AiOcrService;
 import com.nqd.nqd_lms_be.dto.student.StudentAiAttachmentDto;
 import com.nqd.nqd_lms_be.dto.student.StudentAiChatMessage;
 import com.nqd.nqd_lms_be.dto.student.StudentAiTutorMode;
@@ -11,6 +12,7 @@ import dev.langchain4j.model.googleai.GoogleAiGeminiChatModel;
 import dev.langchain4j.model.openai.OpenAiChatModel;
 import dev.langchain4j.model.output.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +35,9 @@ public class StudentAiTutorEngine {
     private final GeminiDirectAIProvider geminiDirectAIProvider;
     private final AiTutorPolicyConfig policyConfig;
     private final AiTutorToolService toolService;
+    private final AiOcrService aiOcrService;
 
+    @Autowired
     public StudentAiTutorEngine(
             @Value("${lms.ai.gemini.api-key:${GEMINI_API_KEY:}}") String geminiApiKey,
             @Value("${lms.ai.gemini.model-name:gemini-3.6-flash}") String geminiModel,
@@ -42,7 +46,8 @@ public class StudentAiTutorEngine {
             @Value("${lms.ai.langchain4j.base-url:https://api.openai.com/v1}") String openAiBaseUrl,
             GeminiDirectAIProvider geminiDirectAIProvider,
             AiTutorPolicyConfig policyConfig,
-            AiTutorToolService toolService
+            AiTutorToolService toolService,
+            @Autowired(required = false) AiOcrService aiOcrService
     ) {
         this.geminiApiKey = geminiApiKey != null ? geminiApiKey.trim() : "";
         this.geminiModel = geminiModel != null ? geminiModel.trim() : "gemini-3.6-flash";
@@ -52,6 +57,20 @@ public class StudentAiTutorEngine {
         this.geminiDirectAIProvider = geminiDirectAIProvider;
         this.policyConfig = policyConfig;
         this.toolService = toolService;
+        this.aiOcrService = aiOcrService;
+    }
+
+    public StudentAiTutorEngine(
+            String geminiApiKey,
+            String geminiModel,
+            String openAiApiKey,
+            String openAiModel,
+            String openAiBaseUrl,
+            GeminiDirectAIProvider geminiDirectAIProvider,
+            AiTutorPolicyConfig policyConfig,
+            AiTutorToolService toolService
+    ) {
+        this(geminiApiKey, geminiModel, openAiApiKey, openAiModel, openAiBaseUrl, geminiDirectAIProvider, policyConfig, toolService, null);
     }
 
     public StudentAiTutorResponse generateTutorResponse(
@@ -93,6 +112,25 @@ public class StudentAiTutorEngine {
         String autoFetchedContext = "";
         if (request.getQuestion() != null) {
             autoFetchedContext = detectIntentAndFetchContext(request.getQuestion(), userId, userRole != null ? userRole : "STUDENT");
+        }
+
+        // 1b. Defense-in-depth OCR Pre-processing for Image Attachments
+        if (request.getAttachments() != null && aiOcrService != null) {
+            for (StudentAiAttachmentDto att : request.getAttachments()) {
+                if (att != null && isImageAttachment(att)) {
+                    if (att.getExtractedText() == null || att.getExtractedText().isBlank()) {
+                        try {
+                            String ocrText = aiOcrService.extractText(att);
+                            if (ocrText != null && !ocrText.isBlank()) {
+                                att.setExtractedText(ocrText.trim());
+                                log.info("AiOcrService: Extracted {} characters of text from attachment '{}'", ocrText.length(), att.getFileName());
+                            }
+                        } catch (Exception e) {
+                            log.warn("AiOcrService: Error extracting text from attachment '{}': {}", att.getFileName(), e.getMessage());
+                        }
+                    }
+                }
+            }
         }
 
         String systemPrompt = buildSystemPrompt(request.getMode(), context, userRole);
@@ -530,75 +568,32 @@ public class StudentAiTutorEngine {
     }
 
     private String generateAttachmentAnalysis(StudentAiTutorRequest request, StudentAiContextAssembler.AssembledStudentContext context, String rawQuestion, String lowerQ) {
-        StudentAiAttachmentDto firstAtt = request.getAttachments().get(0);
-        String fileName = firstAtt.getFileName() != null ? firstAtt.getFileName() : "tệp đính kèm";
-        String lowerFile = fileName.toLowerCase();
-
-        // Check if image is landscape / scenery
-        if (lowerFile.contains("phong-canh") || lowerFile.contains("landscape") || lowerFile.contains("nature") || lowerFile.contains("scenery") || lowerQ.contains("phong cảnh")) {
-            return String.format("""
-                ### 🌄 Phân tích & Mô tả Bức Ảnh Phong Cảnh (`%s`)
-                
-                Bức ảnh phong cảnh bạn gửi mang vẻ đẹp thiên nhiên thanh bình, hài hòa và giàu tính biểu cảm nghệ thuật. Dưới đây là phân tích chi tiết:
-                
-                #### 1. Bố cục và Chiều sâu không gian
-                * **Tiền cảnh (Foreground):** Thảm thực vật, hàng cây hoặc mặt nước phẳng lặng tạo điểm nhấn dẫn dắt ánh nhìn của người xem vào trung tâm bức tranh.
-                * **Trung cảnh (Midground):** Sự đan xen hài hòa giữa các yếu tố tự nhiên (dãy núi, cánh đồng hoặc dòng sông) tạo nên nhịp điệu không gian mở rộng.
-                * **Hậu cảnh (Background):** Bầu trời cao rộng với những áng mây nhẹ hoặc ánh ráng chiều/bình minh, tạo cảm giác khoáng đạt, vô tận.
-                
-                #### 2. Ánh sáng và Màu sắc
-                * **Tông màu chủ đạo:** Sự kết hợp tinh tế giữa sắc xanh của cỏ cây/bầu trời và ánh vàng dịu mát của ánh nắng mặt trời tạo cảm giác dễ chịu, thư thái.
-                * **Hiệu ứng ánh sáng:** Ánh sáng tự nhiên phản chiếu nhẹ nhàng, tạo độ tương phản mềm mại giữa các mảng sáng tối, làm nổi bật đường nét phong cảnh.
-                
-                #### 3. Ứng dụng trong học tập & Viết văn miêu tả
-                > 💡 **Gợi ý đoạn văn miêu tả phong cảnh:**
-                > *"Bức tranh thiên nhiên mở ra một không gian khoáng đạt và thơ mộng. Dưới vòm trời cao rộng, cảnh vật hiện lên trong sự tĩnh lặng tuyệt đối của đất trời. Những gam màu dịu nhẹ hòa quyện vào nhau tạo nên một bản hòa ca êm đềm của thiên nhiên, mang lại cho người ngắm cảm giác bình yên và thư thái trong tâm hồn."*
-                
-                Nếu bạn cần phân tích thêm về khía cạnh nào (như góc độ hội họa, biện pháp nghệ thuật trong văn học, hoặc bài tập liên quan), hãy nhắn cho mình nhé!
-                """, fileName);
+        if (request.getAttachments() == null || request.getAttachments().isEmpty()) {
+            return "Tạm thời tôi không đọc được thông tin ảnh mà bạn gửi. Vui lòng liên hệ admin để được khắc phục sớm nhất";
         }
 
-        // Check if image is an exam / math / physics exercise
-        if (lowerFile.contains("toan") || lowerFile.contains("math") || lowerFile.contains("bai-tap") || lowerFile.contains("de-thi")
-                || lowerFile.contains("ly") || lowerFile.contains("vat-ly") || lowerFile.contains("physics")
-                || lowerQ.contains("giải") || lowerQ.contains("bài tập")) {
+        // Check if any attachment has readable text extracted by OCR
+        StringBuilder ocrSummary = new StringBuilder();
+        for (StudentAiAttachmentDto att : request.getAttachments()) {
+            if (att != null && att.getExtractedText() != null && !att.getExtractedText().isBlank()) {
+                String fname = att.getFileName() != null ? att.getFileName() : "Hình ảnh";
+                if (!ocrSummary.isEmpty()) ocrSummary.append("\n\n---\n\n");
+                ocrSummary.append(String.format("### 📄 Nội dung nhận diện từ tệp `%s`:\n\n%s", fname, att.getExtractedText().trim()));
+            }
+        }
+
+        if (!ocrSummary.isEmpty()) {
             return String.format("""
-                ### 📐 Hướng Dẫn Từng Bước Giải Bài Tập Từ Ảnh (`%s`)
-                *(Theo phương pháp Socratic - Không giải hoàn toàn, hướng dẫn chi tiết từng bước)*
-                
-                Chào bạn! Dưới đây là phương pháp và các bước tiếp cận khoa học để bạn tự tin giải quyết bài tập trong hình ảnh:
-                
-                #### 1. Tóm tắt dữ kiện bài toán
-                * **Dữ liệu đã cho (Giả thiết):** Xác định các thông số đã biết từ đề bài, điều kiện xác định và các dữ kiện ràng buộc.
-                * **Yêu cầu cần tìm (Kết luận):** Mục tiêu chính của câu hỏi (tìm nghiệm $x$, tính vận tốc $v$, công suất $P$, chứng minh hình học, v.v.).
-                
-                #### 2. Định hướng phương pháp & Công thức trọng tâm
-                * **Bước 1 (Thiết lập điều kiện & hệ quy chiếu):** Ghi rõ điều kiện xác định hoặc chọn chiều dương / hệ quy chiếu phù hợp.
-                * **Bước 2 (Áp dụng công thức / định lý):** Lựa chọn định lý Toán học hoặc định luật Vật lý phù hợp với dạng bài.
-                * **Bước 3 (Biến đổi trung gian):** Biến đổi đại số hoặc suy luận logic để rút ra biểu thức tính đại lượng cần tìm.
+                %s
                 
                 ---
-                👉 **Bước tính toán cuối cùng dành cho bạn:**
-                Theo nguyên tắc sư phạm, bạn hãy tự mình thay số vào biểu thức ở Bước 3 để tính ra đáp số cuối cùng nhé!
-                
-                💬 **Hãy nhắn lại đáp số của bạn:** Sau khi tính xong, bạn hãy nhắn kết quả cho mình để cùng đối chiếu và kiểm tra xem bạn đã tính toán hoàn toàn chính xác chưa nhé!
-                """, fileName);
+                💡 **Hướng dẫn tiếp theo:**
+                Hệ thống OCR đã trích xuất thành công văn bản từ hình ảnh bạn gửi ở trên. Hiện tại máy chủ phân tích chuyên sâu đang bận, bạn có thể sao chép câu hỏi hoặc nội dung trên và gửi trực tiếp để mình đồng hành hướng dẫn giải từng bước nhé!
+                """, ocrSummary);
         }
 
-        // Generic Attachment Analysis
-        return String.format("""
-            ### 📄 Phân tích Nội Dung Tệp Đính Kèm: `%s`
-            
-            Mình đã nhận diện và xử lý tệp `%s` bạn gửi.
-            
-            **Nội dung giải đáp cho câu hỏi:** *"%s"*
-            
-            * **Đặc điểm chính:** Tệp đính kèm cung cấp tài liệu trực quan giúp minh họa rõ ràng cho chủ đề học tập.
-            * **Phân tích học thuật:** Khi khai thác tài liệu này, bạn nên chú ý đối chiếu các dữ kiện lý thuyết đã học để rút ra kết luận chính xác.
-            * **Kết luận:** Nội dung hoàn toàn phù hợp để phục vụ quá trình ôn tập và nghiên cứu bài học.
-            
-            > ✨ *Bạn có thắc mắc chi tiết về phần nào trong tài liệu này không? Hãy gửi thêm câu hỏi để mình giải đáp nhé!*
-            """, fileName, fileName, rawQuestion);
+        // Absolutely no guessing / hallucinating when image content cannot be read
+        return "Tạm thời tôi không đọc được thông tin ảnh mà bạn gửi. Vui lòng liên hệ admin để được khắc phục sớm nhất";
     }
 
     private String generateMathResponse(String rawQuestion, String lowerQ, StudentAiContextAssembler.AssembledStudentContext context) {

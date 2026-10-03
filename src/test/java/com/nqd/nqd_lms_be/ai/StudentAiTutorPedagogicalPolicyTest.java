@@ -1,11 +1,14 @@
 package com.nqd.nqd_lms_be.ai;
 
+import com.nqd.nqd_lms_be.dto.student.StudentAiAttachmentDto;
 import com.nqd.nqd_lms_be.dto.student.StudentAiTutorMode;
 import com.nqd.nqd_lms_be.dto.student.StudentAiTutorRequest;
 import com.nqd.nqd_lms_be.dto.student.StudentAiTutorResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -114,5 +117,66 @@ class StudentAiTutorPedagogicalPolicyTest {
         assertTrue(answer.contains("Lời Khuyên Sư Phạm Dành Cho Bạn"));
         assertTrue(answer.contains("nguyên tắc sư phạm"));
         assertTrue(answer.contains("tự mình thực hiện"));
+    }
+
+    @Test
+    @DisplayName("When image cannot be read and remote LLM unavailable, AI must NOT hallucinate math/physics steps and must return admin contact message")
+    void testImageCannotBeReadReturnsAdminContactMessage() {
+        StudentAiAttachmentDto attachment = StudentAiAttachmentDto.builder()
+                .fileName("image.png")
+                .fileType("image/png")
+                .base64Data("data:image/png;base64,invalidImageData")
+                .build();
+
+        StudentAiTutorRequest req = StudentAiTutorRequest.builder()
+                .mode(StudentAiTutorMode.GENERAL_QA)
+                .question("giải thích cho tôi nội dung trong ảnh tôi vừa gửi")
+                .attachments(List.of(attachment))
+                .build();
+
+        StudentAiContextAssembler.AssembledStudentContext context = StudentAiContextAssembler.AssembledStudentContext.builder()
+                .build();
+
+        StudentAiTutorResponse response = engine.generateTutorResponse(req, context, 20);
+
+        assertNotNull(response);
+        assertNotNull(response.getAnswer());
+
+        String answer = response.getAnswer();
+        // Absolutely MUST NOT contain hallucinated math / physics variables
+        assertFalse(answer.contains("vận tốc v"), "Must NOT hallucinate physics velocity v");
+        assertFalse(answer.contains("công suất P"), "Must NOT hallucinate physics power P");
+        assertFalse(answer.contains("tìm nghiệm x"), "Must NOT hallucinate math variable x");
+
+        // MUST return exact admin contact notification
+        assertEquals("Tạm thời tôi không đọc được thông tin ảnh mà bạn gửi. Vui lòng liên hệ admin để được khắc phục sớm nhất", answer.trim());
+    }
+
+    @Test
+    @DisplayName("When image has extracted OCR text, AI displays the extracted text instead of hallucinating")
+    void testImageWithExtractedOcrTextReturnsExactOcrContent() {
+        StudentAiAttachmentDto attachment = StudentAiAttachmentDto.builder()
+                .fileName("de-thi-giua-ky.png")
+                .fileType("image/png")
+                .extractedText("Bài 1: Cho hình thang ABCD vuông tại A và D. Biết AB = 4cm, CD = 8cm.")
+                .build();
+
+        StudentAiTutorRequest req = StudentAiTutorRequest.builder()
+                .mode(StudentAiTutorMode.GENERAL_QA)
+                .question("hãy giải thích cho tôi bài tập trong ảnh này")
+                .attachments(List.of(attachment))
+                .build();
+
+        StudentAiContextAssembler.AssembledStudentContext context = StudentAiContextAssembler.AssembledStudentContext.builder()
+                .build();
+
+        StudentAiTutorResponse response = engine.generateTutorResponse(req, context, 20);
+
+        assertNotNull(response);
+        assertNotNull(response.getAnswer());
+
+        String answer = response.getAnswer();
+        assertTrue(answer.contains("Cho hình thang ABCD vuông tại A và D"), "Must contain exact OCR extracted text");
+        assertTrue(answer.contains("AB = 4cm, CD = 8cm"), "Must contain exact OCR values");
     }
 }

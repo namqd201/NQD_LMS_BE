@@ -166,6 +166,79 @@ public class GeminiDirectAIProvider implements AIProvider {
         return null;
     }
 
+    /**
+     * Dedicated OCR extraction from image base64 data using Gemini Vision.
+     * Returns extracted text verbatim or null if no readable text is present.
+     */
+    public String extractTextFromImage(String mimeType, String base64Payload) {
+        if (!isAvailable() || base64Payload == null || base64Payload.isBlank()) return null;
+
+        List<String> modelsToTry = new ArrayList<>();
+        if (defaultModel != null && !defaultModel.isBlank()) modelsToTry.add(defaultModel.trim());
+        if (!modelsToTry.contains("gemini-3.6-flash")) modelsToTry.add("gemini-3.6-flash");
+        if (!modelsToTry.contains("gemini-3.7-flash")) modelsToTry.add("gemini-3.7-flash");
+        if (!modelsToTry.contains("gemini-3.5-flash-lite")) modelsToTry.add("gemini-3.5-flash-lite");
+
+        String effectiveMimeType = (mimeType != null && mimeType.startsWith("image/")) ? mimeType : "image/png";
+
+        List<Map<String, Object>> parts = List.of(
+                Map.of("inline_data", Map.of(
+                        "mime_type", effectiveMimeType,
+                        "data", base64Payload
+                )),
+                Map.of("text", "Bạn là một công cụ OCR trích xuất văn bản có độ chính xác cao. Hãy đọc và trích xuất toàn bộ chữ viết, chữ in, chữ viết tay, số liệu, biểu thức toán học, ký hiệu, đề bài có trong hình ảnh này sang dạng văn bản/Markdown.\n" +
+                        "QUY TẮC:\n" +
+                        "1. Chỉ trích xuất nội dung văn bản gốc chính xác 100%.\n" +
+                        "2. Tuyệt đối không giải bài tập, không nhận xét, không thêm lời chào hay giải thích thêm.\n" +
+                        "3. Nếu hình ảnh hoàn toàn không có chữ nào hoặc ảnh bị mờ/hỏng không đọc được chữ, chỉ trả về đúng cụm từ: [NO_TEXT]")
+        );
+
+        String systemPrompt = "Bạn là công cụ OCR chuyên dụng. Nhiệm vụ duy nhất của bạn là trích xuất chính xác chữ viết và biểu thức toán học từ hình ảnh, không suy diễn hoặc giải bài.";
+
+        for (String currentModel : modelsToTry) {
+            try {
+                String url = "https://generativelanguage.googleapis.com/v1beta/models/" + currentModel + ":generateContent?key=" + apiKey;
+
+                Map<String, Object> requestPayload = new HashMap<>();
+                requestPayload.put("system_instruction", Map.of(
+                        "parts", List.of(Map.of("text", systemPrompt))
+                ));
+                requestPayload.put("contents", List.of(
+                        Map.of(
+                                "role", "user",
+                                "parts", parts
+                        )
+                ));
+
+                String jsonBody = objectMapper.writeValueAsString(requestPayload);
+
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(URI.create(url))
+                        .header("Content-Type", "application/json")
+                        .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                        .timeout(Duration.ofSeconds(30))
+                        .build();
+
+                HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+                if (response.statusCode() == 200) {
+                    String extracted = extractTextFromGeminiResponse(response.body());
+                    if (extracted != null && !extracted.isBlank()) {
+                        String trimmed = extracted.trim();
+                        if (trimmed.equalsIgnoreCase("[NO_TEXT]") || trimmed.equalsIgnoreCase("NO_TEXT")) {
+                            log.info("Gemini OCR detected no readable text in image");
+                            return null;
+                        }
+                        return trimmed;
+                    }
+                }
+            } catch (Exception e) {
+                log.warn("Gemini OCR extraction failed with model '{}': {}", currentModel, e.getMessage());
+            }
+        }
+        return null;
+    }
+
+
     public AiGradingResult gradeAnswer(
             String questionContent,
             QuestionType questionType,
