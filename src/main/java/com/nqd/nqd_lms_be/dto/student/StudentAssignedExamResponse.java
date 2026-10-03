@@ -1,6 +1,7 @@
 package com.nqd.nqd_lms_be.dto.student;
 
 import com.nqd.nqd_lms_be.entity.enums.ExamStatus;
+import com.nqd.nqd_lms_be.entity.enums.ExamVisibility;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class StudentAssignedExamResponse {
     private Integer maxAttempts;
     private Integer questionCount;
     private ExamStatus status;
+    private ExamVisibility visibility;
     private Integer attemptsTaken;
     private BigDecimal bestScore;
     private Boolean passed;

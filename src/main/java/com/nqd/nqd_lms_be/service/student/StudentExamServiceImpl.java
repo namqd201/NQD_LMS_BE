@@ -9,6 +9,7 @@ import com.nqd.nqd_lms_be.entity.*;
 import com.nqd.nqd_lms_be.entity.enums.ExamAttemptEventType;
 import com.nqd.nqd_lms_be.entity.enums.ExamAttemptStatus;
 import com.nqd.nqd_lms_be.entity.enums.ExamStatus;
+import com.nqd.nqd_lms_be.entity.enums.ExamVisibility;
 import com.nqd.nqd_lms_be.entity.enums.GradingMethod;
 import com.nqd.nqd_lms_be.entity.enums.GradingStatus;
 import com.nqd.nqd_lms_be.entity.enums.QuestionType;
@@ -51,6 +52,7 @@ public class StudentExamServiceImpl implements StudentExamService {
     @Transactional(readOnly = true)
     public List<TeacherExamResponse> getAvailableExams() {
         return examRepository.findByStatus(ExamStatus.PUBLISHED).stream()
+                .filter(exam -> exam.getVisibility() == ExamVisibility.PUBLIC)
                 .map(exam -> TeacherExamResponse.builder()
                         .id(exam.getId())
                         .courseId(exam.getCourse() != null ? exam.getCourse().getId() : null)
@@ -63,6 +65,7 @@ public class StudentExamServiceImpl implements StudentExamService {
                         .passingMarks(exam.getPassingMarks())
                         .maxAttempts(exam.getMaxAttempts())
                         .status(exam.getStatus())
+                        .visibility(exam.getVisibility() != null ? exam.getVisibility() : ExamVisibility.PRIVATE)
                         .build())
                 .collect(Collectors.toList());
     }
@@ -89,9 +92,11 @@ public class StudentExamServiceImpl implements StudentExamService {
         // 3. Find all published exams
         List<Exam> publishedExams = examRepository.findByStatus(ExamStatus.PUBLISHED);
 
-        // Filter exams: either explicitly assigned OR belonging to an enrolled course
+        // Filter exams: either PUBLIC, explicitly assigned, OR belonging to an enrolled course
         List<Exam> studentExams = publishedExams.stream()
-                .filter(e -> explicitExamIds.contains(e.getId()) || (e.getCourse() != null && enrolledCourseIds.contains(e.getCourse().getId())))
+                .filter(e -> e.getVisibility() == ExamVisibility.PUBLIC
+                        || explicitExamIds.contains(e.getId())
+                        || (e.getCourse() != null && enrolledCourseIds.contains(e.getCourse().getId())))
                 .collect(Collectors.toList());
 
         List<ExamAttempt> myAttempts = examAttemptRepository.findByStudentId(studentId);
@@ -126,6 +131,7 @@ public class StudentExamServiceImpl implements StudentExamService {
                     .maxAttempts(e.getMaxAttempts())
                     .questionCount((int) qCount)
                     .status(e.getStatus())
+                    .visibility(e.getVisibility() != null ? e.getVisibility() : ExamVisibility.PRIVATE)
                     .attemptsTaken(attemptsTaken)
                     .bestScore(bestScore)
                     .passed(passed)
@@ -152,6 +158,21 @@ public class StudentExamServiceImpl implements StudentExamService {
 
         User student = userRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", studentId));
+
+        // Quyền truy cập đề thi:
+        // Đề thi Công khai (PUBLIC) -> Mọi người dùng hợp lệ (học sinh, giáo viên, admin) đều có thể truy cập & làm bài.
+        // Đề thi Riêng tư hoặc Cùng bộ môn -> Chỉ người tạo đề, ADMIN, học sinh được giao trực tiếp hoặc học sinh đã ghi danh khóa học mới được làm.
+        boolean isPublic = exam.getVisibility() == ExamVisibility.PUBLIC;
+        if (!isPublic) {
+            boolean isCreator = exam.getCreator() != null && exam.getCreator().getId().equals(studentId);
+            boolean isAdmin = SecurityUtils.isAdmin();
+            boolean isAssigned = examAssignmentRepository.findByExamIdAndStudentId(examId, studentId).isPresent();
+            boolean isEnrolled = exam.getCourse() != null && courseEnrollmentRepository.existsByCourseIdAndStudentId(exam.getCourse().getId(), studentId);
+
+            if (!isCreator && !isAdmin && !isAssigned && !isEnrolled) {
+                throw new ForbiddenOperationException("Bạn không có quyền tham gia làm đề thi này");
+            }
+        }
 
         long existingAttempts = examAttemptRepository.countByExamIdAndStudentId(examId, studentId);
         if (exam.getMaxAttempts() != null && existingAttempts >= exam.getMaxAttempts()) {
