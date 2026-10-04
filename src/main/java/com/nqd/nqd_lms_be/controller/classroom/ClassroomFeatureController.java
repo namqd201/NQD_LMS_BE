@@ -140,6 +140,16 @@ public class ClassroomFeatureController {
         return ResponseEntity.ok(featureService.getMeetingInfo(classroomId, principal.getId()));
     }
 
+    @GetMapping("/meeting/live-presence")
+    @Operation(summary = "Lấy trạng thái trực tiếp & danh sách thành viên đang có mặt trong phòng học 100ms")
+    public ResponseEntity<ClassroomLivePresenceDto> getLivePresence(
+            @PathVariable UUID classroomId,
+            @AuthenticationPrincipal AppUserPrincipal principal
+    ) {
+        return ResponseEntity.ok(featureService.getLivePresence(classroomId, principal != null ? principal.getId() : null));
+    }
+
+
     @PutMapping("/meeting")
     @Operation(summary = "Giáo viên cập nhật link & phòng học trực tuyến (Lark)")
     public ResponseEntity<ClassroomMeetingDto.Response> updateMeetingInfo(

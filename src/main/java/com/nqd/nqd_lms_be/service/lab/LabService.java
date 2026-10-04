@@ -28,4 +28,7 @@ public interface LabService {
     int sync100msRecordings(UUID labId, UUID currentUserId, boolean isAdmin);
 
     void deleteRecordedVideo(UUID videoId, UUID currentUserId, boolean isAdmin);
+
+    com.nqd.nqd_lms_be.dto.lab.LabRoomLivePresenceDto getLivePresence(UUID labId);
 }
+

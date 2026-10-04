@@ -3,6 +3,7 @@ package com.nqd.nqd_lms_be.service.onehundredms;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nqd.nqd_lms_be.config.onehundredms.OneHundredMsProperties;
+import com.nqd.nqd_lms_be.dto.onehundredms.OneHundredMsPeerDto;
 import com.nqd.nqd_lms_be.dto.onehundredms.OneHundredMsRecordingAssetDto;
 import com.nqd.nqd_lms_be.dto.onehundredms.OneHundredMsRoomDto;
 import io.jsonwebtoken.Jwts;
@@ -261,4 +262,95 @@ public class OneHundredMsServiceImpl implements OneHundredMsService {
             return null;
         }
     }
+
+    @Override
+    public List<OneHundredMsPeerDto> getActivePeers(String roomId) {
+        if (!isConfigured() || roomId == null || roomId.isBlank()) {
+            return Collections.emptyList();
+        }
+
+        try {
+            String token = generateManagementToken();
+            HttpRequest req = HttpRequest.newBuilder()
+                    .uri(URI.create(properties.getApiBaseUrl() + "/active-rooms/" + roomId + "/peers"))
+                    .header("Authorization", "Bearer " + token)
+                    .GET()
+                    .timeout(Duration.ofSeconds(10))
+                    .build();
+
+            HttpResponse<String> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofString());
+            if (resp.statusCode() == 404) {
+                // Room is not currently active
+                return Collections.emptyList();
+            }
+            if (resp.statusCode() < 200 || resp.statusCode() >= 300) {
+                log.warn("Failed to query active peers for room {}: status={}, body={}", roomId, resp.statusCode(), resp.body());
+                return Collections.emptyList();
+            }
+
+            JsonNode root = objectMapper.readTree(resp.body());
+            List<OneHundredMsPeerDto> peers = new ArrayList<>();
+
+            JsonNode peersNode = root.path("peers");
+            if (peersNode.isMissingNode() || peersNode.isNull()) {
+                peersNode = root.path("data");
+            }
+
+            if (peersNode.isObject()) {
+                Iterator<Map.Entry<String, JsonNode>> fields = peersNode.fields();
+                while (fields.hasNext()) {
+                    JsonNode node = fields.next().getValue();
+                    peers.add(parsePeerNode(node));
+                }
+            } else if (peersNode.isArray()) {
+                for (JsonNode node : peersNode) {
+                    peers.add(parsePeerNode(node));
+                }
+            }
+
+            return peers;
+        } catch (Exception e) {
+            log.warn("Error getting active peers for 100ms room {}: {}", roomId, e.getMessage());
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public boolean isRoomActive(String roomId) {
+        if (!isConfigured() || roomId == null || roomId.isBlank()) {
+            return false;
+        }
+        try {
+            String token = generateManagementToken();
+            HttpRequest req = HttpRequest.newBuilder()
+                    .uri(URI.create(properties.getApiBaseUrl() + "/active-rooms/" + roomId))
+                    .header("Authorization", "Bearer " + token)
+                    .GET()
+                    .timeout(Duration.ofSeconds(8))
+                    .build();
+
+            HttpResponse<String> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofString());
+            return resp.statusCode() == 200;
+        } catch (Exception e) {
+            log.warn("Error checking active room status for {}: {}", roomId, e.getMessage());
+            return false;
+        }
+    }
+
+    private OneHundredMsPeerDto parsePeerNode(JsonNode node) {
+        String id = node.path("id").isMissingNode() ? node.path("peer_id").asText("") : node.path("id").asText();
+        String name = node.path("name").isMissingNode() ? node.path("user_name").asText("") : node.path("name").asText();
+        String role = node.path("role").asText("");
+        String userId = node.path("user_id").asText("");
+        String joinedAt = node.path("joined_at").asText("");
+
+        return OneHundredMsPeerDto.builder()
+                .id(id)
+                .name(name)
+                .role(role)
+                .userId(userId)
+                .joinedAt(joinedAt)
+                .build();
+    }
 }
+

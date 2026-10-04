@@ -5,7 +5,9 @@ import com.nqd.nqd_lms_be.common.exception.ResourceNotFoundException;
 import com.nqd.nqd_lms_be.dto.lab.CreateLabRoomRequest;
 import com.nqd.nqd_lms_be.dto.lab.CreateLabVideoRequest;
 import com.nqd.nqd_lms_be.dto.lab.LabRecordedVideoResponse;
+import com.nqd.nqd_lms_be.dto.lab.LabRoomLivePresenceDto;
 import com.nqd.nqd_lms_be.dto.lab.LabRoomResponse;
+import com.nqd.nqd_lms_be.dto.onehundredms.OneHundredMsPeerDto;
 import com.nqd.nqd_lms_be.dto.onehundredms.OneHundredMsRecordingAssetDto;
 import com.nqd.nqd_lms_be.dto.onehundredms.OneHundredMsRoomDto;
 import com.nqd.nqd_lms_be.entity.LabRecordedVideo;
@@ -328,6 +330,46 @@ public class LabServiceImpl implements LabService {
                 .ownerUserId(v.getOwnerUser().getId())
                 .ownerName(v.getOwnerUser().getFullName())
                 .createdAt(v.getCreatedAt())
+                .build();
+    }
+
+    @Override
+    @Transactional
+    public LabRoomLivePresenceDto getLivePresence(UUID labId) {
+        LabRoom lab = labRoomRepository.findById(labId)
+                .orElseThrow(() -> new ResourceNotFoundException("LabRoom", labId));
+
+        if (lab.getMeetingRoomId() == null || lab.getMeetingRoomId().isBlank()) {
+            return LabRoomLivePresenceDto.builder()
+                    .labId(labId)
+                    .status(lab.getStatus().name())
+                    .isLiveNow(lab.getStatus() == LabStatus.LIVE)
+                    .participantCount(0)
+                    .peers(Collections.emptyList())
+                    .build();
+        }
+
+        List<OneHundredMsPeerDto> peers = Collections.emptyList();
+        if (oneHundredMsService != null && oneHundredMsService.isConfigured()) {
+            peers = oneHundredMsService.getActivePeers(lab.getMeetingRoomId());
+        }
+
+        boolean isLive = !peers.isEmpty();
+
+        if (isLive && lab.getStatus() == LabStatus.SCHEDULED) {
+            lab.setStatus(LabStatus.LIVE);
+            labRoomRepository.save(lab);
+        } else if (!isLive && lab.getStatus() == LabStatus.LIVE) {
+            lab.setStatus(LabStatus.ENDED);
+            labRoomRepository.save(lab);
+        }
+
+        return LabRoomLivePresenceDto.builder()
+                .labId(labId)
+                .status(lab.getStatus().name())
+                .isLiveNow(lab.getStatus() == LabStatus.LIVE)
+                .participantCount(peers.size())
+                .peers(peers)
                 .build();
     }
 }

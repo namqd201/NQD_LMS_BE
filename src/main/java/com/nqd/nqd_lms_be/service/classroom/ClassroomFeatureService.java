@@ -27,6 +27,8 @@ public interface ClassroomFeatureService {
     ClassroomMeetingDto.Response generateGoogleMeetRoom(UUID classroomId, UUID teacherId);
     int syncMeetRecordings(UUID classroomId, UUID teacherId);
     int sync100msRecordings(UUID classroomId, UUID teacherId);
+    ClassroomLivePresenceDto getLivePresence(UUID classroomId, UUID currentUserId);
+
 
     // Recorded Videos
     List<ClassroomRecordedVideoDto.Response> getRecordedVideos(UUID classroomId, UUID currentUserId);

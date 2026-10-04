@@ -14,4 +14,5 @@ public class OneHundredMsProperties {
     private String templateId;
     private String subdomain;
     private String apiBaseUrl = "https://api.100ms.live/v2";
+    private String webhookSecret;
 }

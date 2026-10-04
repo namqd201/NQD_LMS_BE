@@ -1,5 +1,6 @@
 package com.nqd.nqd_lms_be.service.onehundredms;
 
+import com.nqd.nqd_lms_be.dto.onehundredms.OneHundredMsPeerDto;
 import com.nqd.nqd_lms_be.dto.onehundredms.OneHundredMsRecordingAssetDto;
 import com.nqd.nqd_lms_be.dto.onehundredms.OneHundredMsRoomDto;
 
@@ -16,4 +17,9 @@ public interface OneHundredMsService {
     List<OneHundredMsRecordingAssetDto> getCompletedRecordingAssets(String roomId);
 
     String getPresignedDownloadUrl(String assetId);
+
+    List<OneHundredMsPeerDto> getActivePeers(String roomId);
+
+    boolean isRoomActive(String roomId);
 }
+

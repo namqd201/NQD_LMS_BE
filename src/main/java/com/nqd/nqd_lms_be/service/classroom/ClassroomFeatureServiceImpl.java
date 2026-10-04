@@ -390,7 +390,52 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
         return synced;
     }
 
+    @Override
+    @Transactional
+    public ClassroomLivePresenceDto getLivePresence(UUID classroomId, UUID currentUserId) {
+        Classroom c = classroomRepository.findById(classroomId)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy lớp học"));
+
+        if (c.getMeetingId() == null || c.getMeetingId().isBlank()) {
+            return ClassroomLivePresenceDto.builder()
+                    .classroomId(classroomId)
+                    .roomId(null)
+                    .isLiveNow(false)
+                    .hostOnline(false)
+                    .participantCount(0)
+                    .peers(java.util.Collections.emptyList())
+                    .build();
+        }
+
+        List<com.nqd.nqd_lms_be.dto.onehundredms.OneHundredMsPeerDto> peers = java.util.Collections.emptyList();
+        if (oneHundredMsService != null && oneHundredMsService.isConfigured()) {
+            peers = oneHundredMsService.getActivePeers(c.getMeetingId());
+        }
+
+        boolean hasHost = peers.stream().anyMatch(p -> "host".equalsIgnoreCase(p.getRole()) || "teacher".equalsIgnoreCase(p.getRole()));
+        boolean isLive = !peers.isEmpty() || Boolean.TRUE.equals(c.getIsLiveNow());
+
+        if (!peers.isEmpty() && !Boolean.TRUE.equals(c.getIsLiveNow())) {
+            c.setIsLiveNow(true);
+            classroomRepository.save(c);
+        } else if (peers.isEmpty() && Boolean.TRUE.equals(c.getIsLiveNow())) {
+            c.setIsLiveNow(false);
+            classroomRepository.save(c);
+            isLive = false;
+        }
+
+        return ClassroomLivePresenceDto.builder()
+                .classroomId(classroomId)
+                .roomId(c.getMeetingId())
+                .isLiveNow(isLive)
+                .hostOnline(hasHost)
+                .participantCount(peers.size())
+                .peers(peers)
+                .build();
+    }
+
     private ClassroomMeetingDto.Response mapToMeetingResponse(Classroom c) {
+
         String hostUrl = null;
         String guestUrl = c.getLarkMeetingUrl();
 

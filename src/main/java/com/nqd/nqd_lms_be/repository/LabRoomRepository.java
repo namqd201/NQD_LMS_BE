@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -16,4 +17,7 @@ public interface LabRoomRepository extends JpaRepository<LabRoom, UUID> {
     List<LabRoom> findAllActiveRooms();
 
     List<LabRoom> findByHostUserIdAndIsDeletedFalseOrderByScheduledStartTimeDesc(UUID hostUserId);
+
+    Optional<LabRoom> findByMeetingRoomIdAndIsDeletedFalse(String meetingRoomId);
 }
+

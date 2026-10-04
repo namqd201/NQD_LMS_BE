@@ -4,6 +4,7 @@ import com.nqd.nqd_lms_be.config.security.AppUserPrincipal;
 import com.nqd.nqd_lms_be.dto.lab.CreateLabRoomRequest;
 import com.nqd.nqd_lms_be.dto.lab.CreateLabVideoRequest;
 import com.nqd.nqd_lms_be.dto.lab.LabRecordedVideoResponse;
+import com.nqd.nqd_lms_be.dto.lab.LabRoomLivePresenceDto;
 import com.nqd.nqd_lms_be.dto.lab.LabRoomResponse;
 import com.nqd.nqd_lms_be.entity.enums.LabStatus;
 import com.nqd.nqd_lms_be.service.lab.LabService;
@@ -51,6 +52,15 @@ public class LabController {
         boolean isAdmin = principal != null && principal.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("ADMIN"));
         return ResponseEntity.ok(labService.getLabRoomById(id, currentUserId, isAdmin));
     }
+
+    @GetMapping("/api/v1/public/labs/{id}/live-presence")
+    @Operation(summary = "Get live presence and active participants count of a public lab room")
+    public ResponseEntity<LabRoomLivePresenceDto> getLabLivePresence(
+            @PathVariable UUID id
+    ) {
+        return ResponseEntity.ok(labService.getLivePresence(id));
+    }
+
 
     // ==========================================
     // AUTHENTICATED LAB ROOM MANAGEMENT
