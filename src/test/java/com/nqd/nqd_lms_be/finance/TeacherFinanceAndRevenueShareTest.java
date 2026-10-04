@@ -67,6 +67,12 @@ public class TeacherFinanceAndRevenueShareTest {
     @Autowired
     private CourseEnrollmentRepository courseEnrollmentRepository;
 
+    @Autowired
+    private UserRoleRepository userRoleRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
     private User teacher;
     private User student;
     private Subject subject;
@@ -359,5 +365,90 @@ public class TeacherFinanceAndRevenueShareTest {
         TeacherBalanceSummaryResponse summary = teacherFinanceService.getBalanceSummary(teacher.getId());
         assertThat(summary.getTotalEarned()).isEqualByComparingTo("0.00");
         assertThat(summary.getReversedAmount()).isEqualByComparingTo("239200.00");
+    }
+
+    @Test
+    @DisplayName("8. Admin Seller Revenue: If course creator is Admin, platform fee rate is 0% and Admin gets 100% gross")
+    void testAdminSellerZeroPlatformFee() {
+        // Create an Admin user
+        User adminUser = userRepository.save(User.builder()
+                .email("admin.seller." + UUID.randomUUID() + "@nqd.edu.vn")
+                .fullName("Super Admin Seller")
+                .status(UserStatus.ACTIVE)
+                .build());
+
+        Role adminRole = roleRepository.findByName("ADMIN")
+                .orElseGet(() -> roleRepository.save(Role.builder()
+                        .name("ADMIN")
+                        .description("Administrator")
+                        .build()));
+
+        userRoleRepository.save(UserRole.builder()
+                .userId(adminUser.getId())
+                .roleId(adminRole.getId())
+                .user(adminUser)
+                .role(adminRole)
+                .build());
+
+        Course adminCourse = courseRepository.save(Course.builder()
+                .subject(subject)
+                .name("Admin Special Course")
+                .code("COURSE_" + UUID.randomUUID().toString().substring(0, 8).toUpperCase())
+                .status(CourseStatus.PUBLISHED)
+                .pricingType(CoursePricingType.PAID)
+                .price(new BigDecimal("500000.00"))
+                .currency("VND")
+                .creator(adminUser)
+                .build());
+
+        Product adminProduct = productRepository.save(Product.builder()
+                .productType(ProductType.COURSE)
+                .targetEntityId(adminCourse.getId())
+                .title(adminCourse.getName())
+                .code("PROD_" + adminCourse.getCode())
+                .basePrice(adminCourse.getPrice())
+                .currency("VND")
+                .status(ProductStatus.PUBLISHED)
+                .build());
+
+        Order order = Order.builder()
+                .orderCode("ORD_ADMIN_" + System.currentTimeMillis() + "_" + UUID.randomUUID().toString().substring(0, 6))
+                .user(student)
+                .totalAmount(new BigDecimal("500000.00"))
+                .discountAmount(BigDecimal.ZERO)
+                .finalAmount(new BigDecimal("500000.00"))
+                .currency("VND")
+                .status(OrderStatus.PAID)
+                .placedAt(LocalDateTime.now())
+                .completedAt(LocalDateTime.now())
+                .build();
+
+        OrderItem item = OrderItem.builder()
+                .order(order)
+                .product(adminProduct)
+                .productTitle(adminProduct.getTitle())
+                .productType(ProductType.COURSE)
+                .unitPrice(new BigDecimal("500000.00"))
+                .quantity(1)
+                .subtotal(new BigDecimal("500000.00"))
+                .currency("VND")
+                .build();
+
+        order.setItems(List.of(item));
+        order = orderRepository.save(order);
+
+        entitlementActivationService.activateOrderFulfillment(order);
+
+        List<TeacherEarning> earnings = teacherEarningRepository.findByOrderIdAndIsDeletedFalse(order.getId());
+        assertThat(earnings).hasSize(1);
+
+        TeacherEarning earning = earnings.get(0);
+        assertThat(earning.getTeacher().getId()).isEqualTo(adminUser.getId());
+        assertThat(earning.getGrossAmount()).isEqualByComparingTo("500000.00");
+        assertThat(earning.getPlatformFee()).isEqualByComparingTo("0.00");
+        assertThat(earning.getTeacherAmount()).isEqualByComparingTo("500000.00");
+        assertThat(earning.getPlatformFeeRate()).isEqualByComparingTo("0.0000");
+        assertThat(earning.getTeacherShareRate()).isEqualByComparingTo("1.0000");
+        assertThat(earning.getStatus()).isEqualTo(EarningStatus.AVAILABLE);
     }
 }

@@ -101,23 +101,35 @@ public class TeacherFinanceServiceImpl implements TeacherFinanceService {
             return;
         }
 
+        boolean isCreatorAdmin = course.getCreator() != null && userRoleRepository.findRoleNamesByUserId(course.getCreator().getId())
+                .stream()
+                .anyMatch(r -> "ADMIN".equalsIgnoreCase(r) || "ROLE_ADMIN".equalsIgnoreCase(r));
+        boolean isTeacherAdmin = userRoleRepository.findRoleNamesByUserId(teacher.getId())
+                .stream()
+                .anyMatch(r -> "ADMIN".equalsIgnoreCase(r) || "ROLE_ADMIN".equalsIgnoreCase(r));
+        boolean isAdminSeller = isCreatorAdmin || isTeacherAdmin;
+
         boolean isBuyerPro = false;
         if (orderItem.getOrder() != null && orderItem.getOrder().getUser() != null) {
             UUID buyerId = orderItem.getOrder().getUser().getId();
             isBuyerPro = membershipEntitlementService.hasFeature(buyerId, com.nqd.nqd_lms_be.entity.enums.FeatureKey.DISCOUNT_ON_PURCHASES);
         }
 
-        // COURSERA-STYLE PRO FINANCIAL MODEL:
-        // If buyer is PRO, Admin charges 0% platform fee -> Teacher gets 100% of the discounted purchase amount!
-        BigDecimal platformFeeRate = isBuyerPro ? BigDecimal.ZERO : (defaultPlatformFeeRate != null ? defaultPlatformFeeRate : new BigDecimal("0.20"));
+        // COURSERA-STYLE PRO FINANCIAL MODEL & ADMIN SELLER RULE:
+        // 1. If course creator/seller is an ADMIN -> 0% platform fee (Admin keeps 100% of revenue, no platform fee deducted).
+        // 2. If buyer is PRO -> 0% platform fee (Platform subsidizes the discount -> Teacher gets 100% of discounted amount).
+        // 3. Otherwise -> default platform fee (e.g. 20%).
+        BigDecimal platformFeeRate = (isAdminSeller || isBuyerPro)
+                ? BigDecimal.ZERO
+                : (defaultPlatformFeeRate != null ? defaultPlatformFeeRate : new BigDecimal("0.20"));
         BigDecimal teacherShareRate = BigDecimal.ONE.subtract(platformFeeRate);
 
         BigDecimal platformFee = grossAmount.multiply(platformFeeRate).setScale(2, RoundingMode.HALF_UP);
         BigDecimal teacherAmount = grossAmount.subtract(platformFee);
 
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime availableAt = holdPeriodDays > 0 ? now.plusDays(holdPeriodDays) : now;
-        EarningStatus status = holdPeriodDays > 0 ? EarningStatus.PENDING : EarningStatus.AVAILABLE;
+        LocalDateTime availableAt = (holdPeriodDays > 0 && !isAdminSeller) ? now.plusDays(holdPeriodDays) : now;
+        EarningStatus status = (holdPeriodDays > 0 && !isAdminSeller) ? EarningStatus.PENDING : EarningStatus.AVAILABLE;
 
         TeacherEarning earning = TeacherEarning.builder()
                 .order(orderItem.getOrder())
