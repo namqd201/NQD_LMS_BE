@@ -279,6 +279,13 @@ public class ClassroomServiceImpl implements ClassroomService {
         User student = userRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", studentId));
 
+        if (student.getStatus() == UserStatus.BANNED || student.getStatus() == UserStatus.INACTIVE) {
+            String reason = (student.getLockReason() != null && !student.getLockReason().isBlank())
+                    ? student.getLockReason()
+                    : "Vi phạm quy định hệ thống";
+            throw new ForbiddenOperationException("Tài khoản của bạn hiện đang bị khóa (Lý do: " + reason + "). Không thể tham gia lớp học.");
+        }
+
         Optional<ClassroomStudent> existingOpt = classroomStudentRepository.findByClassroomIdAndStudentId(classroom.getId(), studentId);
 
         ClassroomStudent cs;
@@ -400,6 +407,13 @@ public class ClassroomServiceImpl implements ClassroomService {
         }
 
         User student = studentOpt.get();
+        if (student.getStatus() == UserStatus.BANNED || student.getStatus() == UserStatus.INACTIVE) {
+            String reason = (student.getLockReason() != null && !student.getLockReason().isBlank())
+                    ? student.getLockReason()
+                    : "Vi phạm quy định hệ thống";
+            throw new ForbiddenOperationException("Không thể mời học viên này vào lớp. Tài khoản '" + student.getEmail() + "' hiện đang bị khóa (Lý do: " + reason + ").");
+        }
+
         if (student.getId().equals(teacherId)) {
             throw new IllegalArgumentException("Bạn không thể tự mời chính mình vào lớp học.");
         }
@@ -471,6 +485,13 @@ public class ClassroomServiceImpl implements ClassroomService {
 
         if (cs.getStatus() != ClassEnrollmentStatus.INVITED) {
             throw new IllegalArgumentException("Lời mời không ở trạng thái chờ chấp nhận (trạng thái hiện tại: " + cs.getStatus() + ").");
+        }
+
+        if (cs.getStudent() != null && (cs.getStudent().getStatus() == UserStatus.BANNED || cs.getStudent().getStatus() == UserStatus.INACTIVE)) {
+            String reason = (cs.getStudent().getLockReason() != null && !cs.getStudent().getLockReason().isBlank())
+                    ? cs.getStudent().getLockReason()
+                    : "Vi phạm quy định hệ thống";
+            throw new ForbiddenOperationException("Tài khoản của bạn hiện đang bị khóa (Lý do: " + reason + "). Không thể chấp nhận lời mời vào lớp.");
         }
 
         cs.setStatus(ClassEnrollmentStatus.ENROLLED);

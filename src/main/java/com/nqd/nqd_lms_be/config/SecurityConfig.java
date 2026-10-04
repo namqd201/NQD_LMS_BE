@@ -30,6 +30,7 @@ public class SecurityConfig {
     private final CustomOidcUserService customOidcUserService;
     private final com.nqd.nqd_lms_be.config.security.DynamicRoleAuthenticationFilter dynamicRoleAuthenticationFilter;
     private final com.nqd.nqd_lms_be.config.security.OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final com.nqd.nqd_lms_be.config.security.OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
 
     @Value("${app.frontend.url:https://nqdlms.online}")
     private String frontendUrl;
@@ -115,7 +116,7 @@ public class SecurityConfig {
             )
             .oauth2Login(oauth2 -> oauth2
                 .successHandler(oAuth2LoginSuccessHandler)
-                .failureUrl(frontendUrl + "/login?error=oauth2_failure")
+                .failureHandler(oAuth2LoginFailureHandler)
                 .userInfoEndpoint(userInfo -> userInfo
                     .userService(customOAuth2UserService)
                     .oidcUserService(customOidcUserService)

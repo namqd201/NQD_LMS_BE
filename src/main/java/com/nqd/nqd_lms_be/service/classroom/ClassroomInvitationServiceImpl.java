@@ -33,11 +33,27 @@ public class ClassroomInvitationServiceImpl implements ClassroomInvitationServic
     private final ClassroomRepository classroomRepository;
     private final EmailService emailService;
     private final KafkaNotificationProducer kafkaNotificationProducer;
+    private final com.nqd.nqd_lms_be.repository.UserRepository userRepository;
 
     @Override
     @Transactional
     public ClassroomStudentResponse inviteByEmail(Classroom classroom, String email, String message, User teacher) {
         String cleanEmail = email.trim().toLowerCase();
+
+        // Check if user already exists and is locked
+        Optional<User> existingUserOpt = userRepository.findByEmail(cleanEmail);
+        if (existingUserOpt.isPresent()) {
+            User existingUser = existingUserOpt.get();
+            if (existingUser.getStatus() == com.nqd.nqd_lms_be.entity.enums.UserStatus.BANNED
+                    || existingUser.getStatus() == com.nqd.nqd_lms_be.entity.enums.UserStatus.INACTIVE) {
+                String reason = (existingUser.getLockReason() != null && !existingUser.getLockReason().isBlank())
+                        ? existingUser.getLockReason()
+                        : "Vi phạm quy định hệ thống";
+                throw new com.nqd.nqd_lms_be.common.exception.ForbiddenOperationException(
+                        "Không thể mời học viên này vào lớp. Tài khoản '" + cleanEmail + "' hiện đang bị khóa (Lý do: " + reason + ")."
+                );
+            }
+        }
 
         // Check if an invitation already exists for this classroom and email
         Optional<ClassroomInvitation> existingInvOpt = invitationRepository

@@ -525,8 +525,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private User getUserOrThrow(UUID userId) {
-        return userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy người dùng với ID: " + userId));
+        if (user.getStatus() == com.nqd.nqd_lms_be.entity.enums.UserStatus.BANNED 
+                || user.getStatus() == com.nqd.nqd_lms_be.entity.enums.UserStatus.INACTIVE) {
+            String reason = (user.getLockReason() != null && !user.getLockReason().isBlank()) 
+                    ? user.getLockReason() 
+                    : "Vi phạm quy định hệ thống";
+            throw new com.nqd.nqd_lms_be.common.exception.ForbiddenOperationException(
+                    "Tài khoản của bạn hiện đang bị khóa (Lý do: " + reason + "). Không thể tạo đơn hàng hoặc mua khóa học."
+            );
+        }
+        return user;
     }
 
     private BigDecimal calculateCouponDiscount(String couponCode, BigDecimal totalAmount) {

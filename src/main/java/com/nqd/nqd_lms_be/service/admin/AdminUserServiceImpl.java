@@ -171,9 +171,19 @@ public class AdminUserServiceImpl implements AdminUserService {
         }
 
         user.setStatus(request.getStatus());
+        if (request.getStatus() == UserStatus.BANNED || request.getStatus() == UserStatus.INACTIVE) {
+            String reason = request.getReason() != null && !request.getReason().isBlank()
+                    ? request.getReason().trim()
+                    : "Khóa bởi Quản trị viên";
+            user.setLockReason(reason);
+            user.setLockedAt(LocalDateTime.now());
+        } else {
+            user.setLockReason(null);
+            user.setLockedAt(null);
+        }
         user = userRepository.save(user);
 
-        log.info("Admin updated status for user: {} to {}", user.getEmail(), request.getStatus());
+        log.info("Admin updated status for user: {} to {} (Reason: {})", user.getEmail(), request.getStatus(), user.getLockReason());
         return getUserById(id);
     }
 
@@ -378,6 +388,8 @@ public class AdminUserServiceImpl implements AdminUserService {
                 .currentPlanName(currentPlanName)
                 .isVip(isVip)
                 .subscriptionEndDate(subscriptionEndDate)
+                .lockReason(user.getLockReason())
+                .lockedAt(user.getLockedAt())
                 .build();
     }
 }

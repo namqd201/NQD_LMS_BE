@@ -77,6 +77,14 @@ public class StudentCourseServiceImpl implements StudentCourseService {
         User student = userRepository.findById(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", studentId));
 
+        if (student.getStatus() == com.nqd.nqd_lms_be.entity.enums.UserStatus.BANNED 
+                || student.getStatus() == com.nqd.nqd_lms_be.entity.enums.UserStatus.INACTIVE) {
+            String reason = (student.getLockReason() != null && !student.getLockReason().isBlank()) 
+                    ? student.getLockReason() 
+                    : "Vi phạm quy định hệ thống";
+            throw new ForbiddenOperationException("Tài khoản của bạn hiện đang bị khóa (Lý do: " + reason + "). Không thể tham gia khóa học.");
+        }
+
         if (course.isPaid()) {
             boolean isUltra = membershipEntitlementService.hasFeature(studentId, com.nqd.nqd_lms_be.entity.enums.FeatureKey.ULTRA_UNLIMITED_COURSES);
             boolean hasCourseAccess = entitlementRepository.findByUserIdAndEntitlementTypeAndTargetEntityIdAndStatusAndIsDeletedFalse(

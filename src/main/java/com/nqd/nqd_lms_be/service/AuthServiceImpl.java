@@ -79,6 +79,18 @@ public class AuthServiceImpl implements AuthService {
             }
         }
 
+        // Block login if user account is BANNED or INACTIVE
+        if (user.getStatus() == UserStatus.BANNED || user.getStatus() == UserStatus.INACTIVE) {
+            String lockReason = (user.getLockReason() != null && !user.getLockReason().isBlank())
+                    ? user.getLockReason()
+                    : "Tài khoản của bạn đã bị khóa bởi Quản trị viên.";
+            log.warn("Blocked login attempt for locked user: {} (Status: {}, Reason: {})", email, user.getStatus(), lockReason);
+            throw new OAuth2AuthenticationException(
+                    new OAuth2Error("account_locked"),
+                    lockReason
+            );
+        }
+
         // Auto-enroll user into any classrooms they were previously invited to
         try {
             classroomInvitationService.processPendingInvitationsForUser(user);
@@ -181,6 +193,8 @@ public class AuthServiceImpl implements AuthService {
                     .status(user.getStatus())
                     .roles(roles)
                     .isOnboarded(isOnboarded)
+                    .lockReason(user.getLockReason())
+                    .lockedAt(user.getLockedAt())
                     .build();
         }
 

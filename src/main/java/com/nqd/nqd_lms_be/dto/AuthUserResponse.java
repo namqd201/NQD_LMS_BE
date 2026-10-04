@@ -22,4 +22,6 @@ public class AuthUserResponse {
     private UserStatus status;
     private Set<String> roles;
     private Boolean isOnboarded;
+    private String lockReason;
+    private java.time.LocalDateTime lockedAt;
 }

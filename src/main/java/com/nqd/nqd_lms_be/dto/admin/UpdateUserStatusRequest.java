@@ -14,4 +14,6 @@ import lombok.NoArgsConstructor;
 public class UpdateUserStatusRequest {
     @NotNull(message = "Status is required")
     private UserStatus status;
+
+    private String reason;
 }

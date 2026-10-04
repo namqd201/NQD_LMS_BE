@@ -28,4 +28,6 @@ public class AdminUserResponse {
     private String currentPlanName;
     private Boolean isVip;
     private LocalDateTime subscriptionEndDate;
+    private String lockReason;
+    private LocalDateTime lockedAt;
 }

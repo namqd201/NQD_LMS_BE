@@ -89,6 +89,14 @@ public class CourseFreeGrantServiceImpl implements CourseFreeGrantService {
                 .filter(u -> !u.getIsDeleted())
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy tài khoản học sinh nào với email: " + request.getEmail()));
 
+        if (student.getStatus() == com.nqd.nqd_lms_be.entity.enums.UserStatus.BANNED
+                || student.getStatus() == com.nqd.nqd_lms_be.entity.enums.UserStatus.INACTIVE) {
+            String reason = (student.getLockReason() != null && !student.getLockReason().isBlank())
+                    ? student.getLockReason()
+                    : "Vi phạm quy định hệ thống";
+            throw new ForbiddenOperationException("Không thể tặng khóa học cho học viên này. Tài khoản '" + targetEmail + "' hiện đang bị khóa (Lý do: " + reason + ").");
+        }
+
         if (student.getId().equals(teacherId)) {
             throw new IllegalArgumentException("Giáo viên không thể tự tặng khóa học cho chính mình.");
         }

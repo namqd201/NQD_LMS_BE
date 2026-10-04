@@ -54,7 +54,7 @@ public class DynamicRoleAuthenticationFilter extends OncePerRequestFilter {
                     UUID userId = jwtService.getUserIdFromToken(token);
                     if (userId != null) {
                         User user = userRepository.findById(userId).orElse(null);
-                        if (user != null && user.getStatus() != UserStatus.BANNED) {
+                        if (user != null && user.getStatus() != UserStatus.BANNED && user.getStatus() != UserStatus.INACTIVE) {
                             List<String> latestRoleNames = userRoleRepository.findRoleNamesByUserId(userId);
                             Set<String> roles = (latestRoleNames != null && !latestRoleNames.isEmpty())
                                     ? new HashSet<>(latestRoleNames)
@@ -79,18 +79,35 @@ public class DynamicRoleAuthenticationFilter extends OncePerRequestFilter {
                 if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
                     Authentication registeredAuth = sessionAuthRegistry.get(token);
                     if (registeredAuth != null) {
-                        SecurityContext context = SecurityContextHolder.createEmptyContext();
-                        context.setAuthentication(registeredAuth);
-                        SecurityContextHolder.setContext(context);
-                        authentication = registeredAuth;
+                        boolean isBlocked = false;
+                        if (registeredAuth.getPrincipal() instanceof AppUserPrincipal p) {
+                            User u = userRepository.findById(p.getId()).orElse(null);
+                            if (u != null && (u.getStatus() == UserStatus.BANNED || u.getStatus() == UserStatus.INACTIVE)) {
+                                isBlocked = true;
+                            }
+                        }
+                        if (!isBlocked) {
+                            SecurityContext context = SecurityContextHolder.createEmptyContext();
+                            context.setAuthentication(registeredAuth);
+                            SecurityContextHolder.setContext(context);
+                            authentication = registeredAuth;
+                        }
                     }
                 }
             }
         }
 
-        // 3. Dynamic role refresh if user roles have changed in DB
+        // 3. Dynamic status & role refresh if user status or roles have changed in DB
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof AppUserPrincipal principal) {
             UUID userId = principal.getId();
+            User currentUser = userRepository.findById(userId).orElse(null);
+            if (currentUser != null && (currentUser.getStatus() == UserStatus.BANNED || currentUser.getStatus() == UserStatus.INACTIVE)) {
+                log.warn("Clearing security context for currently locked user: {}", currentUser.getEmail());
+                SecurityContextHolder.clearContext();
+                filterChain.doFilter(request, response);
+                return;
+            }
+
             List<String> latestRoleNames = userRoleRepository.findRoleNamesByUserId(userId);
             if (latestRoleNames != null && !latestRoleNames.isEmpty()) {
                 Set<String> latestRoles = new HashSet<>(latestRoleNames);

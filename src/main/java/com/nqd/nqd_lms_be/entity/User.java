@@ -40,4 +40,10 @@ public class User extends BaseEntity {
     @Column(name = "is_onboarded")
     @Builder.Default
     private Boolean isOnboarded = false;
+
+    @Column(name = "lock_reason", columnDefinition = "TEXT")
+    private String lockReason;
+
+    @Column(name = "locked_at")
+    private LocalDateTime lockedAt;
 }
