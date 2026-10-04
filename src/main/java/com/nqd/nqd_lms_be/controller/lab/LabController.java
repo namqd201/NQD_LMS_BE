@@ -57,7 +57,7 @@ public class LabController {
     // ==========================================
 
     @PostMapping("/api/v1/labs")
-    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN', 'STUDENT')")
+    @PreAuthorize("hasAnyRole('TEACHER', 'ADMIN')")
     @Operation(summary = "Register/Create a new open Lab room (For teachers, lecturers, doctors, professors...)")
     public ResponseEntity<LabRoomResponse> createLabRoom(
             @Valid @RequestBody CreateLabRoomRequest request,
