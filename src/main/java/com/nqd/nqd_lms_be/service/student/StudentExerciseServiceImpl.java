@@ -42,6 +42,7 @@ public class StudentExerciseServiceImpl implements StudentExerciseService {
     private final StudentAiTutorEngine studentAiTutorEngine;
     private final com.nqd.nqd_lms_be.service.certificate.CertificateService certificateService;
     private final AiGradingService aiGradingService;
+    private final com.nqd.nqd_lms_be.service.gamification.GamificationService gamificationService;
 
     @Override
     @Transactional(readOnly = true)
@@ -271,6 +272,13 @@ public class StudentExerciseServiceImpl implements StudentExerciseService {
                 attempt.getExercise().getLesson().getChapter().getCourse() != null) {
             UUID courseId = attempt.getExercise().getLesson().getChapter().getCourse().getId();
             certificateService.checkAndAutoIssueCertificate(studentId, courseId);
+        }
+
+        // Hook Gamification: streak and XP
+        try {
+            gamificationService.onExerciseCompleted(studentId, attempt.getExercise().getId(), passed, percentage);
+        } catch (Exception e) {
+            log.error("Failed to process gamification for student {} on exercise {}", studentId, attempt.getExercise().getId(), e);
         }
 
         return mapToAttemptResultResponse(attempt);

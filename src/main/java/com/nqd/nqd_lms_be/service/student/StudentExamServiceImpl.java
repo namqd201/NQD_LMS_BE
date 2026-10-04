@@ -47,6 +47,7 @@ public class StudentExamServiceImpl implements StudentExamService {
     private final com.nqd.nqd_lms_be.membership.service.MembershipEntitlementService membershipEntitlementService;
     private final com.nqd.nqd_lms_be.service.certificate.CertificateService certificateService;
     private final AiGradingService aiGradingService;
+    private final com.nqd.nqd_lms_be.service.gamification.GamificationService gamificationService;
 
     @Override
     @Transactional(readOnly = true)
@@ -358,6 +359,13 @@ public class StudentExamServiceImpl implements StudentExamService {
 
         if (Boolean.TRUE.equals(attempt.getPassed()) && exam.getCourse() != null) {
             certificateService.checkAndAutoIssueCertificate(studentId, exam.getCourse().getId());
+        }
+
+        // Hook Gamification: streak and XP
+        try {
+            gamificationService.onExamSubmitted(studentId, exam.getId(), attempt.getPassed(), attempt.getPercentage());
+        } catch (Exception e) {
+            log.error("Failed to process gamification for student {} on exam {}", studentId, exam.getId(), e);
         }
 
         return mapToResultResponse(attempt);

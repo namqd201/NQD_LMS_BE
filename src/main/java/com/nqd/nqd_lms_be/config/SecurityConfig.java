@@ -87,6 +87,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/v1/slides/download").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/slides/files/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/teacher-applications/documents/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/v1/gamification/leaderboard", "/api/v1/gamification/leaderboard/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/logout").authenticated()
                 .requestMatchers("/api/v1/auth/me").authenticated()
                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")

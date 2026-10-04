@@ -40,6 +40,7 @@ public class StudentProgressServiceImpl implements StudentProgressService {
     private final CourseEnrollmentRepository courseEnrollmentRepository;
     private final ExamAttemptRepository examAttemptRepository;
     private final CertificateService certificateService;
+    private final com.nqd.nqd_lms_be.service.gamification.GamificationService gamificationService;
 
     @Override
     @Transactional(readOnly = true)
@@ -133,6 +134,11 @@ public class StudentProgressServiceImpl implements StudentProgressService {
         // Check if course is 100% completed across all criteria to automatically issue certificate
         if (courseId != null && (progress.getStatus() == LessonProgressStatus.COMPLETED || Boolean.TRUE.equals(progress.getVideoWatched()))) {
             certificateService.checkAndAutoIssueCertificate(studentId, courseId);
+        }
+
+        // Trigger gamification progress / streak / XP
+        if (progress.getStatus() == LessonProgressStatus.COMPLETED || Boolean.TRUE.equals(progress.getVideoWatched())) {
+            gamificationService.onLessonCompleted(studentId, lessonId);
         }
 
         return mapToResponse(progress);
