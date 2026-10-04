@@ -10,6 +10,7 @@ import com.nqd.nqd_lms_be.entity.Chapter;
 import com.nqd.nqd_lms_be.entity.Course;
 import com.nqd.nqd_lms_be.entity.Lesson;
 import com.nqd.nqd_lms_be.entity.enums.CourseStatus;
+import com.nqd.nqd_lms_be.entity.enums.EnrollmentStatus;
 import com.nqd.nqd_lms_be.entity.enums.LessonStatus;
 import com.nqd.nqd_lms_be.repository.ChapterRepository;
 import com.nqd.nqd_lms_be.repository.CourseEnrollmentRepository;
@@ -197,6 +198,28 @@ public class StudentCourseStructureServiceImpl implements StudentCourseStructure
                     .build());
         }
 
+        Long enrolledStudentsCount = null;
+        Long activeStudentsCount = null;
+        Long completedStudentsCount = null;
+
+        if (isOwner || isAdmin) {
+            List<Object[]> statusCounts = courseEnrollmentRepository.countEnrollmentsByStatusForCourse(courseId);
+            long active = 0;
+            long completed = 0;
+            for (Object[] row : statusCounts) {
+                EnrollmentStatus status = (EnrollmentStatus) row[0];
+                long count = ((Number) row[1]).longValue();
+                if (status == EnrollmentStatus.ENROLLED) {
+                    active += count;
+                } else if (status == EnrollmentStatus.COMPLETED) {
+                    completed += count;
+                }
+            }
+            activeStudentsCount = active;
+            completedStudentsCount = completed;
+            enrolledStudentsCount = active + completed;
+        }
+
         return StudentCourseDetailResponse.builder()
                 .id(course.getId())
                 .name(course.getName())
@@ -211,6 +234,9 @@ public class StudentCourseStructureServiceImpl implements StudentCourseStructure
                 .creatorName(course.getCreator() != null ? course.getCreator().getFullName() : null)
                 .isOwner(isOwner)
                 .isEnrolled(isEnrolled)
+                .enrolledStudentsCount(enrolledStudentsCount)
+                .activeStudentsCount(activeStudentsCount)
+                .completedStudentsCount(completedStudentsCount)
                 .chapters(chapterDtos)
                 .build();
     }

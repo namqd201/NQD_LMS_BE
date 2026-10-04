@@ -39,6 +39,11 @@ public class MarketplaceCourseDetailResponse {
     private String creatorBio;
     private LocalDateTime publishedAt;
 
+    // Student counts (Visible ONLY to course creator and admin)
+    private Long enrolledStudentsCount;
+    private Long activeStudentsCount;
+    private Long completedStudentsCount;
+
     // Student specific access info
     private Boolean isEnrolled;
     private Boolean hasPurchased;

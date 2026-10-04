@@ -27,6 +27,11 @@ public class StudentCourseDetailResponse {
     private UUID creatorId;
     private String creatorName;
 
+    // Student counts (Visible ONLY to course creator and admin)
+    private Long enrolledStudentsCount;
+    private Long activeStudentsCount;
+    private Long completedStudentsCount;
+
     @JsonProperty("isOwner")
     private boolean isOwner;
 

@@ -8,6 +8,7 @@ import com.nqd.nqd_lms_be.entity.Course;
 import com.nqd.nqd_lms_be.entity.Lesson;
 import com.nqd.nqd_lms_be.entity.Product;
 import com.nqd.nqd_lms_be.entity.enums.CourseStatus;
+import com.nqd.nqd_lms_be.entity.enums.EnrollmentStatus;
 import com.nqd.nqd_lms_be.entity.enums.LessonStatus;
 import com.nqd.nqd_lms_be.entity.enums.ProductStatus;
 import com.nqd.nqd_lms_be.entity.enums.ProductType;
@@ -35,6 +36,7 @@ public class TeacherCourseStructureServiceImpl implements TeacherCourseStructure
     private final LessonRepository lessonRepository;
     private final CourseTeacherRepository courseTeacherRepository;
     private final ProductRepository productRepository;
+    private final CourseEnrollmentRepository courseEnrollmentRepository;
 
     @Override
     @Transactional
@@ -96,6 +98,29 @@ public class TeacherCourseStructureServiceImpl implements TeacherCourseStructure
                 .map(this::mapToChapterResponse)
                 .collect(Collectors.toList());
 
+        boolean isCreator = (course.getCreator() != null && course.getCreator().getId().equals(teacherId)) || SecurityUtils.isAdmin();
+        Long enrolledStudentsCount = null;
+        Long activeStudentsCount = null;
+        Long completedStudentsCount = null;
+
+        if (isCreator) {
+            List<Object[]> statusCounts = courseEnrollmentRepository.countEnrollmentsByStatusForCourse(courseId);
+            long active = 0;
+            long completed = 0;
+            for (Object[] row : statusCounts) {
+                EnrollmentStatus status = (EnrollmentStatus) row[0];
+                long count = ((Number) row[1]).longValue();
+                if (status == EnrollmentStatus.ENROLLED) {
+                    active += count;
+                } else if (status == EnrollmentStatus.COMPLETED) {
+                    completed += count;
+                }
+            }
+            activeStudentsCount = active;
+            completedStudentsCount = completed;
+            enrolledStudentsCount = active + completed;
+        }
+
         return TeacherCourseDetailResponse.builder()
                 .id(course.getId())
                 .subjectId(course.getSubject() != null ? course.getSubject().getId() : null)
@@ -114,6 +139,9 @@ public class TeacherCourseStructureServiceImpl implements TeacherCourseStructure
                 .currency(course.getCurrency())
                 .creatorId(course.getCreator() != null ? course.getCreator().getId() : null)
                 .creatorName(course.getCreator() != null ? course.getCreator().getFullName() : null)
+                .enrolledStudentsCount(enrolledStudentsCount)
+                .activeStudentsCount(activeStudentsCount)
+                .completedStudentsCount(completedStudentsCount)
                 .chapters(chapterDtos)
                 .createdAt(course.getCreatedAt())
                 .updatedAt(course.getUpdatedAt())

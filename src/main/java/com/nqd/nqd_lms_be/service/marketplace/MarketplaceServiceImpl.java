@@ -243,6 +243,29 @@ public class MarketplaceServiceImpl implements MarketplaceService {
                     .build());
         }
 
+        boolean isAdmin = SecurityUtils.isAdmin();
+        Long enrolledStudentsCount = null;
+        Long activeStudentsCount = null;
+        Long completedStudentsCount = null;
+
+        if (isOwner || isAdmin) {
+            List<Object[]> statusCounts = courseEnrollmentRepository.countEnrollmentsByStatusForCourse(course.getId());
+            long active = 0;
+            long completed = 0;
+            for (Object[] row : statusCounts) {
+                EnrollmentStatus status = (EnrollmentStatus) row[0];
+                long count = ((Number) row[1]).longValue();
+                if (status == EnrollmentStatus.ENROLLED) {
+                    active += count;
+                } else if (status == EnrollmentStatus.COMPLETED) {
+                    completed += count;
+                }
+            }
+            activeStudentsCount = active;
+            completedStudentsCount = completed;
+            enrolledStudentsCount = active + completed;
+        }
+
         return MarketplaceCourseDetailResponse.builder()
                 .id(course.getId())
                 .name(course.getName())
@@ -261,7 +284,10 @@ public class MarketplaceServiceImpl implements MarketplaceService {
                 .isFree(!course.isPaid())
                 .averageRating(course.getAverageRating())
                 .reviewCount(course.getReviewCount())
-                .enrollmentCount(course.getEnrollmentCount())
+                .enrollmentCount(isOwner || isAdmin ? (enrolledStudentsCount != null ? enrolledStudentsCount.intValue() : 0) : null)
+                .enrolledStudentsCount(enrolledStudentsCount)
+                .activeStudentsCount(activeStudentsCount)
+                .completedStudentsCount(completedStudentsCount)
                 .creatorId(course.getCreator() != null ? course.getCreator().getId() : null)
                 .creatorName(course.getCreator() != null ? course.getCreator().getFullName() : null)
                 .creatorAvatarUrl(course.getCreator() != null ? course.getCreator().getAvatarUrl() : null)

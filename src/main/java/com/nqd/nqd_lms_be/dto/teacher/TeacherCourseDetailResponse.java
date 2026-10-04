@@ -32,6 +32,12 @@ public class TeacherCourseDetailResponse {
     private String currency;
     private UUID creatorId;
     private String creatorName;
+
+    // Student counts (Visible ONLY to course creator and admin)
+    private Long enrolledStudentsCount;
+    private Long activeStudentsCount;
+    private Long completedStudentsCount;
+
     private List<TeacherChapterResponse> chapters;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
