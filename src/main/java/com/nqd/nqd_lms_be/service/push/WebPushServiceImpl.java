@@ -29,13 +29,13 @@ public class WebPushServiceImpl implements WebPushService {
     private final UserPushSubscriptionRepository subscriptionRepository;
     private final ObjectMapper objectMapper;
 
-    @Value("${webpush.vapid.public-key:BBhzeAGIXNZjfC7AfOkN-gVsclnjHxI-HO5cUqB-dGmRXllMN9eROU9urks7BruiqjmPUNSRzTRTpSZSZoqQZV8}")
+    @Value("${webpush.vapid.public-key:${VAPID_PUBLIC_KEY:}}")
     private String vapidPublicKey;
 
-    @Value("${webpush.vapid.private-key:E-e_Yy5_MBDKZUs-duWzfaH5G_JndriCe6WLzOkUet4}")
+    @Value("${webpush.vapid.private-key:${VAPID_PRIVATE_KEY:}}")
     private String vapidPrivateKey;
 
-    @Value("${webpush.vapid.subject:mailto:admin@nqdlms.online}")
+    @Value("${webpush.vapid.subject:${VAPID_SUBJECT:mailto:admin@nqdlms.online}}")
     private String vapidSubject;
 
     private PushService pushService;
