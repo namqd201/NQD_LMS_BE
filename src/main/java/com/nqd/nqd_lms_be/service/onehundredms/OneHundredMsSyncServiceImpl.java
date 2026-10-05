@@ -108,6 +108,18 @@ public class OneHundredMsSyncServiceImpl implements OneHundredMsSyncService {
     }
 
     private boolean processAndUploadAsset(Classroom classroom, OneHundredMsRecordingAssetDto asset) {
+        // STRICT FILTER: Only sync actual video recordings (room-composite, beam). Reject chat transcripts, logs, etc.
+        String assetType = asset.getType() != null ? asset.getType().toLowerCase() : "";
+        if (!assetType.contains("composite") && !assetType.contains("beam") && !assetType.contains("video")) {
+            log.info("Skipping non-video 100ms asset {} of type '{}' for classroom '{}'", asset.getId(), asset.getType(), classroom.getName());
+            return false;
+        }
+
+        if (asset.getDuration() == null || asset.getDuration() <= 0) {
+            log.info("Skipping 100ms asset {} with zero duration for classroom '{}'", asset.getId(), classroom.getName());
+            return false;
+        }
+
         String title = "Buổi học " + classroom.getName() + " - Bản ghi " + (asset.getCreatedAt() != null ? asset.getCreatedAt().substring(0, 10) : "");
         String uniqueMarker = "100ms-" + asset.getId();
         String description = "Bản ghi buổi học trực tuyến lớp " + classroom.getName()
@@ -148,8 +160,8 @@ public class OneHundredMsSyncServiceImpl implements OneHundredMsSyncService {
             return false;
         }
 
-        int durationMinutes = asset.getDuration() != null && asset.getDuration() > 0 ? (int) (asset.getDuration() / 60) : 45;
-        if (durationMinutes <= 0) durationMinutes = 30;
+        int durationMinutes = Math.max(1, (int) Math.round((double) asset.getDuration() / 60.0));
+
 
         // Attempt YouTube upload if configured
         String videoFinalUrl = uploadStreamToYouTube(downloadUrl, title, description, List.of("NQDLMS", "100ms", classroom.getName()));

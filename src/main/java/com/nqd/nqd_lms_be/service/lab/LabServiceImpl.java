@@ -185,7 +185,36 @@ public class LabServiceImpl implements LabService {
                 ? recordedVideoRepository.findAllForAdmin()
                 : recordedVideoRepository.findByOwnerUserId(currentUserId);
 
-        return videos.stream().map(this::mapToVideoResponse).collect(Collectors.toList());
+        List<LabRecordedVideoResponse> responses = new java.util.ArrayList<>();
+        for (LabRecordedVideo v : videos) {
+            // 1. Delete and clean up chat transcript asset mistakenly synced
+            if ("6ac2f22e9a2b7ec98e046fb2".equals(v.getRecordingAssetId()) || "6abd9c349a2b7ec98efb7f9c".equals(v.getRecordingAssetId())) {
+                try {
+                    recordedVideoRepository.delete(v);
+                } catch (Exception ignored) {}
+                continue;
+            }
+
+            // 2. Auto-refresh expiring 100ms presigned URL on-the-fly
+            if (v.getRecordingAssetId() != null && !v.getRecordingAssetId().isBlank()
+                    && (v.getVideoUrl() == null || (!v.getVideoUrl().contains("youtube.com") && !v.getVideoUrl().contains("youtu.be")))) {
+                try {
+                    if (oneHundredMsService != null && oneHundredMsService.isConfigured()) {
+                        String freshUrl = oneHundredMsService.getPresignedDownloadUrl(v.getRecordingAssetId());
+                        if (freshUrl != null && !freshUrl.isBlank()) {
+                            v.setVideoUrl(freshUrl);
+                            recordedVideoRepository.save(v);
+                        }
+                    }
+                } catch (Exception e) {
+                    log.warn("Failed to refresh presigned URL for lab video {}: {}", v.getId(), e.getMessage());
+                }
+            }
+
+            responses.add(mapToVideoResponse(v));
+        }
+
+        return responses;
     }
 
     @Override
@@ -243,15 +272,26 @@ public class LabServiceImpl implements LabService {
                     continue;
                 }
 
+                // Filter out non-video assets (like chat logs, etc.)
+                String assetType = asset.getType() != null ? asset.getType().toLowerCase() : "";
+                if (!assetType.contains("composite") && !assetType.contains("beam") && !assetType.contains("video")) {
+                    log.info("Skipping non-video asset: id={}, type={}", asset.getId(), asset.getType());
+                    continue;
+                }
+                if (asset.getDuration() == null || asset.getDuration() <= 0) {
+                    log.info("Skipping asset with non-positive duration: id={}, duration={}", asset.getId(), asset.getDuration());
+                    continue;
+                }
+
                 String downloadUrl = oneHundredMsService.getPresignedDownloadUrl(asset.getId());
                 if (downloadUrl == null || downloadUrl.isBlank()) {
                     continue;
                 }
 
-                int durationMinutes = asset.getDuration() != null ? (int) (asset.getDuration() / 60) : 0;
+                int durationMinutes = Math.max(1, (int) Math.round((double) asset.getDuration() / 60.0));
                 LabRecordedVideo video = LabRecordedVideo.builder()
                         .labRoom(room)
-                        .title("Bản ghi Phòng Lab: " + room.getTitle() + " (" + (durationMinutes > 0 ? durationMinutes + " phút" : "Video") + ")")
+                        .title("Bản ghi Phòng Lab: " + room.getTitle() + " (" + durationMinutes + " phút)")
                         .videoUrl(downloadUrl)
                         .durationMinutes(durationMinutes)
                         .recordedDate(LocalDate.now())

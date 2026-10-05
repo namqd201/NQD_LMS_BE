@@ -472,14 +472,48 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
     // ==========================================
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<ClassroomRecordedVideoDto.Response> getRecordedVideos(UUID classroomId, UUID currentUserId) {
         validateAndGetClassroomAccess(classroomId, currentUserId);
-        return videoRepository.findByClassroomIdOrderBySessionDateDescCreatedAtDesc(classroomId)
-                .stream()
-                .map(this::mapToVideoResponse)
-                .collect(Collectors.toList());
+        List<ClassroomRecordedVideo> videos = videoRepository.findByClassroomIdOrderBySessionDateDescCreatedAtDesc(classroomId);
+
+        List<ClassroomRecordedVideoDto.Response> responses = new java.util.ArrayList<>();
+        for (ClassroomRecordedVideo v : videos) {
+            String desc = v.getDescription() != null ? v.getDescription() : "";
+
+            // 1. Delete and clean up chat transcript asset mistakenly synced as 45m video
+            if (desc.contains("6ac2f22e9a2b7ec98e046fb2") || desc.contains("6abd9c349a2b7ec98efb7f9c")) {
+                try {
+                    videoRepository.delete(v);
+                } catch (Exception ignored) {}
+                continue;
+            }
+
+            // 2. Auto-refresh expiring 100ms presigned URL on-the-fly
+            if (desc.contains("100ms-") && (v.getVideoUrl() == null || (!v.getVideoUrl().contains("youtube.com") && !v.getVideoUrl().contains("youtu.be")))) {
+                try {
+                    int markerIdx = desc.indexOf("100ms-");
+                    if (markerIdx != -1) {
+                        String assetId = desc.substring(markerIdx + 6).trim().split("\\s+")[0].replaceAll("[^a-zA-Z0-9]", "");
+                        if (oneHundredMsService != null && oneHundredMsService.isConfigured() && !assetId.isBlank()) {
+                            String freshUrl = oneHundredMsService.getPresignedDownloadUrl(assetId);
+                            if (freshUrl != null && !freshUrl.isBlank()) {
+                                v.setVideoUrl(freshUrl);
+                                videoRepository.save(v);
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    log.warn("Failed to refresh presigned URL for video {}: {}", v.getId(), e.getMessage());
+                }
+            }
+
+            responses.add(mapToVideoResponse(v));
+        }
+
+        return responses;
     }
+
 
     @Override
     @Transactional
