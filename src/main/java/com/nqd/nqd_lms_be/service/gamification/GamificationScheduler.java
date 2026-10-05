@@ -16,9 +16,9 @@ public class GamificationScheduler {
     private final GamificationService gamificationService;
 
     /**
-     * Daily at 00:05 AM: Check and reset streaks for users who didn't study yesterday.
+     * Daily at 00:05 AM (VN +7): Check and reset streaks for users who didn't study yesterday.
      */
-    @Scheduled(cron = "0 5 0 * * *")
+    @Scheduled(cron = "0 5 0 * * *", zone = "Asia/Ho_Chi_Minh")
     public void scheduleDailyStreakReset() {
         log.info("Starting daily streak verification job...");
         try {
@@ -30,10 +30,10 @@ public class GamificationScheduler {
     }
 
     /**
-     * Every night at 23:59 PM: Check if today is the last day of the month.
+     * Every night at 23:59 PM (VN +7): Check if today is the last day of the month.
      * If so, finalize monthly leaderboard rewards and reset monthly XP.
      */
-    @Scheduled(cron = "0 59 23 28-31 * *")
+    @Scheduled(cron = "0 59 23 28-31 * *", zone = "Asia/Ho_Chi_Minh")
     public void scheduleMonthlyRewardFinalization() {
         LocalDate today = LocalDate.now();
         LocalDate tomorrow = today.plusDays(1);
