@@ -21,6 +21,7 @@ public class KafkaNotificationProducer {
     private final KafkaTemplate<String, NotificationEvent> kafkaTemplate;
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
+    private final com.nqd.nqd_lms_be.service.push.WebPushService webPushService;
 
     public void sendNotification(UUID userId, String type, String title, String body, String linkUrl) {
         NotificationEvent event = NotificationEvent.builder()
@@ -30,6 +31,15 @@ public class KafkaNotificationProducer {
                 .body(body)
                 .linkUrl(linkUrl)
                 .build();
+
+        // 1. Dispatch Web Push notification to user's devices (phone/desktop)
+        try {
+            if (webPushService != null) {
+                webPushService.sendPushToUser(userId, title, body, linkUrl);
+            }
+        } catch (Exception e) {
+            log.warn("Web push dispatch non-blocking error for user {}: {}", userId, e.getMessage());
+        }
 
         try {
             log.info("Publishing notification event to Kafka topic {}: type={}, user={}",

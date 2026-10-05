@@ -10,4 +10,5 @@ import java.util.UUID;
 @Repository
 public interface ClassroomScheduleRepository extends JpaRepository<ClassroomSchedule, UUID> {
     List<ClassroomSchedule> findByClassroomIdOrderByDayOfWeekAscStartTimeAsc(UUID classroomId);
+    List<ClassroomSchedule> findByDayOfWeek(String dayOfWeek);
 }

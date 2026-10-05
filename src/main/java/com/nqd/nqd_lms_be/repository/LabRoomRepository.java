@@ -19,5 +19,11 @@ public interface LabRoomRepository extends JpaRepository<LabRoom, UUID> {
     List<LabRoom> findByHostUserIdAndIsDeletedFalseOrderByScheduledStartTimeDesc(UUID hostUserId);
 
     Optional<LabRoom> findByMeetingRoomIdAndIsDeletedFalse(String meetingRoomId);
+
+    List<LabRoom> findByStatusAndScheduledStartTimeBetweenAndIsDeletedFalse(
+            com.nqd.nqd_lms_be.entity.enums.LabStatus status,
+            java.time.LocalDateTime from,
+            java.time.LocalDateTime to
+    );
 }
 
