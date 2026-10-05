@@ -16,6 +16,9 @@ public interface ClassroomStudentRepository extends JpaRepository<ClassroomStude
 
     List<ClassroomStudent> findByClassroomIdAndStatusOrderByJoinedAtDesc(UUID classroomId, ClassEnrollmentStatus status);
 
+    @Query("SELECT cs FROM ClassroomStudent cs JOIN FETCH cs.student WHERE cs.classroom.id = :classroomId AND cs.status = :status")
+    List<ClassroomStudent> findByClassroomIdAndStatusWithStudent(@Param("classroomId") UUID classroomId, @Param("status") ClassEnrollmentStatus status);
+
     List<ClassroomStudent> findByClassroomIdOrderByCreatedAtDesc(UUID classroomId);
 
     Optional<ClassroomStudent> findByClassroomIdAndStudentId(UUID classroomId, UUID studentId);

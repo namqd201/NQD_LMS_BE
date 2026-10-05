@@ -16,6 +16,14 @@ public interface NotificationRepository extends JpaRepository<Notification, UUID
 
     long countByUserIdAndIsReadFalse(UUID userId);
 
+    @Query("SELECT COUNT(n) > 0 FROM Notification n WHERE n.user.id = :userId AND n.type = :type AND n.linkUrl = :linkUrl AND n.createdAt >= :since")
+    boolean existsByUserIdAndTypeAndLinkUrlAndCreatedAtAfter(
+            @Param("userId") UUID userId,
+            @Param("type") String type,
+            @Param("linkUrl") String linkUrl,
+            @Param("since") java.time.LocalDateTime since
+    );
+
     @Modifying
     @Query("UPDATE Notification n SET n.isRead = true, n.readAt = CURRENT_TIMESTAMP WHERE n.user.id = :userId AND n.isRead = false")
     void markAllAsReadByUserId(@Param("userId") UUID userId);
