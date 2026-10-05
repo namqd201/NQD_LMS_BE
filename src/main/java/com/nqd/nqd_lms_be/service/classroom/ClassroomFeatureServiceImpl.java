@@ -579,6 +579,10 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
     public ClassroomScheduleDto.Response createSchedule(UUID classroomId, ClassroomScheduleDto.Request request, UUID teacherId) {
         Classroom classroom = validateTeacherPermission(classroomId, teacherId);
 
+        String sessionType = request.getSessionType() != null && !request.getSessionType().isBlank()
+                ? request.getSessionType().trim().toUpperCase()
+                : "ONLINE_100MS";
+
         ClassroomSchedule schedule = ClassroomSchedule.builder()
                 .classroom(classroom)
                 .dayOfWeek(request.getDayOfWeek().trim().toUpperCase())
@@ -586,6 +590,7 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
                 .endTime(request.getEndTime().trim())
                 .title(request.getTitle().trim())
                 .roomNote(request.getRoomNote())
+                .sessionType(sessionType)
                 .build();
 
         schedule = scheduleRepository.save(schedule);
@@ -610,6 +615,7 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
                 .endTime(s.getEndTime())
                 .title(s.getTitle())
                 .roomNote(s.getRoomNote())
+                .sessionType(s.getSessionType() != null ? s.getSessionType() : "ONLINE_100MS")
                 .build();
     }
 

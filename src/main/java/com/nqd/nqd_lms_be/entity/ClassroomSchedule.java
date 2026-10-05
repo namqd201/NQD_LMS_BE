@@ -39,5 +39,9 @@ public class ClassroomSchedule extends BaseEntity {
     private String title;
 
     @Column(name = "room_note", length = 255)
-    private String roomNote; // e.g. "Học trực tuyến qua Lark"
+    private String roomNote; // e.g. "Ghi chú buổi học"
+
+    @Column(name = "session_type", length = 50)
+    @Builder.Default
+    private String sessionType = "ONLINE_100MS"; // ONLINE_100MS, LAB, EXAM
 }

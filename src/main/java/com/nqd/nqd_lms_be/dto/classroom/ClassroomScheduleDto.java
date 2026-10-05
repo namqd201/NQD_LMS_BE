@@ -21,6 +21,7 @@ public class ClassroomScheduleDto {
         @NotBlank(message = "Tên buổi học không được để trống")
         private String title;
         private String roomNote;
+        private String sessionType; // ONLINE_100MS, LAB, EXAM
     }
 
     @Data
@@ -35,5 +36,6 @@ public class ClassroomScheduleDto {
         private String endTime;
         private String title;
         private String roomNote;
+        private String sessionType;
     }
 }
