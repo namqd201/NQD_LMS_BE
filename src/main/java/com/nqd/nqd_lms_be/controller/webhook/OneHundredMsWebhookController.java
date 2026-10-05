@@ -70,4 +70,14 @@ public class OneHundredMsWebhookController {
                 "message", "Webhook processed successfully"
         ));
     }
+
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<Map<String, Object>> handleAnyError(Throwable t) {
+        log.error("100ms webhook controller caught error: {}", t.getMessage(), t);
+        return ResponseEntity.ok(Map.of(
+                "status", "ok",
+                "message", "Webhook acknowledged with note: " + t.getMessage()
+        ));
+    }
 }
+
