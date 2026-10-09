@@ -43,6 +43,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     private final ClassroomFileRepository fileRepository;
     private final ClassroomInvitationService classroomInvitationService;
     private final com.nqd.nqd_lms_be.service.email.EmailService emailService;
+    private final com.nqd.nqd_lms_be.service.audit.AuditLogService auditLogService;
 
     private static final String CODE_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     private static final SecureRandom RANDOM = new SecureRandom();
@@ -303,6 +304,8 @@ public class ClassroomServiceImpl implements ClassroomService {
                 cs.setJoinedAt(LocalDateTime.now());
                 cs = classroomStudentRepository.save(cs);
                 updateClassroomStudentCount(classroom.getId());
+                auditLogService.logAsync(student.getId(), "CLASSROOM_JOIN", "Classroom", classroom.getId(),
+                        "Học sinh " + student.getFullName() + " (" + student.getEmail() + ") đã tham gia vào lớp học '" + classroom.getName() + "' (Mã: " + classroom.getCode() + ")", null, null);
                 return mapToStudentResponse(cs);
             }
             // If DROPPED or REJECTED or DECLINED -> Re-apply
@@ -351,6 +354,9 @@ public class ClassroomServiceImpl implements ClassroomService {
         cs = classroomStudentRepository.save(cs);
 
         updateClassroomStudentCount(classroomId);
+
+        auditLogService.logAsync(studentId, "CLASSROOM_JOIN", "Classroom", classroomId,
+                "Học sinh " + cs.getStudent().getFullName() + " (" + cs.getStudent().getEmail() + ") đã được giáo viên " + classroom.getTeacher().getFullName() + " phê duyệt tham gia vào lớp '" + classroom.getName() + "' (Mã: " + classroom.getCode() + ")", null, null);
 
         // Notify Student about approval
         String studentTitle = "Yêu cầu vào lớp học được chấp thuận 🎉";
@@ -583,6 +589,9 @@ public class ClassroomServiceImpl implements ClassroomService {
 
         updateClassroomStudentCount(classroomId);
 
+        auditLogService.logAsync(studentId, "CLASSROOM_LEAVE", "Classroom", classroomId,
+                "Học sinh " + cs.getStudent().getFullName() + " (" + cs.getStudent().getEmail() + ") đã bị giáo viên " + classroom.getTeacher().getFullName() + " đưa ra khỏi lớp học '" + classroom.getName() + "'", null, null);
+
         // Notify Student
         String studentTitle = "Bạn đã được đưa ra khỏi lớp học";
         String studentBody = "Giáo viên " + classroom.getTeacher().getFullName() + " đã đưa bạn ra khỏi lớp học '" + classroom.getName() + "'.";
@@ -606,8 +615,11 @@ public class ClassroomServiceImpl implements ClassroomService {
 
         updateClassroomStudentCount(classroomId);
 
-        // Notify Teacher
         User student = cs.getStudent();
+        auditLogService.logAsync(studentId, "CLASSROOM_LEAVE", "Classroom", classroomId,
+                "Học sinh " + student.getFullName() + " (" + student.getEmail() + ") đã chủ động rời khỏi lớp học '" + classroom.getName() + "'", null, null);
+
+        // Notify Teacher
         String teacherTitle = "Học sinh rời khỏi lớp học";
         String teacherBody = "Học sinh " + student.getFullName() + " (" + student.getEmail() + ") đã rời khỏi lớp học '" + classroom.getName() + "'.";
         String teacherLink = "/classrooms/" + classroom.getId();

@@ -34,6 +34,8 @@ import java.util.UUID;
 public class ClassroomFeatureController {
 
     private final ClassroomFeatureService featureService;
+    private final com.nqd.nqd_lms_be.service.audit.AuditLogService auditLogService;
+    private final com.nqd.nqd_lms_be.repository.ClassroomRepository classroomRepository;
     private static final String CLASSROOM_FILES_DIR = "uploads/classroom_files";
 
     // ==========================================
@@ -299,5 +301,34 @@ public class ClassroomFeatureController {
     ) {
         featureService.deleteFile(classroomId, fileId, principal.getId());
         return ResponseEntity.ok(MessageResponse.of("Đã xóa tệp tin thành công."));
+    }
+
+    @PostMapping("/live-join")
+    @Operation(summary = "Ghi nhận nhật ký người dùng tham gia phòng học trực tuyến")
+    public ResponseEntity<java.util.Map<String, Object>> logLiveJoin(
+            @PathVariable UUID classroomId,
+            @AuthenticationPrincipal AppUserPrincipal principal,
+            jakarta.servlet.http.HttpServletRequest request
+    ) {
+        com.nqd.nqd_lms_be.entity.Classroom c = classroomRepository.findById(classroomId).orElse(null);
+        if (c != null && principal != null) {
+            String roleText = principal.getAuthorities().stream().anyMatch(a -> a.getAuthority().contains("TEACHER")) ? "Giáo viên" : "Học sinh";
+            String ip = request.getHeader("X-Forwarded-For");
+            if (ip == null || ip.isBlank()) {
+                ip = request.getRemoteAddr();
+            } else {
+                ip = ip.split(",")[0].trim();
+            }
+            auditLogService.logAsync(
+                    principal.getId(),
+                    "ONLINE_MEETING_JOIN",
+                    "Classroom",
+                    classroomId,
+                    roleText + " " + principal.getFullName() + " (" + principal.getEmail() + ") đã vào phòng học trực tuyến của lớp '" + c.getName() + "'",
+                    ip,
+                    request.getHeader("User-Agent")
+            );
+        }
+        return ResponseEntity.ok(java.util.Map.of("success", true));
     }
 }

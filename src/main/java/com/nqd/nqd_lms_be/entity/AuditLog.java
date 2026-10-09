@@ -7,7 +7,14 @@ import lombok.experimental.FieldNameConstants;
 import java.util.UUID;
 
 @Entity
-@Table(name = "audit_logs")
+@Table(
+    name = "audit_logs",
+    indexes = {
+        @Index(name = "idx_audit_logs_user", columnList = "user_id"),
+        @Index(name = "idx_audit_logs_action", columnList = "action"),
+        @Index(name = "idx_audit_logs_created_at", columnList = "created_at")
+    }
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,7 +36,7 @@ public class AuditLog extends BaseEntity {
     @Column(name = "entity_id")
     private UUID entityId;
 
-    @Column(name = "details", columnDefinition = "jsonb")
+    @Column(name = "details", columnDefinition = "TEXT")
     private String details;
 
     @Column(name = "ip_address", length = 45)

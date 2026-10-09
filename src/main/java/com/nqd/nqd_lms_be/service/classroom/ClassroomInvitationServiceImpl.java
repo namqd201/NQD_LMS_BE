@@ -34,6 +34,7 @@ public class ClassroomInvitationServiceImpl implements ClassroomInvitationServic
     private final EmailService emailService;
     private final KafkaNotificationProducer kafkaNotificationProducer;
     private final com.nqd.nqd_lms_be.repository.UserRepository userRepository;
+    private final com.nqd.nqd_lms_be.service.audit.AuditLogService auditLogService;
 
     @Override
     @Transactional
@@ -176,6 +177,8 @@ public class ClassroomInvitationServiceImpl implements ClassroomInvitationServic
                 kafkaNotificationProducer.sendNotification(user.getId(), "CLASSROOM_ENROLLED", notifTitle, notifBody, notifLink);
 
                 log.info("Auto-enrolled newly registered student {} into classroom '{}'", userEmail, classroom.getName());
+                auditLogService.logAsync(user.getId(), "CLASSROOM_JOIN", "Classroom", classroom.getId(),
+                        "Học sinh " + user.getFullName() + " (" + user.getEmail() + ") đã tham gia vào lớp '" + classroom.getName() + "' (Mã: " + classroom.getCode() + ") theo thư mời", null, null);
             } catch (Exception e) {
                 log.error("Failed to auto-enroll user {} for invitation {}: {}", userEmail, inv.getId(), e.getMessage(), e);
             }
