@@ -490,17 +490,21 @@ public class ClassroomFeatureServiceImpl implements ClassroomFeatureService {
             }
 
             // 2. Auto-refresh expiring 100ms presigned URL on-the-fly
-            if (desc.contains("100ms-") && (v.getVideoUrl() == null || (!v.getVideoUrl().contains("youtube.com") && !v.getVideoUrl().contains("youtu.be")))) {
+            if ((desc.contains("100ms-") || desc.contains("Mã: ")) && (v.getVideoUrl() == null || (!v.getVideoUrl().contains("youtube.com") && !v.getVideoUrl().contains("youtu.be")))) {
                 try {
-                    int markerIdx = desc.indexOf("100ms-");
-                    if (markerIdx != -1) {
-                        String assetId = desc.substring(markerIdx + 6).trim().split("\\s+")[0].replaceAll("[^a-zA-Z0-9]", "");
-                        if (oneHundredMsService != null && oneHundredMsService.isConfigured() && !assetId.isBlank()) {
-                            String freshUrl = oneHundredMsService.getPresignedDownloadUrl(assetId);
-                            if (freshUrl != null && !freshUrl.isBlank()) {
-                                v.setVideoUrl(freshUrl);
-                                videoRepository.save(v);
-                            }
+                    String assetId = "";
+                    if (desc.contains("100ms-")) {
+                        int markerIdx = desc.indexOf("100ms-");
+                        assetId = desc.substring(markerIdx + 6).trim().split("\\s+")[0].replaceAll("[^a-zA-Z0-9]", "");
+                    } else if (desc.contains("Mã: ")) {
+                        int markerIdx = desc.indexOf("Mã: ");
+                        assetId = desc.substring(markerIdx + 4).trim().split("\\s+")[0].replaceAll("[^a-zA-Z0-9]", "");
+                    }
+                    if (oneHundredMsService != null && oneHundredMsService.isConfigured() && !assetId.isBlank()) {
+                        String freshUrl = oneHundredMsService.getPresignedDownloadUrl(assetId);
+                        if (freshUrl != null && !freshUrl.isBlank()) {
+                            v.setVideoUrl(freshUrl);
+                            videoRepository.save(v);
                         }
                     }
                 } catch (Exception e) {

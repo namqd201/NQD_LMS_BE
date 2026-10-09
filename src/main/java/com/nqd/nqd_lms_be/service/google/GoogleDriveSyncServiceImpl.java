@@ -199,6 +199,7 @@ public class GoogleDriveSyncServiceImpl implements GoogleDriveSyncService {
 
                     videoRepository.save(recordedVideo);
                     log.info("Saved recorded video to LMS database: title='{}', url='{}'", title, youtubeUrl);
+                    ensureVideoInPlaylist(classroom, youtubeUrl);
                     return true;
                 }
             }
@@ -207,6 +208,32 @@ public class GoogleDriveSyncServiceImpl implements GoogleDriveSyncService {
         }
 
         return false;
+    }
+
+    private void ensureVideoInPlaylist(Classroom classroom, String youtubeUrl) {
+        if (!youTubeUploadService.isConfigured() || youtubeUrl == null || !youtubeUrl.contains("watch?v=")) {
+            return;
+        }
+        try {
+            int idx = youtubeUrl.indexOf("watch?v=");
+            String sub = youtubeUrl.substring(idx + 8);
+            int amp = sub.indexOf('&');
+            String videoId = amp != -1 ? sub.substring(0, amp) : sub;
+
+            String playlistTitle = "Lớp: " + classroom.getName() + " - NQD LMS";
+            String playlistDesc = "Danh sách video bản ghi các buổi học trực tuyến của lớp " + classroom.getName() + " trên hệ thống NQD-LMS.";
+            String playlistId = youTubeUploadService.getOrCreatePlaylist(playlistTitle, playlistDesc, classroom.getYoutubePlaylistId());
+
+            if (playlistId != null && !playlistId.isBlank()) {
+                if (!playlistId.equals(classroom.getYoutubePlaylistId())) {
+                    classroom.setYoutubePlaylistId(playlistId);
+                    classroomRepository.save(classroom);
+                }
+                youTubeUploadService.addVideoToPlaylist(playlistId, videoId);
+            }
+        } catch (Exception e) {
+            log.warn("Failed to ensure video in YouTube playlist: {}", e.getMessage());
+        }
     }
 
     private List<DriveFileDto> fetchMeetRecordingsFromDrive() {

@@ -37,6 +37,7 @@ public class ClassroomResponse {
     private String passcode;
     private String meetingNote;
     private Boolean isLiveNow;
+    private String youtubePlaylistId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -770,6 +770,7 @@ public class ClassroomServiceImpl implements ClassroomService {
                 .passcode(c.getPasscode())
                 .meetingNote(c.getMeetingNote())
                 .isLiveNow(Boolean.TRUE.equals(c.getIsLiveNow()))
+                .youtubePlaylistId(c.getYoutubePlaylistId())
                 .createdAt(c.getCreatedAt())
                 .updatedAt(c.getUpdatedAt())
                 .build();

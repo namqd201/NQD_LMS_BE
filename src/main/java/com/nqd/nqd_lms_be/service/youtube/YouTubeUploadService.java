@@ -38,4 +38,23 @@ public interface YouTubeUploadService {
      * @return Full YouTube video URL
      */
     String uploadVideoStream(InputStream inputStream, long contentLength, String title, String description, List<String> tags);
+
+    /**
+     * Get an existing playlist or create a new unlisted playlist for a classroom on YouTube.
+     *
+     * @param playlistTitle Title of the playlist (e.g. "Lớp 1A12 - NQD LMS")
+     * @param description Description of the playlist
+     * @param existingPlaylistId Existing playlist ID if known
+     * @return YouTube Playlist ID (e.g. "PLxxxxxx") or empty string if failed
+     */
+    String getOrCreatePlaylist(String playlistTitle, String description, String existingPlaylistId);
+
+    /**
+     * Add a YouTube video to a specified playlist.
+     *
+     * @param playlistId The YouTube Playlist ID
+     * @param videoId The YouTube Video ID
+     * @return true if added successfully or already present
+     */
+    boolean addVideoToPlaylist(String playlistId, String videoId);
 }

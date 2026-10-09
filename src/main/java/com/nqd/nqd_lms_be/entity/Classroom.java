@@ -71,4 +71,7 @@ public class Classroom extends BaseEntity {
     @Column(name = "is_live_now", nullable = false, columnDefinition = "boolean default false")
     @Builder.Default
     private Boolean isLiveNow = false;
+
+    @Column(name = "youtube_playlist_id", length = 100)
+    private String youtubePlaylistId;
 }

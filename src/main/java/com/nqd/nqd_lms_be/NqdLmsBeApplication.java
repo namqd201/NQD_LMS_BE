@@ -16,10 +16,12 @@ public class NqdLmsBeApplication {
     @PostConstruct
     public void init() {
         TimeZone.setDefault(TimeZone.getTimeZone(TIMEZONE_VN));
+        System.setProperty("jdk.httpclient.allowRestrictedHeaders", "Content-Length,Host");
     }
 
     public static void main(String[] args) {
         TimeZone.setDefault(TimeZone.getTimeZone(TIMEZONE_VN));
+        System.setProperty("jdk.httpclient.allowRestrictedHeaders", "Content-Length,Host");
         SpringApplication.run(NqdLmsBeApplication.class, args);
     }
 

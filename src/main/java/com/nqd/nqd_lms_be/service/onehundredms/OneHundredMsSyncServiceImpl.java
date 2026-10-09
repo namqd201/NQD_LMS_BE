@@ -120,33 +120,58 @@ public class OneHundredMsSyncServiceImpl implements OneHundredMsSyncService {
             return false;
         }
 
+        LocalDate sessionDate = LocalDate.now();
+        if (asset.getCreatedAt() != null) {
+            try {
+                sessionDate = OffsetDateTime.parse(asset.getCreatedAt()).toLocalDate();
+            } catch (Exception ignored) {}
+        }
+
         String title = "Buổi học " + classroom.getName() + " - Bản ghi " + (asset.getCreatedAt() != null ? asset.getCreatedAt().substring(0, 10) : "");
         String uniqueMarker = "100ms-" + asset.getId();
         String description = "Bản ghi buổi học trực tuyến lớp " + classroom.getName()
                 + "\nMã: " + uniqueMarker;
 
-        // Check if already synced
+        // Comprehensive duplicate check (match by assetId with/without prefix, or same classroom + title + sessionDate)
+        final LocalDate targetDate = sessionDate;
         var existingOpt = videoRepository.findByClassroomIdOrderBySessionDateDescCreatedAtDesc(classroom.getId())
                 .stream()
-                .filter(v -> v.getTitle().contains(asset.getId()) || (v.getDescription() != null && v.getDescription().contains(uniqueMarker)))
+                .filter(v -> {
+                    boolean hasAssetId = (v.getDescription() != null && v.getDescription().contains(asset.getId()))
+                            || (v.getTitle() != null && v.getTitle().contains(asset.getId()))
+                            || (v.getVideoUrl() != null && v.getVideoUrl().contains(asset.getId()));
+                    boolean sameTitle = v.getTitle() != null && v.getTitle().equalsIgnoreCase(title);
+                    boolean sameDate = targetDate != null && targetDate.equals(v.getSessionDate());
+                    return hasAssetId || (sameTitle && sameDate);
+                })
                 .findFirst();
 
         if (existingOpt.isPresent()) {
             ClassroomRecordedVideo existing = existingOpt.get();
-            // If already on YouTube, skip
+            // 1. If already on YouTube, skip immediately to prevent duplicates
             if (existing.getVideoUrl() != null && (existing.getVideoUrl().contains("youtube.com") || existing.getVideoUrl().contains("youtu.be"))) {
-                log.debug("Recording asset {} already synced to YouTube. Skipping.", asset.getId());
+                log.debug("Recording asset {} already synced to YouTube: {}. Skipping.", asset.getId(), existing.getVideoUrl());
+                ensureVideoInPlaylist(classroom, existing.getVideoUrl());
                 return false;
             }
 
-            // If it previously fell back to 100ms URL, attempt to upload to YouTube now
-            log.info("Recording {} exists with non-YouTube URL. Attempting YouTube re-upload...", asset.getId());
+            // 2. If YouTube is not configured, do not attempt upload
+            if (!youTubeUploadService.isConfigured()) {
+                return false;
+            }
+
+            // 3. If it previously fell back to 100ms URL, attempt to upload to YouTube now
+            log.info("Recording {} exists with non-YouTube URL. Attempting YouTube upload...", asset.getId());
             String downloadUrl = oneHundredMsService.getPresignedDownloadUrl(asset.getId());
             if (downloadUrl != null && !downloadUrl.isBlank()) {
                 String yt = uploadStreamToYouTube(downloadUrl, title, description, List.of("NQDLMS", "100ms", classroom.getName()));
                 if (yt != null && !yt.isBlank()) {
                     existing.setVideoUrl(yt);
+                    if (existing.getDescription() == null || !existing.getDescription().contains(asset.getId())) {
+                        existing.setDescription(description);
+                    }
                     videoRepository.save(existing);
+                    ensureVideoInPlaylist(classroom, yt);
                     log.info("Successfully upgraded recording {} to YouTube URL: {}", asset.getId(), yt);
                     return true;
                 }
@@ -162,19 +187,16 @@ public class OneHundredMsSyncServiceImpl implements OneHundredMsSyncService {
 
         int durationMinutes = Math.max(1, (int) Math.round((double) asset.getDuration() / 60.0));
 
-
         // Attempt YouTube upload if configured
-        String videoFinalUrl = uploadStreamToYouTube(downloadUrl, title, description, List.of("NQDLMS", "100ms", classroom.getName()));
+        String videoFinalUrl = null;
+        if (youTubeUploadService.isConfigured()) {
+            videoFinalUrl = uploadStreamToYouTube(downloadUrl, title, description, List.of("NQDLMS", "100ms", classroom.getName()));
+        }
         if (videoFinalUrl == null || videoFinalUrl.isBlank()) {
             videoFinalUrl = downloadUrl;
             log.info("Using direct 100ms download URL as videoUrl for asset {}", asset.getId());
-        }
-
-        LocalDate sessionDate = LocalDate.now();
-        if (asset.getCreatedAt() != null) {
-            try {
-                sessionDate = OffsetDateTime.parse(asset.getCreatedAt()).toLocalDate();
-            } catch (Exception ignored) {}
+        } else {
+            ensureVideoInPlaylist(classroom, videoFinalUrl);
         }
 
         ClassroomRecordedVideo recordedVideo = ClassroomRecordedVideo.builder()
@@ -190,6 +212,48 @@ public class OneHundredMsSyncServiceImpl implements OneHundredMsSyncService {
         videoRepository.save(recordedVideo);
         log.info("Saved 100ms recorded video '{}' for classroom '{}'", title, classroom.getName());
         return true;
+    }
+
+    private void ensureVideoInPlaylist(Classroom classroom, String youtubeUrl) {
+        if (!youTubeUploadService.isConfigured() || youtubeUrl == null || !youtubeUrl.contains("watch?v=")) {
+            return;
+        }
+        try {
+            String videoId = extractYouTubeVideoId(youtubeUrl);
+            if (videoId == null || videoId.isBlank()) {
+                return;
+            }
+
+            String playlistTitle = "Lớp: " + classroom.getName() + " - NQD LMS";
+            String playlistDesc = "Danh sách video bản ghi các buổi học trực tuyến của lớp " + classroom.getName() + " trên hệ thống NQD-LMS.";
+            String playlistId = youTubeUploadService.getOrCreatePlaylist(playlistTitle, playlistDesc, classroom.getYoutubePlaylistId());
+
+            if (playlistId != null && !playlistId.isBlank()) {
+                if (!playlistId.equals(classroom.getYoutubePlaylistId())) {
+                    classroom.setYoutubePlaylistId(playlistId);
+                    classroomRepository.save(classroom);
+                }
+                youTubeUploadService.addVideoToPlaylist(playlistId, videoId);
+            }
+        } catch (Exception e) {
+            log.warn("Failed to ensure video in YouTube playlist: {}", e.getMessage());
+        }
+    }
+
+    private String extractYouTubeVideoId(String url) {
+        if (url == null) return null;
+        if (url.contains("watch?v=")) {
+            int idx = url.indexOf("watch?v=");
+            String sub = url.substring(idx + 8);
+            int amp = sub.indexOf('&');
+            return amp != -1 ? sub.substring(0, amp) : sub;
+        } else if (url.contains("youtu.be/")) {
+            int idx = url.indexOf("youtu.be/");
+            String sub = url.substring(idx + 9);
+            int q = sub.indexOf('?');
+            return q != -1 ? sub.substring(0, q) : sub;
+        }
+        return null;
     }
 
     private String uploadStreamToYouTube(String downloadUrl, String title, String description, List<String> tags) {
