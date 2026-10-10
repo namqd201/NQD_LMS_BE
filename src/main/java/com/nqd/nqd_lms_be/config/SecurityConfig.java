@@ -74,7 +74,8 @@ public class SecurityConfig {
                     "/api/v1/payments/webhook/**",
                     "/api/v1/webhooks/**",
                     "/api/v1/public/certificates/**",
-                    "/api/v1/public/knowledge/**"
+                    "/api/v1/public/knowledge/**",
+                    "/api/v1/push/public-key"
                 ).permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/payments/config").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/v1/marketplace/courses/**").permitAll()

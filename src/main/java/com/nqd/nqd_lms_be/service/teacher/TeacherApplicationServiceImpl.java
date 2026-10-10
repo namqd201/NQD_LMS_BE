@@ -128,6 +128,15 @@ public class TeacherApplicationServiceImpl implements TeacherApplicationService 
         user.setIsOnboarded(true);
         userRepository.save(user);
 
+        // Notify applicant about successful submission
+        notificationProducer.sendNotification(
+                user.getId(),
+                "TEACHER_APPLICATION_SUBMITTED",
+                "Đã gửi hồ sơ xét duyệt Giảng viên",
+                "Hồ sơ của bạn đã được tiếp nhận thành công và đang chờ Ban quản trị xét duyệt.",
+                "/become-teacher"
+        );
+
         // Notify all Admins about new application
         notifyAdminsAboutApplication(app, false);
 
@@ -170,6 +179,15 @@ public class TeacherApplicationServiceImpl implements TeacherApplicationService 
 
         app = applicationRepository.save(app);
         log.info("User {} updated and re-submitted teacher application {}", userId, app.getId());
+
+        // Notify applicant about updated submission
+        notificationProducer.sendNotification(
+                userId,
+                "TEACHER_APPLICATION_UPDATED",
+                "Đã cập nhật hồ sơ xét duyệt Giảng viên",
+                "Hồ sơ bổ sung của bạn đã được cập nhật thành công và chuyển đến Ban quản trị.",
+                "/become-teacher"
+        );
 
         // Notify all Admins about updated application
         notifyAdminsAboutApplication(app, true);

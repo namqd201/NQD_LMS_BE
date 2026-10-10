@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import nl.martijndwars.webpush.Notification;
 import nl.martijndwars.webpush.PushService;
 import nl.martijndwars.webpush.Subscription;
+import nl.martijndwars.webpush.Urgency;
 import org.apache.http.HttpResponse;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.beans.factory.annotation.Value;
@@ -153,9 +154,11 @@ public class WebPushServiceImpl implements WebPushService {
             payloadMap.put("linkUrl", linkUrl != null ? linkUrl : "/");
             payloadMap.put("icon", "/logo.png");
             payloadMap.put("badge", "/logo.png");
+            payloadMap.put("tag", "nqd-" + System.currentTimeMillis());
+            payloadMap.put("timestamp", System.currentTimeMillis());
 
             String payloadJson = objectMapper.writeValueAsString(payloadMap);
-            Notification notification = new Notification(subscription, payloadJson);
+            Notification notification = new Notification(subscription, payloadJson, Urgency.HIGH);
 
             HttpResponse response = pushService.send(notification);
             int statusCode = response.getStatusLine().getStatusCode();
