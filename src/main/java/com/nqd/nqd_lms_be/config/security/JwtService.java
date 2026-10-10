@@ -22,7 +22,7 @@ public class JwtService {
 
     public JwtService(
             @Value("${app.jwt.secret:nqd-lms-super-secret-key-for-jwt-signing-at-least-256-bits-long-2026}") String secretKeyString,
-            @Value("${app.jwt.expiration-days:7}") int expirationDays
+            @Value("${app.jwt.expiration-days:90}") int expirationDays
     ) {
         this.secretKeyString = secretKeyString;
         this.expirationDays = expirationDays;

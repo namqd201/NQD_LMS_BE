@@ -49,7 +49,7 @@ public class DynamicRoleAuthenticationFilter extends OncePerRequestFilter {
             }
 
             if (token != null && !token.isBlank()) {
-                // 1. Verify and authenticate with stateless 7-day JWT
+                // 1. Verify and authenticate with stateless 90-day JWT
                 if (jwtService.validateToken(token)) {
                     UUID userId = jwtService.getUserIdFromToken(token);
                     if (userId != null) {
